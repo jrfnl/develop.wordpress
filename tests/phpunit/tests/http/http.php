@@ -107,6 +107,31 @@ class Tests_HTTP_HTTP extends WP_UnitTestCase {
 			// PHP's parse_url() calls this an invalid url, we handle it as a path
 			array( '/://example.com/', array( 'path' => '/://example.com/' ) ),
 
+			// Schemeless URL containing colons cause parse errors in PHP 7+.
+			array( '//fonts.googleapis.com/css?family=Open+Sans:400&subset=latin', array(
+				'host'  => 'fonts.googleapis.com',
+				'path'  => '/css',
+				'query' => 'family=Open+Sans:400&subset=latin',
+			) ),
+			array( '//fonts.googleapis.com/css?family=Open+Sans:400', array(
+				'host'  => 'fonts.googleapis.com',
+				'path'  => '/css',
+				'query' => 'family=Open+Sans:400',
+			) ),
+
+			// Query parameter starting with & instead of ?
+			array( 'http://www.test.com/path1/path2/&q=a', array(
+				'scheme' => 'http',
+				'host'   => 'www.test.com',
+				'path'   => '/path1/path2/',
+				'query'  => 'q=a',
+			) ),
+			array( 'http://www.test.com/path1/path2/file.php&q=a', array(
+				'scheme' => 'http',
+				'host'  => 'www.test.com',
+				'path'  => '/path1/path2/file.php',
+				'query' => 'q=a',
+			) ),
 		);
 		/*
 		Untestable edge cases in various PHP:
@@ -117,7 +142,7 @@ class Tests_HTTP_HTTP extends WP_UnitTestCase {
 
 	/**
 	 * @ticket 36356
-     */
+	 */
 	function test_wp_parse_url_with_default_component() {
 		$actual = wp_parse_url( self::FULL_TEST_URL, -1 );
 		$this->assertEquals( array(
@@ -175,6 +200,21 @@ class Tests_HTTP_HTTP extends WP_UnitTestCase {
 			// PHP's parse_url() calls this an invalid URL, we handle it as a path.
 			array( '/://example.com/', PHP_URL_PATH, '/://example.com/' ),
 
+			// Schemeless URL containing colons cause parse errors in PHP 7+.
+			array( '//fonts.googleapis.com/css?family=Open+Sans:400&subset=latin', PHP_URL_HOST, 'fonts.googleapis.com' ),
+			array( '//fonts.googleapis.com/css?family=Open+Sans:400&subset=latin', PHP_URL_PORT, null ),
+			array( '//fonts.googleapis.com/css?family=Open+Sans:400&subset=latin', PHP_URL_PATH, '/css' ),
+			array( '//fonts.googleapis.com/css?family=Open+Sans:400&subset=latin', PHP_URL_QUERY, 'family=Open+Sans:400&subset=latin' ),
+			array( '//fonts.googleapis.com/css?family=Open+Sans:400', PHP_URL_HOST, 'fonts.googleapis.com' ), // 25
+			array( '//fonts.googleapis.com/css?family=Open+Sans:400', PHP_URL_PORT, null ),
+			array( '//fonts.googleapis.com/css?family=Open+Sans:400', PHP_URL_PATH, '/css' ), //27
+			array( '//fonts.googleapis.com/css?family=Open+Sans:400', PHP_URL_QUERY, 'family=Open+Sans:400' ), //28
+
+			// Query parameter starting with & instead of ?
+			array( 'http://www.test.com/path1/path2/&q=a', PHP_URL_PATH, '/path1/path2/' ),
+			array( 'http://www.test.com/path1/path2/&q=a', PHP_URL_QUERY, 'q=a' ),
+			array( 'http://www.test.com/path1/path2/file.php&q=a', PHP_URL_PATH, '/path1/path2/file.php' ),
+			array( 'http://www.test.com/path1/path2/file.php&q=a', PHP_URL_QUERY, 'q=a' ),
 		);
 	}
 

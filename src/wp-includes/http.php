@@ -623,80 +623,165 @@ function ms_allowed_http_request_hosts( $is_external, $host ) {
 }
 
 /**
- * A wrapper for PHP's parse_url() function that handles edgecases in < PHP 5.4.7
+ * A wrapper for PHP's parse_url() function that handles consistency in the return
+ * values across PHP versions.
  *
  * PHP 5.4.7 expanded parse_url()'s ability to handle non-absolute url's, including
- * schemeless and relative url's with :// in the path, this works around those
- * limitations providing a standard output on PHP 5.2~5.4+.
+ * schemeless and relative url's with :// in the path. This function works around
+ * those limitations providing a standard output on PHP 5.2~5.4+.
+ *
+ * Secondly, across various PHP versions, schemeless URLs starting containing a ":"
+ * in the query are being handled inconsistently. This function works around those
+ * differences as well.
+ *
+ * Lastly, PHP does not recognize query parameters which start with an ampersant (&)
+ * instead of a question mark (?) as query parameters. That edge case is also
+ * handled by this function.
  *
  * Error suppression is used as prior to PHP 5.3.3, an E_WARNING would be generated
  * when URL parsing failed.
  *
  * @since 4.4.0
  * @since 4.7.0 The $component parameter was added for parity with PHP's parse_url().
+ *              Handling of query parameters starting with & was added.
  *
  * @param string $url       The URL to parse.
  * @param int    $component The specific component to retrieve. Use one of the PHP
  *                          predefined constants to specify which one.
  *                          Defaults to -1 (= return all parts as an array).
  *                          @see http://php.net/manual/en/function.parse-url.php
- * @return mixed False on failure; Array of URL components on success;
- *               When a specific component has been requested: null if the component doesn't
- *               exist in the given URL; a sting or - in the case of PHP_URL_PORT - integer
- *               when it does; See parse_url()'s return values.
+ * @return mixed False on parse failure; Array of URL components on success;
+ *               When a specific component has been requested: null if the component
+ *               doesn't exist in the given URL; a sting or - in the case of
+ *               PHP_URL_PORT - integer when it does. See parse_url()'s return values.
  */
 function wp_parse_url( $url, $component = -1 ) {
-	$parts = @parse_url( $url, $component );
+	$parts = @parse_url( $url );
 
-	if ( version_compare( PHP_VERSION, '5.4.7', '>=' ) ) {
-		return $parts;
-	}
+	$schemeless_with_colon = ( '//' === substr( $url, 0, 2 ) && false !== strpos( $url, ':' ) );
 
 	if ( false === $parts ) {
 		// < PHP 5.4.7 compat, trouble with relative paths including a scheme break in the path.
-		if ( '/' == $url[0] && false !== strpos( $url, '://' ) ) {
-			if ( in_array( $component, array( PHP_URL_SCHEME, PHP_URL_HOST ), true ) ) {
-				return null;
+		if ( '/' === $url[0] && ( false !== strpos( $url, '://' ) || true === $schemeless_with_colon ) ) {
+			if ( true === $schemeless_with_colon ) {
+				if ( PHP_URL_SCHEME === $component ) {
+					return null;
+				} else {
+					// Since we know it's a schemeless path, prefix with a scheme placeholder.
+					$url      = 'placeholder:' . $url;
+					$to_unset = array( 'scheme' );
+				}
+			} else {
+				if ( in_array( $component, array( PHP_URL_SCHEME, PHP_URL_HOST ), true ) ) {
+					return null;
+				} else {
+					// Since we know it's a relative path, prefix with a scheme/host placeholder.
+					$url        = 'placeholder://placeholder' . $url;
+					$to_unset = array( 'scheme', 'host' );
+				}
 			}
-			// Since we know it's a relative path, prefix with a scheme/host placeholder and try again.
-			if ( ! $parts = @parse_url( 'placeholder://placeholder' . $url, $component ) ) {
-				return $parts;
+
+			$parts = @parse_url( $url );
+			if ( false === $parts ) {
+				return _get_component_from_parsed_url_array( $parts, $component );
 			}
+
 			// Remove the placeholder values.
-			if ( -1 === $component ) {
-				unset( $parts['scheme'], $parts['host'] );
+			foreach ( $to_unset as $key ) {
+				unset( $parts[ $key ] );
 			}
 		} else {
-			return $parts;
+			return _get_component_from_parsed_url_array( $parts, $component );
 		}
 	}
 
 	// < PHP 5.4.7 compat, doesn't detect a schemeless URL's host field.
-	if ( '//' == substr( $url, 0, 2 ) ) {
-		if ( -1 === $component && ! isset( $parts['host'] ) ) {
-			$path_parts = explode( '/', substr( $parts['path'], 2 ), 2 );
-			$parts['host'] = $path_parts[0];
-			if ( isset( $path_parts[1] ) ) {
-				$parts['path'] = '/' . $path_parts[1];
-			} else {
-				unset( $parts['path'] );
-			}
-		} elseif ( PHP_URL_HOST === $component || PHP_URL_PATH === $component ) {
-			$all_parts = @parse_url( $url );
-			if ( ! isset( $all_parts['host'] ) ) {
-				$path_parts = explode( '/', substr( $all_parts['path'], 2 ), 2 );
-				if ( PHP_URL_PATH === $component ) {
-					if ( isset( $path_parts[1] ) ) {
-						$parts = '/' . $path_parts[1];
-					} else {
-						$parts = null;
-					}
-				} elseif ( PHP_URL_HOST === $component ) {
-					$parts = $path_parts[0];
-				}
-			}
+	if ( '//' == substr( $url, 0, 2 ) && ! isset( $parts['host'] ) && isset( $parts['path'] ) ) {
+		$path_parts = explode( '/', substr( $parts['path'], 2 ), 2 );
+		$parts['host'] = $path_parts[0];
+		if ( isset( $path_parts[1] ) ) {
+			$parts['path'] = '/' . $path_parts[1];
+		} else {
+			unset( $parts['path'] );
 		}
 	}
 
-	return $parts;
+	// Deal with query parameters starting with & instead of ?
+	if ( isset( $parts['path'] ) && ! isset( $parts['query'] ) ) {
+		$ampersant_in_path = strpos( $parts['path'], '&', strrpos( $parts['path'], '/' ) );
+		if ( false !== $ampersant_in_path ) {
+			$parts['query'] = substr( $parts['path'], ( $ampersant_in_path + 1 ) );
+			$parts['path']  = str_replace( '&' . $parts['query'], '', $parts['path'] );
+		}
+	}
+
+	// HHVM mistakenly interprets a ':400' in the query string as the port.
+	if ( isset( $parts['port'], $parts['query'] ) && false !== strpos( $parts['query'], ':' . $parts['port'] ) ) {
+		if ( 1 === substr_count( $url, ':' . $parts['port'] ) ) {
+			unset( $parts['port'] );
+		}
+	}
+
+	return _get_component_from_parsed_url_array( $parts, $component );
+}
+
+/**
+ * Retrieve a specific component from a parsed URL array.
+ *
+ * @internal
+ *
+ * @since 4.7.0
+ *
+ * @param array|false $url_parts The parsed URL. Can be false if the URL failed to parse.
+ * @param int    $component The specific component to retrieve. Use one of the PHP
+ *                          predefined constants to specify which one.
+ *                          Defaults to -1 (= return all parts as an array).
+ *                          @see http://php.net/manual/en/function.parse-url.php
+ * @return mixed False on parse failure; Array of URL components on success;
+ *               When a specific component has been requested: null if the component
+ *               doesn't exist in the given URL; a sting or - in the case of
+ *               PHP_URL_PORT - integer when it does. See parse_url()'s return values.
+ */
+function _get_component_from_parsed_url_array( $url_parts, $component = -1 ) {
+	if ( -1 === $component ) {
+		return $url_parts;
+	}
+
+	$key = _wp_translate_php_url_constant_to_key( $component );
+	if ( false !== $key && is_array( $url_parts ) && isset( $url_parts[ $key ] ) ) {
+		return $url_parts[ $key ];
+	} else {
+		return null;
+	}
+}
+
+/**
+ * Translate a PHP_URL_* constant to the named array keys PHP uses.
+ *
+ * @internal
+ *
+ * @since 4.7.0
+ *
+ * @see   http://php.net/manual/en/url.constants.php
+ *
+ * @param int $constant PHP_URL_* constant.
+ * @return string|bool The named key or false.
+ */
+function _wp_translate_php_url_constant_to_key( $constant ) {
+	$translation = array(
+		PHP_URL_SCHEME   => 'scheme',
+		PHP_URL_HOST     => 'host',
+		PHP_URL_PORT     => 'port',
+		PHP_URL_USER     => 'user',
+		PHP_URL_PASS     => 'pass',
+		PHP_URL_PATH     => 'path',
+		PHP_URL_QUERY    => 'query',
+		PHP_URL_FRAGMENT => 'fragment',
+	);
+
+	if ( isset( $translation[ $constant ] ) ) {
+		return $translation[ $constant ];
+	} else {
+		return false;
+	}
 }
