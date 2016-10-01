@@ -264,4 +264,56 @@ class Tests_HTTP_HTTP extends WP_UnitTestCase {
 			}
 		}
 	}
+
+	/**
+	 * @ticket 36356
+	 *
+	 * @dataProvider get_component_from_parsed_url_array_testcases
+	 */
+	function test_get_component_from_parsed_url_array( $url, $component, $expected ) {
+		$parts  = wp_parse_url( $url );
+		$actual = _get_component_from_parsed_url_array( $parts, $component );
+		$this->assertSame( $expected, $actual );
+	}
+
+	function get_component_from_parsed_url_array_testcases() {
+		// 0: A URL, 1: PHP URL constant, 2: The expected result.
+		return array(
+			array( 'http://example.com/', -1, array( 'scheme' => 'http', 'host' => 'example.com', 'path' => '/' ) ),
+			array( 'http://example.com/', -1, array( 'scheme' => 'http', 'host' => 'example.com', 'path' => '/' ) ),
+			array( 'http://example.com/', PHP_URL_HOST, 'example.com' ),
+			array( 'http://example.com/', PHP_URL_USER, null ),
+			array( 'http:///example.com', -1, false ),
+			array( 'http:///example.com', PHP_URL_HOST, null ),
+		);
+	}
+
+	/**
+	 * @ticket 36356
+	 *
+	 * @dataProvider wp_translate_php_url_constant_to_key_testcases
+	 */
+	function test_wp_translate_php_url_constant_to_key( $input, $expected ) {
+		$actual = _wp_translate_php_url_constant_to_key( $input );
+		$this->assertSame( $expected, $actual );
+	}
+
+	function wp_translate_php_url_constant_to_key_testcases() {
+		// 0: PHP URL constant, 1: The expected result.
+		return array(
+			array( PHP_URL_SCHEME, 'scheme' ),
+			array( PHP_URL_HOST, 'host' ),
+			array( PHP_URL_PORT, 'port' ),
+			array( PHP_URL_USER, 'user' ),
+			array( PHP_URL_PASS, 'pass' ),
+			array( PHP_URL_PATH, 'path' ),
+			array( PHP_URL_QUERY, 'query' ),
+			array( PHP_URL_FRAGMENT, 'fragment' ),
+
+			// Test with non-PHP_URL_CONSTANT parameter.
+			array( 'something', false ),
+			array( ABSPATH, false ),
+		);
+	}
+
 }
