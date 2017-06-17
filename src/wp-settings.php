@@ -278,8 +278,9 @@ if ( is_multisite() ) {
  */
 do_action( 'muplugins_loaded' );
 
-if ( is_multisite() )
-	ms_cookie_constants(  );
+if ( is_multisite() ) {
+	ms_cookie_constants( );
+}
 
 // Define constants after multisite is loaded.
 wp_cookie_constants();
@@ -390,7 +391,7 @@ $GLOBALS['wp_roles'] = new WP_Roles();
 do_action( 'setup_theme' );
 
 // Define the template related constants.
-wp_templating_constants(  );
+wp_templating_constants( );
 
 // Load the default text localization domain.
 load_default_textdomain();
