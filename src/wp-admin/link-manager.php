@@ -8,10 +8,11 @@
 
 /** Load WordPress Administration Bootstrap */
 require_once( dirname( __FILE__ ) . '/admin.php' );
-if ( ! current_user_can( 'manage_links' ) )
+if ( ! current_user_can( 'manage_links' ) ) {
 	wp_die( __( 'Sorry, you are not allowed to edit the links for this site.' ) );
+}
 
-$wp_list_table = _get_list_table('WP_Links_List_Table');
+$wp_list_table = _get_list_table( 'WP_Links_List_Table' );
 
 // Handle bulk deletes
 $doaction = $wp_list_table->current_action();
@@ -43,7 +44,7 @@ if ( $doaction && isset( $_REQUEST['linkcheck'] ) ) {
 
 $wp_list_table->prepare_items();
 
-$title = __('Links');
+$title = __( 'Links' );
 $this_file = $parent_file = 'link-manager.php';
 
 get_current_screen()->add_help_tab( array(
@@ -62,9 +63,9 @@ get_current_screen()->add_help_tab( array(
 ) );
 
 get_current_screen()->set_help_sidebar(
-	'<p><strong>' . __('For more information:') . '</strong></p>' .
-	'<p>' . __('<a href="https://codex.wordpress.org/Links_Screen">Documentation on Managing Links</a>') . '</p>' .
-	'<p>' . __('<a href="https://wordpress.org/support/">Support Forums</a>') . '</p>'
+	'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
+	'<p>' . __( '<a href="https://codex.wordpress.org/Links_Screen">Documentation on Managing Links</a>' ) . '</p>' .
+	'<p>' . __( '<a href="https://wordpress.org/support/">Support Forums</a>' ) . '</p>'
 );
 
 get_current_screen()->set_screen_reader_content( array(
@@ -73,8 +74,9 @@ get_current_screen()->set_screen_reader_content( array(
 
 include_once( ABSPATH . 'wp-admin/admin-header.php' );
 
-if ( ! current_user_can('manage_links') )
-	wp_die(__('Sorry, you are not allowed to edit the links for this site.'));
+if ( ! current_user_can( 'manage_links' ) ) {
+	wp_die( __( 'Sorry, you are not allowed to edit the links for this site.' ) );
+}
 
 ?>
 
@@ -95,12 +97,12 @@ if ( isset( $_REQUEST['s'] ) && strlen( $_REQUEST['s'] ) ) {
 <hr class="wp-header-end">
 
 <?php
-if ( isset($_REQUEST['deleted']) ) {
+if ( isset( $_REQUEST['deleted'] ) ) {
 	echo '<div id="message" class="updated notice is-dismissible"><p>';
 	$deleted = (int) $_REQUEST['deleted'];
-	printf(_n('%s link deleted.', '%s links deleted', $deleted), $deleted);
+	printf( _n( '%s link deleted.', '%s links deleted', $deleted ), $deleted );
 	echo '</p></div>';
-	$_SERVER['REQUEST_URI'] = remove_query_arg(array('deleted'), $_SERVER['REQUEST_URI']);
+	$_SERVER['REQUEST_URI'] = remove_query_arg( array( 'deleted' ), $_SERVER['REQUEST_URI'] );
 }
 ?>
 

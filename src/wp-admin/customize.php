@@ -61,7 +61,7 @@ $wp_scripts = new WP_Scripts;
 $wp_scripts->registered = $registered;
 
 add_action( 'customize_controls_print_scripts',        'print_head_scripts', 20 );
-add_action( 'customize_controls_print_footer_scripts', '_wp_footer_scripts'     );
+add_action( 'customize_controls_print_footer_scripts', '_wp_footer_scripts' );
 add_action( 'customize_controls_print_styles',         'print_admin_styles', 20 );
 
 /**
@@ -82,7 +82,7 @@ wp_enqueue_style( 'customize-controls' );
 do_action( 'customize_controls_enqueue_scripts' );
 
 // Let's roll.
-@header('Content-Type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));
+@header( 'Content-Type: ' . get_option( 'html_type' ) . '; charset=' . get_option( 'blog_charset' ) );
 
 wp_user_settings();
 _wp_admin_html_begin();

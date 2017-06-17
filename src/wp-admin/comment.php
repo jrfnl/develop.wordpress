@@ -16,21 +16,24 @@ $submenu_file = 'edit-comments.php';
  * @global string $action
  */
 global $action;
-wp_reset_vars( array('action') );
+wp_reset_vars( array( 'action' ) );
 
-if ( isset( $_POST['deletecomment'] ) )
+if ( isset( $_POST['deletecomment'] ) ) {
 	$action = 'deletecomment';
+}
 
-if ( 'cdc' == $action )
+if ( 'cdc' == $action ) {
 	$action = 'delete';
-elseif ( 'mac' == $action )
+} elseif ( 'mac' == $action ) {
 	$action = 'approve';
+}
 
 if ( isset( $_GET['dt'] ) ) {
-	if ( 'spam' == $_GET['dt'] )
+	if ( 'spam' == $_GET['dt'] ) {
 		$action = 'spam';
-	elseif ( 'trash' == $_GET['dt'] )
+	} elseif ( 'trash' == $_GET['dt'] ) {
 		$action = 'trash';
+	}
 }
 
 switch( $action ) {
@@ -150,18 +153,18 @@ if ( $comment->comment_approved != '0' ) { // if not unapproved
 
 <table class="form-table comment-ays">
 <tr>
-<th scope="row"><?php _e('Author'); ?></th>
+<th scope="row"><?php _e( 'Author' ); ?></th>
 <td><?php comment_author( $comment ); ?></td>
 </tr>
 <?php if ( get_comment_author_email( $comment ) ) { ?>
 <tr>
-<th scope="row"><?php _e('Email'); ?></th>
+<th scope="row"><?php _e( 'Email' ); ?></th>
 <td><?php comment_author_email( $comment ); ?></td>
 </tr>
 <?php } ?>
 <?php if ( get_comment_author_url( $comment ) ) { ?>
 <tr>
-<th scope="row"><?php _e('URL'); ?></th>
+<th scope="row"><?php _e( 'URL' ); ?></th>
 <td><a href="<?php comment_author_url( $comment ); ?>"><?php comment_author_url( $comment ); ?></a></td>
 </tr>
 <?php } ?>

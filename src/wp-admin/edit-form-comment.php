@@ -7,11 +7,12 @@
  */
 
 // don't load directly
-if ( !defined('ABSPATH') )
-	die('-1');
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 ?>
 <form name="post" action="comment.php" method="post" id="post">
-<?php wp_nonce_field('update-comment_' . $comment->comment_ID) ?>
+<?php wp_nonce_field( 'update-comment_' . $comment->comment_ID ) ?>
 <div class="wrap">
 <h1><?php _e( 'Edit Comment' ); ?></h1>
 
@@ -52,7 +53,7 @@ if ( 'approved' === wp_get_comment_status( $comment ) && $comment->comment_post_
 <tr>
 	<td class="first"><label for="newcomment_author_url"><?php _e( 'URL:' ); ?></label></td>
 	<td>
-		<input type="text" id="newcomment_author_url" name="newcomment_author_url" size="30" class="code" value="<?php echo esc_attr($comment->comment_author_url); ?>" />
+		<input type="text" id="newcomment_author_url" name="newcomment_author_url" size="30" class="code" value="<?php echo esc_attr( $comment->comment_author_url ); ?>" />
 	</td>
 </tr>
 </tbody>
@@ -65,8 +66,14 @@ if ( 'approved' === wp_get_comment_status( $comment ) && $comment->comment_post_
 <div id="postdiv" class="postarea">
 <?php
 	echo '<label for="content" class="screen-reader-text">' . __( 'Comment' ) . '</label>';
-	$quicktags_settings = array( 'buttons' => 'strong,em,link,block,del,ins,img,ul,ol,li,code,close' );
-	wp_editor( $comment->comment_content, 'content', array( 'media_buttons' => false, 'tinymce' => false, 'quicktags' => $quicktags_settings ) );
+	$quicktags_settings = array(
+		'buttons' => 'strong,em,link,block,del,ins,img,ul,ol,li,code,close',
+	);
+	wp_editor( $comment->comment_content, 'content', array(
+		'media_buttons' => false,
+		'tinymce' => false,
+		'quicktags' => $quicktags_settings,
+	) );
 	wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 </div>
 </div><!-- /post-body-content -->
@@ -159,7 +166,7 @@ endif; ?>
 
 <div id="major-publishing-actions">
 <div id="delete-action">
-<?php echo "<a class='submitdelete deletion' href='" . wp_nonce_url("comment.php?action=" . ( !EMPTY_TRASH_DAYS ? 'deletecomment' : 'trashcomment' ) . "&amp;c=$comment->comment_ID&amp;_wp_original_http_referer=" . urlencode(wp_get_referer()), 'delete-comment_' . $comment->comment_ID) . "'>" . ( !EMPTY_TRASH_DAYS ? __('Delete Permanently') : __('Move to Trash') ) . "</a>\n"; ?>
+<?php echo "<a class='submitdelete deletion' href='" . wp_nonce_url( 'comment.php?action=' . ( ! EMPTY_TRASH_DAYS ? 'deletecomment' : 'trashcomment' ) . "&amp;c=$comment->comment_ID&amp;_wp_original_http_referer=" . urlencode( wp_get_referer() ), 'delete-comment_' . $comment->comment_ID ) . "'>" . ( ! EMPTY_TRASH_DAYS ? __( 'Delete Permanently' ) : __( 'Move to Trash' ) ) . "</a>\n"; ?>
 </div>
 <div id="publishing-action">
 <?php submit_button( __( 'Update' ), 'primary large', 'save', false ); ?>
@@ -185,16 +192,16 @@ do_action( 'add_meta_boxes', 'comment', $comment );
  */
 do_action( 'add_meta_boxes_comment', $comment );
 
-do_meta_boxes(null, 'normal', $comment);
+do_meta_boxes( null, 'normal', $comment );
 
 $referer = wp_get_referer();
 ?>
 </div>
 
-<input type="hidden" name="c" value="<?php echo esc_attr($comment->comment_ID) ?>" />
-<input type="hidden" name="p" value="<?php echo esc_attr($comment->comment_post_ID) ?>" />
+<input type="hidden" name="c" value="<?php echo esc_attr( $comment->comment_ID ) ?>" />
+<input type="hidden" name="p" value="<?php echo esc_attr( $comment->comment_post_ID ) ?>" />
 <input name="referredby" type="hidden" id="referredby" value="<?php echo $referer ? esc_url( $referer ) : ''; ?>" />
-<?php wp_original_referer_field(true, 'previous'); ?>
+<?php wp_original_referer_field( true, 'previous' ); ?>
 <input type="hidden" name="noredir" value="1" />
 
 </div><!-- /post-body -->
