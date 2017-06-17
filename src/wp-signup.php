@@ -102,19 +102,19 @@ function show_blog_form( $blogname = '', $blog_title = '', $errors = '' ) {
 
 	$current_network = get_network();
 	// Blog name
-	if ( !is_subdomain_install() )
-		echo '<label for="blogname">' . __('Site Name:') . '</label>';
-	else
-		echo '<label for="blogname">' . __('Site Domain:') . '</label>';
+	if ( ! is_subdomain_install() ) {
+		echo '<label for="blogname">' . __( 'Site Name:' ) . '</label>';
+	} else {      echo '<label for="blogname">' . __( 'Site Domain:' ) . '</label>';
+	}
 
 	if ( $errmsg = $errors->get_error_message( 'blogname' ) ) { ?>
 		<p class="error"><?php echo $errmsg ?></p>
 	<?php }
 
-	if ( !is_subdomain_install() )
-		echo '<span class="prefix_address">' . $current_network->domain . $current_network->path . '</span><input name="blogname" type="text" id="blogname" value="'. esc_attr($blogname) .'" maxlength="60" /><br />';
-	else
-		echo '<input name="blogname" type="text" id="blogname" value="'.esc_attr($blogname).'" maxlength="60" /><span class="suffix_address">.' . ( $site_domain = preg_replace( '|^www\.|', '', $current_network->domain ) ) . '</span><br />';
+	if ( ! is_subdomain_install() ) {
+		echo '<span class="prefix_address">' . $current_network->domain . $current_network->path . '</span><input name="blogname" type="text" id="blogname" value="' . esc_attr( $blogname ) . '" maxlength="60" /><br />';
+	} else {      echo '<input name="blogname" type="text" id="blogname" value="' . esc_attr( $blogname ) . '" maxlength="60" /><span class="suffix_address">.' . ( $site_domain = preg_replace( '|^www\.|', '', $current_network->domain ) ) . '</span><br />';
+	}
 
 	if ( ! is_user_logged_in() ) {
 		if ( ! is_subdomain_install() ) {
@@ -861,16 +861,16 @@ if ( $active_signup == 'none' ) {
 	$stage = isset( $_POST['stage'] ) ?  $_POST['stage'] : 'default';
 	switch ( $stage ) {
 		case 'validate-user-signup' :
-			if ( $active_signup == 'all' || $_POST[ 'signup_for' ] == 'blog' && $active_signup == 'blog' || $_POST[ 'signup_for' ] == 'user' && $active_signup == 'user' )
+			if ( $active_signup == 'all' || $_POST['signup_for'] == 'blog' && $active_signup == 'blog' || $_POST['signup_for'] == 'user' && $active_signup == 'user' ) {
 				validate_user_signup();
-			else
-				_e( 'User registration has been disabled.' );
+			} else {              _e( 'User registration has been disabled.' );
+			}
 		break;
 		case 'validate-blog-signup':
-			if ( $active_signup == 'all' || $active_signup == 'blog' )
+			if ( $active_signup == 'all' || $active_signup == 'blog' ) {
 				validate_blog_signup();
-			else
-				_e( 'Site registration has been disabled.' );
+			} else {              _e( 'Site registration has been disabled.' );
+			}
 			break;
 		case 'gimmeanotherblog':
 			validate_another_blog_signup();
@@ -884,28 +884,28 @@ if ( $active_signup == 'none' ) {
 			 * @since 3.0.0
 			 */
 			do_action( 'preprocess_signup_form' );
-			if ( is_user_logged_in() && ( $active_signup == 'all' || $active_signup == 'blog' ) )
-				signup_another_blog($newblogname);
-			elseif ( ! is_user_logged_in() && ( $active_signup == 'all' || $active_signup == 'user' ) )
+			if ( is_user_logged_in() && ( $active_signup == 'all' || $active_signup == 'blog' ) ) {
+				signup_another_blog( $newblogname );
+			} elseif ( ! is_user_logged_in() && ( $active_signup == 'all' || $active_signup == 'user' ) ) {
 				signup_user( $newblogname, $user_email );
-			elseif ( ! is_user_logged_in() && ( $active_signup == 'blog' ) )
+			} elseif ( ! is_user_logged_in() && ( $active_signup == 'blog' ) ) {
 				_e( 'Sorry, new registrations are not allowed at this time.' );
-			else
-				_e( 'You are logged in already. No need to register again!' );
+			} else {              _e( 'You are logged in already. No need to register again!' );
+			}
 
 			if ( $newblogname ) {
 				$newblog = get_blogaddress_by_name( $newblogname );
 
-				if ( $active_signup == 'blog' || $active_signup == 'all' )
+				if ( $active_signup == 'blog' || $active_signup == 'all' ) {
 					/* translators: %s: site address */
 					printf( '<p><em>' . __( 'The site you were looking for, %s, does not exist, but you can create it now!' ) . '</em></p>',
 						'<strong>' . $newblog . '</strong>'
 					);
-				else
-					/* translators: %s: site address */
+				} else {                  /* translators: %s: site address */
 					printf( '<p><em>' . __( 'The site you were looking for, %s, does not exist.' ) . '</em></p>',
 						'<strong>' . $newblog . '</strong>'
 					);
+				}
 			}
 			break;
 	}

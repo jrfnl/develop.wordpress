@@ -124,10 +124,10 @@ for ( $i = 1; $i <= $count; $i++ ) {
 			 * otherwise use the site admin.
 			 */
 			if ( ! $author_found && preg_match( '/^(From|Reply-To): /', $line ) ) {
-				if ( preg_match('|[a-z0-9_.-]+@[a-z0-9_.-]+(?!.*<)|i', $line, $matches) )
+				if ( preg_match( '|[a-z0-9_.-]+@[a-z0-9_.-]+(?!.*<)|i', $line, $matches ) ) {
 					$author = $matches[0];
-				else
-					$author = trim($line);
+				} else {                  $author = trim( $line );
+				}
 				$author = sanitize_email( $author );
 				if ( is_email( $author ) ) {
 					/* translators: Post author email address */

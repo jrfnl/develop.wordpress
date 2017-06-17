@@ -59,10 +59,10 @@ $title     = isset( $_POST['title'] )     ? wp_unslash( $_POST['title'] )      :
 $excerpt   = isset( $_POST['excerpt'] )   ? wp_unslash( $_POST['excerpt'] )    : '';
 $blog_name = isset( $_POST['blog_name'] ) ? wp_unslash( $_POST['blog_name'] )  : '';
 
-if ($charset)
-	$charset = str_replace( array(',', ' '), '', strtoupper( trim($charset) ) );
-else
-	$charset = 'ASCII, UTF-8, ISO-8859-1, JIS, EUC-JP, SJIS';
+if ( $charset ) {
+	$charset = str_replace( array( ',', ' ' ), '', strtoupper( trim( $charset ) ) );
+} else {    $charset = 'ASCII, UTF-8, ISO-8859-1, JIS, EUC-JP, SJIS';
+}
 
 // No valid uses for UTF-7.
 if ( false !== strpos( $charset, 'UTF-7' ) ) {
