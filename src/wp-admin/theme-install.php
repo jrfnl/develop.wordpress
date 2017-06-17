@@ -12,8 +12,9 @@ require( ABSPATH . 'wp-admin/includes/theme-install.php' );
 
 wp_reset_vars( array( 'tab' ) );
 
-if ( ! current_user_can('install_themes') )
+if ( ! current_user_can( 'install_themes' ) ) {
 	wp_die( __( 'Sorry, you are not allowed to install themes on this site.' ) );
+}
 
 if ( is_multisite() && ! is_network_admin() ) {
 	wp_redirect( network_admin_url( 'theme-install.php' ) );
@@ -45,7 +46,7 @@ wp_localize_script( 'theme', '_wpThemeSettings', array(
 		'isInstall'  => true,
 		'canInstall' => current_user_can( 'install_themes' ),
 		'installURI' => current_user_can( 'install_themes' ) ? self_admin_url( 'theme-install.php' ) : null,
-		'adminUrl'   => parse_url( self_admin_url(), PHP_URL_PATH )
+		'adminUrl'   => parse_url( self_admin_url(), PHP_URL_PATH ),
 	),
 	'l10n' => array(
 		'addNew'              => __( 'Add New Theme' ),
@@ -100,27 +101,27 @@ $help_overview =
 
 get_current_screen()->add_help_tab( array(
 	'id'      => 'overview',
-	'title'   => __('Overview'),
-	'content' => $help_overview
+	'title'   => __( 'Overview' ),
+	'content' => $help_overview,
 ) );
 
 $help_installing =
-	'<p>' . __('Once you have generated a list of themes, you can preview and install any of them. Click on the thumbnail of the theme you&#8217;re interested in previewing. It will open up in a full-screen Preview page to give you a better idea of how that theme will look.') . '</p>' .
-	'<p>' . __('To install the theme so you can preview it with your site&#8217;s content and customize its theme options, click the "Install" button at the top of the left-hand pane. The theme files will be downloaded to your website automatically. When this is complete, the theme is now available for activation, which you can do by clicking the "Activate" link, or by navigating to your Manage Themes screen and clicking the "Live Preview" link under any installed theme&#8217;s thumbnail image.') . '</p>';
+	'<p>' . __( 'Once you have generated a list of themes, you can preview and install any of them. Click on the thumbnail of the theme you&#8217;re interested in previewing. It will open up in a full-screen Preview page to give you a better idea of how that theme will look.' ) . '</p>' .
+	'<p>' . __( 'To install the theme so you can preview it with your site&#8217;s content and customize its theme options, click the "Install" button at the top of the left-hand pane. The theme files will be downloaded to your website automatically. When this is complete, the theme is now available for activation, which you can do by clicking the "Activate" link, or by navigating to your Manage Themes screen and clicking the "Live Preview" link under any installed theme&#8217;s thumbnail image.' ) . '</p>';
 
 get_current_screen()->add_help_tab( array(
 	'id'      => 'installing',
-	'title'   => __('Previewing and Installing'),
-	'content' => $help_installing
+	'title'   => __( 'Previewing and Installing' ),
+	'content' => $help_installing,
 ) );
 
 get_current_screen()->set_help_sidebar(
-	'<p><strong>' . __('For more information:') . '</strong></p>' .
-	'<p>' . __('<a href="https://codex.wordpress.org/Using_Themes#Adding_New_Themes">Documentation on Adding New Themes</a>') . '</p>' .
-	'<p>' . __('<a href="https://wordpress.org/support/">Support Forums</a>') . '</p>'
+	'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
+	'<p>' . __( '<a href="https://codex.wordpress.org/Using_Themes#Adding_New_Themes">Documentation on Adding New Themes</a>' ) . '</p>' .
+	'<p>' . __( '<a href="https://wordpress.org/support/">Support Forums</a>' ) . '</p>'
 );
 
-include(ABSPATH . 'wp-admin/admin-header.php');
+include( ABSPATH . 'wp-admin/admin-header.php' );
 
 ?>
 <div class="wrap">
@@ -137,7 +138,9 @@ include(ABSPATH . 'wp-admin/admin-header.php');
 	 *
 	 * @param array $tabs The tabs shown on the Add Themes screen. Default is 'upload'.
 	 */
-	$tabs = apply_filters( 'install_themes_tabs', array( 'upload' => __( 'Upload Theme' ) ) );
+	$tabs = apply_filters( 'install_themes_tabs', array(
+		'upload' => __( 'Upload Theme' ),
+	) );
 	if ( ! empty( $tabs['upload'] ) && current_user_can( 'upload_themes' ) ) {
 		echo ' <button type="button" class="upload-view-toggle page-title-action hide-if-no-js" aria-expanded="false">' . __( 'Upload Theme' ) . '</button>';
 	}
@@ -353,4 +356,4 @@ if ( $tab ) {
 wp_print_request_filesystem_credentials_modal();
 wp_print_admin_notice_templates();
 
-include(ABSPATH . 'wp-admin/admin-footer.php');
+include( ABSPATH . 'wp-admin/admin-footer.php' );

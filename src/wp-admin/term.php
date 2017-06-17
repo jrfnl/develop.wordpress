@@ -13,7 +13,9 @@ require_once( dirname( __FILE__ ) . '/admin.php' );
 if ( empty( $_REQUEST['tag_ID'] ) ) {
 	$sendback = admin_url( 'edit-tags.php' );
 	if ( ! empty( $taxnow ) ) {
-		$sendback = add_query_arg( array( 'taxonomy' => $taxnow ), $sendback );
+		$sendback = add_query_arg( array(
+			'taxonomy' => $taxnow,
+		), $sendback );
 	}
 	wp_redirect( esc_url( $sendback ) );
 	exit;
@@ -30,8 +32,10 @@ $tax      = get_taxonomy( $tag->taxonomy );
 $taxonomy = $tax->name;
 $title    = $tax->labels->edit_item;
 
-if ( ! in_array( $taxonomy, get_taxonomies( array( 'show_ui' => true ) ) ) ||
-     ! current_user_can( 'edit_term', $tag->term_id )
+if ( ! in_array( $taxonomy, get_taxonomies( array(
+	'show_ui' => true,
+) ) ) ||
+	 ! current_user_can( 'edit_term', $tag->term_id )
 ) {
 	wp_die(
 		'<h1>' . __( 'Cheatin&#8217; uh?' ) . '</h1>' .

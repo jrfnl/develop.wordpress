@@ -9,11 +9,13 @@
 
 require_once( dirname( __FILE__ ) . '/admin.php' );
 
-if ( !is_multisite() )
+if ( ! is_multisite() ) {
 	wp_die( __( 'Multisite support is not enabled.' ) );
+}
 
-if ( ! current_user_can('read') )
+if ( ! current_user_can( 'read' ) ) {
 	wp_die( __( 'Sorry, you are not allowed to access this page.' ) );
+}
 
 $action = isset( $_POST['action'] ) ? $_POST['action'] : 'splash';
 
@@ -37,15 +39,15 @@ $parent_file = 'index.php';
 
 get_current_screen()->add_help_tab( array(
 	'id'      => 'overview',
-	'title'   => __('Overview'),
+	'title'   => __( 'Overview' ),
 	'content' =>
-		'<p>' . __('This screen shows an individual user all of their sites in this network, and also allows that user to set a primary site. They can use the links under each site to visit either the front end or the dashboard for that site.') . '</p>'
+		'<p>' . __( 'This screen shows an individual user all of their sites in this network, and also allows that user to set a primary site. They can use the links under each site to visit either the front end or the dashboard for that site.' ) . '</p>',
 ) );
 
 get_current_screen()->set_help_sidebar(
-	'<p><strong>' . __('For more information:') . '</strong></p>' .
-	'<p>' . __('<a href="https://codex.wordpress.org/Dashboard_My_Sites_Screen">Documentation on My Sites</a>') . '</p>' .
-	'<p>' . __('<a href="https://wordpress.org/support/">Support Forums</a>') . '</p>'
+	'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
+	'<p>' . __( '<a href="https://codex.wordpress.org/Dashboard_My_Sites_Screen">Documentation on My Sites</a>' ) . '</p>' .
+	'<p>' . __( '<a href="https://wordpress.org/support/">Support Forums</a>' ) . '</p>'
 );
 
 require_once( ABSPATH . 'wp-admin/admin-header.php' );
@@ -108,7 +110,7 @@ else :
 	reset( $blogs );
 
 	foreach ( $blogs as $user_blog ) {
-		echo "<li>";
+		echo '<li>';
 		echo "<h3>{$user_blog->blogname}</h3>";
 		/**
 		 * Filters the row links displayed for each site on the My Sites screen.
@@ -118,10 +120,10 @@ else :
 		 * @param string $string    The HTML site link markup.
 		 * @param object $user_blog An object containing the site data.
 		 */
-		echo "<p class='my-sites-actions'>" . apply_filters( 'myblogs_blog_actions', "<a href='" . esc_url( get_home_url( $user_blog->userblog_id ) ). "'>" . __( 'Visit' ) . "</a> | <a href='" . esc_url( get_admin_url( $user_blog->userblog_id ) ) . "'>" . __( 'Dashboard' ) . "</a>", $user_blog ) . "</p>";
+		echo "<p class='my-sites-actions'>" . apply_filters( 'myblogs_blog_actions', "<a href='" . esc_url( get_home_url( $user_blog->userblog_id ) ) . "'>" . __( 'Visit' ) . "</a> | <a href='" . esc_url( get_admin_url( $user_blog->userblog_id ) ) . "'>" . __( 'Dashboard' ) . '</a>', $user_blog ) . '</p>';
 		/** This filter is documented in wp-admin/my-sites.php */
 		echo apply_filters( 'myblogs_options', '', $user_blog );
-		echo "</li>";
+		echo '</li>';
 	}?>
 	</ul>
 	<?php
