@@ -322,7 +322,7 @@ function signup_another_blog( $blogname = '', $blog_title = '', $errors = '' ) {
 				<?php foreach ( $blogs as $blog ) {
 					$home_url = get_home_url( $blog->userblog_id );
 					echo '<li><a href="' . esc_url( $home_url ) . '">' . $home_url . '</a></li>';
-				} ?>
+} ?>
 			</ul>
 	<?php } ?>
 
