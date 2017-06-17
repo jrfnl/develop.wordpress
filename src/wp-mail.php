@@ -212,7 +212,8 @@ for ( $i = 1; $i <= $count; $i++ ) {
 
 	$post_title = xmlrpc_getposttitle( $content );
 
-	if ($post_title == '') $post_title = $subject;
+	if ( $post_title == '' ) { $post_title = $subject;
+	}
 
 	$post_category = array( get_option( 'default_email_category' ) );
 
