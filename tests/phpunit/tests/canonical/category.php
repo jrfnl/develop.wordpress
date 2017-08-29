@@ -42,19 +42,69 @@ class Tests_Canonical_Category extends WP_Canonical_UnitTestCase {
 
 		return array(
 			// Valid category.
-			array( '/cat0/post0/', array( 'url' => '/cat0/post0/', 'qv' => array( 'category_name' => 'cat0', 'name' => 'post0', 'page' => '' ) ) ),
+			array(
+				'/cat0/post0/',
+				array(
+					'url' => '/cat0/post0/',
+					'qv' => array(
+						'category_name' => 'cat0',
+						'name' => 'post0',
+						'page' => '',
+					),
+				),
+			),
 
 			// Category other than the first one will redirect to first "canonical" category.
-			array( '/cat2/post0/', array( 'url' => '/cat0/post0/', 'qv' => array( 'category_name' => 'cat0', 'name' => 'post0', 'page' => '' ) ) ),
+			array(
+				'/cat2/post0/',
+				array(
+					'url' => '/cat0/post0/',
+					'qv' => array(
+						'category_name' => 'cat0',
+						'name' => 'post0',
+						'page' => '',
+					),
+				),
+			),
 
 			// Incorrect category will redirect to correct one.
-			array( '/cat1/post0/', array( 'url' => '/cat0/post0/', 'qv' => array( 'category_name' => 'cat0', 'name' => 'post0', 'page' => '' ) ) ),
+			array(
+				'/cat1/post0/',
+				array(
+					'url' => '/cat0/post0/',
+					'qv' => array(
+						'category_name' => 'cat0',
+						'name' => 'post0',
+						'page' => '',
+					),
+				),
+			),
 
 			// Nonexistent category will redirect to correct one.
-			array( '/foo/post0/', array( 'url' => '/cat0/post0/', 'qv' => array( 'category_name' => 'cat0', 'name' => 'post0', 'page' => '' ) ) ),
+			array(
+				'/foo/post0/',
+				array(
+					'url' => '/cat0/post0/',
+					'qv' => array(
+						'category_name' => 'cat0',
+						'name' => 'post0',
+						'page' => '',
+					),
+				),
+			),
 
 			// Embed URLs should not redirect to post permalinks.
-			array( '/cat0/post0/embed/', array( 'url' => '/cat0/post0/embed/', 'qv' => array( 'category_name' => 'cat0', 'name' => 'post0', 'embed' => 'true' ) ) ),
+			array(
+				'/cat0/post0/embed/',
+				array(
+					'url' => '/cat0/post0/embed/',
+					'qv' => array(
+						'category_name' => 'cat0',
+						'name' => 'post0',
+						'embed' => 'true',
+					),
+				),
+			),
 		);
 	}
 }

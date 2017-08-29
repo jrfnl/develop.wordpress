@@ -111,7 +111,7 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 	function test_construct_empty_menus() {
 		do_action( 'customize_register', $this->wp_customize );
 		$_wp_customize = $this->wp_customize;
-		unset($_wp_customize->nav_menus);
+		unset( $_wp_customize->nav_menus );
 
 		$exception = null;
 		try {
@@ -153,13 +153,15 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 
 		$menu_id = wp_create_nav_menu( 'Menu' );
 		$item_title = 'Greetings';
-		$item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-			'menu-item-type' => 'post_type',
-			'menu-item-object' => 'post',
-			'menu-item-object-id' => $post_id,
-			'menu-item-title' => $item_title,
-			'menu-item-status' => 'publish',
-		) );
+		$item_id = wp_update_nav_menu_item(
+			$menu_id, 0, array(
+				'menu-item-type' => 'post_type',
+				'menu-item-object' => 'post',
+				'menu-item-object-id' => $post_id,
+				'menu-item-title' => $item_title,
+				'menu-item-status' => 'publish',
+			)
+		);
 
 		$post = get_post( $item_id );
 		$menu_item = wp_setup_nav_menu_item( $post );
@@ -176,9 +178,11 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		$this->assertEquals( 'Hello World', $value['original_title'] );
 
 		$other_menu_id = wp_create_nav_menu( 'Menu2' );
-		wp_update_nav_menu_item( $other_menu_id, $item_id, array(
-			'menu-item-title' => 'Hola',
-		) );
+		wp_update_nav_menu_item(
+			$other_menu_id, $item_id, array(
+				'menu-item-title' => 'Hola',
+			)
+		);
 		$value = $setting->value();
 		$this->assertEquals( 'Hola', $value['title'] );
 		$this->assertEquals( $other_menu_id, $value['nav_menu_term_id'] );
@@ -196,13 +200,15 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		$post_id = self::factory()->post->create( array( 'post_title' => $original_title ) );
 
 		$menu_id = wp_create_nav_menu( 'Menu' );
-		$item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-			'menu-item-type' => 'post_type',
-			'menu-item-object' => 'post',
-			'menu-item-object-id' => $post_id,
-			'menu-item-title' => '',
-			'menu-item-status' => 'publish',
-		) );
+		$item_id = wp_update_nav_menu_item(
+			$menu_id, 0, array(
+				'menu-item-type' => 'post_type',
+				'menu-item-object' => 'post',
+				'menu-item-object-id' => $post_id,
+				'menu-item-title' => '',
+				'menu-item-status' => 'publish',
+			)
+		);
 
 		$setting_id = "nav_menu_item[$item_id]";
 		$setting = new WP_Customize_Nav_Menu_Item_Setting( $this->wp_customize, $setting_id );
@@ -224,13 +230,15 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 
 		$menu_id = wp_create_nav_menu( 'Menu' );
 		$item_title = 'Greetings';
-		$item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-			'menu-item-type' => 'taxonomy',
-			'menu-item-object' => 'category',
-			'menu-item-object-id' => $tax_id,
-			'menu-item-title' => $item_title,
-			'menu-item-status' => 'publish',
-		) );
+		$item_id = wp_update_nav_menu_item(
+			$menu_id, 0, array(
+				'menu-item-type' => 'taxonomy',
+				'menu-item-object' => 'category',
+				'menu-item-object-id' => $tax_id,
+				'menu-item-title' => $item_title,
+				'menu-item-status' => 'publish',
+			)
+		);
 
 		$post = get_post( $item_id );
 		$menu_item = wp_setup_nav_menu_item( $post );
@@ -257,12 +265,14 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		add_filter( 'wp_setup_nav_menu_item', array( $this, 'filter_type_label' ) );
 
 		$menu_id = wp_create_nav_menu( 'Menu' );
-		$item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-			'menu-item-type'   => 'custom_type',
-			'menu-item-object' => 'custom_object',
-			'menu-item-title'  => 'Cool beans',
-			'menu-item-status' => 'publish',
-		) );
+		$item_id = wp_update_nav_menu_item(
+			$menu_id, 0, array(
+				'menu-item-type'   => 'custom_type',
+				'menu-item-object' => 'custom_object',
+				'menu-item-title'  => 'Cool beans',
+				'menu-item-status' => 'publish',
+			)
+		);
 
 		$post = get_post( $item_id );
 		$menu_item = wp_setup_nav_menu_item( $post );
@@ -299,13 +309,15 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		$this->assertEquals( $post_value, $value );
 
 		$post_id = self::factory()->post->create( array( 'post_title' => 'Hello World' ) );
-		$item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-			'menu-item-type' => 'post_type',
-			'menu-item-object' => 'post',
-			'menu-item-object-id' => $post_id,
-			'menu-item-title' => 'Hello World',
-			'menu-item-status' => 'publish',
-		) );
+		$item_id = wp_update_nav_menu_item(
+			$menu_id, 0, array(
+				'menu-item-type' => 'post_type',
+				'menu-item-object' => 'post',
+				'menu-item-object-id' => $post_id,
+				'menu-item-title' => 'Hello World',
+				'menu-item-status' => 'publish',
+			)
+		);
 
 		$post = get_post( $item_id );
 		$menu_item = wp_setup_nav_menu_item( $post );
@@ -330,13 +342,15 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		$primary_menu_id = wp_create_nav_menu( 'Primary' );
 		$secondary_menu_id = wp_create_nav_menu( 'Secondary' );
 		$item_title = 'Greetings';
-		$item_id = wp_update_nav_menu_item( $primary_menu_id, 0, array(
-			'menu-item-type' => 'post_type',
-			'menu-item-object' => 'post',
-			'menu-item-object-id' => $first_post_id,
-			'menu-item-title' => $item_title,
-			'menu-item-status' => 'publish',
-		) );
+		$item_id = wp_update_nav_menu_item(
+			$primary_menu_id, 0, array(
+				'menu-item-type' => 'post_type',
+				'menu-item-object' => 'post',
+				'menu-item-object-id' => $first_post_id,
+				'menu-item-title' => $item_title,
+				'menu-item-status' => 'publish',
+			)
+		);
 		$this->assertNotEmpty( wp_get_nav_menu_items( $primary_menu_id, array( 'post_status' => 'publish,draft' ) ) );
 
 		$post_value = array(
@@ -379,14 +393,16 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		$post_id = self::factory()->post->create( array( 'post_title' => 'Hello World' ) );
 		$item_ids = array();
 		for ( $i = 0; $i < 5; $i += 1 ) {
-			$item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-				'menu-item-type' => 'post_type',
-				'menu-item-object' => 'post',
-				'menu-item-object-id' => $post_id,
-				'menu-item-title' => "Item $i",
-				'menu-item-status' => 'publish',
-				'menu-item-position' => $i + 1,
-			) );
+			$item_id = wp_update_nav_menu_item(
+				$menu_id, 0, array(
+					'menu-item-type' => 'post_type',
+					'menu-item-object' => 'post',
+					'menu-item-object-id' => $post_id,
+					'menu-item-title' => "Item $i",
+					'menu-item-status' => 'publish',
+					'menu-item-position' => $i + 1,
+				)
+			);
 			$item_ids[] = $item_id;
 		}
 
@@ -434,14 +450,16 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		$post_id = self::factory()->post->create( array( 'post_title' => 'Hello World' ) );
 		$item_ids = array();
 		for ( $i = 0; $i < 5; $i += 1 ) {
-			$item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-				'menu-item-type' => 'post_type',
-				'menu-item-object' => 'post',
-				'menu-item-object-id' => $post_id,
-				'menu-item-title' => "Item $i",
-				'menu-item-status' => 'publish',
-				'menu-item-position' => $i + 1,
-			) );
+			$item_id = wp_update_nav_menu_item(
+				$menu_id, 0, array(
+					'menu-item-type' => 'post_type',
+					'menu-item-object' => 'post',
+					'menu-item-object-id' => $post_id,
+					'menu-item-title' => "Item $i",
+					'menu-item-status' => 'publish',
+					'menu-item-position' => $i + 1,
+				)
+			);
 			$item_ids[] = $item_id;
 		}
 
@@ -516,21 +534,25 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 			$this->assertEquals( $value, $sanitized[ $key ], "Expected $key to be sanitized." );
 		}
 
-		$nav_menu_item_id = wp_update_nav_menu_item( $menu_id, 0, wp_slash( array(
-			'menu-item-object-id' => $unsanitized['object_id'],
-			'menu-item-object' => $unsanitized['object'],
-			'menu-item-parent-id' => $unsanitized['menu_item_parent'],
-			'menu-item-position' => $unsanitized['position'],
-			'menu-item-type' => $unsanitized['type'],
-			'menu-item-title' => $unsanitized['title'],
-			'menu-item-url' => $unsanitized['url'],
-			'menu-item-description' => $unsanitized['description'],
-			'menu-item-attr-title' => $unsanitized['attr_title'],
-			'menu-item-target' => $unsanitized['target'],
-			'menu-item-classes' => $unsanitized['classes'],
-			'menu-item-xfn' => $unsanitized['xfn'],
-			'menu-item-status' => $unsanitized['status'],
-		) ) );
+		$nav_menu_item_id = wp_update_nav_menu_item(
+			$menu_id, 0, wp_slash(
+				array(
+					'menu-item-object-id' => $unsanitized['object_id'],
+					'menu-item-object' => $unsanitized['object'],
+					'menu-item-parent-id' => $unsanitized['menu_item_parent'],
+					'menu-item-position' => $unsanitized['position'],
+					'menu-item-type' => $unsanitized['type'],
+					'menu-item-title' => $unsanitized['title'],
+					'menu-item-url' => $unsanitized['url'],
+					'menu-item-description' => $unsanitized['description'],
+					'menu-item-attr-title' => $unsanitized['attr_title'],
+					'menu-item-target' => $unsanitized['target'],
+					'menu-item-classes' => $unsanitized['classes'],
+					'menu-item-xfn' => $unsanitized['xfn'],
+					'menu-item-status' => $unsanitized['status'],
+				)
+			)
+		);
 
 		$post = get_post( $nav_menu_item_id );
 		$nav_menu_item = wp_setup_nav_menu_item( clone $post );
@@ -564,13 +586,15 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		$primary_menu_id = wp_create_nav_menu( 'Primary' );
 		$secondary_menu_id = wp_create_nav_menu( 'Secondary' );
 		$item_title = 'Greetings';
-		$item_id = wp_update_nav_menu_item( $primary_menu_id, 0, array(
-			'menu-item-type' => 'post_type',
-			'menu-item-object' => 'post',
-			'menu-item-object-id' => $first_post_id,
-			'menu-item-title' => $item_title,
-			'menu-item-status' => 'publish',
-		) );
+		$item_id = wp_update_nav_menu_item(
+			$primary_menu_id, 0, array(
+				'menu-item-type' => 'post_type',
+				'menu-item-object' => 'post',
+				'menu-item-object-id' => $first_post_id,
+				'menu-item-title' => $item_title,
+				'menu-item-status' => 'publish',
+			)
+		);
 		$this->assertNotEmpty( wp_get_nav_menu_items( $primary_menu_id, array( 'post_status' => 'publish,draft' ) ) );
 
 		$post_value = array(
@@ -627,14 +651,16 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		$post_id = self::factory()->post->create( array( 'post_title' => 'Hello World' ) );
 		$item_ids = array();
 		for ( $i = 0; $i < 5; $i += 1 ) {
-			$item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-				'menu-item-type' => 'post_type',
-				'menu-item-object' => 'post',
-				'menu-item-object-id' => $post_id,
-				'menu-item-title' => "Item $i",
-				'menu-item-status' => 'publish',
-				'menu-item-position' => $i + 1,
-			) );
+			$item_id = wp_update_nav_menu_item(
+				$menu_id, 0, array(
+					'menu-item-type' => 'post_type',
+					'menu-item-object' => 'post',
+					'menu-item-object-id' => $post_id,
+					'menu-item-title' => "Item $i",
+					'menu-item-status' => 'publish',
+					'menu-item-position' => $i + 1,
+				)
+			);
 			$item_ids[] = $item_id;
 		}
 
@@ -696,14 +722,16 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		$post_id = self::factory()->post->create( array( 'post_title' => 'Hello World' ) );
 		$item_ids = array();
 		for ( $i = 0; $i < 5; $i += 1 ) {
-			$item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-				'menu-item-type' => 'post_type',
-				'menu-item-object' => 'post',
-				'menu-item-object-id' => $post_id,
-				'menu-item-title' => "Item $i",
-				'menu-item-status' => 'publish',
-				'menu-item-position' => $i + 1,
-			) );
+			$item_id = wp_update_nav_menu_item(
+				$menu_id, 0, array(
+					'menu-item-type' => 'post_type',
+					'menu-item-object' => 'post',
+					'menu-item-object-id' => $post_id,
+					'menu-item-title' => "Item $i",
+					'menu-item-status' => 'publish',
+					'menu-item-position' => $i + 1,
+				)
+			);
 			$item_ids[] = $item_id;
 		}
 
@@ -739,20 +767,29 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 	 */
 	function test_invalid_nav_menu_item() {
 		$menu_id = wp_create_nav_menu( 'Primary' );
-		register_post_type( 'poem', array(
-			'public' => true,
-		) );
+		register_post_type(
+			'poem', array(
+				'public' => true,
+			)
+		);
 
-		$post_id = self::factory()->post->create( array( 'post_type' => 'poem', 'post_title' => 'Code is poetry.' ) );
+		$post_id = self::factory()->post->create(
+			array(
+				'post_type' => 'poem',
+				'post_title' => 'Code is poetry.',
+			)
+		);
 		$post = get_post( $post_id );
-		$item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-			'menu-item-type' => 'post_type',
-			'menu-item-object' => 'poem',
-			'menu-item-object-id' => $post_id,
-			'menu-item-title' => $post->post_title,
-			'menu-item-status' => 'publish',
-			'menu-item-position' => 1,
-		) );
+		$item_id = wp_update_nav_menu_item(
+			$menu_id, 0, array(
+				'menu-item-type' => 'post_type',
+				'menu-item-object' => 'poem',
+				'menu-item-object-id' => $post_id,
+				'menu-item-title' => $post->post_title,
+				'menu-item-status' => 'publish',
+				'menu-item-position' => 1,
+			)
+		);
 		$setting_id = "nav_menu_item[$item_id]";
 
 		do_action( 'customize_register', $this->wp_customize );
@@ -844,9 +881,11 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 	 */
 	function test_value_as_wp_post_nav_menu_item_term_urls() {
 		$term_id = self::factory()->term->create( array( 'taxonomy' => 'category' ) );
-		register_post_type( 'press_release', array(
-			'has_archive' => true,
-		) );
+		register_post_type(
+			'press_release', array(
+				'has_archive' => true,
+			)
+		);
 		$post_id = self::factory()->post->create( array( 'post_type' => 'press_release' ) );
 
 		// Term.
@@ -854,13 +893,15 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 			$this->wp_customize,
 			'nav_menu_item[-1]'
 		);
-		$this->wp_customize->set_post_value( $setting->id, array(
-			'type' => 'taxonomy',
-			'object' => 'category',
-			'object_id' => $term_id,
-			'title' => 'Category',
-			'url' => '',
-		) );
+		$this->wp_customize->set_post_value(
+			$setting->id, array(
+				'type' => 'taxonomy',
+				'object' => 'category',
+				'object_id' => $term_id,
+				'title' => 'Category',
+				'url' => '',
+			)
+		);
 		$setting->preview();
 		$nav_menu_item = $setting->value_as_wp_post_nav_menu_item();
 		$this->assertEquals( get_term_link( $term_id ), $nav_menu_item->url );
@@ -870,13 +911,15 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 			$this->wp_customize,
 			'nav_menu_item[-2]'
 		);
-		$this->wp_customize->set_post_value( $setting->id, array(
-			'type' => 'post_type',
-			'object' => 'press_release',
-			'object_id' => $post_id,
-			'title' => 'PR',
-			'url' => '',
-		) );
+		$this->wp_customize->set_post_value(
+			$setting->id, array(
+				'type' => 'post_type',
+				'object' => 'press_release',
+				'object_id' => $post_id,
+				'title' => 'PR',
+				'url' => '',
+			)
+		);
 		$setting->preview();
 		$nav_menu_item = $setting->value_as_wp_post_nav_menu_item();
 		$this->assertEquals( get_permalink( $post_id ), $nav_menu_item->url );
@@ -886,12 +929,14 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 			$this->wp_customize,
 			'nav_menu_item[-3]'
 		);
-		$this->wp_customize->set_post_value( $setting->id, array(
-			'type' => 'post_type_archive',
-			'object' => 'press_release',
-			'title' => 'PR',
-			'url' => '',
-		) );
+		$this->wp_customize->set_post_value(
+			$setting->id, array(
+				'type' => 'post_type_archive',
+				'object' => 'press_release',
+				'title' => 'PR',
+				'url' => '',
+			)
+		);
 		$setting->preview();
 		$nav_menu_item = $setting->value_as_wp_post_nav_menu_item();
 		$this->assertEquals( get_post_type_archive_link( 'press_release' ), $nav_menu_item->url );
@@ -905,27 +950,41 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 	 */
 	function test_get_original_title() {
 		$menu_id = wp_create_nav_menu( 'Menu' );
-		register_post_type( 'press_release', array(
-			'has_archive' => true,
-			'labels' => array(
-				'name' => 'PRs',
-				'singular_name' => 'PR',
-				'archives' => 'All PRs',
-			),
-		) );
+		register_post_type(
+			'press_release', array(
+				'has_archive' => true,
+				'labels' => array(
+					'name' => 'PRs',
+					'singular_name' => 'PR',
+					'archives' => 'All PRs',
+				),
+			)
+		);
 		$original_post_title = 'The PR Post';
-		$post_id = self::factory()->post->create( array( 'post_type' => 'press_release', 'post_title' => $original_post_title ) );
+		$post_id = self::factory()->post->create(
+			array(
+				'post_type' => 'press_release',
+				'post_title' => $original_post_title,
+			)
+		);
 		$original_term_title = 'The Category Term';
-		$term_id = self::factory()->term->create( array( 'taxonomy' => 'category', 'name' => $original_term_title ) );
+		$term_id = self::factory()->term->create(
+			array(
+				'taxonomy' => 'category',
+				'name' => $original_term_title,
+			)
+		);
 
 		// Post: existing nav menu item.
-		$nav_menu_item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-			'menu-item-object-id' => $post_id,
-			'menu-item-type' => 'post_type',
-			'menu-item-object' => 'press_release',
-			'menu-item-title' => '',
-			'menu-item-status' => 'publish',
-		) );
+		$nav_menu_item_id = wp_update_nav_menu_item(
+			$menu_id, 0, array(
+				'menu-item-object-id' => $post_id,
+				'menu-item-type' => 'post_type',
+				'menu-item-object' => 'press_release',
+				'menu-item-title' => '',
+				'menu-item-status' => 'publish',
+			)
+		);
 		$setting = new WP_Customize_Nav_Menu_Item_Setting(
 			$this->wp_customize,
 			'nav_menu_item[' . $nav_menu_item_id . ']'
@@ -946,13 +1005,15 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 			$this->wp_customize,
 			'nav_menu_item[-1]'
 		);
-		$this->wp_customize->set_post_value( $setting->id, array(
-			'object_id' => $post_id,
-			'type' => 'post_type',
-			'object' => 'press_release',
-			'title' => '',
-			'status' => 'publish',
-		) );
+		$this->wp_customize->set_post_value(
+			$setting->id, array(
+				'object_id' => $post_id,
+				'type' => 'post_type',
+				'object' => 'press_release',
+				'title' => '',
+				'status' => 'publish',
+			)
+		);
 		$setting->preview();
 		$item_value = $setting->value();
 		$this->assertEquals( $original_post_title, $item_value['original_title'] );
@@ -966,13 +1027,15 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		$this->assertEquals( $item->type_label, $item_value['type_label'] );
 
 		// Term: existing nav menu item.
-		$nav_menu_item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-			'menu-item-object-id' => $term_id,
-			'menu-item-type' => 'taxonomy',
-			'menu-item-object' => 'category',
-			'menu-item-title' => '',
-			'menu-item-status' => 'publish',
-		) );
+		$nav_menu_item_id = wp_update_nav_menu_item(
+			$menu_id, 0, array(
+				'menu-item-object-id' => $term_id,
+				'menu-item-type' => 'taxonomy',
+				'menu-item-object' => 'category',
+				'menu-item-title' => '',
+				'menu-item-status' => 'publish',
+			)
+		);
 		$setting = new WP_Customize_Nav_Menu_Item_Setting(
 			$this->wp_customize,
 			'nav_menu_item[' . $nav_menu_item_id . ']'
@@ -993,13 +1056,15 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 			$this->wp_customize,
 			'nav_menu_item[-2]'
 		);
-		$this->wp_customize->set_post_value( $setting->id, array(
-			'object_id' => $term_id,
-			'type' => 'taxonomy',
-			'object' => 'category',
-			'title' => '',
-			'status' => 'publish',
-		) );
+		$this->wp_customize->set_post_value(
+			$setting->id, array(
+				'object_id' => $term_id,
+				'type' => 'taxonomy',
+				'object' => 'category',
+				'title' => '',
+				'status' => 'publish',
+			)
+		);
 		$setting->preview();
 		$item_value = $setting->value();
 		$this->assertEquals( $original_term_title, $item_value['original_title'] );
@@ -1013,12 +1078,14 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 		$this->assertEquals( $item->type_label, $item_value['type_label'] );
 
 		// Post Type Archive: existing nav menu item.
-		$nav_menu_item_id = wp_update_nav_menu_item( $menu_id, 0, array(
-			'menu-item-type' => 'post_type_archive',
-			'menu-item-object' => 'press_release',
-			'menu-item-title' => '',
-			'menu-item-status' => 'publish',
-		) );
+		$nav_menu_item_id = wp_update_nav_menu_item(
+			$menu_id, 0, array(
+				'menu-item-type' => 'post_type_archive',
+				'menu-item-object' => 'press_release',
+				'menu-item-title' => '',
+				'menu-item-status' => 'publish',
+			)
+		);
 		$setting = new WP_Customize_Nav_Menu_Item_Setting(
 			$this->wp_customize,
 			'nav_menu_item[' . $nav_menu_item_id . ']'
@@ -1039,12 +1106,14 @@ class Test_WP_Customize_Nav_Menu_Item_Setting extends WP_UnitTestCase {
 			$this->wp_customize,
 			'nav_menu_item[-3]'
 		);
-		$this->wp_customize->set_post_value( $setting->id, array(
-			'type' => 'post_type_archive',
-			'object' => 'press_release',
-			'title' => '',
-			'status' => 'publish',
-		) );
+		$this->wp_customize->set_post_value(
+			$setting->id, array(
+				'type' => 'post_type_archive',
+				'object' => 'press_release',
+				'title' => '',
+				'status' => 'publish',
+			)
+		);
 		$setting->preview();
 		$item_value = $setting->value();
 		$this->assertEquals( get_post_type_object( 'press_release' )->labels->archives, $item_value['original_title'] );

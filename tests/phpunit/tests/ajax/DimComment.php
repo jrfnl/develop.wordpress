@@ -35,8 +35,8 @@ class Tests_Ajax_DimComment extends WP_Ajax_UnitTestCase {
 	 * Clear the POST actions in between requests
 	 */
 	protected function _clear_post_action() {
-		unset($_POST['id']);
-		unset($_POST['new']);
+		unset( $_POST['id'] );
+		unset( $_POST['new'] );
 		$this->_last_response = '';
 	}
 
@@ -87,7 +87,7 @@ class Tests_Ajax_DimComment extends WP_Ajax_UnitTestCase {
 
 		// Check the status
 		$current = wp_get_comment_status( $comment->comment_ID );
-		if (in_array( $prev_status, array( 'unapproved', 'spam') ) ) {
+		if ( in_array( $prev_status, array( 'unapproved', 'spam' ) ) ) {
 			$this->assertEquals( 'approved', $current );
 		} else {
 			$this->assertEquals( 'unapproved', $current );

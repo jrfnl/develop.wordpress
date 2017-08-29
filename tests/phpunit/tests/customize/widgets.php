@@ -379,7 +379,12 @@ class Tests_WP_Customize_Widgets extends WP_UnitTestCase {
 			'widget_id' => $widget['id'],
 			'widget_name' => $widget['name'],
 		);
-		$args = wp_list_widget_controls_dynamic_sidebar( array( 0 => $args, 1 => $widget['params'][0] ) );
+		$args = wp_list_widget_controls_dynamic_sidebar(
+			array(
+				0 => $args,
+				1 => $widget['params'][0],
+			)
+		);
 		return $args;
 	}
 
@@ -463,23 +468,25 @@ class Tests_WP_Customize_Widgets extends WP_UnitTestCase {
 			'title' => 'Buscar',
 		);
 
-		$_POST = wp_slash( array(
-			'action' => 'update-widget',
-			'wp_customize' => 'on',
-			'nonce' => wp_create_nonce( 'update-widget' ),
-			'theme' => $this->manager->get_stylesheet(),
-			'customized' => '{}',
-			'widget-search' => array(
-				2 => $instance,
-			),
-			'widget-id' => $widget_id,
-			'id_base' => 'search',
-			'widget-width' => '250',
-			'widget-height' => '200',
-			'widget_number' => strval( $widget_number ),
-			'multi_number' => '',
-			'add_new' => '',
-		) );
+		$_POST = wp_slash(
+			array(
+				'action' => 'update-widget',
+				'wp_customize' => 'on',
+				'nonce' => wp_create_nonce( 'update-widget' ),
+				'theme' => $this->manager->get_stylesheet(),
+				'customized' => '{}',
+				'widget-search' => array(
+					2 => $instance,
+				),
+				'widget-id' => $widget_id,
+				'id_base' => 'search',
+				'widget-width' => '250',
+				'widget-height' => '200',
+				'widget_number' => strval( $widget_number ),
+				'multi_number' => '',
+				'add_new' => '',
+			)
+		);
 
 		$this->do_customize_boot_actions();
 
@@ -579,9 +586,11 @@ class Tests_WP_Customize_Widgets extends WP_UnitTestCase {
 	 */
 	function test_filter_dynamic_sidebar_params() {
 		global $wp_registered_sidebars;
-		register_sidebar( array(
-			'id' => 'foo',
-		) );
+		register_sidebar(
+			array(
+				'id' => 'foo',
+			)
+		);
 
 		$this->manager->widgets->selective_refresh_init();
 

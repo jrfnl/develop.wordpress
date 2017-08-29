@@ -13,7 +13,7 @@ class Tests_Meta extends WP_UnitTestCase {
 		$this->delete_meta_id = add_metadata( 'user', $this->author->ID, 'delete_meta_key', 'delete_meta_value' );
 	}
 
-	function _meta_sanitize_cb ( $meta_value, $meta_key, $meta_type ) {
+	function _meta_sanitize_cb( $meta_value, $meta_key, $meta_type ) {
 		return 'sanitized';
 	}
 
@@ -68,7 +68,7 @@ class Tests_Meta extends WP_UnitTestCase {
 
 		// Let's try some invalid meta data
 		$this->assertFalse( update_metadata_by_mid( 'user', 0, 'meta_value' ) );
-		$this->assertFalse( update_metadata_by_mid( 'user', $this->meta_id, 'meta_value', array('invalid', 'key' ) ) );
+		$this->assertFalse( update_metadata_by_mid( 'user', $this->meta_id, 'meta_value', array( 'invalid', 'key' ) ) );
 
 		// Let's see if caches get cleared after updates.
 		$meta = get_metadata_by_mid( 'user', $this->meta_id );
@@ -126,11 +126,16 @@ class Tests_Meta extends WP_UnitTestCase {
 	 * @ticket 18158
 	 */
 	function test_user_metadata_not_exists() {
-		$u = get_users( array(
-			'meta_query' => array(
-				array( 'key' => 'meta_key', 'compare' => 'NOT EXISTS' )
+		$u = get_users(
+			array(
+				'meta_query' => array(
+					array(
+						'key' => 'meta_key',
+						'compare' => 'NOT EXISTS',
+					),
+				),
 			)
-		) );
+		);
 
 		$this->assertEquals( 1, count( $u ) );
 
@@ -138,26 +143,56 @@ class Tests_Meta extends WP_UnitTestCase {
 		$this->assertNotEquals( $this->author->user_login, $u[0]->user_login );
 
 		// Test EXISTS and NOT EXISTS together, no users should be found
-		$this->assertEquals( 0, count( get_users( array(
-			'meta_query' => array(
-				array( 'key' => 'meta_key', 'compare' => 'NOT EXISTS' ),
-				array( 'key' => 'delete_meta_key', 'compare' => 'EXISTS' )
+		$this->assertEquals(
+			0, count(
+				get_users(
+					array(
+						'meta_query' => array(
+							array(
+								'key' => 'meta_key',
+								'compare' => 'NOT EXISTS',
+							),
+							array(
+								'key' => 'delete_meta_key',
+								'compare' => 'EXISTS',
+							),
+						),
+					)
+				)
 			)
-		) ) ) );
+		);
 
-		$this->assertEquals( 2, count( get_users( array(
-			'meta_query' => array(
-				array( 'key' => 'non_existing_meta', 'compare' => 'NOT EXISTS' )
+		$this->assertEquals(
+			2, count(
+				get_users(
+					array(
+						'meta_query' => array(
+							array(
+								'key' => 'non_existing_meta',
+								'compare' => 'NOT EXISTS',
+							),
+						),
+					)
+				)
 			)
-		) ) ) );
+		);
 
 		delete_metadata( 'user', $this->author->ID, 'meta_key' );
 
-		$this->assertEquals( 2, count( get_users( array(
-			'meta_query' => array(
-				array( 'key' => 'meta_key', 'compare' => 'NOT EXISTS' )
+		$this->assertEquals(
+			2, count(
+				get_users(
+					array(
+						'meta_query' => array(
+							array(
+								'key' => 'meta_key',
+								'compare' => 'NOT EXISTS',
+							),
+						),
+					)
+				)
 			)
-		) ) ) );
+		);
 	}
 
 	function test_metadata_slashes() {
@@ -201,57 +236,63 @@ class Tests_Meta extends WP_UnitTestCase {
 		add_post_meta( $post_id2, 'num_as_longtext', 99 );
 		add_post_meta( $post_id2, 'num_as_longtext_desc', 100 );
 
-		$posts = new WP_Query( array(
-			'fields' => 'ids',
-			'post_type' => 'any',
-			'meta_key' => 'num_as_longtext',
-			'meta_value' => '0',
-			'meta_compare' => '>',
-			'meta_type' => 'UNSIGNED',
-			'orderby' => 'meta_value',
-			'order' => 'ASC'
-		) );
+		$posts = new WP_Query(
+			array(
+				'fields' => 'ids',
+				'post_type' => 'any',
+				'meta_key' => 'num_as_longtext',
+				'meta_value' => '0',
+				'meta_compare' => '>',
+				'meta_type' => 'UNSIGNED',
+				'orderby' => 'meta_value',
+				'order' => 'ASC',
+			)
+		);
 
 		$this->assertEquals( array( $post_id2, $post_id1 ), $posts->posts );
 		$this->assertEquals( 2, substr_count( $posts->request, 'CAST(' ) );
 
 		// Make sure the newer meta_query syntax behaves in a consistent way
-		$posts = new WP_Query( array(
-			'fields' => 'ids',
-			'post_type' => 'any',
-			'meta_query' => array(
-				array(
-					'key' => 'num_as_longtext',
-					'value' => '0',
-					'compare' => '>',
-					'type' => 'UNSIGNED',
+		$posts = new WP_Query(
+			array(
+				'fields' => 'ids',
+				'post_type' => 'any',
+				'meta_query' => array(
+					array(
+						'key' => 'num_as_longtext',
+						'value' => '0',
+						'compare' => '>',
+						'type' => 'UNSIGNED',
+					),
 				),
-			),
-			'orderby' => 'meta_value',
-			'order' => 'ASC'
-		) );
+				'orderby' => 'meta_value',
+				'order' => 'ASC',
+			)
+		);
 
 		$this->assertEquals( array( $post_id2, $post_id1 ), $posts->posts );
 		$this->assertEquals( 2, substr_count( $posts->request, 'CAST(' ) );
 
 		// The legacy `meta_key` value should take precedence.
-		$posts = new WP_Query( array(
-			'fields' => 'ids',
-			'post_type' => 'any',
-			'meta_key' => 'num_as_longtext',
-			'meta_compare' => '>',
-			'meta_type' => 'UNSIGNED',
-			'meta_query' => array(
-				array(
-					'key' => 'num_as_longtext_desc',
-					'value' => '0',
-					'compare' => '>',
-					'type' => 'UNSIGNED',
+		$posts = new WP_Query(
+			array(
+				'fields' => 'ids',
+				'post_type' => 'any',
+				'meta_key' => 'num_as_longtext',
+				'meta_compare' => '>',
+				'meta_type' => 'UNSIGNED',
+				'meta_query' => array(
+					array(
+						'key' => 'num_as_longtext_desc',
+						'value' => '0',
+						'compare' => '>',
+						'type' => 'UNSIGNED',
+					),
 				),
-			),
-			'orderby' => 'meta_value',
-			'order' => 'ASC'
-		) );
+				'orderby' => 'meta_value',
+				'order' => 'ASC',
+			)
+		);
 
 		$this->assertEquals( array( $post_id2, $post_id1 ), $posts->posts );
 		$this->assertEquals( 2, substr_count( $posts->request, 'CAST(' ) );
@@ -260,15 +301,17 @@ class Tests_Meta extends WP_UnitTestCase {
 	function test_meta_cache_order_asc() {
 		$post_id = self::factory()->post->create();
 		$colors = array( 'red', 'blue', 'yellow', 'green' );
-		foreach ( $colors as $color )
+		foreach ( $colors as $color ) {
 			add_post_meta( $post_id, 'color', $color );
+		}
 
 		foreach ( range( 1, 10 ) as $i ) {
 			$meta = get_post_meta( $post_id, 'color' );
 			$this->assertEquals( $meta, $colors );
 
-			if ( 0 === $i % 2 )
+			if ( 0 === $i % 2 ) {
 				wp_cache_delete( $post_id, 'post_meta' );
+			}
 		}
 	}
 

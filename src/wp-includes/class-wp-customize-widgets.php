@@ -400,21 +400,25 @@ final class WP_Customize_Widgets {
 		 */
 		if ( ! $this->manager->is_theme_active() ) {
 			$setting_id = 'old_sidebars_widgets_data';
-			$setting_args = $this->get_setting_args( $setting_id, array(
-				'type' => 'global_variable',
-				'dirty' => true,
-			) );
+			$setting_args = $this->get_setting_args(
+				$setting_id, array(
+					'type' => 'global_variable',
+					'dirty' => true,
+				)
+			);
 			$this->manager->add_setting( $setting_id, $setting_args );
 		}
 
-		$this->manager->add_panel( 'widgets', array(
-			'type'            => 'widgets',
-			'title'           => __( 'Widgets' ),
-			'description'     => __( 'Widgets are independent sections of content that can be placed into widgetized areas provided by your theme (commonly called sidebars).' ),
-			'priority'        => 110,
-			'active_callback' => array( $this, 'is_panel_active' ),
-			'auto_expand_sole_section' => true,
-		) );
+		$this->manager->add_panel(
+			'widgets', array(
+				'type'            => 'widgets',
+				'title'           => __( 'Widgets' ),
+				'description'     => __( 'Widgets are independent sections of content that can be placed into widgetized areas provided by your theme (commonly called sidebars).' ),
+				'priority'        => 110,
+				'active_callback' => array( $this, 'is_panel_active' ),
+				'auto_expand_sole_section' => true,
+			)
+		);
 
 		foreach ( $sidebars_widgets as $sidebar_id => $sidebar_widget_ids ) {
 			if ( empty( $sidebar_widget_ids ) ) {
@@ -463,11 +467,13 @@ final class WP_Customize_Widgets {
 					$section = new WP_Customize_Sidebar_Section( $this->manager, $section_id, $section_args );
 					$this->manager->add_section( $section );
 
-					$control = new WP_Widget_Area_Customize_Control( $this->manager, $setting_id, array(
-						'section'    => $section_id,
-						'sidebar_id' => $sidebar_id,
-						'priority'   => count( $sidebar_widget_ids ), // place 'Add Widget' and 'Reorder' buttons at end.
-					) );
+					$control = new WP_Widget_Area_Customize_Control(
+						$this->manager, $setting_id, array(
+							'section'    => $section_id,
+							'sidebar_id' => $sidebar_id,
+							'priority'   => count( $sidebar_widget_ids ), // place 'Add Widget' and 'Reorder' buttons at end.
+						)
+					);
 					$new_setting_ids[] = $setting_id;
 
 					$this->manager->add_control( $control );
@@ -478,25 +484,27 @@ final class WP_Customize_Widgets {
 			foreach ( $sidebar_widget_ids as $i => $widget_id ) {
 
 				// Skip widgets that may have gone away due to a plugin being deactivated.
-				if ( ! $is_active_sidebar || ! isset( $wp_registered_widgets[$widget_id] ) ) {
+				if ( ! $is_active_sidebar || ! isset( $wp_registered_widgets[ $widget_id ] ) ) {
 					continue;
 				}
 
-				$registered_widget = $wp_registered_widgets[$widget_id];
+				$registered_widget = $wp_registered_widgets[ $widget_id ];
 				$setting_id        = $this->get_setting_id( $widget_id );
-				$id_base           = $wp_registered_widget_controls[$widget_id]['id_base'];
+				$id_base           = $wp_registered_widget_controls[ $widget_id ]['id_base'];
 
-				$control = new WP_Widget_Form_Customize_Control( $this->manager, $setting_id, array(
-					'label'          => $registered_widget['name'],
-					'section'        => $section_id,
-					'sidebar_id'     => $sidebar_id,
-					'widget_id'      => $widget_id,
-					'widget_id_base' => $id_base,
-					'priority'       => $i,
-					'width'          => $wp_registered_widget_controls[$widget_id]['width'],
-					'height'         => $wp_registered_widget_controls[$widget_id]['height'],
-					'is_wide'        => $this->is_wide_widget( $widget_id ),
-				) );
+				$control = new WP_Widget_Form_Customize_Control(
+					$this->manager, $setting_id, array(
+						'label'          => $registered_widget['name'],
+						'section'        => $section_id,
+						'sidebar_id'     => $sidebar_id,
+						'widget_id'      => $widget_id,
+						'widget_id_base' => $id_base,
+						'priority'       => $i,
+						'width'          => $wp_registered_widget_controls[ $widget_id ]['width'],
+						'height'         => $wp_registered_widget_controls[ $widget_id ]['height'],
+						'is_wide'        => $this->is_wide_widget( $widget_id ),
+					)
+				);
 				$this->manager->add_control( $control );
 			}
 		}
@@ -562,7 +570,7 @@ final class WP_Customize_Widgets {
 		global $wp_registered_widget_controls;
 
 		$parsed_widget_id = $this->parse_widget_id( $widget_id );
-		$width            = $wp_registered_widget_controls[$widget_id]['width'];
+		$width            = $wp_registered_widget_controls[ $widget_id ]['width'];
 		$is_core          = in_array( $parsed_widget_id['id_base'], $this->core_widget_id_bases );
 		$is_wide          = ( $width > 250 && ! $is_core );
 
@@ -717,32 +725,38 @@ final class WP_Customize_Widgets {
 		);
 		$registered_sidebar_count = count( $wp_registered_sidebars );
 		for ( $non_rendered_count = 2; $non_rendered_count < $registered_sidebar_count; $non_rendered_count++ ) {
-			$some_non_rendered_areas_messages[ $non_rendered_count ] = html_entity_decode( sprintf(
-				/* translators: placeholder is the number of other widget areas registered but not rendered */
-				_n(
-					'Your theme has %s other widget area, but this particular page doesn&#8217;t display it.',
-					'Your theme has %s other widget areas, but this particular page doesn&#8217;t display them.',
-					$non_rendered_count
-				),
-				number_format_i18n( $non_rendered_count )
-			), ENT_QUOTES, get_bloginfo( 'charset' ) );
+			$some_non_rendered_areas_messages[ $non_rendered_count ] = html_entity_decode(
+				sprintf(
+					/* translators: placeholder is the number of other widget areas registered but not rendered */
+					 _n(
+						 'Your theme has %s other widget area, but this particular page doesn&#8217;t display it.',
+						 'Your theme has %s other widget areas, but this particular page doesn&#8217;t display them.',
+						 $non_rendered_count
+					 ),
+					number_format_i18n( $non_rendered_count )
+				), ENT_QUOTES, get_bloginfo( 'charset' )
+			);
 		}
 
 		if ( 1 === $registered_sidebar_count ) {
-			$no_areas_shown_message = html_entity_decode( sprintf(
-				/* translators: placeholder is the total number of widget areas registered */
-				__( 'Your theme has 1 widget area, but this particular page doesn&#8217;t display it.' )
-			), ENT_QUOTES, get_bloginfo( 'charset' ) );
+			$no_areas_shown_message = html_entity_decode(
+				sprintf(
+					/* translators: placeholder is the total number of widget areas registered */
+					 __( 'Your theme has 1 widget area, but this particular page doesn&#8217;t display it.' )
+				), ENT_QUOTES, get_bloginfo( 'charset' )
+			);
 		} else {
-			$no_areas_shown_message = html_entity_decode( sprintf(
-				/* translators: placeholder is the total number of widget areas registered */
-				_n(
-					'Your theme has %s widget area, but this particular page doesn&#8217;t display it.',
-					'Your theme has %s widget areas, but this particular page doesn&#8217;t display them.',
-					$registered_sidebar_count
-				),
-				number_format_i18n( $registered_sidebar_count )
-			), ENT_QUOTES, get_bloginfo( 'charset' ) );
+			$no_areas_shown_message = html_entity_decode(
+				sprintf(
+					/* translators: placeholder is the total number of widget areas registered */
+					 _n(
+						 'Your theme has %s widget area, but this particular page doesn&#8217;t display it.',
+						 'Your theme has %s widget areas, but this particular page doesn&#8217;t display them.',
+						 $registered_sidebar_count
+					 ),
+					number_format_i18n( $registered_sidebar_count )
+				), ENT_QUOTES, get_bloginfo( 'charset' )
+			);
 		}
 
 		$settings = array(
@@ -799,23 +813,25 @@ final class WP_Customize_Widgets {
 					<span class="screen-reader-text"><?php _e( 'Back' ); ?></span>
 				</button>
 				<h3>
-					<span class="customize-action"><?php
+					<span class="customize-action">
+					<?php
 						/* translators: &#9656; is the unicode right-pointing triangle, and %s is the section title in the Customizer */
 						echo sprintf( __( 'Customizing &#9656; %s' ), esc_html( $this->manager->get_panel( 'widgets' )->title ) );
-					?></span>
+					?>
+					</span>
 					<?php _e( 'Add a Widget' ); ?>
 				</h3>
 			</div>
 			<div id="available-widgets-filter">
 				<label class="screen-reader-text" for="widgets-search"><?php _e( 'Search Widgets' ); ?></label>
-				<input type="text" id="widgets-search" placeholder="<?php esc_attr_e( 'Search widgets&hellip;' ) ?>" aria-describedby="widgets-search-desc" />
+				<input type="text" id="widgets-search" placeholder="<?php esc_attr_e( 'Search widgets&hellip;' ); ?>" aria-describedby="widgets-search-desc" />
 				<div class="search-icon" aria-hidden="true"></div>
 				<button type="button" class="clear-results"><span class="screen-reader-text"><?php _e( 'Clear Results' ); ?></span></button>
 				<p class="screen-reader-text" id="widgets-search-desc"><?php _e( 'The search results will be updated as you type.' ); ?></p>
 			</div>
 			<div id="available-widgets-list">
-			<?php foreach ( $this->get_available_widgets() as $available_widget ): ?>
-				<div id="widget-tpl-<?php echo esc_attr( $available_widget['id'] ) ?>" data-widget-id="<?php echo esc_attr( $available_widget['id'] ) ?>" class="widget-tpl <?php echo esc_attr( $available_widget['id'] ) ?>" tabindex="0">
+			<?php foreach ( $this->get_available_widgets() as $available_widget ) : ?>
+				<div id="widget-tpl-<?php echo esc_attr( $available_widget['id'] ); ?>" data-widget-id="<?php echo esc_attr( $available_widget['id'] ); ?>" class="widget-tpl <?php echo esc_attr( $available_widget['id'] ); ?>" tabindex="0">
 					<?php echo $available_widget['control_tpl']; ?>
 				</div>
 			<?php endforeach; ?>
@@ -951,9 +967,9 @@ final class WP_Customize_Widgets {
 			);
 
 			$is_disabled     = false;
-			$is_multi_widget = ( isset( $wp_registered_widget_controls[$widget['id']]['id_base'] ) && isset( $widget['params'][0]['number'] ) );
+			$is_multi_widget = ( isset( $wp_registered_widget_controls[ $widget['id'] ]['id_base'] ) && isset( $widget['params'][0]['number'] ) );
 			if ( $is_multi_widget ) {
-				$id_base            = $wp_registered_widget_controls[$widget['id']]['id_base'];
+				$id_base            = $wp_registered_widget_controls[ $widget['id'] ]['id_base'];
 				$args['_temp_id']   = "$id_base-__i__";
 				$args['_multi_num'] = next_widget_id_number( $id_base );
 				$args['_add']       = 'multi';
@@ -966,22 +982,29 @@ final class WP_Customize_Widgets {
 				$id_base = $widget['id'];
 			}
 
-			$list_widget_controls_args = wp_list_widget_controls_dynamic_sidebar( array( 0 => $args, 1 => $widget['params'][0] ) );
+			$list_widget_controls_args = wp_list_widget_controls_dynamic_sidebar(
+				array(
+					0 => $args,
+					1 => $widget['params'][0],
+				)
+			);
 			$control_tpl = $this->get_widget_control( $list_widget_controls_args );
 
 			// The properties here are mapped to the Backbone Widget model.
-			$available_widget = array_merge( $available_widget, array(
-				'temp_id'      => isset( $args['_temp_id'] ) ? $args['_temp_id'] : null,
-				'is_multi'     => $is_multi_widget,
-				'control_tpl'  => $control_tpl,
-				'multi_number' => ( $args['_add'] === 'multi' ) ? $args['_multi_num'] : false,
-				'is_disabled'  => $is_disabled,
-				'id_base'      => $id_base,
-				'transport'    => $this->is_widget_selective_refreshable( $id_base ) ? 'postMessage' : 'refresh',
-				'width'        => $wp_registered_widget_controls[$widget['id']]['width'],
-				'height'       => $wp_registered_widget_controls[$widget['id']]['height'],
-				'is_wide'      => $this->is_wide_widget( $widget['id'] ),
-			) );
+			$available_widget = array_merge(
+				$available_widget, array(
+					'temp_id'      => isset( $args['_temp_id'] ) ? $args['_temp_id'] : null,
+					'is_multi'     => $is_multi_widget,
+					'control_tpl'  => $control_tpl,
+					'multi_number' => ( $args['_add'] === 'multi' ) ? $args['_multi_num'] : false,
+					'is_disabled'  => $is_disabled,
+					'id_base'      => $id_base,
+					'transport'    => $this->is_widget_selective_refreshable( $id_base ) ? 'postMessage' : 'refresh',
+					'width'        => $wp_registered_widget_controls[ $widget['id'] ]['width'],
+					'height'       => $wp_registered_widget_controls[ $widget['id'] ]['height'],
+					'is_wide'      => $this->is_wide_widget( $widget['id'] ),
+				)
+			);
 
 			$available_widgets[] = $available_widget;
 		}
@@ -1042,11 +1065,13 @@ final class WP_Customize_Widgets {
 
 		$control = substr( $control_markup, 0, $content_start_pos + strlen( $args[0]['before_widget_content'] ) );
 		$control .= substr( $control_markup, $content_end_pos );
-		$content = trim( substr(
-			$control_markup,
-			$content_start_pos + strlen( $args[0]['before_widget_content'] ),
-			$content_end_pos - $content_start_pos - strlen( $args[0]['before_widget_content'] )
-		) );
+		$content = trim(
+			substr(
+				$control_markup,
+				$content_start_pos + strlen( $args[0]['before_widget_content'] ),
+				$content_end_pos - $content_start_pos - strlen( $args[0]['before_widget_content'] )
+			)
+		);
 
 		return compact( 'control', 'content' );
 	}
@@ -1129,7 +1154,7 @@ final class WP_Customize_Widgets {
 	 * and at the very end of the wp_footer,
 	 *
 	 * @since 3.9.0
-     *
+	 *
 	 * @global array $wp_registered_sidebars
 	 * @global array $wp_registered_widgets
 	 */
@@ -1283,8 +1308,7 @@ final class WP_Customize_Widgets {
 
 		if ( empty( $value['is_widget_customizer_js_value'] )
 			|| empty( $value['instance_hash_key'] )
-			|| empty( $value['encoded_serialized_instance'] ) )
-		{
+			|| empty( $value['encoded_serialized_instance'] ) ) {
 			return;
 		}
 
@@ -1401,13 +1425,13 @@ final class WP_Customize_Widgets {
 
 			if ( ! is_null( $parsed_id['number'] ) ) {
 				$value = array();
-				$value[$parsed_id['number']] = $instance;
+				$value[ $parsed_id['number'] ] = $instance;
 				$key = 'widget-' . $parsed_id['id_base'];
-				$_REQUEST[$key] = $_POST[$key] = wp_slash( $value );
+				$_REQUEST[ $key ] = $_POST[ $key ] = wp_slash( $value );
 				$added_input_vars[] = $key;
 			} else {
 				foreach ( $instance as $key => $value ) {
-					$_REQUEST[$key] = $_POST[$key] = wp_slash( $value );
+					$_REQUEST[ $key ] = $_POST[ $key ] = wp_slash( $value );
 					$added_input_vars[] = $key;
 				}
 			}
@@ -1630,7 +1654,7 @@ final class WP_Customize_Widgets {
 		);
 		if ( isset( $this->context_sidebar_instance_number ) ) {
 			$context['sidebar_instance_number'] = $this->context_sidebar_instance_number;
-		} else if ( isset( $sidebar_args['id'] ) && isset( $this->sidebar_instance_count[ $sidebar_args['id'] ] ) ) {
+		} elseif ( isset( $sidebar_args['id'] ) && isset( $this->sidebar_instance_count[ $sidebar_args['id'] ] ) ) {
 			$context['sidebar_instance_number'] = $this->sidebar_instance_count[ $sidebar_args['id'] ];
 		}
 
@@ -1672,13 +1696,15 @@ final class WP_Customize_Widgets {
 			}
 			$allowed_html[ $tag_name ] = array_merge(
 				$allowed_html[ $tag_name ],
-				array_fill_keys( array(
-					'data-customize-partial-id',
-					'data-customize-partial-type',
-					'data-customize-partial-placement-context',
-					'data-customize-partial-widget-id',
-					'data-customize-partial-options',
-				), true )
+				array_fill_keys(
+					array(
+						'data-customize-partial-id',
+						'data-customize-partial-type',
+						'data-customize-partial-placement-context',
+						'data-customize-partial-widget-id',
+						'data-customize-partial-options',
+					), true
+				)
 			);
 		}
 		return $allowed_html;

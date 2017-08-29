@@ -71,10 +71,10 @@ class Tests_WP_Resource_Hints extends WP_UnitTestCase {
 	 */
 	function test_preconnect() {
 		$expected = "<link rel='dns-prefetch' href='//s.w.org' />\n" .
-		            "<link rel='preconnect' href='//wordpress.org' />\n" .
-		            "<link rel='preconnect' href='https://make.wordpress.org' />\n" .
-		            "<link rel='preconnect' href='http://google.com' />\n" .
-		            "<link rel='preconnect' href='http://w.org' />\n";
+					"<link rel='preconnect' href='//wordpress.org' />\n" .
+					"<link rel='preconnect' href='https://make.wordpress.org' />\n" .
+					"<link rel='preconnect' href='http://google.com' />\n" .
+					"<link rel='preconnect' href='http://w.org' />\n";
 
 		add_filter( 'wp_resource_hints', array( $this, '_add_preconnect_domains' ), 10, 2 );
 
@@ -248,10 +248,10 @@ class Tests_WP_Resource_Hints extends WP_UnitTestCase {
 	 */
 	function test_custom_attributes() {
 		$expected = "<link rel='dns-prefetch' href='//s.w.org' />\n" .
-		            "<link rel='preconnect' href='https://make.wordpress.org' />\n" .
-		            "<link crossorigin as='image' pr='0.5' href='https://example.com/foo.jpeg' rel='prefetch' />\n" .
-		            "<link crossorigin='use-credentials' as='style' href='https://example.com/foo.css' rel='prefetch' />\n" .
-		            "<link href='http://wordpress.org' rel='prerender' />\n";
+					"<link rel='preconnect' href='https://make.wordpress.org' />\n" .
+					"<link crossorigin as='image' pr='0.5' href='https://example.com/foo.jpeg' rel='prefetch' />\n" .
+					"<link crossorigin='use-credentials' as='style' href='https://example.com/foo.css' rel='prefetch' />\n" .
+					"<link href='http://wordpress.org' rel='prerender' />\n";
 
 		add_filter( 'wp_resource_hints', array( $this, '_add_url_with_attributes' ), 10, 2 );
 

@@ -7,16 +7,33 @@ class Tests_Formatting_BalanceTags extends WP_UnitTestCase {
 
 	function nestable_tags() {
 		return array(
-			array( 'blockquote' ), array( 'div' ), array( 'object' ), array( 'q' ), array( 'span' ),
+			array( 'blockquote' ),
+			array( 'div' ),
+			array( 'object' ),
+			array( 'q' ),
+			array( 'span' ),
 		);
 	}
 
 	// This is a complete(?) listing of valid single/self-closing tags.
 	function single_tags() {
 		return array(
-			array( 'area' ), array( 'base' ), array( 'basefont' ), array( 'br' ), array( 'col' ), array( 'command' ),
-			array( 'embed' ), array( 'frame' ), array( 'hr' ), array( 'img' ), array( 'input' ), array( 'isindex' ),
-			array( 'link' ), array( 'meta' ), array( 'param' ), array( 'source' ),
+			array( 'area' ),
+			array( 'base' ),
+			array( 'basefont' ),
+			array( 'br' ),
+			array( 'col' ),
+			array( 'command' ),
+			array( 'embed' ),
+			array( 'frame' ),
+			array( 'hr' ),
+			array( 'img' ),
+			array( 'input' ),
+			array( 'isindex' ),
+			array( 'link' ),
+			array( 'meta' ),
+			array( 'param' ),
+			array( 'source' ),
 		);
 	}
 
@@ -60,22 +77,22 @@ class Tests_Formatting_BalanceTags extends WP_UnitTestCase {
 		);
 
 		foreach ( $inputs as $key => $input ) {
-			$this->assertEquals( $expected[$key], balanceTags( $inputs[$key], true ) );
+			$this->assertEquals( $expected[ $key ], balanceTags( $inputs[ $key ], true ) );
 		}
 	}
 
 	function test_closes_unclosed_single_tags_having_attributes() {
 		$inputs = array(
 			'<img src="/images/example.png">',
-			'<input type="text" name="example">'
+			'<input type="text" name="example">',
 		);
 		$expected = array(
 			'<img src="/images/example.png"/>',
-			'<input type="text" name="example"/>'
+			'<input type="text" name="example"/>',
 		);
 
 		foreach ( $inputs as $key => $input ) {
-			$this->assertEquals( $expected[$key], balanceTags( $inputs[$key], true ) );
+			$this->assertEquals( $expected[ $key ], balanceTags( $inputs[ $key ], true ) );
 		}
 	}
 
@@ -84,11 +101,11 @@ class Tests_Formatting_BalanceTags extends WP_UnitTestCase {
 			'<br />',
 			'<hr />',
 			'<img src="/images/example.png" />',
-			'<input type="text" name="example" />'
+			'<input type="text" name="example" />',
 		);
 
 		foreach ( $inputs as $key => $input ) {
-			$this->assertEquals( $inputs[$key], balanceTags( $inputs[$key], true ) );
+			$this->assertEquals( $inputs[ $key ], balanceTags( $inputs[ $key ], true ) );
 		}
 	}
 
@@ -108,7 +125,7 @@ class Tests_Formatting_BalanceTags extends WP_UnitTestCase {
 		);
 
 		foreach ( $inputs as $key => $input ) {
-			$this->assertEquals( $expected[$key], balanceTags( $inputs[$key], true ) );
+			$this->assertEquals( $expected[ $key ], balanceTags( $inputs[ $key ], true ) );
 		}
 	}
 
@@ -122,7 +139,7 @@ class Tests_Formatting_BalanceTags extends WP_UnitTestCase {
 		);
 
 		foreach ( $inputs as $key => $input ) {
-			$this->assertEquals( $inputs[$key], balanceTags( $inputs[$key], true ) );
+			$this->assertEquals( $inputs[ $key ], balanceTags( $inputs[ $key ], true ) );
 		}
 	}
 
@@ -145,7 +162,7 @@ class Tests_Formatting_BalanceTags extends WP_UnitTestCase {
 		);
 
 		foreach ( $inputs as $key => $input ) {
-			$this->assertEquals( $expected[$key], balanceTags( $inputs[$key], true ) );
+			$this->assertEquals( $expected[ $key ], balanceTags( $inputs[ $key ], true ) );
 		}
 	}
 
@@ -159,8 +176,8 @@ class Tests_Formatting_BalanceTags extends WP_UnitTestCase {
 			'<ul><li>Aaa</li><li>Bbb</li></ul>',
 		);
 
-		foreach ($inputs as $key => $input) {
-			$this->assertEquals( $expected[$key], balanceTags( $inputs[$key], true ) );
+		foreach ( $inputs as $key => $input ) {
+			$this->assertEquals( $expected[ $key ], balanceTags( $inputs[ $key ], true ) );
 		}
 	}
 
@@ -181,7 +198,7 @@ class Tests_Formatting_BalanceTags extends WP_UnitTestCase {
 		);
 
 		foreach ( $inputs as $key => $input ) {
-			$this->assertEquals( $expected[$key], balanceTags( $inputs[$key], true ) );
+			$this->assertEquals( $expected[ $key ], balanceTags( $inputs[ $key ], true ) );
 		}
 	}
 
@@ -200,7 +217,7 @@ class Tests_Formatting_BalanceTags extends WP_UnitTestCase {
 		);
 
 		foreach ( $inputs as $key => $input ) {
-			$this->assertEquals( $expected[$key], balanceTags( $inputs[$key], true ) );
+			$this->assertEquals( $expected[ $key ], balanceTags( $inputs[ $key ], true ) );
 		}
 	}
 

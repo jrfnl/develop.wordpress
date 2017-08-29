@@ -178,7 +178,14 @@ class WP_Test_REST_Schema_Validation extends WP_UnitTestCase {
 				'type' => 'string',
 			),
 		);
-		$this->assertWPError( rest_validate_value_from_schema( array( 'first' => '1', 'second' => '2' ), $schema ) );
+		$this->assertWPError(
+			rest_validate_value_from_schema(
+				array(
+					'first' => '1',
+					'second' => '2',
+				), $schema
+			)
+		);
 	}
 
 	public function test_type_unknown() {

@@ -52,9 +52,12 @@ class Tests_WP_Theme_Get_Theme_Starter_Content extends WP_UnitTestCase {
 					'recent-posts',
 					'search',
 					'unknown',
-					'meta_custom' => array( 'meta', array(
-						'title' => 'Pre-hydrated meta widget.',
-					) ),
+					'meta_custom' => array(
+						'meta',
+						array(
+							'title' => 'Pre-hydrated meta widget.',
+						),
+					),
 				),
 			),
 			'nav_menus' => array(
@@ -171,7 +174,8 @@ class Tests_WP_Theme_Get_Theme_Starter_Content extends WP_UnitTestCase {
 	 */
 	function test_get_theme_starter_content_filter() {
 
-		add_theme_support( 'starter-content',
+		add_theme_support(
+			'starter-content',
 			array(
 				'widgets' => array(
 					'sidebar-1' => array(
@@ -198,10 +202,13 @@ class Tests_WP_Theme_Get_Theme_Starter_Content extends WP_UnitTestCase {
 	public function filter_theme_starter_content( $content, $config ) {
 		$this->assertInternalType( 'array', $config );
 		$this->assertCount( 1, $config['widgets']['sidebar-1'] );
-		$content['widgets']['sidebar-1'][] = array( 'text', array(
-			'title' => 'Filtered Widget',
-			'text'  => 'Custom ',
-		) );
+		$content['widgets']['sidebar-1'][] = array(
+			'text',
+			array(
+				'title' => 'Filtered Widget',
+				'text'  => 'Custom ',
+			),
+		);
 		return $content;
 	}
 }

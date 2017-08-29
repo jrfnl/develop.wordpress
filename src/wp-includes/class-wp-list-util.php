@@ -115,7 +115,7 @@ class WP_List_Util {
 				( 'OR' == $operator && $matched > 0 ) ||
 				( 'NOT' == $operator && 0 == $matched )
 			) {
-				$filtered[$key] = $obj;
+				$filtered[ $key ] = $obj;
 			}
 		}
 

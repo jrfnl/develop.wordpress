@@ -136,8 +136,7 @@ class Test_Theme_File extends WP_UnitTestCase {
 			array(
 				'neither.php',
 				$parent,
-				array(
-				),
+				array(),
 			),
 		);
 	}

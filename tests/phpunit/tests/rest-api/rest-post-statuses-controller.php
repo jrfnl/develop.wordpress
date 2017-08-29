@@ -51,14 +51,16 @@ class WP_Test_REST_Post_Statuses_Controller extends WP_Test_REST_Controller_Test
 
 		$data = $response->get_data();
 		$this->assertEquals( 6, count( $data ) );
-		$this->assertEqualSets( array(
-			'publish',
-			'private',
-			'pending',
-			'draft',
-			'trash',
-			'future',
-		), array_keys( $data ) );
+		$this->assertEqualSets(
+			array(
+				'publish',
+				'private',
+				'pending',
+				'draft',
+				'trash',
+				'future',
+			), array_keys( $data )
+		);
 	}
 
 	public function test_get_items_unauthorized_context() {
@@ -153,11 +155,13 @@ class WP_Test_REST_Post_Statuses_Controller extends WP_Test_REST_Controller_Test
 			'context'     => array( 'view', 'edit' ),
 		);
 
-		register_rest_field( 'status', 'my_custom_int', array(
-			'schema'          => $schema,
-			'get_callback'    => array( $this, 'additional_field_get_callback' ),
-			'update_callback' => array( $this, 'additional_field_update_callback' ),
-		) );
+		register_rest_field(
+			'status', 'my_custom_int', array(
+				'schema'          => $schema,
+				'get_callback'    => array( $this, 'additional_field_get_callback' ),
+				'update_callback' => array( $this, 'additional_field_update_callback' ),
+			)
+		);
 
 		$request = new WP_REST_Request( 'OPTIONS', '/wp/v2/statuses' );
 
@@ -188,9 +192,11 @@ class WP_Test_REST_Post_Statuses_Controller extends WP_Test_REST_Controller_Test
 		$this->assertEquals( $status_obj->publicly_queryable, $data['queryable'] );
 		$this->assertEquals( $status_obj->show_in_admin_all_list, $data['show_in_list'] );
 		$this->assertEquals( $status_obj->name, $data['slug'] );
-		$this->assertEqualSets( array(
-			'archives',
-		), array_keys( $links ) );
+		$this->assertEqualSets(
+			array(
+				'archives',
+			), array_keys( $links )
+		);
 	}
 
 	protected function check_post_status_object_response( $response ) {

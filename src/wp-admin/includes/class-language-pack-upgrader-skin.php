@@ -26,7 +26,12 @@ class Language_Pack_Upgrader_Skin extends WP_Upgrader_Skin {
 	 * @param array $args
 	 */
 	public function __construct( $args = array() ) {
-		$defaults = array( 'url' => '', 'nonce' => '', 'title' => __( 'Update Translations' ), 'skip_header_footer' => false );
+		$defaults = array(
+			'url' => '',
+			'nonce' => '',
+			'title' => __( 'Update Translations' ),
+			'skip_header_footer' => false,
+		);
 		$args = wp_parse_args( $args, $defaults );
 		if ( $args['skip_header_footer'] ) {
 			$this->done_header = true;
@@ -78,7 +83,8 @@ class Language_Pack_Upgrader_Skin extends WP_Upgrader_Skin {
 		 */
 		$update_actions = apply_filters( 'update_translations_complete_actions', $update_actions );
 
-		if ( $update_actions && $this->display_footer_actions )
+		if ( $update_actions && $this->display_footer_actions ) {
 			$this->feedback( implode( ' | ', $update_actions ) );
+		}
 	}
 }

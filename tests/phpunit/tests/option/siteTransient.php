@@ -31,7 +31,10 @@ class Tests_Option_SiteTransient extends WP_UnitTestCase {
 
 	function test_serialized_data() {
 		$key = __FUNCTION__;
-		$value = array( 'foo' => true, 'bar' => true );
+		$value = array(
+			'foo' => true,
+			'bar' => true,
+		);
 
 		$this->assertTrue( set_site_transient( $key, $value ) );
 		$this->assertEquals( $value, get_site_transient( $key ) );

@@ -130,71 +130,87 @@ class WP_Test_REST_Schema_Initialization extends WP_Test_REST_TestCase {
 		// fixture file will be different between runs of PHPUnit tests, which
 		// is not desirable.
 
-		$administrator_id = $this->factory->user->create( array(
-			'role'          => 'administrator',
-			'display_name'  => 'REST API Client Fixture: User',
-			'user_nicename' => 'restapiclientfixtureuser',
-			'user_email'    => 'administrator@example.org',
-		) );
+		$administrator_id = $this->factory->user->create(
+			array(
+				'role'          => 'administrator',
+				'display_name'  => 'REST API Client Fixture: User',
+				'user_nicename' => 'restapiclientfixtureuser',
+				'user_email'    => 'administrator@example.org',
+			)
+		);
 		wp_set_current_user( $administrator_id );
 
-		$post_id = $this->factory->post->create( array(
-			'post_name'      => 'restapi-client-fixture-post',
-			'post_title'     => 'REST API Client Fixture: Post',
-			'post_content'   => 'REST API Client Fixture: Post',
-			'post_excerpt'   => 'REST API Client Fixture: Post',
-			'post_author'    => 0,
-		) );
-		wp_update_post( array(
-			'ID'           => $post_id,
-			'post_content' => 'Updated post content.',
-		) );
+		$post_id = $this->factory->post->create(
+			array(
+				'post_name'      => 'restapi-client-fixture-post',
+				'post_title'     => 'REST API Client Fixture: Post',
+				'post_content'   => 'REST API Client Fixture: Post',
+				'post_excerpt'   => 'REST API Client Fixture: Post',
+				'post_author'    => 0,
+			)
+		);
+		wp_update_post(
+			array(
+				'ID'           => $post_id,
+				'post_content' => 'Updated post content.',
+			)
+		);
 		$post_revisions = array_values( wp_get_post_revisions( $post_id ) );
 		$post_revision_id = $post_revisions[ count( $post_revisions ) - 1 ]->ID;
 
-		$page_id = $this->factory->post->create( array(
-			'post_type'      => 'page',
-			'post_name'      => 'restapi-client-fixture-page',
-			'post_title'     => 'REST API Client Fixture: Page',
-			'post_content'   => 'REST API Client Fixture: Page',
-			'post_excerpt'   => 'REST API Client Fixture: Page',
-			'post_date'      => '2017-02-14 00:00:00',
-			'post_date_gmt'  => '2017-02-14 00:00:00',
-			'post_author'    => 0,
-		) );
-		wp_update_post( array(
-			'ID'           => $page_id,
-			'post_content' => 'Updated page content.',
-		) );
+		$page_id = $this->factory->post->create(
+			array(
+				'post_type'      => 'page',
+				'post_name'      => 'restapi-client-fixture-page',
+				'post_title'     => 'REST API Client Fixture: Page',
+				'post_content'   => 'REST API Client Fixture: Page',
+				'post_excerpt'   => 'REST API Client Fixture: Page',
+				'post_date'      => '2017-02-14 00:00:00',
+				'post_date_gmt'  => '2017-02-14 00:00:00',
+				'post_author'    => 0,
+			)
+		);
+		wp_update_post(
+			array(
+				'ID'           => $page_id,
+				'post_content' => 'Updated page content.',
+			)
+		);
 		$page_revisions = array_values( wp_get_post_revisions( $page_id ) );
 		$page_revision_id = $page_revisions[ count( $page_revisions ) - 1 ]->ID;
 
-		$tag_id = $this->factory->tag->create( array(
-			'name'        => 'REST API Client Fixture: Tag',
-			'slug'        => 'restapi-client-fixture-tag',
-			'description' => 'REST API Client Fixture: Tag',
-		) );
+		$tag_id = $this->factory->tag->create(
+			array(
+				'name'        => 'REST API Client Fixture: Tag',
+				'slug'        => 'restapi-client-fixture-tag',
+				'description' => 'REST API Client Fixture: Tag',
+			)
+		);
 
-		$media_id = $this->factory->attachment->create_object( '/tmp/canola.jpg', 0, array(
-			'post_mime_type' => 'image/jpeg',
-			'post_excerpt'   => 'A sample caption',
-			'post_name'      => 'restapi-client-fixture-attachment',
-			'post_title'     => 'REST API Client Fixture: Attachment',
-			'post_date'      => '2017-02-14 00:00:00',
-			'post_date_gmt'  => '2017-02-14 00:00:00',
-			'post_author'    => 0,
-		) );
+		$media_id = $this->factory->attachment->create_object(
+			'/tmp/canola.jpg', 0, array(
+				'post_mime_type' => 'image/jpeg',
+				'post_excerpt'   => 'A sample caption',
+				'post_name'      => 'restapi-client-fixture-attachment',
+				'post_title'     => 'REST API Client Fixture: Attachment',
+				'post_date'      => '2017-02-14 00:00:00',
+				'post_date_gmt'  => '2017-02-14 00:00:00',
+				'post_author'    => 0,
+			)
+		);
 
-		$comment_id = $this->factory->comment->create( array(
-			'comment_approved'     => 1,
-			'comment_post_ID'      => $post_id,
-			'user_id'              => 0,
-			'comment_date'         => '2017-02-14 00:00:00',
-			'comment_date_gmt'     => '2017-02-14 00:00:00',
-			'comment_author'       => 'Internet of something or other',
-			'comment_author_email' => 'lights@example.org',
-			'comment_author_url'   => 'http://lights.example.org/',
-		) );
+		$comment_id = $this->factory->comment->create(
+			array(
+				'comment_approved'     => 1,
+				'comment_post_ID'      => $post_id,
+				'user_id'              => 0,
+				'comment_date'         => '2017-02-14 00:00:00',
+				'comment_date_gmt'     => '2017-02-14 00:00:00',
+				'comment_author'       => 'Internet of something or other',
+				'comment_author_email' => 'lights@example.org',
+				'comment_author_url'   => 'http://lights.example.org/',
+			)
+		);
 
 		// Generate route data for subsequent QUnit tests.
 		$routes_to_generate_data = array(
@@ -245,11 +261,11 @@ class WP_Test_REST_Schema_Initialization extends WP_Test_REST_TestCase {
 				'name'  => 'PageModel',
 			),
 			array(
-				'route' => '/wp/v2/pages/'. $page_id . '/revisions',
+				'route' => '/wp/v2/pages/' . $page_id . '/revisions',
 				'name'  => 'pageRevisions',
 			),
 			array(
-				'route' => '/wp/v2/pages/'. $page_id . '/revisions/' . $page_revision_id,
+				'route' => '/wp/v2/pages/' . $page_id . '/revisions/' . $page_revision_id,
 				'name'  => 'pageRevision',
 			),
 			array(

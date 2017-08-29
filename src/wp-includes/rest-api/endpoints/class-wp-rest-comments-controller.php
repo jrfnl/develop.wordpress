@@ -43,65 +43,69 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 	 */
 	public function register_routes() {
 
-		register_rest_route( $this->namespace, '/' . $this->rest_base, array(
-			array(
-				'methods'   => WP_REST_Server::READABLE,
-				'callback'  => array( $this, 'get_items' ),
-				'permission_callback' => array( $this, 'get_items_permissions_check' ),
-				'args'      => $this->get_collection_params(),
-			),
-			array(
-				'methods'  => WP_REST_Server::CREATABLE,
-				'callback' => array( $this, 'create_item' ),
-				'permission_callback' => array( $this, 'create_item_permissions_check' ),
-				'args'     => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+		register_rest_route(
+			$this->namespace, '/' . $this->rest_base, array(
+				array(
+					'methods'   => WP_REST_Server::READABLE,
+					'callback'  => array( $this, 'get_items' ),
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+					'args'      => $this->get_collection_params(),
+				),
+				array(
+					'methods'  => WP_REST_Server::CREATABLE,
+					'callback' => array( $this, 'create_item' ),
+					'permission_callback' => array( $this, 'create_item_permissions_check' ),
+					'args'     => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 
-		register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)', array(
-			'args' => array(
-				'id' => array(
-					'description' => __( 'Unique identifier for the object.' ),
-					'type'        => 'integer',
-				),
-			),
-			array(
-				'methods'  => WP_REST_Server::READABLE,
-				'callback' => array( $this, 'get_item' ),
-				'permission_callback' => array( $this, 'get_item_permissions_check' ),
-				'args'     => array(
-					'context'          => $this->get_context_param( array( 'default' => 'view' ) ),
-					'password' => array(
-						'description' => __( 'The password for the parent post of the comment (if the post is password protected).' ),
-						'type'        => 'string',
+		register_rest_route(
+			$this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)', array(
+				'args' => array(
+					'id' => array(
+						'description' => __( 'Unique identifier for the object.' ),
+						'type'        => 'integer',
 					),
 				),
-			),
-			array(
-				'methods'  => WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'update_item' ),
-				'permission_callback' => array( $this, 'update_item_permissions_check' ),
-				'args'     => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-			),
-			array(
-				'methods'  => WP_REST_Server::DELETABLE,
-				'callback' => array( $this, 'delete_item' ),
-				'permission_callback' => array( $this, 'delete_item_permissions_check' ),
-				'args'     => array(
-					'force'    => array(
-						'type'        => 'boolean',
-						'default'     => false,
-						'description' => __( 'Whether to bypass trash and force deletion.' ),
-					),
-					'password' => array(
-						'description' => __( 'The password for the parent post of the comment (if the post is password protected).' ),
-						'type'        => 'string',
+				array(
+					'methods'  => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'get_item' ),
+					'permission_callback' => array( $this, 'get_item_permissions_check' ),
+					'args'     => array(
+						'context'          => $this->get_context_param( array( 'default' => 'view' ) ),
+						'password' => array(
+							'description' => __( 'The password for the parent post of the comment (if the post is password protected).' ),
+							'type'        => 'string',
+						),
 					),
 				),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+				array(
+					'methods'  => WP_REST_Server::EDITABLE,
+					'callback' => array( $this, 'update_item' ),
+					'permission_callback' => array( $this, 'update_item_permissions_check' ),
+					'args'     => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
+				),
+				array(
+					'methods'  => WP_REST_Server::DELETABLE,
+					'callback' => array( $this, 'delete_item' ),
+					'permission_callback' => array( $this, 'delete_item_permissions_check' ),
+					'args'     => array(
+						'force'    => array(
+							'type'        => 'boolean',
+							'default'     => false,
+							'description' => __( 'Whether to bypass trash and force deletion.' ),
+						),
+						'password' => array(
+							'description' => __( 'The password for the parent post of the comment (if the post is password protected).' ),
+							'type'        => 'string',
+						),
+					),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 	}
 
 	/**
@@ -415,7 +419,8 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 
 		// Limit who can set comment `author`, `author_ip` or `status` to anything other than the default.
 		if ( isset( $request['author'] ) && get_current_user_id() !== $request['author'] && ! current_user_can( 'moderate_comments' ) ) {
-			return new WP_Error( 'rest_comment_invalid_author',
+			return new WP_Error(
+				'rest_comment_invalid_author',
 				/* translators: %s: request parameter */
 				sprintf( __( "Sorry, you are not allowed to edit '%s' for comments." ), 'author' ),
 				array( 'status' => rest_authorization_required_code() )
@@ -424,7 +429,8 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 
 		if ( isset( $request['author_ip'] ) && ! current_user_can( 'moderate_comments' ) ) {
 			if ( empty( $_SERVER['REMOTE_ADDR'] ) || $request['author_ip'] !== $_SERVER['REMOTE_ADDR'] ) {
-				return new WP_Error( 'rest_comment_invalid_author_ip',
+				return new WP_Error(
+					'rest_comment_invalid_author_ip',
 					/* translators: %s: request parameter */
 					sprintf( __( "Sorry, you are not allowed to edit '%s' for comments." ), 'author_ip' ),
 					array( 'status' => rest_authorization_required_code() )
@@ -433,7 +439,8 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 		}
 
 		if ( isset( $request['status'] ) && ! current_user_can( 'moderate_comments' ) ) {
-			return new WP_Error( 'rest_comment_invalid_status',
+			return new WP_Error(
+				'rest_comment_invalid_status',
 				/* translators: %s: request parameter */
 				sprintf( __( "Sorry, you are not allowed to edit '%s' for comments." ), 'status' ),
 				array( 'status' => rest_authorization_required_code() )
@@ -631,7 +638,6 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 		$response->set_status( 201 );
 		$response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $comment_id ) ) );
 
-
 		return $response;
 	}
 
@@ -806,7 +812,12 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 			$previous = $this->prepare_item_for_response( $comment, $request );
 			$result = wp_delete_comment( $comment->comment_ID, true );
 			$response = new WP_REST_Response();
-			$response->set_data( array( 'deleted' => true, 'previous' => $previous->get_data() ) );
+			$response->set_data(
+				array(
+					'deleted' => true,
+					'previous' => $previous->get_data(),
+				)
+			);
 		} else {
 			// If this type doesn't support trashing, error out.
 			if ( ! $supports_trash ) {
@@ -953,14 +964,16 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 		}
 
 		// Only grab one comment to verify the comment has children.
-		$comment_children = $comment->get_children( array(
-			'number' => 1,
-			'count'  => true
-		) );
+		$comment_children = $comment->get_children(
+			array(
+				'number' => 1,
+				'count'  => true,
+			)
+		);
 
 		if ( ! empty( $comment_children ) ) {
 			$args = array(
-				'parent' => $comment->comment_ID
+				'parent' => $comment->comment_ID,
 			);
 
 			$rest_url = add_query_arg( $args, rest_url( $this->namespace . '/' . $this->rest_base ) );
@@ -1464,7 +1477,7 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 		}
 
 		switch ( $new_status ) {
-			case 'approved' :
+			case 'approved':
 			case 'approve':
 			case '1':
 				$changed = wp_set_comment_status( $comment_id, 'approve' );
@@ -1473,19 +1486,19 @@ class WP_REST_Comments_Controller extends WP_REST_Controller {
 			case '0':
 				$changed = wp_set_comment_status( $comment_id, 'hold' );
 				break;
-			case 'spam' :
+			case 'spam':
 				$changed = wp_spam_comment( $comment_id );
 				break;
-			case 'unspam' :
+			case 'unspam':
 				$changed = wp_unspam_comment( $comment_id );
 				break;
-			case 'trash' :
+			case 'trash':
 				$changed = wp_trash_comment( $comment_id );
 				break;
-			case 'untrash' :
+			case 'untrash':
 				$changed = wp_untrash_comment( $comment_id );
 				break;
-			default :
+			default:
 				$changed = false;
 				break;
 		}

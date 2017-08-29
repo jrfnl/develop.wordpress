@@ -31,18 +31,18 @@ class Tests_Post_Objects extends WP_UnitTestCase {
 		// Excercise the output argument
 		$post = get_post( $id, ARRAY_A );
 		$this->assertInternalType( 'array', $post );
-		$this->assertEquals( 'post', $post[ 'post_type' ] );
+		$this->assertEquals( 'post', $post['post_type'] );
 
 		$post = get_post( $id, ARRAY_N );
 		$this->assertInternalType( 'array', $post );
-		$this->assertFalse( isset( $post[ 'post_type' ] ) );
+		$this->assertFalse( isset( $post['post_type'] ) );
 		$this->assertTrue( in_array( 'post', $post ) );
 
 		$post = get_post( $id );
 		$post = get_post( $post, ARRAY_A );
 		$this->assertInternalType( 'array', $post );
-		$this->assertEquals( 'post', $post[ 'post_type' ] );
-		$this->assertEquals( $id, $post[ 'ID' ] );
+		$this->assertEquals( 'post', $post['post_type'] );
+		$this->assertEquals( $id, $post['ID'] );
 
 		// Should default to OBJECT when given invalid output argument
 		$post = get_post( $id, 'invalid-output-value' );
@@ -70,9 +70,19 @@ class Tests_Post_Objects extends WP_UnitTestCase {
 		$parent_id = self::factory()->post->create();
 		$child_id = self::factory()->post->create();
 		$grandchild_id = self::factory()->post->create();
-		$updated = wp_update_post( array( 'ID' => $child_id, 'post_parent' => $parent_id ) );
+		$updated = wp_update_post(
+			array(
+				'ID' => $child_id,
+				'post_parent' => $parent_id,
+			)
+		);
 		$this->assertEquals( $updated, $child_id );
-		$updated = wp_update_post( array( 'ID' => $grandchild_id, 'post_parent' => $child_id ) );
+		$updated = wp_update_post(
+			array(
+				'ID' => $grandchild_id,
+				'post_parent' => $child_id,
+			)
+		);
 		$this->assertEquals( $updated, $grandchild_id );
 
 		$this->assertEquals( array( $parent_id ), get_post( $child_id )->ancestors );
@@ -149,9 +159,13 @@ class Tests_Post_Objects extends WP_UnitTestCase {
 	}
 
 	function test_get_post_filter() {
-		$post = get_post( self::factory()->post->create( array(
-			'post_title' => "Mary's home"
-		) ) );
+		$post = get_post(
+			self::factory()->post->create(
+				array(
+					'post_title' => "Mary's home",
+				)
+			)
+		);
 
 		$this->assertEquals( 'raw', $post->filter );
 		$this->assertInternalType( 'int', $post->post_parent );

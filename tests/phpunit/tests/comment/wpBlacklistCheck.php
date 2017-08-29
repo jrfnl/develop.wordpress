@@ -79,7 +79,7 @@ class Tests_WP_Blacklist_Check extends WP_UnitTestCase {
 		$author_ip    = '192.168.0.1';
 		$user_agent   = '';
 
-		update_option( 'blacklist_keys',"/spam/" );
+		update_option( 'blacklist_keys','/spam/' );
 
 		$result = wp_blacklist_check( $author, $author_email, $author_url, $comment, $author_ip, $user_agent );
 

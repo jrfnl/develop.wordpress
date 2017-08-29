@@ -216,7 +216,12 @@ abstract class WP_Test_REST_Post_Type_Controller_Testcase extends WP_Test_REST_C
 			$links = $data['_links'];
 			foreach ( $links as &$links_array ) {
 				foreach ( $links_array as &$link ) {
-					$attributes = array_diff_key( $link, array( 'href' => 1, 'name' => 1 ) );
+					$attributes = array_diff_key(
+						$link, array(
+							'href' => 1,
+							'name' => 1,
+						)
+					);
 					$link = array_diff_key( $link, $attributes );
 					$link['attributes'] = $attributes;
 				}
@@ -278,17 +283,21 @@ abstract class WP_Test_REST_Post_Type_Controller_Testcase extends WP_Test_REST_C
 	}
 
 	protected function set_raw_post_data( $args = array() ) {
-		return wp_parse_args( $args, $this->set_post_data( array(
-			'title'   => array(
-				'raw' => 'Post Title',
-			),
-			'content' => array(
-				'raw' => 'Post content',
-			),
-			'excerpt' => array(
-				'raw' => 'Post excerpt',
-			),
-		) ) );
+		return wp_parse_args(
+			$args, $this->set_post_data(
+				array(
+					'title'   => array(
+						'raw' => 'Post Title',
+					),
+					'content' => array(
+						'raw' => 'Post content',
+					),
+					'excerpt' => array(
+						'raw' => 'Post excerpt',
+					),
+				)
+			)
+		);
 	}
 
 	/**

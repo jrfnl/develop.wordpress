@@ -13,19 +13,23 @@ class Tests_User_Author_Template extends WP_UnitTestCase {
 	private $permalink_structure;
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ) {
-		self::$author_id = $factory->user->create( array(
-			'role' => 'author',
-			'user_login' => 'test_author',
-			'description' => 'test_author',
-		) );
+		self::$author_id = $factory->user->create(
+			array(
+				'role' => 'author',
+				'user_login' => 'test_author',
+				'description' => 'test_author',
+			)
+		);
 
-		self::$post_id = $factory->post->create( array(
-			'post_author' => self::$author_id,
-			'post_status' => 'publish',
-			'post_content' => rand_str(),
-			'post_title' => rand_str(),
-			'post_type' => 'post'
-		) );
+		self::$post_id = $factory->post->create(
+			array(
+				'post_author' => self::$author_id,
+				'post_status' => 'publish',
+				'post_content' => rand_str(),
+				'post_title' => rand_str(),
+				'post_type' => 'post',
+			)
+		);
 	}
 
 	function setUp() {
@@ -88,10 +92,12 @@ class Tests_User_Author_Template extends WP_UnitTestCase {
 	function test_get_the_author_posts_with_custom_post_type() {
 		register_post_type( 'wptests_pt' );
 
-		$cpt_ids = self::factory()->post->create_many( 2, array(
-			'post_author' => self::$author_id,
-			'post_type'   => 'wptests_pt',
-		) );
+		$cpt_ids = self::factory()->post->create_many(
+			2, array(
+				'post_author' => self::$author_id,
+				'post_type'   => 'wptests_pt',
+			)
+		);
 		$GLOBALS['post'] = $cpt_ids[0];
 
 		$this->assertEquals( 2, get_the_author_posts() );
@@ -103,10 +109,12 @@ class Tests_User_Author_Template extends WP_UnitTestCase {
 	 * @ticket 30355
 	 */
 	public function test_get_the_author_posts_link_no_permalinks() {
-		$author = self::factory()->user->create_and_get( array(
-			'display_name'  => 'Foo',
-			'user_nicename' => 'bar'
-		) );
+		$author = self::factory()->user->create_and_get(
+			array(
+				'display_name'  => 'Foo',
+				'user_nicename' => 'bar',
+			)
+		);
 
 		$GLOBALS['authordata'] = $author->data;
 
@@ -127,10 +135,12 @@ class Tests_User_Author_Template extends WP_UnitTestCase {
 	public function test_get_the_author_posts_link_with_permalinks() {
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$author = self::factory()->user->create_and_get( array(
-			'display_name'  => 'Foo',
-			'user_nicename' => 'bar'
-		) );
+		$author = self::factory()->user->create_and_get(
+			array(
+				'display_name'  => 'Foo',
+				'user_nicename' => 'bar',
+			)
+		);
 
 		$GLOBALS['authordata'] = $author;
 

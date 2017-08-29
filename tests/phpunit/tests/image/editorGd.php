@@ -78,7 +78,7 @@ class Tests_Image_Editor_GD extends WP_Image_UnitTestCase {
 		$gd_image_editor = new WP_Image_Editor_GD( $file );
 		$gd_image_editor->load();
 
-		$sizes_array =	array(
+		$sizes_array = array(
 			array(
 				'width'  => 50,
 				'height' => 50,
@@ -100,7 +100,7 @@ class Tests_Image_Editor_GD extends WP_Image_UnitTestCase {
 		$this->assertEquals( $expected_array, $resized );
 
 		// Now, verify real dimensions are as expected
-		$image_path = DIR_TESTDATA . '/images/'. $resized[0]['file'];
+		$image_path = DIR_TESTDATA . '/images/' . $resized[0]['file'];
 		$this->assertImageDimensions(
 			$image_path,
 			$expected_array[0]['width'],
@@ -371,14 +371,14 @@ class Tests_Image_Editor_GD extends WP_Image_UnitTestCase {
 		$this->assertNotNull( $resized );
 		$this->assertEquals( $expected_array, $resized );
 
-		foreach( $resized as $key => $image_data ){
+		foreach ( $resized as $key => $image_data ) {
 			$image_path = DIR_TESTDATA . '/images/' . $image_data['file'];
 
 			// Now, verify real dimensions are as expected
 			$this->assertImageDimensions(
 				$image_path,
-				$expected_array[$key]['width'],
-				$expected_array[$key]['height']
+				$expected_array[ $key ]['width'],
+				$expected_array[ $key ]['height']
 			);
 		}
 	}
@@ -483,7 +483,7 @@ class Tests_Image_Editor_GD extends WP_Image_UnitTestCase {
 
 		$editor->save( $save_to_file );
 
-		$this->assertImageAlphaAtPointGD( $save_to_file, array( 0,0 ), 127 );
+		$this->assertImageAlphaAtPointGD( $save_to_file, array( 0, 0 ), 127 );
 
 		unlink( $save_to_file );
 	}
@@ -510,7 +510,7 @@ class Tests_Image_Editor_GD extends WP_Image_UnitTestCase {
 
 		$editor->save( $save_to_file );
 
-		$this->assertImageAlphaAtPointGD( $save_to_file, array( 0,0 ), 127 );
+		$this->assertImageAlphaAtPointGD( $save_to_file, array( 0, 0 ), 127 );
 
 		unlink( $save_to_file );
 	}
@@ -531,15 +531,15 @@ class Tests_Image_Editor_GD extends WP_Image_UnitTestCase {
 		$expected = imagecolorsforindex( $image, $rgb );
 
 		$editor = new WP_Image_Editor_GD( $file );
-                $this->assertNotInstanceOf( 'WP_Error', $editor );
-                $editor->load();
-                $editor->rotate( 180 );
-                $save_to_file = tempnam( get_temp_dir(), '' ) . '.png';
+				$this->assertNotInstanceOf( 'WP_Error', $editor );
+				$editor->load();
+				$editor->rotate( 180 );
+				$save_to_file = tempnam( get_temp_dir(), '' ) . '.png';
 
-                $editor->save( $save_to_file );
+				$editor->save( $save_to_file );
 
-                $this->assertImageAlphaAtPointGD( $save_to_file, array( 0,0 ), $expected['alpha'] );
-                unlink( $save_to_file );
+				$this->assertImageAlphaAtPointGD( $save_to_file, array( 0, 0 ), $expected['alpha'] );
+				unlink( $save_to_file );
 
 	}
 
@@ -548,7 +548,7 @@ class Tests_Image_Editor_GD extends WP_Image_UnitTestCase {
 	 * @ticket 39195
 	 */
 	public function test_image_non_existent_extension() {
-		$image_editor = new WP_Image_Editor_GD( DIR_TESTDATA.'/images/test-image-no-extension' );
+		$image_editor = new WP_Image_Editor_GD( DIR_TESTDATA . '/images/test-image-no-extension' );
 		$result = $image_editor->load();
 
 		$this->assertTrue( $result );

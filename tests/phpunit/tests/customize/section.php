@@ -89,9 +89,11 @@ class Tests_WP_Customize_Section extends WP_UnitTestCase {
 		$section = new WP_Customize_Section( $this->manager, 'foo' );
 		$this->assertTrue( $section->active() );
 
-		$section = new WP_Customize_Section( $this->manager, 'foo', array(
-			'active_callback' => '__return_false',
-		) );
+		$section = new WP_Customize_Section(
+			$this->manager, 'foo', array(
+				'active_callback' => '__return_false',
+			)
+		);
 		$this->assertFalse( $section->active() );
 		add_filter( 'customize_section_active', array( $this, 'filter_active_test' ), 10, 2 );
 		$this->assertTrue( $section->active() );

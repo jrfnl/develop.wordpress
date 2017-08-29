@@ -60,11 +60,13 @@ class Test_WP_Widget_Custom_HTML extends WP_UnitTestCase {
 		);
 
 		// Convert Custom HTML widget instance into Text widget instance data.
-		$text_widget_instance = array_merge( $instance, array(
-			'text' => $instance['content'],
-			'filter' => false,
-			'visual' => false,
-		) );
+		$text_widget_instance = array_merge(
+			$instance, array(
+				'text' => $instance['content'],
+				'filter' => false,
+				'visual' => false,
+			)
+		);
 		unset( $text_widget_instance['content'] );
 
 		update_option( 'use_balanceTags', 0 );
@@ -137,9 +139,13 @@ class Test_WP_Widget_Custom_HTML extends WP_UnitTestCase {
 			'content' => "The\n\n<b>Code</b>",
 		);
 
-		wp_set_current_user( $this->factory()->user->create( array(
-			'role' => 'administrator',
-		) ) );
+		wp_set_current_user(
+			$this->factory()->user->create(
+				array(
+					'role' => 'administrator',
+				)
+			)
+		);
 
 		// Should return valid instance.
 		$expected = array(

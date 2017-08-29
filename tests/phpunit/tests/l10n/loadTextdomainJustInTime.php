@@ -11,10 +11,12 @@ class Tests_L10n_loadTextdomainJustInTime extends WP_UnitTestCase {
 	private $locale_count;
 
 	public static function wpSetUpBeforeClass( $factory ) {
-		self::$user_id = $factory->user->create( array(
-			'role'   => 'administrator',
-			'locale' => 'de_DE',
-		) );
+		self::$user_id = $factory->user->create(
+			array(
+				'role'   => 'administrator',
+				'locale' => 'de_DE',
+			)
+		);
 	}
 
 	public function setUp() {

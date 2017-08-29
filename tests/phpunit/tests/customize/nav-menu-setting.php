@@ -134,11 +134,15 @@ class Test_WP_Customize_Nav_Menu_Setting extends WP_UnitTestCase {
 		$menu_name = 'Test 123 \\o/';
 		$parent_menu_id = wp_create_nav_menu( wp_slash( "Parent $menu_name" ) );
 		$description = 'Hello my world \\o/.';
-		$menu_id = wp_update_nav_menu_object( 0, wp_slash( array(
-			'menu-name' => $menu_name,
-			'parent' => $parent_menu_id,
-			'description' => $description,
-		) ) );
+		$menu_id = wp_update_nav_menu_object(
+			0, wp_slash(
+				array(
+					'menu-name' => $menu_name,
+					'parent' => $parent_menu_id,
+					'description' => $description,
+				)
+			)
+		);
 
 		$setting_id = "nav_menu[$menu_id]";
 		$setting = new WP_Customize_Nav_Menu_Setting( $this->wp_customize, $setting_id );
@@ -166,11 +170,15 @@ class Test_WP_Customize_Nav_Menu_Setting extends WP_UnitTestCase {
 	function test_preview_updated() {
 		do_action( 'customize_register', $this->wp_customize );
 
-		$menu_id = wp_update_nav_menu_object( 0, wp_slash( array(
-			'menu-name' => 'Name 1 \\o/',
-			'description' => 'Description 1 \\o/',
-			'parent' => 0,
-		) ) );
+		$menu_id = wp_update_nav_menu_object(
+			0, wp_slash(
+				array(
+					'menu-name' => 'Name 1 \\o/',
+					'description' => 'Description 1 \\o/',
+					'parent' => 0,
+				)
+			)
+		);
 		$setting_id = "nav_menu[$menu_id]";
 		$setting = new WP_Customize_Nav_Menu_Setting( $this->wp_customize, $setting_id );
 
@@ -273,11 +281,15 @@ class Test_WP_Customize_Nav_Menu_Setting extends WP_UnitTestCase {
 	function test_preview_deleted() {
 		do_action( 'customize_register', $this->wp_customize );
 
-		$menu_id = wp_update_nav_menu_object( 0, wp_slash( array(
-			'menu-name' => 'Name 1 \\o/',
-			'description' => 'Description 1 \\o/',
-			'parent' => 0,
-		) ) );
+		$menu_id = wp_update_nav_menu_object(
+			0, wp_slash(
+				array(
+					'menu-name' => 'Name 1 \\o/',
+					'description' => 'Description 1 \\o/',
+					'parent' => 0,
+				)
+			)
+		);
 		$setting_id = "nav_menu[$menu_id]";
 		$setting = new WP_Customize_Nav_Menu_Setting( $this->wp_customize, $setting_id );
 		$nav_menu_options = $this->get_nav_menu_items_option();
@@ -338,11 +350,15 @@ class Test_WP_Customize_Nav_Menu_Setting extends WP_UnitTestCase {
 	function test_save_updated() {
 		do_action( 'customize_register', $this->wp_customize );
 
-		$menu_id = wp_update_nav_menu_object( 0, wp_slash( array(
-			'menu-name' => 'Name 1 \\o/',
-			'description' => 'Description 1 \\o/',
-			'parent' => 0,
-		) ) );
+		$menu_id = wp_update_nav_menu_object(
+			0, wp_slash(
+				array(
+					'menu-name' => 'Name 1 \\o/',
+					'description' => 'Description 1 \\o/',
+					'parent' => 0,
+				)
+			)
+		);
 		$nav_menu_options = $this->get_nav_menu_items_option();
 		$nav_menu_options['auto_add'][] = $menu_id;
 		update_option( 'nav_menu_options', $nav_menu_options );

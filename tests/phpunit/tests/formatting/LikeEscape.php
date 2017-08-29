@@ -17,14 +17,14 @@ class Tests_Formatting_LikeEscape extends WP_UnitTestCase {
 			'howdy\\howdy%howdy_', //The works
 		);
 		$expected = array(
-			"howdy\\%",
+			'howdy\\%',
 			'howdy\\_',
 			'howdy\\',
-			'howdy\\howdy\\%howdy\\_'
+			'howdy\\howdy\\%howdy\\_',
 		);
 
-		foreach ($inputs as $key => $input) {
-			$this->assertEquals($expected[$key], like_escape($input));
+		foreach ( $inputs as $key => $input ) {
+			$this->assertEquals( $expected[ $key ], like_escape( $input ) );
 		}
 	}
 }

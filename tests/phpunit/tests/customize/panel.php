@@ -80,9 +80,11 @@ class Tests_WP_Customize_Panel extends WP_UnitTestCase {
 		$panel = new WP_Customize_Panel( $this->manager, 'foo' );
 		$this->assertTrue( $panel->active() );
 
-		$panel = new WP_Customize_Panel( $this->manager, 'foo', array(
-			'active_callback' => '__return_false',
-		) );
+		$panel = new WP_Customize_Panel(
+			$this->manager, 'foo', array(
+				'active_callback' => '__return_false',
+			)
+		);
 		$this->assertFalse( $panel->active() );
 		add_filter( 'customize_panel_active', array( $this, 'filter_active_test' ), 10, 2 );
 		$this->assertTrue( $panel->active() );

@@ -23,7 +23,7 @@ add_action( 'media_upload_file',  'wp_media_upload_handler' );
 
 add_action( 'post-plupload-upload-ui', 'media_upload_flash_bypass' );
 
-add_action( 'post-html-upload-ui', 'media_upload_html_bypass'  );
+add_action( 'post-html-upload-ui', 'media_upload_html_bypass' );
 
 add_filter( 'async_upload_image', 'get_media_item', 10, 2 );
 add_filter( 'async_upload_audio', 'get_media_item', 10, 2 );
@@ -38,10 +38,10 @@ add_filter( 'media_upload_library', 'media_upload_library' );
 add_filter( 'media_upload_tabs', 'update_gallery_tab' );
 
 // Misc hooks.
-add_action( 'admin_head', 'wp_admin_canonical_url'   );
+add_action( 'admin_head', 'wp_admin_canonical_url' );
 add_action( 'admin_head', 'wp_color_scheme_settings' );
-add_action( 'admin_head', 'wp_site_icon'             );
-add_action( 'admin_head', '_ipad_meta'               );
+add_action( 'admin_head', 'wp_site_icon' );
+add_action( 'admin_head', '_ipad_meta' );
 
 // Prerendering.
 if ( ! is_customize_preview() ) {
@@ -84,7 +84,7 @@ add_action( 'install_plugins_favorites',              'display_plugins_table' );
 add_action( 'install_plugins_pre_plugin-information', 'install_plugin_information' );
 
 // Template hooks.
-add_action( 'admin_enqueue_scripts', array( 'WP_Internal_Pointers', 'enqueue_scripts'                ) );
+add_action( 'admin_enqueue_scripts', array( 'WP_Internal_Pointers', 'enqueue_scripts' ) );
 add_action( 'user_register',         array( 'WP_Internal_Pointers', 'dismiss_pointers_for_new_users' ) );
 
 // Theme hooks.
@@ -113,7 +113,7 @@ add_action( 'personal_options_update', 'send_confirmation_on_profile_email' );
 add_action( 'load-plugins.php', 'wp_plugin_update_rows', 20 ); // After wp_update_plugins() is called.
 add_action( 'load-themes.php', 'wp_theme_update_rows', 20 ); // After wp_update_themes() is called.
 
-add_action( 'admin_notices', 'update_nag',      3  );
+add_action( 'admin_notices', 'update_nag',      3 );
 add_action( 'admin_notices', 'maintenance_nag', 10 );
 
 add_filter( 'update_footer', 'core_update_footer' );

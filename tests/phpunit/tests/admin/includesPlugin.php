@@ -16,14 +16,14 @@ class Tests_Admin_includesPlugin extends WP_UnitTestCase {
 			'AuthorURI' => 'http://ma.tt/',
 			'Version' => '1.5.1',
 			'TextDomain' => 'hello-dolly',
-			'DomainPath' => ''
+			'DomainPath' => '',
 		);
 
-		$this->assertTrue( is_array($data) );
+		$this->assertTrue( is_array( $data ) );
 
-		foreach ($default_headers as $name => $value) {
-			$this->assertTrue(isset($data[$name]));
-			$this->assertEquals($value, $data[$name]);
+		foreach ( $default_headers as $name => $value ) {
+			$this->assertTrue( isset( $data[ $name ] ) );
+			$this->assertEquals( $value, $data[ $name ] );
 		}
 	}
 
@@ -50,7 +50,7 @@ class Tests_Admin_includesPlugin extends WP_UnitTestCase {
 		$expected['With Spaces'] = 'http://example.com/wp-admin/themes.php?page=With%20Spaces';
 		$expected['testpages'] = 'http://example.com/wp-admin/edit.php?post_type=page&#038;page=testpages';
 
-		foreach ($expected as $name => $value) {
+		foreach ( $expected as $name => $value ) {
 			$this->assertEquals( $value, menu_page_url( $name, false ) );
 		}
 
@@ -295,11 +295,11 @@ class Tests_Admin_includesPlugin extends WP_UnitTestCase {
 	public function test_validate_active_plugins_remove_invalid() {
 		$plugin = $this->_create_plugin();
 
-		activate_plugin( $plugin[ 0 ] );
-		unlink( $plugin[ 1 ] );
+		activate_plugin( $plugin[0] );
+		unlink( $plugin[1] );
 
 		$result = validate_active_plugins();
-		$this->assertTrue( isset( $result[ $plugin[ 0 ] ] ) );
+		$this->assertTrue( isset( $result[ $plugin[0] ] ) );
 	}
 
 	/**
@@ -439,7 +439,7 @@ class Tests_Admin_includesPlugin extends WP_UnitTestCase {
 			mkdir( $di_bu_dir );
 		}
 
-		foreach( _get_dropins() as $file_to_move => $v ) {
+		foreach ( _get_dropins() as $file_to_move => $v ) {
 			if ( file_exists( WP_CONTENT_DIR . '/' . $file_to_move ) ) {
 				rename( WP_CONTENT_DIR . '/' . $file_to_move, $di_bu_dir . '/' . $file_to_move );
 			}
@@ -456,7 +456,7 @@ class Tests_Admin_includesPlugin extends WP_UnitTestCase {
 	private function _restore_drop_ins() {
 		$di_bu_dir = WP_CONTENT_DIR . '/drop-ins-backup';
 
-		foreach( _get_dropins() as $file_to_move => $v ) {
+		foreach ( _get_dropins() as $file_to_move => $v ) {
 			if ( file_exists( $di_bu_dir . '/' . $file_to_move ) ) {
 				rename( $di_bu_dir . '/' . $file_to_move, WP_CONTENT_DIR . '/' . $file_to_move );
 			}

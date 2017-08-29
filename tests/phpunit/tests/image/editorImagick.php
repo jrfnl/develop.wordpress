@@ -71,7 +71,7 @@ class Tests_Image_Editor_Imagick extends WP_Image_UnitTestCase {
 		$imagick_image_editor = new WP_Image_Editor_Imagick( $file );
 		$imagick_image_editor->load();
 
-		$sizes_array =	array(
+		$sizes_array = array(
 			array(
 				'width'  => 50,
 				'height' => 50,
@@ -93,7 +93,7 @@ class Tests_Image_Editor_Imagick extends WP_Image_UnitTestCase {
 		$this->assertEquals( $expected_array, $resized );
 
 		// Now, verify real dimensions are as expected
-		$image_path = DIR_TESTDATA . '/images/'. $resized[0]['file'];
+		$image_path = DIR_TESTDATA . '/images/' . $resized[0]['file'];
 		$this->assertImageDimensions(
 			$image_path,
 			$expected_array[0]['width'],
@@ -364,14 +364,14 @@ class Tests_Image_Editor_Imagick extends WP_Image_UnitTestCase {
 		$this->assertNotNull( $resized );
 		$this->assertEquals( $expected_array, $resized );
 
-		foreach( $resized as $key => $image_data ){
+		foreach ( $resized as $key => $image_data ) {
 			$image_path = DIR_TESTDATA . '/images/' . $image_data['file'];
 
 			// Now, verify real dimensions are as expected
 			$this->assertImageDimensions(
 				$image_path,
-				$expected_array[$key]['width'],
-				$expected_array[$key]['height']
+				$expected_array[ $key ]['width'],
+				$expected_array[ $key ]['height']
 			);
 		}
 	}
@@ -465,7 +465,7 @@ class Tests_Image_Editor_Imagick extends WP_Image_UnitTestCase {
 		$editor = new WP_Image_Editor_Imagick( $file );
 
 		$this->assertNotInstanceOf( 'WP_Error', $editor );
-		
+
 		$editor->load();
 		$editor->resize( 5, 5 );
 		$save_to_file = tempnam( get_temp_dir(), '' ) . '.png';
@@ -476,7 +476,7 @@ class Tests_Image_Editor_Imagick extends WP_Image_UnitTestCase {
 		$pixel = $im->getImagePixelColor( 0, 0 );
 		$expected = $pixel->getColorValue( imagick::COLOR_ALPHA );
 
-		$this->assertImageAlphaAtPointImagick( $save_to_file, array( 0,0 ), $expected );
+		$this->assertImageAlphaAtPointImagick( $save_to_file, array( 0, 0 ), $expected );
 
 		unlink( $save_to_file );
 	}
@@ -503,7 +503,7 @@ class Tests_Image_Editor_Imagick extends WP_Image_UnitTestCase {
 		$pixel = $im->getImagePixelColor( 0, 0 );
 		$expected = $pixel->getColorValue( imagick::COLOR_ALPHA );
 
-		$this->assertImageAlphaAtPointImagick( $save_to_file, array( 0,0 ), $expected );
+		$this->assertImageAlphaAtPointImagick( $save_to_file, array( 0, 0 ), $expected );
 
 		unlink( $save_to_file );
 	}
@@ -537,7 +537,7 @@ class Tests_Image_Editor_Imagick extends WP_Image_UnitTestCase {
 	 * @ticket 39195
 	 */
 	public function test_image_non_existent_extension() {
-		$image_editor = new WP_Image_Editor_Imagick( DIR_TESTDATA.'/images/test-image-no-extension' );
+		$image_editor = new WP_Image_Editor_Imagick( DIR_TESTDATA . '/images/test-image-no-extension' );
 		$result = $image_editor->load();
 
 		$this->assertTrue( $result );
@@ -549,7 +549,7 @@ class Tests_Image_Editor_Imagick extends WP_Image_UnitTestCase {
 	 * @ticket 37140
 	 */
 	public function test_remove_orientation_data_on_rotate() {
-		$file = DIR_TESTDATA . "/images/test-image-upside-down.jpg";
+		$file = DIR_TESTDATA . '/images/test-image-upside-down.jpg';
 		$data = wp_read_image_metadata( $file );
 
 		// The orientation value 3 is equivalent to rotated upside down (180 degrees).

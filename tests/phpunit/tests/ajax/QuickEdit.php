@@ -16,28 +16,38 @@ class Tests_Ajax_QuickEdit extends WP_Ajax_UnitTestCase {
 	 * @ticket 26948
 	 */
 	public function test_dont_process_terms_if_taxonomy_does_not_allow_show_on_quick_edit() {
-		register_taxonomy( 'wptests_tax_1', 'post', array(
-			'show_in_quick_edit' => false,
-			'hierarchical' => true,
-		) );
-		register_taxonomy( 'wptests_tax_2', 'post', array(
-			'show_in_quick_edit' => true,
-			'hierarchical' => true,
-		) );
+		register_taxonomy(
+			'wptests_tax_1', 'post', array(
+				'show_in_quick_edit' => false,
+				'hierarchical' => true,
+			)
+		);
+		register_taxonomy(
+			'wptests_tax_2', 'post', array(
+				'show_in_quick_edit' => true,
+				'hierarchical' => true,
+			)
+		);
 
-		$t1 = self::factory()->term->create( array(
-			'taxonomy' => 'wptests_tax_1',
-		) );
-		$t2 = self::factory()->term->create( array(
-			'taxonomy' => 'wptests_tax_2',
-		) );
+		$t1 = self::factory()->term->create(
+			array(
+				'taxonomy' => 'wptests_tax_1',
+			)
+		);
+		$t2 = self::factory()->term->create(
+			array(
+				'taxonomy' => 'wptests_tax_2',
+			)
+		);
 
 		// Become an administrator.
 		$this->_setRole( 'administrator' );
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_author' => get_current_user_id(),
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_author' => get_current_user_id(),
+			)
+		);
 
 		// Set up a request.
 		$_POST['_inline_edit'] = wp_create_nonce( 'inlineeditnonce' );

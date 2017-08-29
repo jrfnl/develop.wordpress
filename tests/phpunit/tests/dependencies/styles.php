@@ -8,8 +8,9 @@ class Tests_Dependencies_Styles extends WP_UnitTestCase {
 
 	function setUp() {
 		parent::setUp();
-		if ( empty( $GLOBALS['wp_styles'] ) )
+		if ( empty( $GLOBALS['wp_styles'] ) ) {
 			$GLOBALS['wp_styles'] = null;
+		}
 		$this->old_wp_styles = $GLOBALS['wp_styles'];
 		remove_action( 'wp_default_styles', 'wp_default_styles' );
 		remove_action( 'wp_print_styles', 'print_emoji_styles' );
@@ -29,20 +30,20 @@ class Tests_Dependencies_Styles extends WP_UnitTestCase {
 	 * @ticket 11315
 	 */
 	function test_wp_enqueue_style() {
-		wp_enqueue_style('no-deps-no-version', 'example.com' );
-		wp_enqueue_style('no-deps-version', 'example.com', array(), 1.2);
-		wp_enqueue_style('no-deps-null-version', 'example.com', array(), null);
-		wp_enqueue_style('no-deps-null-version-print-media', 'example.com', array(), null, 'print');
+		wp_enqueue_style( 'no-deps-no-version', 'example.com' );
+		wp_enqueue_style( 'no-deps-version', 'example.com', array(), 1.2 );
+		wp_enqueue_style( 'no-deps-null-version', 'example.com', array(), null );
+		wp_enqueue_style( 'no-deps-null-version-print-media', 'example.com', array(), null, 'print' );
 		$ver = get_bloginfo( 'version' );
 		$expected  = "<link rel='stylesheet' id='no-deps-no-version-css'  href='http://example.com?ver=$ver' type='text/css' media='all' />\n";
 		$expected .= "<link rel='stylesheet' id='no-deps-version-css'  href='http://example.com?ver=1.2' type='text/css' media='all' />\n";
 		$expected .= "<link rel='stylesheet' id='no-deps-null-version-css'  href='http://example.com' type='text/css' media='all' />\n";
 		$expected .= "<link rel='stylesheet' id='no-deps-null-version-print-media-css'  href='http://example.com' type='text/css' media='print' />\n";
 
-		$this->assertEquals($expected, get_echo('wp_print_styles'));
+		$this->assertEquals( $expected, get_echo( 'wp_print_styles' ) );
 
 		// No styles left to print
-		$this->assertEquals("", get_echo('wp_print_styles'));
+		$this->assertEquals( '', get_echo( 'wp_print_styles' ) );
 	}
 
 	/**
@@ -97,7 +98,7 @@ class Tests_Dependencies_Styles extends WP_UnitTestCase {
 
 		$style  = ".thing {\n";
 		$style .= "\tbackground: red;\n";
-		$style .= "}";
+		$style .= '}';
 
 		$expected  = "<link rel='stylesheet' id='handle-css'  href='http://example.com?ver=1' type='text/css' media='all' />\n";
 		$expected .= "<style id='handle-inline-css' type='text/css'>\n";
@@ -125,7 +126,7 @@ class Tests_Dependencies_Styles extends WP_UnitTestCase {
 
 		$style  = ".thing {\n";
 		$style .= "\tbackground: red;\n";
-		$style .= "}";
+		$style .= '}';
 
 		$expected  = "<link rel='stylesheet' id='handle-css'  href='http://example.com?ver=1' type='text/css' media='all' />\n";
 		$expected .= "<style id='handle-inline-css' type='text/css'>\n";
@@ -148,11 +149,11 @@ class Tests_Dependencies_Styles extends WP_UnitTestCase {
 
 		$style1  = ".thing1 {\n";
 		$style1 .= "\tbackground: red;\n";
-		$style1 .= "}";
+		$style1 .= '}';
 
 		$style2  = ".thing2 {\n";
 		$style2 .= "\tbackground: blue;\n";
-		$style2 .= "}";
+		$style2 .= '}';
 
 		$expected  = "<link rel='stylesheet' id='handle-css'  href='http://example.com?ver=1' type='text/css' media='all' />\n";
 		$expected .= "<style id='handle-inline-css' type='text/css'>\n";
@@ -181,7 +182,7 @@ class Tests_Dependencies_Styles extends WP_UnitTestCase {
 		$style .= ".thing {\n";
 		$style .= "\tbackground: red;\n";
 		$style .= "}\n";
-		$style .= "</style>";
+		$style .= '</style>';
 
 		$expected  = "<link rel='stylesheet' id='handle-css'  href='http://example.com?ver=1' type='text/css' media='all' />\n";
 		$expected .= "$style\n";
@@ -243,7 +244,7 @@ CSS;
 	 * @ticket 35229
 	 */
 	function test_wp_add_inline_style_for_handle_without_source() {
-		$style  = "a { color: blue; }";
+		$style  = 'a { color: blue; }';
 
 		$expected  = "<link rel='stylesheet' id='handle-one-css'  href='http://example.com?ver=1' type='text/css' media='all' />\n";
 		$expected .= "<link rel='stylesheet' id='handle-two-css'  href='http://example.com?ver=1' type='text/css' media='all' />\n";
@@ -274,27 +275,27 @@ CSS;
 		return array(
 			array(
 				"media='all'",
-				'all'
+				'all',
 			),
 			array(
 				"media='(orientation: portrait)'",
-				'(orientation: portrait)'
+				'(orientation: portrait)',
 			),
 			array(
 				"media='(max-width: 640px)'",
-				'(max-width: 640px)'
+				'(max-width: 640px)',
 			),
 			array(
 				"media='print and (min-width: 25cm)'",
-				'print and (min-width: 25cm)'
+				'print and (min-width: 25cm)',
 			),
 			array(
 				"media='screen and (color), projection and (color)'",
-				'screen and (color), projection and (color)'
+				'screen and (color), projection and (color)',
 			),
 			array(
 				"media='not screen and (color)'",
-				'not screen and (color)'
+				'not screen and (color)',
 			),
 		);
 	}

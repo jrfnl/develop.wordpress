@@ -73,57 +73,61 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 	 */
 	public function register_routes() {
 
-		register_rest_route( $this->namespace, '/' . $this->rest_base, array(
-			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_items' ),
-				'permission_callback' => array( $this, 'get_items_permissions_check' ),
-				'args'                => $this->get_collection_params(),
-			),
-			array(
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'create_item' ),
-				'permission_callback' => array( $this, 'create_item_permissions_check' ),
-				'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+		register_rest_route(
+			$this->namespace, '/' . $this->rest_base, array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_items' ),
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'create_item' ),
+					'permission_callback' => array( $this, 'create_item_permissions_check' ),
+					'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 
-		register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)', array(
-			'args' => array(
-				'id' => array(
-					'description' => __( 'Unique identifier for the term.' ),
-					'type'        => 'integer',
-				),
-			),
-			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_item' ),
-				'permission_callback' => array( $this, 'get_item_permissions_check' ),
-				'args'                => array(
-					'context' => $this->get_context_param( array( 'default' => 'view' ) ),
-				),
-			),
-			array(
-				'methods'             => WP_REST_Server::EDITABLE,
-				'callback'            => array( $this, 'update_item' ),
-				'permission_callback' => array( $this, 'update_item_permissions_check' ),
-				'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-			),
-			array(
-				'methods'             => WP_REST_Server::DELETABLE,
-				'callback'            => array( $this, 'delete_item' ),
-				'permission_callback' => array( $this, 'delete_item_permissions_check' ),
-				'args'                => array(
-					'force' => array(
-						'type'        => 'boolean',
-						'default'     => false,
-						'description' => __( 'Required to be true, as terms do not support trashing.' ),
+		register_rest_route(
+			$this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)', array(
+				'args' => array(
+					'id' => array(
+						'description' => __( 'Unique identifier for the term.' ),
+						'type'        => 'integer',
 					),
 				),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_item' ),
+					'permission_callback' => array( $this, 'get_item_permissions_check' ),
+					'args'                => array(
+						'context' => $this->get_context_param( array( 'default' => 'view' ) ),
+					),
+				),
+				array(
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'update_item' ),
+					'permission_callback' => array( $this, 'update_item_permissions_check' ),
+					'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
+				),
+				array(
+					'methods'             => WP_REST_Server::DELETABLE,
+					'callback'            => array( $this, 'delete_item' ),
+					'permission_callback' => array( $this, 'delete_item_permissions_check' ),
+					'args'                => array(
+						'force' => array(
+							'type'        => 'boolean',
+							'default'     => false,
+							'description' => __( 'Required to be true, as terms do not support trashing.' ),
+						),
+					),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 	}
 
 	/**
@@ -225,7 +229,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 		 */
 		$prepared_args = apply_filters( "rest_{$this->taxonomy}_query", $prepared_args, $request );
 
-		if ( ! empty( $prepared_args['post'] )  ) {
+		if ( ! empty( $prepared_args['post'] ) ) {
 			$query_result = wp_get_object_terms( $prepared_args['post'], $this->taxonomy, $prepared_args );
 
 			// Used when calling wp_count_terms() below.
@@ -589,7 +593,12 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 		}
 
 		$response = new WP_REST_Response();
-		$response->set_data( array( 'deleted' => true, 'previous' => $previous->get_data() ) );
+		$response->set_data(
+			array(
+				'deleted' => true,
+				'previous' => $previous->get_data(),
+			)
+		);
 
 		/**
 		 * Fires after a single term is deleted via the REST API.
@@ -959,7 +968,7 @@ class WP_REST_Terms_Controller extends WP_REST_Controller {
 			'description'       => __( 'Limit result set to terms with one or more specific slugs.' ),
 			'type'              => 'array',
 			'items'             => array(
-				'type'          => 'string'
+				'type'          => 'string',
 			),
 		);
 

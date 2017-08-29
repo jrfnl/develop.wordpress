@@ -125,8 +125,9 @@ class WP_Meta_Query {
 	 * }
 	 */
 	public function __construct( $meta_query = false ) {
-		if ( !$meta_query )
+		if ( ! $meta_query ) {
 			return;
+		}
 
 		if ( isset( $meta_query['relation'] ) && strtoupper( $meta_query['relation'] ) == 'OR' ) {
 			$this->relation = 'OR';
@@ -161,7 +162,7 @@ class WP_Meta_Query {
 			} elseif ( ! is_array( $query ) ) {
 				continue;
 
-			// First-order clause.
+				// First-order clause.
 			} elseif ( $this->is_first_order_clause( $query ) ) {
 				if ( isset( $query['value'] ) && array() === $query['value'] ) {
 					unset( $query['value'] );
@@ -169,7 +170,7 @@ class WP_Meta_Query {
 
 				$clean_queries[ $key ] = $query;
 
-			// Otherwise, it's a nested query, so we recurse.
+				// Otherwise, it's a nested query, so we recurse.
 			} else {
 				$cleaned_query = $this->sanitize_query( $query );
 
@@ -188,15 +189,15 @@ class WP_Meta_Query {
 			$clean_queries['relation'] = 'OR';
 			$this->has_or_relation = true;
 
-		/*
-		 * If there is only a single clause, call the relation 'OR'.
-		 * This value will not actually be used to join clauses, but it
-		 * simplifies the logic around combining key-only queries.
-		 */
+			/*
+			* If there is only a single clause, call the relation 'OR'.
+			* This value will not actually be used to join clauses, but it
+			* simplifies the logic around combining key-only queries.
+			*/
 		} elseif ( 1 === count( $clean_queries ) ) {
 			$clean_queries['relation'] = 'OR';
 
-		// Default to AND.
+			// Default to AND.
 		} else {
 			$clean_queries['relation'] = 'AND';
 		}
@@ -275,16 +276,19 @@ class WP_Meta_Query {
 	 * @return string MySQL type.
 	 */
 	public function get_cast_for_type( $type = '' ) {
-		if ( empty( $type ) )
+		if ( empty( $type ) ) {
 			return 'CHAR';
+		}
 
 		$meta_type = strtoupper( $type );
 
-		if ( ! preg_match( '/^(?:BINARY|CHAR|DATE|DATETIME|SIGNED|UNSIGNED|TIME|NUMERIC(?:\(\d+(?:,\s?\d+)?\))?|DECIMAL(?:\(\d+(?:,\s?\d+)?\))?)$/', $meta_type ) )
+		if ( ! preg_match( '/^(?:BINARY|CHAR|DATE|DATETIME|SIGNED|UNSIGNED|TIME|NUMERIC(?:\(\d+(?:,\s?\d+)?\))?|DECIMAL(?:\(\d+(?:,\s?\d+)?\))?)$/', $meta_type ) ) {
 			return 'CHAR';
+		}
 
-		if ( 'NUMERIC' == $meta_type )
+		if ( 'NUMERIC' == $meta_type ) {
 			$meta_type = 'SIGNED';
+		}
 
 		return $meta_type;
 	}
@@ -404,7 +408,7 @@ class WP_Meta_Query {
 
 		$indent = '';
 		for ( $i = 0; $i < $depth; $i++ ) {
-			$indent .= "  ";
+			$indent .= '  ';
 		}
 
 		foreach ( $query as $key => &$clause ) {
@@ -426,7 +430,7 @@ class WP_Meta_Query {
 					}
 
 					$sql_chunks['join'] = array_merge( $sql_chunks['join'], $clause_sql['join'] );
-				// This is a subquery, so we recurse.
+					// This is a subquery, so we recurse.
 				} else {
 					$clause_sql = $this->get_sql_for_query( $clause, $depth + 1 );
 
@@ -491,14 +495,27 @@ class WP_Meta_Query {
 			$clause['compare'] = isset( $clause['value'] ) && is_array( $clause['value'] ) ? 'IN' : '=';
 		}
 
-		if ( ! in_array( $clause['compare'], array(
-			'=', '!=', '>', '>=', '<', '<=',
-			'LIKE', 'NOT LIKE',
-			'IN', 'NOT IN',
-			'BETWEEN', 'NOT BETWEEN',
-			'EXISTS', 'NOT EXISTS',
-			'REGEXP', 'NOT REGEXP', 'RLIKE'
-		) ) ) {
+		if ( ! in_array(
+			$clause['compare'], array(
+				'=',
+				'!=',
+				'>',
+				'>=',
+				'<',
+				'<=',
+				'LIKE',
+				'NOT LIKE',
+				'IN',
+				'NOT IN',
+				'BETWEEN',
+				'NOT BETWEEN',
+				'EXISTS',
+				'NOT EXISTS',
+				'REGEXP',
+				'NOT REGEXP',
+				'RLIKE',
+			)
+		) ) {
 			$clause['compare'] = '=';
 		}
 
@@ -519,7 +536,7 @@ class WP_Meta_Query {
 				$join .= $i ? " AS $alias" : '';
 				$join .= $wpdb->prepare( " ON ($this->primary_table.$this->primary_id_column = $alias.$this->meta_id_column AND $alias.meta_key = %s )", $clause['key'] );
 
-			// All other JOIN clauses.
+				// All other JOIN clauses.
 			} else {
 				$join .= " INNER JOIN $this->meta_table";
 				$join .= $i ? " AS $alias" : '';
@@ -578,36 +595,36 @@ class WP_Meta_Query {
 			}
 
 			switch ( $meta_compare ) {
-				case 'IN' :
-				case 'NOT IN' :
+				case 'IN':
+				case 'NOT IN':
 					$meta_compare_string = '(' . substr( str_repeat( ',%s', count( $meta_value ) ), 1 ) . ')';
 					$where = $wpdb->prepare( $meta_compare_string, $meta_value );
 					break;
 
-				case 'BETWEEN' :
-				case 'NOT BETWEEN' :
+				case 'BETWEEN':
+				case 'NOT BETWEEN':
 					$meta_value = array_slice( $meta_value, 0, 2 );
 					$where = $wpdb->prepare( '%s AND %s', $meta_value );
 					break;
 
-				case 'LIKE' :
-				case 'NOT LIKE' :
+				case 'LIKE':
+				case 'NOT LIKE':
 					$meta_value = '%' . $wpdb->esc_like( $meta_value ) . '%';
 					$where = $wpdb->prepare( '%s', $meta_value );
 					break;
 
 				// EXISTS with a value is interpreted as '='.
-				case 'EXISTS' :
+				case 'EXISTS':
 					$meta_compare = '=';
 					$where = $wpdb->prepare( '%s', $meta_value );
 					break;
 
 				// 'value' is ignored for NOT EXISTS.
-				case 'NOT EXISTS' :
+				case 'NOT EXISTS':
 					$where = '';
 					break;
 
-				default :
+				default:
 					$where = $wpdb->prepare( '%s', $meta_value );
 					break;
 
@@ -687,7 +704,7 @@ class WP_Meta_Query {
 			if ( 'OR' === $parent_query['relation'] ) {
 				$compatible_compares = array( '=', 'IN', 'BETWEEN', 'LIKE', 'REGEXP', 'RLIKE', '>', '>=', '<', '<=' );
 
-			// Clauses joined by AND with "negative" operators share a join only if they also share a key.
+				// Clauses joined by AND with "negative" operators share a join only if they also share a key.
 			} elseif ( isset( $sibling['key'] ) && isset( $clause['key'] ) && $sibling['key'] === $clause['key'] ) {
 				$compatible_compares = array( '!=', 'NOT IN', 'NOT LIKE' );
 			}
@@ -710,7 +727,7 @@ class WP_Meta_Query {
 		 * @param array       $parent_query Parent of $clause.
 		 * @param object      $this         WP_Meta_Query object.
 		 */
-		return apply_filters( 'meta_query_find_compatible_table_alias', $alias, $clause, $parent_query, $this ) ;
+		return apply_filters( 'meta_query_find_compatible_table_alias', $alias, $clause, $parent_query, $this );
 	}
 
 	/**

@@ -56,7 +56,7 @@ class Tests_Ajax_CompressionTest extends WP_Ajax_UnitTestCase {
 	 */
 	public function test_gzdeflate() {
 
-		if ( !function_exists( 'gzdeflate' ) ) {
+		if ( ! function_exists( 'gzdeflate' ) ) {
 			$this->fail( 'gzdeflate function not available' );
 		}
 
@@ -83,7 +83,7 @@ class Tests_Ajax_CompressionTest extends WP_Ajax_UnitTestCase {
 	 */
 	public function test_gzencode() {
 
-		if ( !function_exists('gzencode') ) {
+		if ( ! function_exists( 'gzencode' ) ) {
 			$this->fail( 'gzencode function not available' );
 		}
 

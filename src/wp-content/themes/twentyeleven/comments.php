@@ -26,13 +26,14 @@
 		endif;
 	?>
 
-	<?php // You can start editing here -- including this comment! ?>
-
+	
 	<?php if ( have_comments() ) : ?>
 		<h2 id="comments-title">
 			<?php
-				printf( _n( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'twentyeleven' ),
-					number_format_i18n( get_comments_number() ), '<span>' . get_the_title() . '</span>' );
+				printf(
+					_n( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'twentyeleven' ),
+					number_format_i18n( get_comments_number() ), '<span>' . get_the_title() . '</span>'
+				);
 			?>
 		</h2>
 
@@ -70,7 +71,8 @@
 		 * If there are no comments and comments are closed, let's leave a little note, shall we?
 		 * But we only want the note on posts and pages that had comments in the first place.
 		 */
-		if ( ! comments_open() && get_comments_number() ) : ?>
+		if ( ! comments_open() && get_comments_number() ) :
+		?>
 		<p class="nocomments"><?php _e( 'Comments are closed.' , 'twentyeleven' ); ?></p>
 		<?php endif; ?>
 

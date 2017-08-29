@@ -166,47 +166,55 @@ final class WP_Customize_Custom_CSS_Setting extends WP_Customize_Setting {
 
 		// Make sure that there is a closing brace for each opening brace.
 		if ( ! $this->validate_balanced_characters( '{', '}', $css ) ) {
-			$validity->add( 'imbalanced_curly_brackets', sprintf(
-				/* translators: 1: {}, 2: }, 3: { */
-				__( 'Your curly brackets %1$s are imbalanced. Make sure there is a closing %2$s for every opening %3$s.' ),
-				'<code>{}</code>',
-				'<code>}</code>',
-				'<code>{</code>'
-			) );
+			$validity->add(
+				'imbalanced_curly_brackets', sprintf(
+					/* translators: 1: {}, 2: }, 3: { */
+					 __( 'Your curly brackets %1$s are imbalanced. Make sure there is a closing %2$s for every opening %3$s.' ),
+					'<code>{}</code>',
+					'<code>}</code>',
+					'<code>{</code>'
+				)
+			);
 			$imbalanced = true;
 		}
 
 		// Ensure brackets are balanced.
 		if ( ! $this->validate_balanced_characters( '[', ']', $css ) ) {
-			$validity->add( 'imbalanced_braces', sprintf(
-				/* translators: 1: [], 2: ], 3: [ */
-				__( 'Your brackets %1$s are imbalanced. Make sure there is a closing %2$s for every opening %3$s.' ),
-				'<code>[]</code>',
-				'<code>]</code>',
-				'<code>[</code>'
-			) );
+			$validity->add(
+				'imbalanced_braces', sprintf(
+					/* translators: 1: [], 2: ], 3: [ */
+					 __( 'Your brackets %1$s are imbalanced. Make sure there is a closing %2$s for every opening %3$s.' ),
+					'<code>[]</code>',
+					'<code>]</code>',
+					'<code>[</code>'
+				)
+			);
 			$imbalanced = true;
 		}
 
 		// Ensure parentheses are balanced.
 		if ( ! $this->validate_balanced_characters( '(', ')', $css ) ) {
-			$validity->add( 'imbalanced_parentheses', sprintf(
-				/* translators: 1: (), 2: ), 3: ( */
-				__( 'Your parentheses %1$s are imbalanced. Make sure there is a closing %2$s for every opening %3$s.' ),
-				'<code>()</code>',
-				'<code>)</code>',
-				'<code>(</code>'
-			) );
+			$validity->add(
+				'imbalanced_parentheses', sprintf(
+					/* translators: 1: (), 2: ), 3: ( */
+					 __( 'Your parentheses %1$s are imbalanced. Make sure there is a closing %2$s for every opening %3$s.' ),
+					'<code>()</code>',
+					'<code>)</code>',
+					'<code>(</code>'
+				)
+			);
 			$imbalanced = true;
 		}
 
 		// Ensure double quotes are equal.
 		if ( ! $this->validate_equal_characters( '"', $css ) ) {
-			$validity->add( 'unequal_double_quotes', sprintf(
-				/* translators: 1: " (double quote) */
-				__( 'Your double quotes %1$s are uneven. Make sure there is a closing %1$s for every opening %1$s.' ),
-				'<code>"</code>'
-			) );
+			$validity->add(
+				'unequal_double_quotes', sprintf(
+					/* translators: 1: " (double quote) */
+					 __( 'Your double quotes %1$s are uneven. Make sure there is a closing %1$s for every opening %1$s.' ),
+					'<code>"</code>'
+				)
+			);
 			$imbalanced = true;
 		}
 
@@ -222,32 +230,38 @@ final class WP_Customize_Custom_CSS_Setting extends WP_Customize_Setting {
 		 */
 		$unclosed_comment_count = $this->validate_count_unclosed_comments( $css );
 		if ( 0 < $unclosed_comment_count ) {
-			$validity->add( 'unclosed_comment', sprintf(
-				/* translators: 1: number of unclosed comments, 2: *​/ */
-				_n(
-					'There is %1$s unclosed code comment. Close each comment with %2$s.',
-					'There are %1$s unclosed code comments. Close each comment with %2$s.',
-					$unclosed_comment_count
-				),
-				$unclosed_comment_count,
-				'<code>*/</code>'
-			) );
+			$validity->add(
+				'unclosed_comment', sprintf(
+					/* translators: 1: number of unclosed comments, 2: *​/ */
+					 _n(
+						 'There is %1$s unclosed code comment. Close each comment with %2$s.',
+						 'There are %1$s unclosed code comments. Close each comment with %2$s.',
+						 $unclosed_comment_count
+					 ),
+					$unclosed_comment_count,
+					'<code>*/</code>'
+				)
+			);
 			$imbalanced = true;
 		} elseif ( ! $this->validate_balanced_characters( '/*', '*/', $css ) ) {
-			$validity->add( 'imbalanced_comments', sprintf(
-				/* translators: 1: *​/, 2: /​* */
-				__( 'There is an extra %1$s, indicating an end to a comment. Be sure that there is an opening %2$s for every closing %1$s.' ),
-				'<code>*/</code>',
-				'<code>/*</code>'
-			) );
+			$validity->add(
+				'imbalanced_comments', sprintf(
+					/* translators: 1: *​/, 2: /​* */
+					 __( 'There is an extra %1$s, indicating an end to a comment. Be sure that there is an opening %2$s for every closing %1$s.' ),
+					'<code>*/</code>',
+					'<code>/*</code>'
+				)
+			);
 			$imbalanced = true;
 		}
 		if ( $imbalanced && $this->is_possible_content_error( $css ) ) {
-			$validity->add( 'possible_false_positive', sprintf(
-				/* translators: %s: content: ""; */
-				__( 'Imbalanced/unclosed character errors can be caused by %s declarations. You may need to remove this or add it to a custom CSS file.' ),
-				'<code>content: "";</code>'
-			) );
+			$validity->add(
+				'possible_false_positive', sprintf(
+					/* translators: %s: content: ""; */
+					 __( 'Imbalanced/unclosed character errors can be caused by %s declarations. You may need to remove this or add it to a custom CSS file.' ),
+					'<code>content: "";</code>'
+				)
+			);
 		}
 
 		if ( empty( $validity->errors ) ) {
@@ -269,9 +283,11 @@ final class WP_Customize_Custom_CSS_Setting extends WP_Customize_Setting {
 			$css = '';
 		}
 
-		$r = wp_update_custom_css_post( $css, array(
-			'stylesheet' => $this->stylesheet,
-		) );
+		$r = wp_update_custom_css_post(
+			$css, array(
+				'stylesheet' => $this->stylesheet,
+			)
+		);
 
 		if ( $r instanceof WP_Error ) {
 			return false;

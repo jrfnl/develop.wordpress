@@ -20,16 +20,30 @@ class WP_Test_REST_Revisions_Controller extends WP_Test_REST_Controller_Testcase
 		self::$post_id = $factory->post->create();
 		self::$page_id = $factory->post->create( array( 'post_type' => 'page' ) );
 
-		self::$editor_id = $factory->user->create( array(
-			'role' => 'editor',
-		) );
-		self::$contributor_id = $factory->user->create( array(
-			'role' => 'contributor',
-		) );
+		self::$editor_id = $factory->user->create(
+			array(
+				'role' => 'editor',
+			)
+		);
+		self::$contributor_id = $factory->user->create(
+			array(
+				'role' => 'contributor',
+			)
+		);
 
 		wp_set_current_user( self::$editor_id );
-		wp_update_post( array( 'post_content' => 'This content is better.', 'ID' => self::$post_id ) );
-		wp_update_post( array( 'post_content' => 'This content is marvelous.', 'ID' => self::$post_id ) );
+		wp_update_post(
+			array(
+				'post_content' => 'This content is better.',
+				'ID' => self::$post_id,
+			)
+		);
+		wp_update_post(
+			array(
+				'post_content' => 'This content is marvelous.',
+				'ID' => self::$post_id,
+			)
+		);
 		wp_set_current_user( 0 );
 	}
 
@@ -264,11 +278,13 @@ class WP_Test_REST_Revisions_Controller extends WP_Test_REST_Controller_Testcase
 			'context'     => array( 'view', 'edit' ),
 		);
 
-		register_rest_field( 'post-revision', 'my_custom_int', array(
-			'schema'          => $schema,
-			'get_callback'    => array( $this, 'additional_field_get_callback' ),
-			'update_callback' => array( $this, 'additional_field_update_callback' ),
-		) );
+		register_rest_field(
+			'post-revision', 'my_custom_int', array(
+				'schema'          => $schema,
+				'get_callback'    => array( $this, 'additional_field_get_callback' ),
+				'update_callback' => array( $this, 'additional_field_update_callback' ),
+			)
+		);
 
 		$request = new WP_REST_Request( 'OPTIONS', '/wp/v2/posts/' . self::$post_id . '/revisions' );
 

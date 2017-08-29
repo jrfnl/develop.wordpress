@@ -27,7 +27,8 @@ class Tests_Meta_DeleteMetadata extends WP_UnitTestCase {
 
 		delete_metadata( 'post', 12345, 'foo', '1' );
 		$m = get_metadata( 'post', 12345, 'foo', false );
-		$expected = array_diff( $vals, array( '1' ) );;
+		$expected = array_diff( $vals, array( '1' ) );
+
 		$this->assertEqualSets( $expected, $m );
 	}
 
@@ -44,7 +45,8 @@ class Tests_Meta_DeleteMetadata extends WP_UnitTestCase {
 
 		delete_metadata( 'post', 12345, 'foo', '0' );
 		$m = get_metadata( 'post', 12345, 'foo', false );
-		$expected = array_diff( $vals, array( '0' ) );;
+		$expected = array_diff( $vals, array( '0' ) );
+
 		$this->assertEqualSets( $expected, $m );
 	}
 

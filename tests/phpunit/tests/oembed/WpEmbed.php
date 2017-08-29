@@ -22,25 +22,29 @@ class Tests_WP_Embed extends WP_UnitTestCase {
 	}
 
 	public function test_maybe_run_ajax_cache_should_return_nothing_if_there_is_no_post() {
-		$this->expectOutputString('');
+		$this->expectOutputString( '' );
 		$this->wp_embed->maybe_run_ajax_cache();
 	}
 
 	public function test_maybe_run_ajax_cache_should_return_nothing_if_there_is_no_message() {
-		$GLOBALS['post'] = $this->factory()->post->create_and_get( array(
-			'post_title' => 'Hello World',
-		) );
+		$GLOBALS['post'] = $this->factory()->post->create_and_get(
+			array(
+				'post_title' => 'Hello World',
+			)
+		);
 
-		$this->expectOutputString('');
+		$this->expectOutputString( '' );
 
 		$this->wp_embed->maybe_run_ajax_cache();
 		unset( $GLOBALS['post'] );
 	}
 
 	public function test_maybe_run_ajax_cache_should_return_javascript() {
-		$GLOBALS['post'] = $this->factory()->post->create_and_get( array(
-			'post_title' => 'Hello World',
-		) );
+		$GLOBALS['post'] = $this->factory()->post->create_and_get(
+			array(
+				'post_title' => 'Hello World',
+			)
+		);
 		$_GET['message'] = 'foo';
 
 		$url    = admin_url( 'admin-ajax.php?action=oembed-cache&post=' . $GLOBALS['post']->ID, 'relative' );
@@ -54,13 +58,17 @@ class Tests_WP_Embed extends WP_UnitTestCase {
 
 	public function test_wp_maybe_load_embeds() {
 		$this->assertEqualSets( array( 10, 9999 ), array_keys( $GLOBALS['wp_embed']->handlers ) );
-		$this->assertEqualSets( array(
-			'youtube_embed_url',
-		), array_keys( $GLOBALS['wp_embed']->handlers[10] ) );
-		$this->assertEqualSets( array(
-			'audio',
-			'video',
-		), array_keys( $GLOBALS['wp_embed']->handlers[9999] ) );
+		$this->assertEqualSets(
+			array(
+				'youtube_embed_url',
+			), array_keys( $GLOBALS['wp_embed']->handlers[10] )
+		);
+		$this->assertEqualSets(
+			array(
+				'audio',
+				'video',
+			), array_keys( $GLOBALS['wp_embed']->handlers[9999] )
+		);
 	}
 
 	public function test_wp_embed_register_handler() {

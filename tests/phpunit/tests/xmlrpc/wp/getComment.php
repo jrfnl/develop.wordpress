@@ -28,7 +28,7 @@ class Tests_XMLRPC_wp_getComment extends WP_XMLRPC_UnitTestCase {
 			'comment_author_url' => 'http://example.org/',
 			'comment_author_email' => 'example@example.org',
 			'comment_parent' => self::$parent_comment_id,
-			'comment_content' => rand_str( 100 )
+			'comment_content' => rand_str( 100 ),
 		);
 		self::$child_comment_id = wp_insert_comment( self::$child_comment_data );
 	}

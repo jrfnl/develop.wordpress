@@ -52,10 +52,12 @@ class Tests_Taxonomy_GetObjectTaxonomies extends WP_UnitTestCase {
 	public function test_should_return_all_attachment_taxonomies_for_attachment_object_type() {
 		register_taxonomy( 'wptests_tax2', 'attachment:image' );
 
-		$a = self::factory()->attachment->create_object( 'image.jpg', 0, array(
-			'post_mime_type' => 'image/jpeg',
-			'post_type' => 'attachment'
-		) );
+		$a = self::factory()->attachment->create_object(
+			'image.jpg', 0, array(
+				'post_mime_type' => 'image/jpeg',
+				'post_type' => 'attachment',
+			)
+		);
 		$attachment = get_post( $a );
 
 		$found = get_object_taxonomies( $attachment, 'names' );
@@ -69,10 +71,12 @@ class Tests_Taxonomy_GetObjectTaxonomies extends WP_UnitTestCase {
 	public function test_should_respect_output_objects_when_object_is_attachment() {
 		register_taxonomy( 'wptests_tax2', 'attachment:image' );
 
-		$a = self::factory()->attachment->create_object( 'image.jpg', 0, array(
-			'post_mime_type' => 'image/jpeg',
-			'post_type' => 'attachment'
-		) );
+		$a = self::factory()->attachment->create_object(
+			'image.jpg', 0, array(
+				'post_mime_type' => 'image/jpeg',
+				'post_type' => 'attachment',
+			)
+		);
 		$attachment = get_post( $a );
 
 		$found = get_object_taxonomies( $attachment, 'objects' );

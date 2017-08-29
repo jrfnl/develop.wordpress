@@ -167,6 +167,9 @@ class Tests_WP_Hook_Do_Action extends WP_UnitTestCase {
 	 */
 	public function _action_callback() {
 		$args = func_get_args();
-		$this->events[] = array('action' => __FUNCTION__, 'args'=>$args);
+		$this->events[] = array(
+			'action' => __FUNCTION__,
+			'args' => $args,
+		);
 	}
 }

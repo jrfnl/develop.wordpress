@@ -57,21 +57,23 @@ class WP_REST_Posts_Controller extends WP_REST_Controller {
 	 */
 	public function register_routes() {
 
-		register_rest_route( $this->namespace, '/' . $this->rest_base, array(
-			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_items' ),
-				'permission_callback' => array( $this, 'get_items_permissions_check' ),
-				'args'                => $this->get_collection_params(),
-			),
-			array(
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'create_item' ),
-				'permission_callback' => array( $this, 'create_item_permissions_check' ),
-				'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+		register_rest_route(
+			$this->namespace, '/' . $this->rest_base, array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_items' ),
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'create_item' ),
+					'permission_callback' => array( $this, 'create_item_permissions_check' ),
+					'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 
 		$schema = $this->get_item_schema();
 		$get_item_args = array(
@@ -83,39 +85,41 @@ class WP_REST_Posts_Controller extends WP_REST_Controller {
 				'type'        => 'string',
 			);
 		}
-		register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)', array(
-			'args' => array(
-				'id' => array(
-					'description' => __( 'Unique identifier for the object.' ),
-					'type'        => 'integer',
-				),
-			),
-			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_item' ),
-				'permission_callback' => array( $this, 'get_item_permissions_check' ),
-				'args'                => $get_item_args,
-			),
-			array(
-				'methods'             => WP_REST_Server::EDITABLE,
-				'callback'            => array( $this, 'update_item' ),
-				'permission_callback' => array( $this, 'update_item_permissions_check' ),
-				'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-			),
-			array(
-				'methods'             => WP_REST_Server::DELETABLE,
-				'callback'            => array( $this, 'delete_item' ),
-				'permission_callback' => array( $this, 'delete_item_permissions_check' ),
-				'args'                => array(
-					'force' => array(
-						'type'        => 'boolean',
-						'default'     => false,
-						'description' => __( 'Whether to bypass trash and force deletion.' ),
+		register_rest_route(
+			$this->namespace, '/' . $this->rest_base . '/(?P<id>[\d]+)', array(
+				'args' => array(
+					'id' => array(
+						'description' => __( 'Unique identifier for the object.' ),
+						'type'        => 'integer',
 					),
 				),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_item' ),
+					'permission_callback' => array( $this, 'get_item_permissions_check' ),
+					'args'                => $get_item_args,
+				),
+				array(
+					'methods'             => WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'update_item' ),
+					'permission_callback' => array( $this, 'update_item_permissions_check' ),
+					'args'                => $this->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
+				),
+				array(
+					'methods'             => WP_REST_Server::DELETABLE,
+					'callback'            => array( $this, 'delete_item' ),
+					'permission_callback' => array( $this, 'delete_item_permissions_check' ),
+					'args'                => array(
+						'force' => array(
+							'type'        => 'boolean',
+							'default'     => false,
+							'description' => __( 'Whether to bypass trash and force deletion.' ),
+						),
+					),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 	}
 
 	/**
@@ -795,13 +799,17 @@ class WP_REST_Posts_Controller extends WP_REST_Controller {
 
 		$request->set_param( 'context', 'edit' );
 
-
 		// If we're forcing, then delete permanently.
 		if ( $force ) {
 			$previous = $this->prepare_item_for_response( $post, $request );
 			$result = wp_delete_post( $id, true );
 			$response = new WP_REST_Response();
-			$response->set_data( array( 'deleted' => true, 'previous' => $previous->get_data() ) );
+			$response->set_data(
+				array(
+					'deleted' => true,
+					'previous' => $previous->get_data(),
+				)
+			);
 		} else {
 			// If we don't support trashing for this type, error out.
 			if ( ! $supports_trash ) {

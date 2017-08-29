@@ -116,7 +116,10 @@ class Tests_Option_SiteOption extends WP_UnitTestCase {
 
 	function test_site_option_add_and_get_serialized_array() {
 		$key = __FUNCTION__;
-		$value = array( 'foo' => true, 'bar' => true );
+		$value = array(
+			'foo' => true,
+			'bar' => true,
+		);
 		add_site_option( $key, $value );
 		$this->assertEquals( $value, get_site_option( $key ) );
 	}

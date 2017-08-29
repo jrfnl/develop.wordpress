@@ -70,7 +70,7 @@ class Test_Functions_Deprecated extends WP_UnitTestCase {
 		$this->_deprecated_functions[] = array(
 			'function'    => $function,
 			'replacement' => $replacement,
-			'version'     => $version
+			'version'     => $version,
 		);
 	}
 
@@ -85,7 +85,7 @@ class Test_Functions_Deprecated extends WP_UnitTestCase {
 		$this->_deprecated_arguments[] = array(
 			'argument' => $argument,
 			'message'  => $message,
-			'version'  => $version
+			'version'  => $version,
 		);
 	}
 
@@ -101,7 +101,7 @@ class Test_Functions_Deprecated extends WP_UnitTestCase {
 			'file'        => $file,
 			'version'     => $version,
 			'replacement' => $replacement,
-			'message'     => $message
+			'message'     => $message,
 		);
 	}
 
@@ -113,20 +113,20 @@ class Test_Functions_Deprecated extends WP_UnitTestCase {
 	 */
 	protected function was_deprecated( $type, $name ) {
 		switch ( $type ) {
-			case 'argument' :
+			case 'argument':
 				$search = $this->_deprecated_arguments;
 				$key    = 'argument';
 				break;
-			case 'function' :
+			case 'function':
 				$search = $this->_deprecated_functions;
 				$key    = 'function';
 				break;
-			default :
+			default:
 				$search = $this->_deprecated_files;
 				$key    = 'file';
 		}
 		foreach ( $search as $v ) {
-			if ( $name == $v[$key] ) {
+			if ( $name == $v[ $key ] ) {
 				return $v;
 			}
 		}
@@ -139,8 +139,9 @@ class Test_Functions_Deprecated extends WP_UnitTestCase {
 	 * @expectedDeprecated wp_save_image_file
 	 */
 	public function test_wp_save_image_file_deprecated_with_gd_resource() {
-		if ( !function_exists( 'imagejpeg' ) )
+		if ( ! function_exists( 'imagejpeg' ) ) {
 			$this->fail( 'jpeg support unavailable' );
+		}
 
 		// Call wp_save_image_file
 		include_once( ABSPATH . 'wp-admin/includes/image-edit.php' );
@@ -160,8 +161,9 @@ class Test_Functions_Deprecated extends WP_UnitTestCase {
 	 * @ticket 6821
 	 */
 	public function test_wp_save_image_file_not_deprecated_with_wp_image_editor() {
-		if ( !function_exists( 'imagejpeg' ) )
+		if ( ! function_exists( 'imagejpeg' ) ) {
 			$this->fail( 'jpeg support unavailable' );
+		}
 
 		// Call wp_save_image_file
 		include_once( ABSPATH . 'wp-admin/includes/image-edit.php' );

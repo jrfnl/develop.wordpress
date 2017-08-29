@@ -114,7 +114,7 @@ class WP_User_Query {
 			'nicename__not_in' => array(),
 			'login' => '',
 			'login__in' => array(),
-			'login__not_in' => array()
+			'login__not_in' => array(),
 		);
 
 		return wp_parse_args( $args, $defaults );
@@ -231,7 +231,7 @@ class WP_User_Query {
 
 		// Ensure that query vars are filled after 'pre_get_users'.
 		$qv =& $this->query_vars;
-		$qv =  $this->fill_query_vars( $qv );
+		$qv = $this->fill_query_vars( $qv );
 
 		if ( is_array( $qv['fields'] ) ) {
 			$qv['fields'] = array_unique( $qv['fields'] );
@@ -248,11 +248,12 @@ class WP_User_Query {
 			$this->query_fields = "$wpdb->users.ID";
 		}
 
-		if ( isset( $qv['count_total'] ) && $qv['count_total'] )
+		if ( isset( $qv['count_total'] ) && $qv['count_total'] ) {
 			$this->query_fields = 'SQL_CALC_FOUND_ROWS ' . $this->query_fields;
+		}
 
 		$this->query_from = "FROM $wpdb->users";
-		$this->query_where = "WHERE 1=1";
+		$this->query_where = 'WHERE 1=1';
 
 		// Parse and sanitize 'include', for use by 'orderby' as well as 'include' below.
 		if ( ! empty( $qv['include'] ) ) {
@@ -278,11 +279,11 @@ class WP_User_Query {
 			}
 
 			$posts_table = $wpdb->get_blog_prefix( $blog_id ) . 'posts';
-			$this->query_where .= " AND $wpdb->users.ID IN ( SELECT DISTINCT $posts_table.post_author FROM $posts_table WHERE $posts_table.post_status = 'publish' AND $posts_table.post_type IN ( " . join( ", ", $post_types ) . " ) )";
+			$this->query_where .= " AND $wpdb->users.ID IN ( SELECT DISTINCT $posts_table.post_author FROM $posts_table WHERE $posts_table.post_status = 'publish' AND $posts_table.post_type IN ( " . join( ', ', $post_types ) . ' ) )';
 		}
 
 		// nicename
-		if ( '' !== $qv['nicename']) {
+		if ( '' !== $qv['nicename'] ) {
 			$this->query_where .= $wpdb->prepare( ' AND user_nicename = %s', $qv['nicename'] );
 		}
 
@@ -299,7 +300,7 @@ class WP_User_Query {
 		}
 
 		// login
-		if ( '' !== $qv['login']) {
+		if ( '' !== $qv['login'] ) {
 			$this->query_where .= $wpdb->prepare( ' AND user_login = %s', $qv['login'] );
 		}
 
@@ -490,43 +491,47 @@ class WP_User_Query {
 		// limit
 		if ( isset( $qv['number'] ) && $qv['number'] > 0 ) {
 			if ( $qv['offset'] ) {
-				$this->query_limit = $wpdb->prepare("LIMIT %d, %d", $qv['offset'], $qv['number']);
+				$this->query_limit = $wpdb->prepare( 'LIMIT %d, %d', $qv['offset'], $qv['number'] );
 			} else {
-				$this->query_limit = $wpdb->prepare( "LIMIT %d, %d", $qv['number'] * ( $qv['paged'] - 1 ), $qv['number'] );
+				$this->query_limit = $wpdb->prepare( 'LIMIT %d, %d', $qv['number'] * ( $qv['paged'] - 1 ), $qv['number'] );
 			}
 		}
 
 		$search = '';
-		if ( isset( $qv['search'] ) )
+		if ( isset( $qv['search'] ) ) {
 			$search = trim( $qv['search'] );
+		}
 
 		if ( $search ) {
-			$leading_wild = ( ltrim($search, '*') != $search );
-			$trailing_wild = ( rtrim($search, '*') != $search );
-			if ( $leading_wild && $trailing_wild )
+			$leading_wild = ( ltrim( $search, '*' ) != $search );
+			$trailing_wild = ( rtrim( $search, '*' ) != $search );
+			if ( $leading_wild && $trailing_wild ) {
 				$wild = 'both';
-			elseif ( $leading_wild )
+			} elseif ( $leading_wild ) {
 				$wild = 'leading';
-			elseif ( $trailing_wild )
+			} elseif ( $trailing_wild ) {
 				$wild = 'trailing';
-			else
+			} else {
 				$wild = false;
-			if ( $wild )
-				$search = trim($search, '*');
+			}
+			if ( $wild ) {
+				$search = trim( $search, '*' );
+			}
 
 			$search_columns = array();
 			if ( $qv['search_columns'] ) {
 				$search_columns = array_intersect( $qv['search_columns'], array( 'ID', 'user_login', 'user_email', 'user_url', 'user_nicename', 'display_name' ) );
 			}
 			if ( ! $search_columns ) {
-				if ( false !== strpos( $search, '@') )
-					$search_columns = array('user_email');
-				elseif ( is_numeric($search) )
-					$search_columns = array('user_login', 'ID');
-				elseif ( preg_match('|^https?://|', $search) && ! ( is_multisite() && wp_is_large_network( 'users' ) ) )
-					$search_columns = array('user_url');
-				else
-					$search_columns = array('user_login', 'user_url', 'user_email', 'user_nicename', 'display_name');
+				if ( false !== strpos( $search, '@' ) ) {
+					$search_columns = array( 'user_email' );
+				} elseif ( is_numeric( $search ) ) {
+					$search_columns = array( 'user_login', 'ID' );
+				} elseif ( preg_match( '|^https?://|', $search ) && ! ( is_multisite() && wp_is_large_network( 'users' ) ) ) {
+					$search_columns = array( 'user_url' );
+				} else {
+					$search_columns = array( 'user_login', 'user_url', 'user_email', 'user_nicename', 'display_name' );
+				}
 			}
 
 			/**
@@ -605,18 +610,21 @@ class WP_User_Query {
 		 *
 		 * @param string $sql The SELECT FOUND_ROWS() query for the current WP_User_Query.
 		 */
-		if ( isset( $qv['count_total'] ) && $qv['count_total'] )
+		if ( isset( $qv['count_total'] ) && $qv['count_total'] ) {
 			$this->total_users = (int) $wpdb->get_var( apply_filters( 'found_users_query', 'SELECT FOUND_ROWS()' ) );
+		}
 
-		if ( !$this->results )
+		if ( ! $this->results ) {
 			return;
+		}
 
 		if ( 'all_with_meta' == $qv['fields'] ) {
 			cache_users( $this->results );
 
 			$r = array();
-			foreach ( $this->results as $userid )
+			foreach ( $this->results as $userid ) {
 				$r[ $userid ] = new WP_User( $userid, '', $qv['blog_id'] );
+			}
 
 			$this->results = $r;
 		} elseif ( 'all' == $qv['fields'] ) {
@@ -635,8 +643,9 @@ class WP_User_Query {
 	 * @return mixed
 	 */
 	public function get( $query_var ) {
-		if ( isset( $this->query_vars[$query_var] ) )
-			return $this->query_vars[$query_var];
+		if ( isset( $this->query_vars[ $query_var ] ) ) {
+			return $this->query_vars[ $query_var ];
+		}
 
 		return null;
 	}
@@ -650,7 +659,7 @@ class WP_User_Query {
 	 * @param mixed $value Query variable value.
 	 */
 	public function set( $query_var, $value ) {
-		$this->query_vars[$query_var] = $value;
+		$this->query_vars[ $query_var ] = $value;
 	}
 
 	/**
@@ -682,7 +691,7 @@ class WP_User_Query {
 			}
 		}
 
-		return ' AND (' . implode(' OR ', $searches) . ')';
+		return ' AND (' . implode( ' OR ', $searches ) . ')';
 	}
 
 	/**
@@ -760,7 +769,7 @@ class WP_User_Query {
 			$_orderby = "FIELD( user_login, '$login__in' )";
 		} elseif ( isset( $meta_query_clauses[ $orderby ] ) ) {
 			$meta_clause = $meta_query_clauses[ $orderby ];
-			$_orderby = sprintf( "CAST(%s.meta_value AS %s)", esc_sql( $meta_clause['alias'] ), esc_sql( $meta_clause['cast'] ) );
+			$_orderby = sprintf( 'CAST(%s.meta_value AS %s)', esc_sql( $meta_clause['alias'] ), esc_sql( $meta_clause['cast'] ) );
 		}
 
 		return $_orderby;

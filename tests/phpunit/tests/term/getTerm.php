@@ -23,7 +23,8 @@ class Tests_Term_GetTerm extends WP_UnitTestCase {
 		$t2 = wp_insert_term( 'Foo', 'wptests_tax_2' );
 
 		// Manually modify because shared terms shouldn't naturally occur.
-		$wpdb->update( $wpdb->term_taxonomy,
+		$wpdb->update(
+			$wpdb->term_taxonomy,
 			array( 'term_id' => $t1['term_id'] ),
 			array( 'term_taxonomy_id' => $t2['term_taxonomy_id'] ),
 			array( '%d' ),
@@ -145,7 +146,7 @@ class Tests_Term_GetTerm extends WP_UnitTestCase {
 	/**
 	 * @ticket 34332
 	 */
-	 public function test_should_return_null_when_provided_taxonomy_does_not_match_actual_term_taxonomy() {
+	public function test_should_return_null_when_provided_taxonomy_does_not_match_actual_term_taxonomy() {
 		$term_id = self::factory()->term->create( array( 'taxonomy' => 'post_tag' ) );
 		$this->assertNull( get_term( $term_id, 'category' ) );
 	}

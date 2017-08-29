@@ -80,23 +80,25 @@ final class _WP_Editors {
 		 */
 		$settings = apply_filters( 'wp_editor_settings', $settings, $editor_id );
 
-		$set = wp_parse_args( $settings, array(
-			'wpautop'             => true,
-			'media_buttons'       => true,
-			'default_editor'      => '',
-			'drag_drop_upload'    => false,
-			'textarea_name'       => $editor_id,
-			'textarea_rows'       => 20,
-			'tabindex'            => '',
-			'tabfocus_elements'   => ':prev,:next',
-			'editor_css'          => '',
-			'editor_class'        => '',
-			'teeny'               => false,
-			'dfw'                 => false,
-			'_content_editor_dfw' => false,
-			'tinymce'             => true,
-			'quicktags'           => true
-		) );
+		$set = wp_parse_args(
+			$settings, array(
+				'wpautop'             => true,
+				'media_buttons'       => true,
+				'default_editor'      => '',
+				'drag_drop_upload'    => false,
+				'textarea_name'       => $editor_id,
+				'textarea_rows'       => 20,
+				'tabindex'            => '',
+				'tabfocus_elements'   => ':prev,:next',
+				'editor_css'          => '',
+				'editor_class'        => '',
+				'teeny'               => false,
+				'dfw'                 => false,
+				'_content_editor_dfw' => false,
+				'tinymce'             => true,
+				'quicktags'           => true,
+			)
+		);
 
 		self::$this_tinymce = ( $set['tinymce'] && user_can_richedit() );
 
@@ -109,31 +111,36 @@ final class _WP_Editors {
 
 		self::$this_quicktags = (bool) $set['quicktags'];
 
-		if ( self::$this_tinymce )
+		if ( self::$this_tinymce ) {
 			self::$has_tinymce = true;
+		}
 
-		if ( self::$this_quicktags )
+		if ( self::$this_quicktags ) {
 			self::$has_quicktags = true;
+		}
 
 		if ( $set['dfw'] ) {
 			self::$old_dfw_compat = true;
 		}
 
-		if ( empty( $set['editor_height'] ) )
+		if ( empty( $set['editor_height'] ) ) {
 			return $set;
+		}
 
 		if ( 'content' === $editor_id && empty( $set['tinymce']['wp_autoresize_on'] ) ) {
 			// A cookie (set when a user resizes the editor) overrides the height.
 			$cookie = (int) get_user_setting( 'ed_size' );
 
-			if ( $cookie )
+			if ( $cookie ) {
 				$set['editor_height'] = $cookie;
+			}
 		}
 
-		if ( $set['editor_height'] < 50 )
+		if ( $set['editor_height'] < 50 ) {
 			$set['editor_height'] = 50;
-		elseif ( $set['editor_height'] > 5000 )
+		} elseif ( $set['editor_height'] > 5000 ) {
 			$set['editor_height'] = 5000;
+		}
 
 		return $set;
 	}
@@ -211,8 +218,9 @@ final class _WP_Editors {
 			if ( $set['media_buttons'] ) {
 				self::$has_medialib = true;
 
-				if ( ! function_exists( 'media_buttons' ) )
+				if ( ! function_exists( 'media_buttons' ) ) {
 					include( ABSPATH . 'wp-admin/includes/media.php' );
+				}
 
 				echo '<div id="wp-' . $editor_id_attr . '-media-buttons" class="wp-media-buttons">';
 
@@ -250,10 +258,12 @@ final class _WP_Editors {
 		 *
 		 * @param string $output Editor's HTML markup.
 		 */
-		$the_editor = apply_filters( 'the_editor', '<div id="wp-' . $editor_id_attr . '-editor-container" class="wp-editor-container">' .
+		$the_editor = apply_filters(
+			'the_editor', '<div id="wp-' . $editor_id_attr . '-editor-container" class="wp-editor-container">' .
 			$quicktags_toolbar .
 			'<textarea' . $editor_class . $height . $tabindex . $autocomplete . ' cols="40" name="' . esc_attr( $set['textarea_name'] ) . '" ' .
-			'id="' . $editor_id_attr . '">%s</textarea></div>' );
+			'id="' . $editor_id_attr . '">%s</textarea></div>'
+		);
 
 		// Prepare the content for the Visual or Text editor, only when TinyMCE is used (back-compat).
 		if ( self::$this_tinymce ) {
@@ -304,10 +314,10 @@ final class _WP_Editors {
 	 * @param string $editor_id
 	 * @param array  $set
 	 */
-	public static function editor_settings($editor_id, $set) {
+	public static function editor_settings( $editor_id, $set ) {
 		global $tinymce_version;
 
-		if ( empty(self::$first_init) ) {
+		if ( empty( self::$first_init ) ) {
 			if ( is_admin() ) {
 				add_action( 'admin_print_footer_scripts', array( __CLASS__, 'editor_js' ), 50 );
 				add_action( 'admin_print_footer_scripts', array( __CLASS__, 'enqueue_scripts' ), 1 );
@@ -321,14 +331,16 @@ final class _WP_Editors {
 
 			$qtInit = array(
 				'id' => $editor_id,
-				'buttons' => ''
+				'buttons' => '',
 			);
 
-			if ( is_array($set['quicktags']) )
-				$qtInit = array_merge($qtInit, $set['quicktags']);
+			if ( is_array( $set['quicktags'] ) ) {
+				$qtInit = array_merge( $qtInit, $set['quicktags'] );
+			}
 
-			if ( empty($qtInit['buttons']) )
+			if ( empty( $qtInit['buttons'] ) ) {
 				$qtInit['buttons'] = 'strong,em,link,block,del,ins,img,ul,ol,li,code,more,close';
+			}
 
 			if ( $set['_content_editor_dfw'] ) {
 				$qtInit['buttons'] .= ',dfw';
@@ -344,9 +356,9 @@ final class _WP_Editors {
 			 */
 			$qtInit = apply_filters( 'quicktags_settings', $qtInit, $editor_id );
 
-			self::$qt_settings[$editor_id] = $qtInit;
+			self::$qt_settings[ $editor_id ] = $qtInit;
 
-			self::$qt_buttons = array_merge( self::$qt_buttons, explode(',', $qtInit['buttons']) );
+			self::$qt_buttons = array_merge( self::$qt_buttons, explode( ',', $qtInit['buttons'] ) );
 		}
 
 		if ( self::$this_tinymce ) {
@@ -428,7 +440,7 @@ final class _WP_Editors {
 					if ( ( $key = array_search( 'spellchecker', $plugins ) ) !== false ) {
 						// Remove 'spellchecker' from the internal plugins if added with 'tiny_mce_plugins' filter to prevent errors.
 						// It can be added with 'mce_external_plugins'.
-						unset( $plugins[$key] );
+						unset( $plugins[ $key ] );
 					}
 
 					if ( ! empty( $mce_external_plugins ) ) {
@@ -477,14 +489,17 @@ final class _WP_Editors {
 								$path = str_replace( content_url(), '', $plugurl );
 								$path = WP_CONTENT_DIR . $path . '/langs/';
 
-								if ( function_exists('realpath') )
-									$path = trailingslashit( realpath($path) );
+								if ( function_exists( 'realpath' ) ) {
+									$path = trailingslashit( realpath( $path ) );
+								}
 
-								if ( @is_file( $path . $mce_locale . '.js' ) )
+								if ( @is_file( $path . $mce_locale . '.js' ) ) {
 									$strings .= @file_get_contents( $path . $mce_locale . '.js' ) . "\n";
+								}
 
-								if ( @is_file( $path . $mce_locale . '_dlg.js' ) )
+								if ( @is_file( $path . $mce_locale . '_dlg.js' ) ) {
 									$strings .= @file_get_contents( $path . $mce_locale . '_dlg.js' ) . "\n";
+								}
 
 								if ( 'en' != $mce_locale && empty( $strings ) ) {
 									if ( @is_file( $path . 'en.js' ) ) {
@@ -498,8 +513,9 @@ final class _WP_Editors {
 									}
 								}
 
-								if ( ! empty( $strings ) )
+								if ( ! empty( $strings ) ) {
 									$ext_plugins .= "\n" . $strings . "\n";
+								}
 							}
 
 							$ext_plugins .= 'tinyMCEPreInit.load_ext("' . $plugurl . '", "' . $mce_locale . '");' . "\n";
@@ -565,7 +581,7 @@ final class _WP_Editors {
 				 * @param array  $buttons   An array of teenyMCE buttons.
 				 * @param string $editor_id Unique editor identifier, e.g. 'content'.
 				 */
-				$mce_buttons = apply_filters( 'teeny_mce_buttons', array('bold', 'italic', 'underline', 'blockquote', 'strikethrough', 'bullist', 'numlist', 'alignleft', 'aligncenter', 'alignright', 'undo', 'redo', 'link', 'unlink', 'fullscreen'), $editor_id );
+				$mce_buttons = apply_filters( 'teeny_mce_buttons', array( 'bold', 'italic', 'underline', 'blockquote', 'strikethrough', 'bullist', 'numlist', 'alignleft', 'aligncenter', 'alignright', 'undo', 'redo', 'link', 'unlink', 'fullscreen' ), $editor_id );
 				$mce_buttons_2 = $mce_buttons_3 = $mce_buttons_4 = array();
 			} else {
 				$mce_buttons = array( 'formatselect', 'bold', 'italic', 'bullist', 'numlist', 'blockquote', 'alignleft', 'aligncenter', 'alignright', 'link', 'unlink', 'wp_more', 'spellchecker' );
@@ -634,10 +650,11 @@ final class _WP_Editors {
 
 				if ( post_type_supports( $post->post_type, 'post-formats' ) ) {
 					$post_format = get_post_format( $post );
-					if ( $post_format && ! is_wp_error( $post_format ) )
+					if ( $post_format && ! is_wp_error( $post_format ) ) {
 						$body_class .= ' post-format-' . sanitize_html_class( $post_format );
-					else
+					} else {
 						$body_class .= ' post-format-standard';
+					}
 				}
 
 				$page_template = get_page_template_slug( $post );
@@ -655,7 +672,7 @@ final class _WP_Editors {
 				unset( $set['tinymce']['body_class'] );
 			}
 
-			$mceInit = array (
+			$mceInit = array(
 				'selector' => "#$editor_id",
 				'wpautop' => (bool) $set['wpautop'],
 				'indent' => ! $set['wpautop'],
@@ -664,14 +681,15 @@ final class _WP_Editors {
 				'toolbar3' => implode( ',', $mce_buttons_3 ),
 				'toolbar4' => implode( ',', $mce_buttons_4 ),
 				'tabfocus_elements' => $set['tabfocus_elements'],
-				'body_class' => $body_class
+				'body_class' => $body_class,
 			);
 
 			// Merge with the first part of the init array
 			$mceInit = array_merge( self::$first_init, $mceInit );
 
-			if ( is_array( $set['tinymce'] ) )
+			if ( is_array( $set['tinymce'] ) ) {
 				$mceInit = array_merge( $mceInit, $set['tinymce'] );
+			}
 
 			/*
 			 * For people who really REALLY know what they're doing with TinyMCE
@@ -710,7 +728,7 @@ final class _WP_Editors {
 				$mceInit['toolbar4'] = '';
 			}
 
-			self::$mce_settings[$editor_id] = $mceInit;
+			self::$mce_settings[ $editor_id ] = $mceInit;
 		} // end if self::$this_tinymce
 	}
 
@@ -781,10 +799,12 @@ final class _WP_Editors {
 		 * @param array $to_load An array containing boolean values whether TinyMCE
 		 *                       and Quicktags are being loaded.
 		 */
-		do_action( 'wp_enqueue_editor', array(
-			'tinymce'   => ( $default_scripts || self::$has_tinymce ),
-			'quicktags' => ( $default_scripts || self::$has_quicktags ),
-		) );
+		do_action(
+			'wp_enqueue_editor', array(
+				'tinymce'   => ( $default_scripts || self::$has_tinymce ),
+				'quicktags' => ( $default_scripts || self::$has_quicktags ),
+			)
+		);
 	}
 
 	/**
@@ -836,23 +856,25 @@ final class _WP_Editors {
 			// In production all plugins are loaded (they are in wp-editor.js.gz).
 			// The 'wpview', 'wpdialogs', and 'media' TinyMCE plugins are not initialized by default.
 			// Can be added from js by using the 'wp-before-tinymce-init' event.
-			$settings['plugins'] = implode( ',', array(
-				'charmap',
-				'colorpicker',
-				'hr',
-				'lists',
-				'paste',
-				'tabfocus',
-				'textcolor',
-				'fullscreen',
-				'wordpress',
-				'wpautoresize',
-				'wpeditimage',
-				'wpemoji',
-				'wpgallery',
-				'wplink',
-				'wptextpattern',
-			) );
+			$settings['plugins'] = implode(
+				',', array(
+					'charmap',
+					'colorpicker',
+					'hr',
+					'lists',
+					'paste',
+					'tabfocus',
+					'textcolor',
+					'fullscreen',
+					'wordpress',
+					'wpautoresize',
+					'wpeditimage',
+					'wpemoji',
+					'wpgallery',
+					'wplink',
+					'wptextpattern',
+				)
+			);
 
 			$settings = self::_parse_init( $settings );
 		} else {
@@ -939,7 +961,7 @@ final class _WP_Editors {
 
 		foreach ( self::get_translation() as $name => $value ) {
 			if ( is_array( $value ) ) {
-				$shortcut_labels[$name] = $value[1];
+				$shortcut_labels[ $name ] = $value[1];
 			}
 		}
 
@@ -997,148 +1019,148 @@ final class _WP_Editors {
 	private static function get_translation() {
 		if ( empty( self::$translation ) ) {
 			self::$translation = array(
-			// Default TinyMCE strings
-			'New document' => __( 'New document' ),
-			'Formats' => _x( 'Formats', 'TinyMCE' ),
+				// Default TinyMCE strings
+				'New document' => __( 'New document' ),
+				'Formats' => _x( 'Formats', 'TinyMCE' ),
 
-			'Headings' => _x( 'Headings', 'TinyMCE' ),
-			'Heading 1' => array( __( 'Heading 1' ), 'access1' ),
-			'Heading 2' => array( __( 'Heading 2' ), 'access2' ),
-			'Heading 3' => array( __( 'Heading 3' ), 'access3' ),
-			'Heading 4' => array( __( 'Heading 4' ), 'access4' ),
-			'Heading 5' => array( __( 'Heading 5' ), 'access5' ),
-			'Heading 6' => array( __( 'Heading 6' ), 'access6' ),
+				'Headings' => _x( 'Headings', 'TinyMCE' ),
+				'Heading 1' => array( __( 'Heading 1' ), 'access1' ),
+				'Heading 2' => array( __( 'Heading 2' ), 'access2' ),
+				'Heading 3' => array( __( 'Heading 3' ), 'access3' ),
+				'Heading 4' => array( __( 'Heading 4' ), 'access4' ),
+				'Heading 5' => array( __( 'Heading 5' ), 'access5' ),
+				'Heading 6' => array( __( 'Heading 6' ), 'access6' ),
 
-			/* translators: block tags */
-			'Blocks' => _x( 'Blocks', 'TinyMCE' ),
-			'Paragraph' => array( __( 'Paragraph' ), 'access7' ),
-			'Blockquote' => array( __( 'Blockquote' ), 'accessQ' ),
-			'Div' => _x( 'Div', 'HTML tag' ),
-			'Pre' => _x( 'Pre', 'HTML tag' ),
-			'Preformatted' => _x( 'Preformatted', 'HTML tag' ),
-			'Address' => _x( 'Address', 'HTML tag' ),
+				/* translators: block tags */
+				'Blocks' => _x( 'Blocks', 'TinyMCE' ),
+				'Paragraph' => array( __( 'Paragraph' ), 'access7' ),
+				'Blockquote' => array( __( 'Blockquote' ), 'accessQ' ),
+				'Div' => _x( 'Div', 'HTML tag' ),
+				'Pre' => _x( 'Pre', 'HTML tag' ),
+				'Preformatted' => _x( 'Preformatted', 'HTML tag' ),
+				'Address' => _x( 'Address', 'HTML tag' ),
 
-			'Inline' => _x( 'Inline', 'HTML elements' ),
-			'Underline' => array( __( 'Underline' ), 'metaU' ),
-			'Strikethrough' => array( __( 'Strikethrough' ), 'accessD' ),
-			'Subscript' => __( 'Subscript' ),
-			'Superscript' => __( 'Superscript' ),
-			'Clear formatting' => __( 'Clear formatting' ),
-			'Bold' => array( __( 'Bold' ), 'metaB' ),
-			'Italic' => array( __( 'Italic' ), 'metaI' ),
-			'Code' => array( __( 'Code' ), 'accessX' ),
-			'Source code' => __( 'Source code' ),
-			'Font Family' => __( 'Font Family' ),
-			'Font Sizes' => __( 'Font Sizes' ),
+				'Inline' => _x( 'Inline', 'HTML elements' ),
+				'Underline' => array( __( 'Underline' ), 'metaU' ),
+				'Strikethrough' => array( __( 'Strikethrough' ), 'accessD' ),
+				'Subscript' => __( 'Subscript' ),
+				'Superscript' => __( 'Superscript' ),
+				'Clear formatting' => __( 'Clear formatting' ),
+				'Bold' => array( __( 'Bold' ), 'metaB' ),
+				'Italic' => array( __( 'Italic' ), 'metaI' ),
+				'Code' => array( __( 'Code' ), 'accessX' ),
+				'Source code' => __( 'Source code' ),
+				'Font Family' => __( 'Font Family' ),
+				'Font Sizes' => __( 'Font Sizes' ),
 
-			'Align center' => array( __( 'Align center' ), 'accessC' ),
-			'Align right' => array( __( 'Align right' ), 'accessR' ),
-			'Align left' => array( __( 'Align left' ), 'accessL' ),
-			'Justify' => array( __( 'Justify' ), 'accessJ' ),
-			'Increase indent' => __( 'Increase indent' ),
-			'Decrease indent' => __( 'Decrease indent' ),
+				'Align center' => array( __( 'Align center' ), 'accessC' ),
+				'Align right' => array( __( 'Align right' ), 'accessR' ),
+				'Align left' => array( __( 'Align left' ), 'accessL' ),
+				'Justify' => array( __( 'Justify' ), 'accessJ' ),
+				'Increase indent' => __( 'Increase indent' ),
+				'Decrease indent' => __( 'Decrease indent' ),
 
-			'Cut' => array( __( 'Cut' ), 'metaX' ),
-			'Copy' => array( __( 'Copy' ), 'metaC' ),
-			'Paste' => array( __( 'Paste' ), 'metaV' ),
-			'Select all' => array( __( 'Select all' ), 'metaA' ),
-			'Undo' => array( __( 'Undo' ), 'metaZ' ),
-			'Redo' => array( __( 'Redo' ), 'metaY' ),
+				'Cut' => array( __( 'Cut' ), 'metaX' ),
+				'Copy' => array( __( 'Copy' ), 'metaC' ),
+				'Paste' => array( __( 'Paste' ), 'metaV' ),
+				'Select all' => array( __( 'Select all' ), 'metaA' ),
+				'Undo' => array( __( 'Undo' ), 'metaZ' ),
+				'Redo' => array( __( 'Redo' ), 'metaY' ),
 
-			'Ok' => __( 'OK' ),
-			'Cancel' => __( 'Cancel' ),
-			'Close' => __( 'Close' ),
-			'Visual aids' => __( 'Visual aids' ),
+				'Ok' => __( 'OK' ),
+				'Cancel' => __( 'Cancel' ),
+				'Close' => __( 'Close' ),
+				'Visual aids' => __( 'Visual aids' ),
 
-			'Bullet list' => array( __( 'Bulleted list' ), 'accessU' ),
-			'Numbered list' => array( __( 'Numbered list' ), 'accessO' ),
-			'Square' => _x( 'Square', 'list style' ),
-			'Default' => _x( 'Default', 'list style' ),
-			'Circle' => _x( 'Circle', 'list style' ),
-			'Disc' => _x('Disc', 'list style' ),
-			'Lower Greek' => _x( 'Lower Greek', 'list style' ),
-			'Lower Alpha' => _x( 'Lower Alpha', 'list style' ),
-			'Upper Alpha' => _x( 'Upper Alpha', 'list style' ),
-			'Upper Roman' => _x( 'Upper Roman', 'list style' ),
-			'Lower Roman' => _x( 'Lower Roman', 'list style' ),
+				'Bullet list' => array( __( 'Bulleted list' ), 'accessU' ),
+				'Numbered list' => array( __( 'Numbered list' ), 'accessO' ),
+				'Square' => _x( 'Square', 'list style' ),
+				'Default' => _x( 'Default', 'list style' ),
+				'Circle' => _x( 'Circle', 'list style' ),
+				'Disc' => _x( 'Disc', 'list style' ),
+				'Lower Greek' => _x( 'Lower Greek', 'list style' ),
+				'Lower Alpha' => _x( 'Lower Alpha', 'list style' ),
+				'Upper Alpha' => _x( 'Upper Alpha', 'list style' ),
+				'Upper Roman' => _x( 'Upper Roman', 'list style' ),
+				'Lower Roman' => _x( 'Lower Roman', 'list style' ),
 
-			// Anchor plugin
-			'Name' => _x( 'Name', 'Name of link anchor (TinyMCE)' ),
-			'Anchor' => _x( 'Anchor', 'Link anchor (TinyMCE)' ),
-			'Anchors' => _x( 'Anchors', 'Link anchors (TinyMCE)' ),
-			'Id should start with a letter, followed only by letters, numbers, dashes, dots, colons or underscores.' =>
-				__( 'Id should start with a letter, followed only by letters, numbers, dashes, dots, colons or underscores.' ),
-			'Id' => _x( 'Id', 'Id for link anchor (TinyMCE)' ),
+				// Anchor plugin
+				'Name' => _x( 'Name', 'Name of link anchor (TinyMCE)' ),
+				'Anchor' => _x( 'Anchor', 'Link anchor (TinyMCE)' ),
+				'Anchors' => _x( 'Anchors', 'Link anchors (TinyMCE)' ),
+				'Id should start with a letter, followed only by letters, numbers, dashes, dots, colons or underscores.' =>
+					__( 'Id should start with a letter, followed only by letters, numbers, dashes, dots, colons or underscores.' ),
+				'Id' => _x( 'Id', 'Id for link anchor (TinyMCE)' ),
 
-			// Fullpage plugin
-			'Document properties' => __( 'Document properties' ),
-			'Robots' => __( 'Robots' ),
-			'Title' => __( 'Title' ),
-			'Keywords' => __( 'Keywords' ),
-			'Encoding' => __( 'Encoding' ),
-			'Description' => __( 'Description' ),
-			'Author' => __( 'Author' ),
+				// Fullpage plugin
+				'Document properties' => __( 'Document properties' ),
+				'Robots' => __( 'Robots' ),
+				'Title' => __( 'Title' ),
+				'Keywords' => __( 'Keywords' ),
+				'Encoding' => __( 'Encoding' ),
+				'Description' => __( 'Description' ),
+				'Author' => __( 'Author' ),
 
-			// Media, image plugins
-			'Image' => __( 'Image' ),
-			'Insert/edit image' => array( __( 'Insert/edit image' ), 'accessM' ),
-			'General' => __( 'General' ),
-			'Advanced' => __( 'Advanced' ),
-			'Source' => __( 'Source' ),
-			'Border' => __( 'Border' ),
-			'Constrain proportions' => __( 'Constrain proportions' ),
-			'Vertical space' => __( 'Vertical space' ),
-			'Image description' => __( 'Image description' ),
-			'Style' => __( 'Style' ),
-			'Dimensions' => __( 'Dimensions' ),
-			'Insert image' => __( 'Insert image' ),
-			'Date/time' => __( 'Date/time' ),
-			'Insert date/time' => __( 'Insert date/time' ),
-			'Table of Contents' => __( 'Table of Contents' ),
-			'Insert/Edit code sample' => __( 'Insert/edit code sample' ),
-			'Language' => __( 'Language' ),
-			'Media' => __( 'Media' ),
-			'Insert/edit media' => __( 'Insert/edit media' ),
-			'Poster' => __( 'Poster' ),
-			'Alternative source' => __( 'Alternative source' ),
-			'Paste your embed code below:' => __( 'Paste your embed code below:' ),
-			'Insert video' => __( 'Insert video' ),
-			'Embed' => __( 'Embed' ),
+				// Media, image plugins
+				'Image' => __( 'Image' ),
+				'Insert/edit image' => array( __( 'Insert/edit image' ), 'accessM' ),
+				'General' => __( 'General' ),
+				'Advanced' => __( 'Advanced' ),
+				'Source' => __( 'Source' ),
+				'Border' => __( 'Border' ),
+				'Constrain proportions' => __( 'Constrain proportions' ),
+				'Vertical space' => __( 'Vertical space' ),
+				'Image description' => __( 'Image description' ),
+				'Style' => __( 'Style' ),
+				'Dimensions' => __( 'Dimensions' ),
+				'Insert image' => __( 'Insert image' ),
+				'Date/time' => __( 'Date/time' ),
+				'Insert date/time' => __( 'Insert date/time' ),
+				'Table of Contents' => __( 'Table of Contents' ),
+				'Insert/Edit code sample' => __( 'Insert/edit code sample' ),
+				'Language' => __( 'Language' ),
+				'Media' => __( 'Media' ),
+				'Insert/edit media' => __( 'Insert/edit media' ),
+				'Poster' => __( 'Poster' ),
+				'Alternative source' => __( 'Alternative source' ),
+				'Paste your embed code below:' => __( 'Paste your embed code below:' ),
+				'Insert video' => __( 'Insert video' ),
+				'Embed' => __( 'Embed' ),
 
-			// Each of these have a corresponding plugin
-			'Special character' => __( 'Special character' ),
-			'Right to left' => _x( 'Right to left', 'editor button' ),
-			'Left to right' => _x( 'Left to right', 'editor button' ),
-			'Emoticons' => __( 'Emoticons' ),
-			'Nonbreaking space' => __( 'Nonbreaking space' ),
-			'Page break' => __( 'Page break' ),
-			'Paste as text' => __( 'Paste as text' ),
-			'Preview' => __( 'Preview' ),
-			'Print' => __( 'Print' ),
-			'Save' => __( 'Save' ),
-			'Fullscreen' => __( 'Fullscreen' ),
-			'Horizontal line' => __( 'Horizontal line' ),
-			'Horizontal space' => __( 'Horizontal space' ),
-			'Restore last draft' => __( 'Restore last draft' ),
-			'Insert/edit link' => array( __( 'Insert/edit link' ), 'metaK' ),
-			'Remove link' => array( __( 'Remove link' ), 'accessS' ),
+				// Each of these have a corresponding plugin
+				'Special character' => __( 'Special character' ),
+				'Right to left' => _x( 'Right to left', 'editor button' ),
+				'Left to right' => _x( 'Left to right', 'editor button' ),
+				'Emoticons' => __( 'Emoticons' ),
+				'Nonbreaking space' => __( 'Nonbreaking space' ),
+				'Page break' => __( 'Page break' ),
+				'Paste as text' => __( 'Paste as text' ),
+				'Preview' => __( 'Preview' ),
+				'Print' => __( 'Print' ),
+				'Save' => __( 'Save' ),
+				'Fullscreen' => __( 'Fullscreen' ),
+				'Horizontal line' => __( 'Horizontal line' ),
+				'Horizontal space' => __( 'Horizontal space' ),
+				'Restore last draft' => __( 'Restore last draft' ),
+				'Insert/edit link' => array( __( 'Insert/edit link' ), 'metaK' ),
+				'Remove link' => array( __( 'Remove link' ), 'accessS' ),
 
-			// Link plugin
-			'Link' => __( 'Link' ),
-			'Insert link' => __( 'Insert link' ),
-			'Insert/edit link' => __( 'Insert/edit link' ),
-			'Target' => __( 'Target' ),
-			'New window' => __( 'New window' ),
-			'Text to display' => __( 'Text to display' ),
-			'Url' => __( 'URL' ),
-			'The URL you entered seems to be an email address. Do you want to add the required mailto: prefix?' =>
-				__( 'The URL you entered seems to be an email address. Do you want to add the required mailto: prefix?' ),
-			'The URL you entered seems to be an external link. Do you want to add the required http:// prefix?' =>
-				__( 'The URL you entered seems to be an external link. Do you want to add the required http:// prefix?' ),
+				// Link plugin
+				'Link' => __( 'Link' ),
+				'Insert link' => __( 'Insert link' ),
+				'Insert/edit link' => __( 'Insert/edit link' ),
+				'Target' => __( 'Target' ),
+				'New window' => __( 'New window' ),
+				'Text to display' => __( 'Text to display' ),
+				'Url' => __( 'URL' ),
+				'The URL you entered seems to be an email address. Do you want to add the required mailto: prefix?' =>
+					__( 'The URL you entered seems to be an email address. Do you want to add the required mailto: prefix?' ),
+				'The URL you entered seems to be an external link. Do you want to add the required http:// prefix?' =>
+					__( 'The URL you entered seems to be an external link. Do you want to add the required http:// prefix?' ),
 
-			'Color' => __( 'Color' ),
-			'Custom color' => __( 'Custom color' ),
-			'Custom...' => _x( 'Custom...', 'label for custom color' ), // no ellipsis
+				'Color' => __( 'Color' ),
+				'Custom color' => __( 'Custom color' ),
+				'Custom...' => _x( 'Custom...', 'label for custom color' ), // no ellipsis
 			'No color' => __( 'No color' ),
 			'R' => _x( 'R', 'Short for red in RGB' ),
 			'G' => _x( 'G', 'Short for green in RGB' ),
@@ -1152,7 +1174,7 @@ final class _WP_Editors {
 			'Prev' => _x( 'Prev', 'find/replace' ),
 			'Whole words' => _x( 'Whole words', 'find/replace' ),
 			'Find and replace' => __( 'Find and replace' ),
-			'Replace with' => _x('Replace with', 'find/replace' ),
+			'Replace with' => _x( 'Replace with', 'find/replace' ),
 			'Find' => _x( 'Find', 'find/replace' ),
 			'Replace all' => _x( 'Replace all', 'find/replace' ),
 			'Match case' => __( 'Match case' ),
@@ -1330,7 +1352,7 @@ final class _WP_Editors {
 
 		foreach ( $mce_translation as $name => $value ) {
 			if ( is_array( $value ) ) {
-				$mce_translation[$name] = $value[0];
+				$mce_translation[ $name ] = $value[0];
 			}
 		}
 
@@ -1347,12 +1369,12 @@ final class _WP_Editors {
 		foreach ( $mce_translation as $key => $value ) {
 			// Remove strings that are not translated.
 			if ( $key === $value ) {
-				unset( $mce_translation[$key] );
+				unset( $mce_translation[ $key ] );
 				continue;
 			}
 
 			if ( false !== strpos( $value, '&' ) ) {
-				$mce_translation[$key] = html_entity_decode( $value, ENT_QUOTES, 'UTF-8' );
+				$mce_translation[ $key ] = html_entity_decode( $value, ENT_QUOTES, 'UTF-8' );
 			}
 		}
 
@@ -1398,8 +1420,8 @@ final class _WP_Editors {
 		$version = 'ver=' . $tinymce_version;
 		$baseurl = self::get_baseurl();
 
-		$compressed = $compress_scripts && $concatenate_scripts && isset($_SERVER['HTTP_ACCEPT_ENCODING'])
-			&& false !== stripos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip');
+		$compressed = $compress_scripts && $concatenate_scripts && isset( $_SERVER['HTTP_ACCEPT_ENCODING'] )
+			&& false !== stripos( $_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip' );
 
 		// Load tinymce.js when running from /src, else load wp-tinymce.js.gz (production) or tinymce.min.js (SCRIPT_DEBUG)
 		$mce_suffix = false !== strpos( get_bloginfo( 'version' ), '-src' ) ? '' : '.min';
@@ -1449,7 +1471,7 @@ final class _WP_Editors {
 		$ref = array(
 			'plugins' => implode( ',', self::$plugins ),
 			'theme' => 'modern',
-			'language' => self::$mce_locale
+			'language' => self::$mce_locale,
 		);
 
 		$suffix = SCRIPT_DEBUG ? '' : '.min';
@@ -1508,11 +1530,13 @@ final class _WP_Editors {
 		<script type="text/javascript">
 		<?php
 
-		if ( self::$ext_plugins )
+		if ( self::$ext_plugins ) {
 			echo self::$ext_plugins . "\n";
+		}
 
-		if ( ! is_admin() )
+		if ( ! is_admin() ) {
 			echo 'var ajaxurl = "' . admin_url( 'admin-ajax.php', 'relative' ) . '";';
+		}
 
 		?>
 
@@ -1602,8 +1626,9 @@ final class _WP_Editors {
 
 		$args['pagenum'] = isset( $args['pagenum'] ) ? absint( $args['pagenum'] ) : 1;
 
-		if ( isset( $args['s'] ) )
+		if ( isset( $args['s'] ) ) {
 			$query['s'] = $args['s'];
+		}
 
 		$query['offset'] = $args['pagenum'] > 1 ? $query['posts_per_page'] * ( $args['pagenum'] - 1 ) : 0;
 
@@ -1624,16 +1649,18 @@ final class _WP_Editors {
 		$get_posts = new WP_Query;
 		$posts = $get_posts->query( $query );
 		// Check if any posts were found.
-		if ( ! $get_posts->post_count )
+		if ( ! $get_posts->post_count ) {
 			return false;
+		}
 
 		// Build results.
 		$results = array();
 		foreach ( $posts as $post ) {
-			if ( 'post' == $post->post_type )
+			if ( 'post' == $post->post_type ) {
 				$info = mysql2date( __( 'Y/m/d' ), $post->post_date );
-			else
+			} else {
 				$info = $pts[ $post->post_type ]->labels->singular_name;
+			}
 
 			$results[] = array(
 				'ID' => $post->ID,
@@ -1689,7 +1716,7 @@ final class _WP_Editors {
 		<div id="wp-link-wrap" class="wp-core-ui" style="display: none" role="dialog" aria-labelledby="link-modal-title">
 		<form id="wp-link" tabindex="-1">
 		<?php wp_nonce_field( 'internal-linking', '_ajax_linking_nonce', false ); ?>
-		<h1 id="link-modal-title"><?php _e( 'Insert/edit link' ) ?></h1>
+		<h1 id="link-modal-title"><?php _e( 'Insert/edit link' ); ?></h1>
 		<button type="button" id="wp-link-close"><span class="screen-reader-text"><?php _e( 'Close' ); ?></span></button>
 		<div id="link-selector">
 			<div id="link-options">
@@ -1731,8 +1758,8 @@ final class _WP_Editors {
 					<div class="river-waiting">
 						<span class="spinner"></span>
 					</div>
- 				</div>
- 			</div>
+				 </div>
+			 </div>
 		</div>
 		<div class="submitbox">
 			<div id="wp-link-cancel">

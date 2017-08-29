@@ -54,11 +54,13 @@ abstract class WP_Widget_Media extends WP_Widget {
 	 *                                for information on accepted arguments. Default empty array.
 	 */
 	public function __construct( $id_base, $name, $widget_options = array(), $control_options = array() ) {
-		$widget_opts = wp_parse_args( $widget_options, array(
-			'description' => __( 'A media item.' ),
-			'customize_selective_refresh' => true,
-			'mime_type' => '',
-		) );
+		$widget_opts = wp_parse_args(
+			$widget_options, array(
+				'description' => __( 'A media item.' ),
+				'customize_selective_refresh' => true,
+				'mime_type' => '',
+			)
+		);
 
 		$control_opts = wp_parse_args( $control_options, array() );
 

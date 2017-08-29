@@ -26,77 +26,99 @@ class WP_Test_REST_Post_Meta_Fields extends WP_Test_REST_TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		register_meta( 'post', 'test_single', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		));
-		register_meta( 'post', 'test_multi', array(
-			'show_in_rest' => true,
-			'single' => false,
-			'type' => 'string',
-		));
-		register_meta( 'post', 'test_bad_auth', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'auth_callback' => '__return_false',
-			'type' => 'string',
-		));
-		register_meta( 'post', 'test_bad_auth_multi', array(
-			'show_in_rest' => true,
-			'single' => false,
-			'auth_callback' => '__return_false',
-			'type' => 'string',
-		));
+		register_meta(
+			'post', 'test_single', array(
+				'show_in_rest' => true,
+				'single' => true,
+				'type' => 'string',
+			)
+		);
+		register_meta(
+			'post', 'test_multi', array(
+				'show_in_rest' => true,
+				'single' => false,
+				'type' => 'string',
+			)
+		);
+		register_meta(
+			'post', 'test_bad_auth', array(
+				'show_in_rest' => true,
+				'single' => true,
+				'auth_callback' => '__return_false',
+				'type' => 'string',
+			)
+		);
+		register_meta(
+			'post', 'test_bad_auth_multi', array(
+				'show_in_rest' => true,
+				'single' => false,
+				'auth_callback' => '__return_false',
+				'type' => 'string',
+			)
+		);
 		register_meta( 'post', 'test_no_rest', array() );
-		register_meta( 'post', 'test_rest_disabled', array(
-			'show_in_rest' => false,
-			'type' => 'string',
-		));
-		register_meta( 'post', 'test_custom_schema', array(
-			'single' => true,
-			'type' => 'integer',
-			'show_in_rest' => array(
-				'schema' => array(
-					'type' => 'number',
+		register_meta(
+			'post', 'test_rest_disabled', array(
+				'show_in_rest' => false,
+				'type' => 'string',
+			)
+		);
+		register_meta(
+			'post', 'test_custom_schema', array(
+				'single' => true,
+				'type' => 'integer',
+				'show_in_rest' => array(
+					'schema' => array(
+						'type' => 'number',
+					),
 				),
-			),
-		));
-		register_meta( 'post', 'test_custom_schema_multi', array(
-			'single' => false,
-			'type' => 'integer',
-			'show_in_rest' => array(
-				'schema' => array(
-					'type' => 'number',
+			)
+		);
+		register_meta(
+			'post', 'test_custom_schema_multi', array(
+				'single' => false,
+				'type' => 'integer',
+				'show_in_rest' => array(
+					'schema' => array(
+						'type' => 'number',
+					),
 				),
-			),
-		));
-		register_meta( 'post', 'test_invalid_type', array(
-			'single' => true,
-			'type' => 'lalala',
-			'show_in_rest' => true,
-		));
-		register_meta( 'post', 'test_no_type', array(
-			'single' => true,
-			'type' => null,
-			'show_in_rest' => true,
-		));
+			)
+		);
+		register_meta(
+			'post', 'test_invalid_type', array(
+				'single' => true,
+				'type' => 'lalala',
+				'show_in_rest' => true,
+			)
+		);
+		register_meta(
+			'post', 'test_no_type', array(
+				'single' => true,
+				'type' => null,
+				'show_in_rest' => true,
+			)
+		);
 
-		register_meta( 'post', 'test_custom_name', array(
-			'single' => true,
-			'type' => 'string',
-			'show_in_rest' => array(
-				'name'	=> 'new_name',
-			),
-		));
+		register_meta(
+			'post', 'test_custom_name', array(
+				'single' => true,
+				'type' => 'string',
+				'show_in_rest' => array(
+					'name'  => 'new_name',
+				),
+			)
+		);
 
-		register_meta( 'post', 'test_custom_name_multi', array(
-			'single' => false,
-			'type' => 'string',
-			'show_in_rest' => array(
-				'name'	=> 'new_name_multi',
-			),
-		));
+		register_meta(
+			'post', 'test_custom_name_multi', array(
+				'single' => false,
+				'type' => 'string',
+				'show_in_rest' => array(
+					'name'  => 'new_name_multi',
+				),
+			)
+		);
 
 		/** @var WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
@@ -106,9 +128,11 @@ class WP_Test_REST_Post_Meta_Fields extends WP_Test_REST_TestCase {
 
 	protected function grant_write_permission() {
 		// Ensure we have write permission.
-		$user = $this->factory->user->create( array(
-			'role' => 'editor',
-		));
+		$user = $this->factory->user->create(
+			array(
+				'role' => 'editor',
+			)
+		);
 		wp_set_current_user( $user );
 	}
 
@@ -201,21 +225,27 @@ class WP_Test_REST_Post_Meta_Fields extends WP_Test_REST_TestCase {
 	}
 
 	public function test_get_value_types() {
-		register_meta( 'post', 'test_string', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		));
-		register_meta( 'post', 'test_number', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'number',
-		));
-		register_meta( 'post', 'test_bool', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'boolean',
-		));
+		register_meta(
+			'post', 'test_string', array(
+				'show_in_rest' => true,
+				'single' => true,
+				'type' => 'string',
+			)
+		);
+		register_meta(
+			'post', 'test_number', array(
+				'show_in_rest' => true,
+				'single' => true,
+				'type' => 'number',
+			)
+		);
+		register_meta(
+			'post', 'test_bool', array(
+				'show_in_rest' => true,
+				'single' => true,
+				'type' => 'boolean',
+			)
+		);
 
 		/** @var WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
@@ -510,11 +540,13 @@ class WP_Test_REST_Post_Meta_Fields extends WP_Test_REST_TestCase {
 	}
 
 	public function test_set_value_invalid_value() {
-		register_meta( 'post', 'my_meta_key', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'string',
-		));
+		register_meta(
+			'post', 'my_meta_key', array(
+				'show_in_rest' => true,
+				'single' => true,
+				'type' => 'string',
+			)
+		);
 
 		$this->grant_write_permission();
 
@@ -531,11 +563,13 @@ class WP_Test_REST_Post_Meta_Fields extends WP_Test_REST_TestCase {
 	}
 
 	public function test_set_value_invalid_value_multiple() {
-		register_meta( 'post', 'my_meta_key', array(
-			'show_in_rest' => true,
-			'single' => false,
-			'type' => 'string',
-		));
+		register_meta(
+			'post', 'my_meta_key', array(
+				'show_in_rest' => true,
+				'single' => false,
+				'type' => 'string',
+			)
+		);
 
 		$this->grant_write_permission();
 
@@ -552,11 +586,13 @@ class WP_Test_REST_Post_Meta_Fields extends WP_Test_REST_TestCase {
 	}
 
 	public function test_set_value_sanitized() {
-		register_meta( 'post', 'my_meta_key', array(
-			'show_in_rest' => true,
-			'single' => true,
-			'type' => 'integer',
-		));
+		register_meta(
+			'post', 'my_meta_key', array(
+				'show_in_rest' => true,
+				'single' => true,
+				'type' => 'integer',
+			)
+		);
 
 		$this->grant_write_permission();
 
@@ -574,11 +610,13 @@ class WP_Test_REST_Post_Meta_Fields extends WP_Test_REST_TestCase {
 	}
 
 	public function test_set_value_csv() {
-		register_meta( 'post', 'my_meta_key', array(
-			'show_in_rest' => true,
-			'single' => false,
-			'type' => 'integer',
-		));
+		register_meta(
+			'post', 'my_meta_key', array(
+				'show_in_rest' => true,
+				'single' => false,
+				'type' => 'integer',
+			)
+		);
 
 		$this->grant_write_permission();
 

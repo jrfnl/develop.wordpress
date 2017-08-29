@@ -39,7 +39,7 @@ class Tests_Formatting_RemoveAccents extends WP_UnitTestCase {
 		$file = DIR_TESTDATA . '/formatting/remove_accents.01.input.txt';
 		$input = file_get_contents( $file );
 		$input = trim( $input );
-		$output = "EfSZszYcYuAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyyOEoeAEDHTHssaedhth";
+		$output = 'EfSZszYcYuAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyyOEoeAEDHTHssaedhth';
 
 		$this->assertEquals( $output, remove_accents( $input ), 'remove_accents from ISO-8859-1 text' );
 	}
@@ -104,9 +104,9 @@ class Tests_Formatting_RemoveAccents extends WP_UnitTestCase {
 	 */
 	public function test_remove_danish_accents() {
 		add_filter( 'locale', array( $this, '_set_locale_to_danish' ) );
-		
+
 		$this->assertEquals( 'AeOeAaaeoeaa', remove_accents( 'ÆØÅæøå' ) );
-		
+
 		remove_filter( 'locale', array( $this, '_set_locale_to_danish' ) );
 	}
 
@@ -121,9 +121,9 @@ class Tests_Formatting_RemoveAccents extends WP_UnitTestCase {
 		add_filter( 'locale', array( $this, '_set_locale_to_catalan' ) );
 
 		$this->assertEquals( 'allallalla', remove_accents( 'al·lallaŀla' ) );
-		
+
 		remove_filter( 'locale', array( $this, '_set_locale_to_catalan' ) );
-		
+
 		$this->assertEquals( 'al·lallalla', remove_accents( 'al·lallaŀla' ) );
 	}
 
@@ -138,9 +138,9 @@ class Tests_Formatting_RemoveAccents extends WP_UnitTestCase {
 		add_filter( 'locale', array( $this, '_set_locale_to_serbian' ) );
 
 		$this->assertEquals( 'DJdj', remove_accents( 'Đđ' ) );
-		
+
 		remove_filter( 'locale', array( $this, '_set_locale_to_serbian' ) );
-		
+
 		$this->assertEquals( 'Dd', remove_accents( 'Đđ' ) );
 	}
 }

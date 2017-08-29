@@ -40,8 +40,7 @@ class Tests_Meta_Slashes extends WP_UnitTestCase {
 			$meta_1 = wp_add_post_meta( $id, 'slash_test_1', 'foo' );
 			$meta_2 = wp_add_post_meta( $id, 'slash_test_2', 'foo' );
 			$meta_3 = wp_add_post_meta( $id, 'slash_test_3', 'foo' );
-		}
-		else {
+		} else {
 			// expects slashed data
 			$meta_1 = add_post_meta( $id, 'slash_test_1', addslashes( 'foo' ) );
 			$meta_2 = add_post_meta( $id, 'slash_test_2', addslashes( 'foo' ) );
@@ -56,15 +55,15 @@ class Tests_Meta_Slashes extends WP_UnitTestCase {
 		$_POST['meta'] = array(
 			$meta_1 => array(
 				'key' => 'slash_test_1',
-				'value' => $this->slash_1
+				'value' => $this->slash_1,
 			),
 			$meta_2 => array(
 				'key' => 'slash_test_2',
-				'value' => $this->slash_3
+				'value' => $this->slash_3,
 			),
 			$meta_3 => array(
 				'key' => 'slash_test_3',
-				'value' => $this->slash_4
+				'value' => $this->slash_4,
 			),
 		);
 		$_POST = add_magic_quotes( $_POST ); // the edit_post() function will strip slashes
@@ -85,15 +84,15 @@ class Tests_Meta_Slashes extends WP_UnitTestCase {
 		$_POST['meta'] = array(
 			$meta_1 => array(
 				'key' => 'slash_test_1',
-				'value' => $this->slash_2
+				'value' => $this->slash_2,
 			),
 			$meta_2 => array(
 				'key' => 'slash_test_2',
-				'value' => $this->slash_4
+				'value' => $this->slash_4,
 			),
 			$meta_3 => array(
 				'key' => 'slash_test_3',
-				'value' => $this->slash_5
+				'value' => $this->slash_5,
 			),
 		);
 		$_POST = add_magic_quotes( $_POST ); // the edit_post() function will strip slashes

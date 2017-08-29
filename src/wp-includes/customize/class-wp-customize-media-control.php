@@ -53,15 +53,17 @@ class WP_Customize_Media_Control extends WP_Customize_Control {
 		parent::__construct( $manager, $id, $args );
 
 		if ( ! ( $this instanceof WP_Customize_Image_Control ) ) {
-			$this->button_labels = wp_parse_args( $this->button_labels, array(
-				'select'       => __( 'Select File' ),
-				'change'       => __( 'Change File' ),
-				'default'      => __( 'Default' ),
-				'remove'       => __( 'Remove' ),
-				'placeholder'  => __( 'No file selected' ),
-				'frame_title'  => __( 'Select File' ),
-				'frame_button' => __( 'Choose File' ),
-			) );
+			$this->button_labels = wp_parse_args(
+				$this->button_labels, array(
+					'select'       => __( 'Select File' ),
+					'change'       => __( 'Change File' ),
+					'default'      => __( 'Default' ),
+					'remove'       => __( 'Remove' ),
+					'placeholder'  => __( 'No file selected' ),
+					'frame_title'  => __( 'Select File' ),
+					'frame_button' => __( 'Choose File' ),
+				)
+			);
 		}
 	}
 

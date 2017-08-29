@@ -28,15 +28,15 @@ class Tests_Term_Slashes extends WP_Ajax_UnitTestCase {
 	function test_wp_insert_term() {
 		$taxonomies = array(
 			'category',
-			'post_tag'
+			'post_tag',
 		);
 		foreach ( $taxonomies as $taxonomy ) {
 			$insert = wp_insert_term(
 				$this->slash_1,
 				$taxonomy,
 				array(
-					'slug' => 'slash_test_1_'.$taxonomy,
-					'description' => $this->slash_3
+					'slug' => 'slash_test_1_' . $taxonomy,
+					'description' => $this->slash_3,
 				)
 			);
 			$term = get_term( $insert['term_id'], $taxonomy );
@@ -47,8 +47,8 @@ class Tests_Term_Slashes extends WP_Ajax_UnitTestCase {
 				$this->slash_3,
 				$taxonomy,
 				array(
-					'slug' => 'slash_test_2_'.$taxonomy,
-					'description' => $this->slash_5
+					'slug' => 'slash_test_2_' . $taxonomy,
+					'description' => $this->slash_5,
 				)
 			);
 			$term = get_term( $insert['term_id'], $taxonomy );
@@ -59,8 +59,8 @@ class Tests_Term_Slashes extends WP_Ajax_UnitTestCase {
 				$this->slash_2,
 				$taxonomy,
 				array(
-					'slug' => 'slash_test_3_'.$taxonomy,
-					'description' => $this->slash_4
+					'slug' => 'slash_test_3_' . $taxonomy,
+					'description' => $this->slash_4,
 				)
 			);
 			$term = get_term( $insert['term_id'], $taxonomy );
@@ -76,19 +76,21 @@ class Tests_Term_Slashes extends WP_Ajax_UnitTestCase {
 	function test_wp_update_term() {
 		$taxonomies = array(
 			'category',
-			'post_tag'
+			'post_tag',
 		);
 		foreach ( $taxonomies as $taxonomy ) {
-			$id = self::factory()->term->create(array(
-				'taxonomy' => $taxonomy
-			));
+			$id = self::factory()->term->create(
+				array(
+					'taxonomy' => $taxonomy,
+				)
+			);
 
 			$update = wp_update_term(
 				$id,
 				$taxonomy,
 				array(
 					'name' => $this->slash_1,
-					'description' => $this->slash_3
+					'description' => $this->slash_3,
 				)
 			);
 
@@ -101,7 +103,7 @@ class Tests_Term_Slashes extends WP_Ajax_UnitTestCase {
 				$taxonomy,
 				array(
 					'name' => $this->slash_3,
-					'description' => $this->slash_5
+					'description' => $this->slash_5,
 				)
 			);
 			$term = get_term( $id, $taxonomy );
@@ -113,7 +115,7 @@ class Tests_Term_Slashes extends WP_Ajax_UnitTestCase {
 				$taxonomy,
 				array(
 					'name' => $this->slash_2,
-					'description' => $this->slash_4
+					'description' => $this->slash_4,
 				)
 			);
 			$term = get_term( $id, $taxonomy );

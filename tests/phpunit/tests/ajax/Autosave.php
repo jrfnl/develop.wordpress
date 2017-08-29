@@ -55,13 +55,13 @@ class Tests_Ajax_Autosave extends WP_Ajax_UnitTestCase {
 		// Set up the $_POST request
 		$md5 = md5( uniqid() );
 		$_POST = array(
-			'action' =>	'heartbeat',
+			'action' => 'heartbeat',
 			'_nonce' => wp_create_nonce( 'heartbeat-nonce' ),
 			'data' => array(
 				'wp_autosave' => array(
-				    'post_id'       => self::$post_id,
-				    '_wpnonce'      => wp_create_nonce( 'update-post_' . self::$post->ID ),
-				    'post_content'  => self::$post->post_content . PHP_EOL . $md5,
+					'post_id'       => self::$post_id,
+					'_wpnonce'      => wp_create_nonce( 'update-post_' . self::$post->ID ),
+					'post_content'  => self::$post->post_content . PHP_EOL . $md5,
 					'post_type'     => 'post',
 				),
 			),
@@ -103,13 +103,13 @@ class Tests_Ajax_Autosave extends WP_Ajax_UnitTestCase {
 		// Set up the $_POST request
 		$md5 = md5( uniqid() );
 		$_POST = array(
-			'action' =>	'heartbeat',
+			'action' => 'heartbeat',
 			'_nonce' => wp_create_nonce( 'heartbeat-nonce' ),
 			'data' => array(
 				'wp_autosave' => array(
-				    'post_id'       => self::$post_id,
-				    '_wpnonce'      => wp_create_nonce( 'update-post_' . self::$post_id ),
-				    'post_content'  => self::$post->post_content . PHP_EOL . $md5,
+					'post_id'       => self::$post_id,
+					'_wpnonce'      => wp_create_nonce( 'update-post_' . self::$post_id ),
+					'post_content'  => self::$post->post_content . PHP_EOL . $md5,
 					'post_type'     => 'post',
 				),
 			),
@@ -142,18 +142,18 @@ class Tests_Ajax_Autosave extends WP_Ajax_UnitTestCase {
 	 * Test with an invalid nonce
 	 * @return void
 	 */
-	public function test_with_invalid_nonce( ) {
+	public function test_with_invalid_nonce() {
 
 		wp_set_current_user( self::$admin_id );
 
 		// Set up the $_POST request
 		$_POST = array(
-			'action' =>	'heartbeat',
+			'action' => 'heartbeat',
 			'_nonce' => wp_create_nonce( 'heartbeat-nonce' ),
 			'data' => array(
 				'wp_autosave' => array(
-				    'post_id'  => self::$post_id,
-				    '_wpnonce' => substr( md5( uniqid() ), 0, 10 ),
+					'post_id'  => self::$post_id,
+					'_wpnonce' => substr( md5( uniqid() ), 0, 10 ),
 				),
 			),
 		);

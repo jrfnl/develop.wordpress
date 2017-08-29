@@ -25,20 +25,20 @@ class Tests_Dependencies_Scripts extends WP_UnitTestCase {
 	 * @ticket 11315
 	 */
 	function test_wp_enqueue_script() {
-		wp_enqueue_script('no-deps-no-version', 'example.com', array());
-		wp_enqueue_script('empty-deps-no-version', 'example.com' );
-		wp_enqueue_script('empty-deps-version', 'example.com', array(), 1.2);
-		wp_enqueue_script('empty-deps-null-version', 'example.com', array(), null);
+		wp_enqueue_script( 'no-deps-no-version', 'example.com', array() );
+		wp_enqueue_script( 'empty-deps-no-version', 'example.com' );
+		wp_enqueue_script( 'empty-deps-version', 'example.com', array(), 1.2 );
+		wp_enqueue_script( 'empty-deps-null-version', 'example.com', array(), null );
 		$ver = get_bloginfo( 'version' );
 		$expected  = "<script type='text/javascript' src='http://example.com?ver=$ver'></script>\n";
 		$expected .= "<script type='text/javascript' src='http://example.com?ver=$ver'></script>\n";
 		$expected .= "<script type='text/javascript' src='http://example.com?ver=1.2'></script>\n";
 		$expected .= "<script type='text/javascript' src='http://example.com'></script>\n";
 
-		$this->assertEquals($expected, get_echo('wp_print_scripts'));
+		$this->assertEquals( $expected, get_echo( 'wp_print_scripts' ) );
 
 		// No scripts left to print
-		$this->assertEquals("", get_echo('wp_print_scripts'));
+		$this->assertEquals( '', get_echo( 'wp_print_scripts' ) );
 	}
 
 	/**
@@ -116,7 +116,7 @@ class Tests_Dependencies_Scripts extends WP_UnitTestCase {
 		wp_enqueue_script( 'test-only-data', 'example.com', array(), null );
 		wp_script_add_data( 'test-only-data', 'data', 'testing' );
 		$expected = "<script type='text/javascript'>\n/* <![CDATA[ */\ntesting\n/* ]]> */\n</script>\n";
-		$expected.= "<script type='text/javascript' src='http://example.com'></script>\n";
+		$expected .= "<script type='text/javascript' src='http://example.com'></script>\n";
 
 		// Go!
 		$this->assertEquals( $expected, get_echo( 'wp_print_scripts' ) );
@@ -152,7 +152,7 @@ class Tests_Dependencies_Scripts extends WP_UnitTestCase {
 		wp_script_add_data( 'test-conditional-with-data', 'data', 'testing' );
 		wp_script_add_data( 'test-conditional-with-data', 'conditional', 'lt IE 9' );
 		$expected = "<!--[if lt IE 9]>\n<script type='text/javascript'>\n/* <![CDATA[ */\ntesting\n/* ]]> */\n</script>\n<![endif]-->\n";
-		$expected.= "<!--[if lt IE 9]>\n<script type='text/javascript' src='http://example.com'></script>\n<![endif]-->\n";
+		$expected .= "<!--[if lt IE 9]>\n<script type='text/javascript' src='http://example.com'></script>\n<![endif]-->\n";
 
 		// Go!
 		$this->assertEquals( $expected, get_echo( 'wp_print_scripts' ) );
@@ -518,7 +518,7 @@ class Tests_Dependencies_Scripts extends WP_UnitTestCase {
 		global $wp_scripts;
 
 		$wp_scripts->do_concat = true;
-		$wp_scripts->default_dirs = array('/wp-admin/js/', '/wp-includes/js/'); // Default dirs as in wp-includes/script-loader.php
+		$wp_scripts->default_dirs = array( '/wp-admin/js/', '/wp-includes/js/' ); // Default dirs as in wp-includes/script-loader.php
 
 		$expected_localized = "<!--[if gte IE 9]>\n";
 		$expected_localized .= "<script type='text/javascript'>\n/* <![CDATA[ */\nvar testExample = {\"foo\":\"bar\"};\n/* ]]> */\n</script>\n";
@@ -672,7 +672,7 @@ class Tests_Dependencies_Scripts extends WP_UnitTestCase {
 		wp_print_scripts();
 		$print_scripts = get_echo( '_print_scripts' );
 
-		$tail = substr( $print_scripts, strrpos( $print_scripts, "<![endif]-->" ) );
+		$tail = substr( $print_scripts, strrpos( $print_scripts, '<![endif]-->' ) );
 		$this->assertEquals( $expected_tail, $tail );
 	}
 

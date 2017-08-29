@@ -66,13 +66,13 @@ class Tests_Functions_MaybeDeclineDate extends WP_UnitTestCase {
 
 	public function data_wp_maybe_decline_date() {
 		return array(
-			array( 'ru_RU', '21 Июнь',       '21 июня' ),
+			array( 'ru_RU', '21 Июнь', '21 июня' ),
 			array( 'ru_RU', '1 Январь 2016', '1 января 2016' ),
-			array( 'pl_PL', '1 Styczeń',     '1 stycznia' ),
-			array( 'hr',    '1. Siječanj',   '1. siječnja' ),
-			array( 'ca',    '1 de abril',    "1 d'abril" ),
-			array( 'cs_CZ', '1. Červen',     '1. června' ),
-			array( 'cs_CZ', '1. Červenec',   '1. července' ),
+			array( 'pl_PL', '1 Styczeń', '1 stycznia' ),
+			array( 'hr', '1. Siječanj', '1. siječnja' ),
+			array( 'ca', '1 de abril', "1 d'abril" ),
+			array( 'cs_CZ', '1. Červen', '1. června' ),
+			array( 'cs_CZ', '1. Červenec', '1. července' ),
 		);
 	}
 

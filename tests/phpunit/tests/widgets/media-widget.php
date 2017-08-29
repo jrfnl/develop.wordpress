@@ -62,17 +62,19 @@ class Test_WP_Widget_Media extends WP_UnitTestCase {
 		$this->assertArrayHasKey( 'description', $widget->widget_options );
 		$this->assertTrue( $widget->widget_options['customize_selective_refresh'] );
 		$this->assertEmpty( $widget->widget_options['mime_type'] );
-		$this->assertEqualSets( array(
-			'add_to_widget',
-			'replace_media',
-			'edit_media',
-			'media_library_state_multi',
-			'media_library_state_single',
-			'missing_attachment',
-			'no_media_selected',
-			'add_media',
-			'unsupported_file_type',
-		), array_keys( $widget->l10n ) );
+		$this->assertEqualSets(
+			array(
+				'add_to_widget',
+				'replace_media',
+				'edit_media',
+				'media_library_state_multi',
+				'media_library_state_single',
+				'missing_attachment',
+				'no_media_selected',
+				'add_media',
+				'unsupported_file_type',
+			), array_keys( $widget->l10n )
+		);
 		$this->assertEquals( count( $widget->l10n ), count( array_filter( $widget->l10n ) ), 'Expected all translation strings to be defined.' );
 		$this->assertEquals( 10, has_action( 'admin_print_scripts-widgets.php', array( $widget, 'enqueue_admin_scripts' ) ) );
 		$this->assertFalse( has_action( 'wp_enqueue_scripts', array( $widget, 'enqueue_preview_scripts' ) ), 'Did not expect preview scripts to be enqueued when not in customize preview context.' );
@@ -108,13 +110,19 @@ class Test_WP_Widget_Media extends WP_UnitTestCase {
 	 */
 	function test_constructor_in_customize_preview() {
 		global $wp_customize;
-		wp_set_current_user( $this->factory()->user->create( array(
-			'role' => 'administrator',
-		) ) );
+		wp_set_current_user(
+			$this->factory()->user->create(
+				array(
+					'role' => 'administrator',
+				)
+			)
+		);
 		require_once ABSPATH . WPINC . '/class-wp-customize-manager.php';
-		$wp_customize = new WP_Customize_Manager( array(
-			'changeset_uuid' => wp_generate_uuid4(),
-		) );
+		$wp_customize = new WP_Customize_Manager(
+			array(
+				'changeset_uuid' => wp_generate_uuid4(),
+			)
+		);
 		$wp_customize->start_previewing_theme();
 
 		$widget = $this->get_mocked_class_instance();
@@ -131,12 +139,14 @@ class Test_WP_Widget_Media extends WP_UnitTestCase {
 
 		$test_image = '/tmp/canola.jpg';
 		copy( DIR_TESTDATA . '/images/canola.jpg', $test_image );
-		$attachment_id = self::factory()->attachment->create_object( array(
-			'file' => $test_image,
-			'post_parent' => 0,
-			'post_mime_type' => 'image/jpeg',
-			'post_title' => 'Canola',
-		) );
+		$attachment_id = self::factory()->attachment->create_object(
+			array(
+				'file' => $test_image,
+				'post_parent' => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title' => 'Canola',
+			)
+		);
 		wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $test_image ) );
 		$widget = $this->get_mocked_class_instance();
 
@@ -173,11 +183,13 @@ class Test_WP_Widget_Media extends WP_UnitTestCase {
 		$widget = $this->get_mocked_class_instance();
 		$schema = $widget->get_instance_schema();
 
-		$this->assertEqualSets( array(
-			'attachment_id',
-			'title',
-			'url',
-		), array_keys( $schema ) );
+		$this->assertEqualSets(
+			array(
+				'attachment_id',
+				'title',
+				'url',
+			), array_keys( $schema )
+		);
 	}
 
 	/**
@@ -365,31 +377,37 @@ class Test_WP_Widget_Media extends WP_UnitTestCase {
 	 */
 	function test_display_media_state() {
 		$widget = $this->get_mocked_class_instance();
-		$attachment_id = self::factory()->attachment->create_object( array(
-			'file' => DIR_TESTDATA . '/images/canola.jpg',
-			'post_parent' => 0,
-			'post_mime_type' => 'image/jpeg',
-		) );
+		$attachment_id = self::factory()->attachment->create_object(
+			array(
+				'file' => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent' => 0,
+				'post_mime_type' => 'image/jpeg',
+			)
+		);
 
 		$result = $widget->display_media_state( array(), get_post( $attachment_id ) );
 		$this->assertEqualSets( array(), $result );
 
-		$widget->save_settings( array(
+		$widget->save_settings(
 			array(
-				'attachment_id' => $attachment_id,
-			),
-		) );
+				array(
+					'attachment_id' => $attachment_id,
+				),
+			)
+		);
 		$result = $widget->display_media_state( array(), get_post( $attachment_id ) );
 		$this->assertEqualSets( array( $widget->l10n['media_library_state_single'] ), $result );
 
-		$widget->save_settings( array(
+		$widget->save_settings(
 			array(
-				'attachment_id' => $attachment_id,
-			),
-			array(
-				'attachment_id' => $attachment_id,
-			),
-		) );
+				array(
+					'attachment_id' => $attachment_id,
+				),
+				array(
+					'attachment_id' => $attachment_id,
+				),
+			)
+		);
 		$result = $widget->display_media_state( array(), get_post( $attachment_id ) );
 		$this->assertEqualSets( array( sprintf( $widget->l10n['media_library_state_multi']['singular'], 2 ) ), $result );
 	}
@@ -433,38 +451,46 @@ class Test_WP_Widget_Media extends WP_UnitTestCase {
 			return;
 		}
 
-		$attachment_id = self::factory()->attachment->create_object( array(
-			'file' => DIR_TESTDATA . '/images/canola.jpg',
-			'post_parent' => 0,
-			'post_mime_type' => 'image/jpeg',
-		) );
+		$attachment_id = self::factory()->attachment->create_object(
+			array(
+				'file' => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent' => 0,
+				'post_mime_type' => 'image/jpeg',
+			)
+		);
 
 		$wp_widget_media = new ReflectionClass( 'WP_Widget_Media' );
 		$has_content = $wp_widget_media->getMethod( 'has_content' );
 		$has_content->setAccessible( true );
 
-		$result = $has_content->invokeArgs( $this->get_mocked_class_instance(), array(
-			array(
-				'attachment_id' => 0,
-				'url' => '',
-			),
-		) );
+		$result = $has_content->invokeArgs(
+			$this->get_mocked_class_instance(), array(
+				array(
+					'attachment_id' => 0,
+					'url' => '',
+				),
+			)
+		);
 		$this->assertFalse( $result );
 
-		$result = $has_content->invokeArgs( $this->get_mocked_class_instance(), array(
-			array(
-				'attachment_id' => $attachment_id,
-				'url' => '',
-			),
-		) );
+		$result = $has_content->invokeArgs(
+			$this->get_mocked_class_instance(), array(
+				array(
+					'attachment_id' => $attachment_id,
+					'url' => '',
+				),
+			)
+		);
 		$this->assertTrue( $result );
 
-		$result = $has_content->invokeArgs( $this->get_mocked_class_instance(), array(
-			array(
-				'attachment_id' => 0,
-				'url' => 'http://example.com/image.jpg',
-			),
-		) );
+		$result = $has_content->invokeArgs(
+			$this->get_mocked_class_instance(), array(
+				array(
+					'attachment_id' => 0,
+					'url' => 'http://example.com/image.jpg',
+				),
+			)
+		);
 		$this->assertTrue( $result );
 	}
 }

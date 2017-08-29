@@ -159,7 +159,7 @@ class WP_Customize_Partial {
 		// Process settings.
 		if ( ! isset( $this->settings ) ) {
 			$this->settings = array( $id );
-		} else if ( is_string( $this->settings ) ) {
+		} elseif ( is_string( $this->settings ) ) {
 			$this->settings = array( $this->settings );
 		}
 

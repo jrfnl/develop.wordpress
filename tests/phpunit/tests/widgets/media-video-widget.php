@@ -64,17 +64,19 @@ class Test_WP_Widget_Media_Video extends WP_UnitTestCase {
 		$this->assertArrayHasKey( 'description', $widget->widget_options );
 		$this->assertTrue( $widget->widget_options['customize_selective_refresh'] );
 		$this->assertEquals( 'video', $widget->widget_options['mime_type'] );
-		$this->assertEqualSets( array(
-			'add_to_widget',
-			'replace_media',
-			'unsupported_file_type',
-			'edit_media',
-			'media_library_state_multi',
-			'media_library_state_single',
-			'missing_attachment',
-			'no_media_selected',
-			'add_media',
-		), array_keys( $widget->l10n ) );
+		$this->assertEqualSets(
+			array(
+				'add_to_widget',
+				'replace_media',
+				'unsupported_file_type',
+				'edit_media',
+				'media_library_state_multi',
+				'media_library_state_single',
+				'missing_attachment',
+				'no_media_selected',
+				'add_media',
+			), array_keys( $widget->l10n )
+		);
 	}
 
 	/**
@@ -94,9 +96,11 @@ class Test_WP_Widget_Media_Video extends WP_UnitTestCase {
 		$this->assertSame( $result, $expected );
 
 		// Should filter invalid attachment ID.
-		$result = $widget->update( array(
-			'attachment_id' => 'media',
-		), $instance );
+		$result = $widget->update(
+			array(
+				'attachment_id' => 'media',
+			), $instance
+		);
 		$this->assertSame( $result, $instance );
 
 		// Should return valid attachment url.
@@ -107,9 +111,11 @@ class Test_WP_Widget_Media_Video extends WP_UnitTestCase {
 		$this->assertSame( $result, $expected );
 
 		// Should filter invalid attachment url.
-		$result = $widget->update( array(
-			'url' => 'not_a_url',
-		), $instance );
+		$result = $widget->update(
+			array(
+				'url' => 'not_a_url',
+			), $instance
+		);
 		$this->assertNotSame( $result, $instance );
 		$this->assertStringStartsWith( 'http://', $result['url'] );
 
@@ -121,9 +127,11 @@ class Test_WP_Widget_Media_Video extends WP_UnitTestCase {
 		$this->assertSame( $result, $expected );
 
 		// Should filter invalid loop setting.
-		$result = $widget->update( array(
-			'loop' => 'not-boolean',
-		), $instance );
+		$result = $widget->update(
+			array(
+				'loop' => 'not-boolean',
+			), $instance
+		);
 		$this->assertSame( $result, $instance );
 
 		// Should return valid attachment title.
@@ -134,9 +142,11 @@ class Test_WP_Widget_Media_Video extends WP_UnitTestCase {
 		$this->assertSame( $result, $expected );
 
 		// Should filter invalid attachment title.
-		$result = $widget->update( array(
-			'title' => '<h1>Cute Baby Goats</h1>',
-		), $instance );
+		$result = $widget->update(
+			array(
+				'title' => '<h1>Cute Baby Goats</h1>',
+			), $instance
+		);
 		$this->assertNotSame( $result, $instance );
 
 		// Should return valid preload setting.
@@ -147,15 +157,19 @@ class Test_WP_Widget_Media_Video extends WP_UnitTestCase {
 		$this->assertSame( $result, $expected );
 
 		// Should filter invalid preload setting.
-		$result = $widget->update( array(
-			'preload' => 'nope',
-		), $instance );
+		$result = $widget->update(
+			array(
+				'preload' => 'nope',
+			), $instance
+		);
 		$this->assertSame( $result, $instance );
 
 		// Should filter invalid key.
-		$result = $widget->update( array(
-			'h4x' => 'value',
-		), $instance );
+		$result = $widget->update(
+			array(
+				'h4x' => 'value',
+			), $instance
+		);
 		$this->assertSame( $result, $instance );
 	}
 
@@ -168,12 +182,14 @@ class Test_WP_Widget_Media_Video extends WP_UnitTestCase {
 	function test_render_media() {
 		$test_movie_file = __FILE__ . '../../data/uploads/small-video.m4v';
 		$widget = new WP_Widget_Media_Video();
-		$attachment_id = self::factory()->attachment->create_object( array(
-			'file' => $test_movie_file,
-			'post_parent' => 0,
-			'post_mime_type' => 'video/mp4',
-			'post_title' => 'Test Video',
-		) );
+		$attachment_id = self::factory()->attachment->create_object(
+			array(
+				'file' => $test_movie_file,
+				'post_parent' => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title' => 'Test Video',
+			)
+		);
 		wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $test_movie_file ) );
 
 		// Should be empty when there is no attachment_id.
@@ -184,17 +200,21 @@ class Test_WP_Widget_Media_Video extends WP_UnitTestCase {
 
 		// Should be empty when there is an invalid attachment_id.
 		ob_start();
-		$widget->render_media( array(
-			'attachment_id' => 777,
-		) );
+		$widget->render_media(
+			array(
+				'attachment_id' => 777,
+			)
+		);
 		$output = ob_get_clean();
 		$this->assertEmpty( $output );
 
 		// Tests with video from library.
 		ob_start();
-		$widget->render_media( array(
-			'attachment_id' => $attachment_id,
-		) );
+		$widget->render_media(
+			array(
+				'attachment_id' => $attachment_id,
+			)
+		);
 		$output = ob_get_clean();
 
 		// Check default outputs.
@@ -206,12 +226,14 @@ class Test_WP_Widget_Media_Video extends WP_UnitTestCase {
 		$this->assertContains( 'small-video.m4v', $output );// Auto parses dimensions.
 
 		ob_start();
-		$widget->render_media( array(
-			'attachment_id' => $attachment_id,
-			'title' => 'Open Source Cartoon',
-			'preload' => 'metadata',
-			'loop' => true,
-		) );
+		$widget->render_media(
+			array(
+				'attachment_id' => $attachment_id,
+				'title' => 'Open Source Cartoon',
+				'preload' => 'metadata',
+				'loop' => true,
+			)
+		);
 		$output = ob_get_clean();
 
 		// Custom attributes.
@@ -221,12 +243,14 @@ class Test_WP_Widget_Media_Video extends WP_UnitTestCase {
 		// Externally hosted video.
 		ob_start();
 		$content = '<track srclang="en" label="English" kind="subtitles" src="http://example.com/wp-content/uploads/2017/04/subtitles-en.vtt">';
-		$widget->render_media( array(
-			'attachment_id' => null,
-			'loop' => false,
-			'url' => 'https://www.youtube.com/watch?v=OQSNhk5ICTI',
-			'content' => $content,
-		) );
+		$widget->render_media(
+			array(
+				'attachment_id' => null,
+				'loop' => false,
+				'url' => 'https://www.youtube.com/watch?v=OQSNhk5ICTI',
+				'content' => $content,
+			)
+		);
 		$output = ob_get_clean();
 
 		// Custom attributes.
