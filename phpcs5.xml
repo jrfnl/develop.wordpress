@@ -7,13 +7,13 @@
 	<arg name="extensions" value="php" />
 
 	<!-- Show sniff codes in all reports -->
-	<arg value="s" />
+	<arg value="ps" />
 
 	<file>.</file>
 
 	<!-- Unknown bug -->
-	<exclude-pattern>/tests/phpunit/tests/functions/wpListUtil.php</exclude-pattern>
-	<exclude-pattern>/tests/phpunit/tests/walker.php</exclude-pattern>
+	<!--<exclude-pattern>/tests/phpunit/tests/functions/wpListUtil.php</exclude-pattern>-->
+	<!--<exclude-pattern>/tests/phpunit/tests/walker.php</exclude-pattern>-->
 
 	<!-- Directories and third party library exclusions -->
 	<exclude-pattern>/build/*</exclude-pattern>
