@@ -3,6 +3,7 @@
 	<description>Apply WordPress Coding Standards to all Core files</description>
 
 	<rule ref="WordPress-Core" />
+	<rule ref="WordPress.CodeAnalysis.EmptyStatement"/>
 
 	<arg name="extensions" value="php" />
 
