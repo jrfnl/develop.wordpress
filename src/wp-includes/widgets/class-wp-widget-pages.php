@@ -55,8 +55,9 @@ class WP_Widget_Pages extends WP_Widget {
 		$sortby = empty( $instance['sortby'] ) ? 'menu_order' : $instance['sortby'];
 		$exclude = empty( $instance['exclude'] ) ? '' : $instance['exclude'];
 
-		if ( $sortby == 'menu_order' )
+		if ( $sortby == 'menu_order' ) {
 			$sortby = 'menu_order, post_title';
+		}
 
 		/**
 		 * Filters the arguments for the Pages widget.
@@ -67,12 +68,16 @@ class WP_Widget_Pages extends WP_Widget {
 		 *
 		 * @param array $args An array of arguments to retrieve the pages list.
 		 */
-		$out = wp_list_pages( apply_filters( 'widget_pages_args', array(
-			'title_li'    => '',
-			'echo'        => 0,
-			'sort_column' => $sortby,
-			'exclude'     => $exclude
-		) ) );
+		$out = wp_list_pages(
+			apply_filters(
+				'widget_pages_args', array(
+					'title_li'    => '',
+					'echo'        => 0,
+					'sort_column' => $sortby,
+					'exclude'     => $exclude,
+				)
+			)
+		);
 
 		if ( ! empty( $out ) ) {
 			echo $args['before_widget'];
@@ -121,17 +126,23 @@ class WP_Widget_Pages extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		//Defaults
-		$instance = wp_parse_args( (array) $instance, array( 'sortby' => 'post_title', 'title' => '', 'exclude' => '') );
+		$instance = wp_parse_args(
+			(array) $instance, array(
+				'sortby' => 'post_title',
+				'title' => '',
+				'exclude' => '',
+			)
+		);
 		?>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:' ); ?></label>
-			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>" />
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 		</p>
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'sortby' ) ); ?>"><?php _e( 'Sort by:' ); ?></label>
 			<select name="<?php echo esc_attr( $this->get_field_name( 'sortby' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'sortby' ) ); ?>" class="widefat">
-				<option value="post_title"<?php selected( $instance['sortby'], 'post_title' ); ?>><?php _e('Page title'); ?></option>
-				<option value="menu_order"<?php selected( $instance['sortby'], 'menu_order' ); ?>><?php _e('Page order'); ?></option>
+				<option value="post_title"<?php selected( $instance['sortby'], 'post_title' ); ?>><?php _e( 'Page title' ); ?></option>
+				<option value="menu_order"<?php selected( $instance['sortby'], 'menu_order' ); ?>><?php _e( 'Page order' ); ?></option>
 				<option value="ID"<?php selected( $instance['sortby'], 'ID' ); ?>><?php _e( 'Page ID' ); ?></option>
 			</select>
 		</p>

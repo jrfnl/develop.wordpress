@@ -5,7 +5,7 @@
  *
  * @package wordpress-i18n
  */
-error_reporting(E_ALL);
+error_reporting( E_ALL );
 
 require_once dirname( __FILE__ ) . '/makepot.php';
 
@@ -28,8 +28,8 @@ class AddTextdomain {
 	 */
 	public function usage() {
 		$usage = "Usage: php add-textdomain.php [-i] <domain> <file>\n\nAdds the string <domain> as a last argument to all i18n function calls in <file>\nand prints the modified php file on standard output.\n\nOptions:\n    -i    Modifies the PHP file in place, instead of printing it to standard output.\n";
-		fwrite(STDERR, $usage);
-		exit(1);
+		fwrite( STDERR, $usage );
+		exit( 1 );
 	}
 
 	/**
@@ -88,27 +88,27 @@ class AddTextdomain {
 		$parens_balance = 0;
 		$found_domain = false;
 
-		foreach($tokens as $index => $token) {
+		foreach ( $tokens as $index => $token ) {
 			$string_success = false;
-			if (is_array($token)) {
+			if ( is_array( $token ) ) {
 				list($id, $text) = $token;
-				if (T_STRING == $id && in_array($text, $this->funcs)) {
+				if ( T_STRING == $id && in_array( $text, $this->funcs ) ) {
 					$in_func = true;
 					$parens_balance = 0;
 					$args_started = false;
 					$found_domain = false;
-				} elseif (T_CONSTANT_ENCAPSED_STRING == $id && ("'$domain'" == $text || "\"$domain\"" == $text)) {
-					if ($in_func && $args_started) {
+				} elseif ( T_CONSTANT_ENCAPSED_STRING == $id && ("'$domain'" == $text || "\"$domain\"" == $text) ) {
+					if ( $in_func && $args_started ) {
 						$found_domain = true;
 					}
 				}
 				$token = $text;
-			} elseif ('(' == $token){
+			} elseif ( '(' == $token ) {
 				$args_started = true;
 				++$parens_balance;
-			} elseif (')' == $token) {
+			} elseif ( ')' == $token ) {
 				--$parens_balance;
-				if ($in_func && 0 == $parens_balance) {
+				if ( $in_func && 0 == $parens_balance ) {
 					if ( ! $found_domain ) {
 						$token = ", '$domain'";
 						if ( T_WHITESPACE == $tokens[ $index - 1 ][0] ) {
@@ -132,18 +132,20 @@ class AddTextdomain {
 
 // Run the CLI only if the file wasn't included.
 $included_files = get_included_files();
-if ($included_files[0] == __FILE__) {
+if ( $included_files[0] == __FILE__ ) {
 	$adddomain = new AddTextdomain();
 
-	if (!isset($argv[1]) || !isset($argv[2])) {
+	if ( ! isset( $argv[1] ) || ! isset( $argv[2] ) ) {
 		$adddomain->usage();
 	}
 
 	$inplace = false;
-	if ('-i' == $argv[1]) {
+	if ( '-i' == $argv[1] ) {
 		$inplace = true;
-		if (!isset($argv[3])) $adddomain->usage();
-		array_shift($argv);
+		if ( ! isset( $argv[3] ) ) {
+			$adddomain->usage();
+		}
+		array_shift( $argv );
 	}
 
 	if ( is_dir( $argv[2] ) ) {

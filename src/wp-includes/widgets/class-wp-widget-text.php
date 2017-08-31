@@ -116,11 +116,13 @@ class WP_Widget_Text extends WP_Widget {
 		}
 
 		$doc = new DOMDocument();
-		@$doc->loadHTML( sprintf(
-			'<!DOCTYPE html><html><head><meta charset="%s"></head><body>%s</body></html>',
-			esc_attr( get_bloginfo( 'charset' ) ),
-			$instance['text']
-		) );
+		@$doc->loadHTML(
+			sprintf(
+				'<!DOCTYPE html><html><head><meta charset="%s"></head><body>%s</body></html>',
+				esc_attr( get_bloginfo( 'charset' ) ),
+				$instance['text']
+			)
+		);
 		$body = $doc->getElementsByTagName( 'body' )->item( 0 );
 
 		// See $allowedposttags.
@@ -277,12 +279,14 @@ class WP_Widget_Text extends WP_Widget {
 	 * @return array Settings to save or bool false to cancel saving.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$new_instance = wp_parse_args( $new_instance, array(
-			'title' => '',
-			'text' => '',
-			'filter' => false, // For back-compat.
+		$new_instance = wp_parse_args(
+			$new_instance, array(
+				'title' => '',
+				'text' => '',
+				'filter' => false, // For back-compat.
 			'visual' => null, // Must be explicitly defined.
-		) );
+			)
+		);
 
 		$instance = $old_instance;
 

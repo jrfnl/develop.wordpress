@@ -232,7 +232,7 @@ class WP_REST_Response extends WP_HTTP_Response {
 			$data = $this->get_data();
 			$error->add( $data['code'], $data['message'], $data['data'] );
 			if ( ! empty( $data['additional_errors'] ) ) {
-				foreach( $data['additional_errors'] as $err ) {
+				foreach ( $data['additional_errors'] as $err ) {
 					$error->add( $err['code'], $err['message'], $err['data'] );
 				}
 			}

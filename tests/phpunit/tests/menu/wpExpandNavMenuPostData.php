@@ -22,7 +22,7 @@ class Tests_Menu_WpExpandNavMenuPostData extends WP_UnitTestCase {
 
 		$expected = array(
 			'nav-menu-data' => $_POST['nav-menu-data'],
-			'yesorno' => 'yes'
+			'yesorno' => 'yes',
 		);
 
 		$this->assertEquals( $expected, $_POST );

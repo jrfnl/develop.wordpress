@@ -418,11 +418,13 @@ class WP_Term_Query {
 			foreach ( $exclude_tree as $extrunk ) {
 				$excluded_children = array_merge(
 					$excluded_children,
-					(array) get_terms( reset( $taxonomies ), array(
-						'child_of' => intval( $extrunk ),
-						'fields' => 'ids',
-						'hide_empty' => 0
-					) )
+					(array) get_terms(
+						reset( $taxonomies ), array(
+							'child_of' => intval( $extrunk ),
+							'fields' => 'ids',
+							'hide_empty' => 0,
+						)
+					)
 				);
 			}
 			$exclusions = array_merge( $excluded_children, $exclusions );
@@ -494,16 +496,16 @@ class WP_Term_Query {
 				$tt_ids = implode( ',', array_map( 'intval', $args['term_taxonomy_id'] ) );
 				$this->sql_clauses['where']['term_taxonomy_id'] = "tt.term_taxonomy_id IN ({$tt_ids})";
 			} else {
-				$this->sql_clauses['where']['term_taxonomy_id'] = $wpdb->prepare( "tt.term_taxonomy_id = %d", $args['term_taxonomy_id'] );
+				$this->sql_clauses['where']['term_taxonomy_id'] = $wpdb->prepare( 'tt.term_taxonomy_id = %d', $args['term_taxonomy_id'] );
 			}
 		}
 
 		if ( ! empty( $args['name__like'] ) ) {
-			$this->sql_clauses['where']['name__like'] = $wpdb->prepare( "t.name LIKE %s", '%' . $wpdb->esc_like( $args['name__like'] ) . '%' );
+			$this->sql_clauses['where']['name__like'] = $wpdb->prepare( 't.name LIKE %s', '%' . $wpdb->esc_like( $args['name__like'] ) . '%' );
 		}
 
 		if ( ! empty( $args['description__like'] ) ) {
-			$this->sql_clauses['where']['description__like'] = $wpdb->prepare( "tt.description LIKE %s", '%' . $wpdb->esc_like( $args['description__like'] ) . '%' );
+			$this->sql_clauses['where']['description__like'] = $wpdb->prepare( 'tt.description LIKE %s', '%' . $wpdb->esc_like( $args['description__like'] ) . '%' );
 		}
 
 		if ( ! empty( $args['object_ids'] ) ) {
@@ -533,7 +535,7 @@ class WP_Term_Query {
 		if ( 'count' == $args['fields'] ) {
 			$hierarchical = false;
 		}
-		if ( $args['hide_empty'] && !$hierarchical ) {
+		if ( $args['hide_empty'] && ! $hierarchical ) {
 			$this->sql_clauses['where']['count'] = 'tt.count > 0';
 		}
 
@@ -551,7 +553,6 @@ class WP_Term_Query {
 			$limits = '';
 		}
 
-
 		if ( ! empty( $args['search'] ) ) {
 			$this->sql_clauses['where']['search'] = $this->get_search_sql( $args['search'] );
 		}
@@ -568,16 +569,16 @@ class WP_Term_Query {
 		if ( ! empty( $meta_clauses ) ) {
 			$join .= $mq_sql['join'];
 			$this->sql_clauses['where']['meta_query'] = preg_replace( '/^\s*AND\s*/', '', $mq_sql['where'] );
-			$distinct .= "DISTINCT";
+			$distinct .= 'DISTINCT';
 
 		}
 
 		$selects = array();
 		switch ( $args['fields'] ) {
 			case 'all':
-			case 'all_with_object_id' :
-			case 'tt_ids' :
-			case 'slugs' :
+			case 'all_with_object_id':
+			case 'tt_ids':
+			case 'slugs':
 				$selects = array( 't.*', 'tt.*' );
 				if ( 'all_with_object_id' === $args['fields'] && ! empty( $args['object_ids'] ) ) {
 					$selects[] = 'tr.object_id';
@@ -642,13 +643,13 @@ class WP_Term_Query {
 		 */
 		$clauses = apply_filters( 'terms_clauses', compact( 'fields', 'join', 'where', 'distinct', 'orderby', 'order', 'limits' ), $taxonomies, $args );
 
-		$fields = isset( $clauses[ 'fields' ] ) ? $clauses[ 'fields' ] : '';
-		$join = isset( $clauses[ 'join' ] ) ? $clauses[ 'join' ] : '';
-		$where = isset( $clauses[ 'where' ] ) ? $clauses[ 'where' ] : '';
-		$distinct = isset( $clauses[ 'distinct' ] ) ? $clauses[ 'distinct' ] : '';
-		$orderby = isset( $clauses[ 'orderby' ] ) ? $clauses[ 'orderby' ] : '';
-		$order = isset( $clauses[ 'order' ] ) ? $clauses[ 'order' ] : '';
-		$limits = isset( $clauses[ 'limits' ] ) ? $clauses[ 'limits' ] : '';
+		$fields = isset( $clauses['fields'] ) ? $clauses['fields'] : '';
+		$join = isset( $clauses['join'] ) ? $clauses['join'] : '';
+		$where = isset( $clauses['where'] ) ? $clauses['where'] : '';
+		$distinct = isset( $clauses['distinct'] ) ? $clauses['distinct'] : '';
+		$orderby = isset( $clauses['orderby'] ) ? $clauses['orderby'] : '';
+		$order = isset( $clauses['order'] ) ? $clauses['order'] : '';
+		$limits = isset( $clauses['limits'] ) ? $clauses['limits'] : '';
 
 		if ( $where ) {
 			$where = "WHERE $where";
@@ -896,7 +897,7 @@ class WP_Term_Query {
 			return $orderby;
 		}
 
-		switch( $orderby_raw ) {
+		switch ( $orderby_raw ) {
 			case $primary_meta_key:
 			case 'meta_value':
 				if ( ! empty( $primary_meta_query['type'] ) ) {

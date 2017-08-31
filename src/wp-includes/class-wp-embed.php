@@ -79,8 +79,9 @@ class WP_Embed {
 	public function maybe_run_ajax_cache() {
 		$post = get_post();
 
-		if ( ! $post || empty( $_GET['message'] ) )
+		if ( ! $post || empty( $_GET['message'] ) ) {
 			return;
+		}
 
 ?>
 <script type="text/javascript">
@@ -104,7 +105,7 @@ class WP_Embed {
 	 * @param int $priority Optional. Used to specify the order in which the registered handlers will be tested (default: 10). Lower numbers correspond with earlier testing, and handlers with the same priority are tested in the order in which they were added to the action.
 	 */
 	public function register_handler( $id, $regex, $callback, $priority = 10 ) {
-		$this->handlers[$priority][$id] = array(
+		$this->handlers[ $priority ][ $id ] = array(
 			'regex'    => $regex,
 			'callback' => $callback,
 		);
@@ -167,7 +168,7 @@ class WP_Embed {
 		foreach ( $this->handlers as $priority => $handlers ) {
 			foreach ( $handlers as $id => $handler ) {
 				if ( preg_match( $handler['regex'], $url, $matches ) && is_callable( $handler['callback'] ) ) {
-					if ( false !== $return = call_user_func( $handler['callback'], $matches, $attr, $url, $rawattr ) )
+					if ( false !== $return = call_user_func( $handler['callback'], $matches, $attr, $url, $rawattr ) ) {
 						/**
 						 * Filters the returned embed handler.
 						 *
@@ -180,13 +181,15 @@ class WP_Embed {
 						 * @param array  $attr   An array of shortcode attributes.
 						 */
 						return apply_filters( 'embed_handler_html', $return, $url, $attr );
+					}
 				}
 			}
 		}
 
 		$post_ID = ( ! empty( $post->ID ) ) ? $post->ID : null;
-		if ( ! empty( $this->post_ID ) ) // Potentially set by WP_Embed::cache_oembed()
+		if ( ! empty( $this->post_ID ) ) { // Potentially set by WP_Embed::cache_oembed()
 			$post_ID = $this->post_ID;
+		}
 
 		// Unknown URL format. Let oEmbed have a go.
 		if ( $post_ID ) {
@@ -219,8 +222,9 @@ class WP_Embed {
 
 			if ( $this->usecache || $cached_recently ) {
 				// Failures are cached. Serve one if we're using the cache.
-				if ( '{{unknown}}' === $cache )
+				if ( '{{unknown}}' === $cache ) {
 					return $this->maybe_make_link( $url );
+				}
 
 				if ( ! empty( $cache ) ) {
 					/**
@@ -280,12 +284,14 @@ class WP_Embed {
 	 */
 	public function delete_oembed_caches( $post_ID ) {
 		$post_metas = get_post_custom_keys( $post_ID );
-		if ( empty($post_metas) )
+		if ( empty( $post_metas ) ) {
 			return;
+		}
 
 		foreach ( $post_metas as $post_meta_key ) {
-			if ( '_oembed_' == substr( $post_meta_key, 0, 8 ) )
+			if ( '_oembed_' == substr( $post_meta_key, 0, 8 ) ) {
 				delete_post_meta( $post_ID, $post_meta_key );
+			}
 		}
 	}
 
@@ -305,7 +311,7 @@ class WP_Embed {
 		 *
 		 * @param array $post_types Array of post types to cache oEmbed results for. Defaults to post types with `show_ui` set to true.
 		 */
-		if ( empty( $post->ID ) || ! in_array( $post->post_type, apply_filters( 'embed_cache_oembed_types', $post_types ) ) ){
+		if ( empty( $post->ID ) || ! in_array( $post->post_type, apply_filters( 'embed_cache_oembed_types', $post_types ) ) ) {
 			return;
 		}
 
@@ -370,7 +376,7 @@ class WP_Embed {
 			return false;
 		}
 
-		$output = ( $this->linkifunknown ) ? '<a href="' . esc_url($url) . '">' . esc_html($url) . '</a>' : $url;
+		$output = ( $this->linkifunknown ) ? '<a href="' . esc_url( $url ) . '">' . esc_html( $url ) . '</a>' : $url;
 
 		/**
 		 * Filters the returned, maybe-linked embed URL.

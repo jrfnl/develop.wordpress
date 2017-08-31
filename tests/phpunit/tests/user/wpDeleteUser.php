@@ -66,9 +66,9 @@ class Tests_User_WpDeleteUser extends WP_UnitTestCase {
 		);
 
 		// insert a post and make sure the ID is ok
-		$post_id = wp_insert_post($post);
-		$this->assertTrue(is_numeric($post_id));
-		$this->assertTrue($post_id > 0);
+		$post_id = wp_insert_post( $post );
+		$this->assertTrue( is_numeric( $post_id ) );
+		$this->assertTrue( $post_id > 0 );
 
 		$post = get_post( $post_id );
 		$this->assertEquals( $post_id, $post->ID );
@@ -82,19 +82,20 @@ class Tests_User_WpDeleteUser extends WP_UnitTestCase {
 		);
 
 		// insert a post and make sure the ID is ok
-		$nav_id = wp_insert_post($post);
-		$this->assertTrue(is_numeric($nav_id));
-		$this->assertTrue($nav_id > 0);
+		$nav_id = wp_insert_post( $post );
+		$this->assertTrue( is_numeric( $nav_id ) );
+		$this->assertTrue( $nav_id > 0 );
 
 		$post = get_post( $nav_id );
 		$this->assertEquals( $nav_id, $post->ID );
 
 		wp_delete_user( $user_id );
 		$user = new WP_User( $user_id );
-		if ( is_multisite() )
+		if ( is_multisite() ) {
 			$this->assertTrue( $user->exists() );
-		else
+		} else {
 			$this->assertFalse( $user->exists() );
+		}
 
 		$this->assertNotNull( get_post( $post_id ) );
 		$this->assertEquals( 'trash', get_post( $post_id )->post_status );

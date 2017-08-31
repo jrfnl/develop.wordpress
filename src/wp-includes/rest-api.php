@@ -36,7 +36,7 @@ function register_rest_route( $namespace, $route, $args = array(), $override = f
 		 */
 		_doing_it_wrong( 'register_rest_route', __( 'Routes must be namespaced with plugin or theme name and version.' ), '4.4.0' );
 		return false;
-	} else if ( empty( $route ) ) {
+	} elseif ( empty( $route ) ) {
 		_doing_it_wrong( 'register_rest_route', __( 'Route must be specified.' ), '4.4.0' );
 		return false;
 	}
@@ -938,7 +938,7 @@ function rest_is_ip_address( $ip ) {
  */
 function rest_sanitize_boolean( $value ) {
 	// String values are translated to `true`; make sure 'false' is false.
-	if ( is_string( $value )  ) {
+	if ( is_string( $value ) ) {
 		$value = strtolower( $value );
 		if ( in_array( $value, array( 'false', '0' ), true ) ) {
 			$value = false;
@@ -1080,18 +1080,18 @@ function rest_validate_value_from_schema( $value, $args, $param = '' ) {
 
 	if ( isset( $args['format'] ) ) {
 		switch ( $args['format'] ) {
-			case 'date-time' :
+			case 'date-time':
 				if ( ! rest_parse_date( $value ) ) {
 					return new WP_Error( 'rest_invalid_date', __( 'Invalid date.' ) );
 				}
 				break;
 
-			case 'email' :
+			case 'email':
 				if ( ! is_email( $value ) ) {
 					return new WP_Error( 'rest_invalid_email', __( 'Invalid email address.' ) );
 				}
 				break;
-			case 'ip' :
+			case 'ip':
 				if ( ! rest_is_ip_address( $value ) ) {
 					/* translators: %s: IP address */
 					return new WP_Error( 'rest_invalid_param', sprintf( __( '%s is not a valid IP address.' ), $value ) );
@@ -1184,19 +1184,19 @@ function rest_sanitize_value_from_schema( $value, $args ) {
 
 	if ( isset( $args['format'] ) ) {
 		switch ( $args['format'] ) {
-			case 'date-time' :
+			case 'date-time':
 				return sanitize_text_field( $value );
 
-			case 'email' :
+			case 'email':
 				/*
 				 * sanitize_email() validates, which would be unexpected.
 				 */
 				return sanitize_text_field( $value );
 
-			case 'uri' :
+			case 'uri':
 				return esc_url_raw( $value );
 
-			case 'ip' :
+			case 'ip':
 				return sanitize_text_field( $value );
 		}
 	}

@@ -16,9 +16,11 @@ class Tests_Auth extends WP_UnitTestCase {
 	protected $nonce_failure_hook = 'wp_verify_nonce_failed';
 
 	public static function wpSetUpBeforeClass( $factory ) {
-		self::$_user = $factory->user->create_and_get( array(
-			'user_login' => 'password-tests'
-		) );
+		self::$_user = $factory->user->create_and_get(
+			array(
+				'user_login' => 'password-tests',
+			)
+		);
 
 		self::$user_id = self::$_user->ID;
 
@@ -49,7 +51,7 @@ class Tests_Auth extends WP_UnitTestCase {
 		$this->assertEquals( false, wp_validate_auth_cookie( $cookie, 'logged_in' ), 'wrong auth scheme' );
 
 		$cookie = wp_generate_auth_cookie( self::$user_id, time() + 3600, 'auth' );
-		list($a, $b, $c) = explode('|', $cookie);
+		list($a, $b, $c) = explode( '|', $cookie );
 		$cookie = $a . '|' . ($b + 1) . '|' . $c;
 		$this->assertEquals( false, wp_validate_auth_cookie( self::$user_id, 'auth' ), 'altered cookie' );
 	}
@@ -75,7 +77,7 @@ class Tests_Auth extends WP_UnitTestCase {
 			' a password with trailing and leading spaces ',
 		);
 
-		foreach( $passwords_to_test as $password_to_test ) {
+		foreach ( $passwords_to_test as $password_to_test ) {
 			wp_set_password( $password_to_test, $this->user->ID );
 			$authed_user = wp_authenticate( $this->user->user_login, $password_to_test );
 
@@ -231,11 +233,13 @@ class Tests_Auth extends WP_UnitTestCase {
 		global $wpdb;
 
 		$key  = wp_generate_password( 20, false );
-		$wpdb->update( $wpdb->users, array(
-			'user_activation_key' => strtotime( '-1 hour' ) . ':' . self::$wp_hasher->HashPassword( $key ),
-		), array(
-			'ID' => $this->user->ID,
-		) );
+		$wpdb->update(
+			$wpdb->users, array(
+				'user_activation_key' => strtotime( '-1 hour' ) . ':' . self::$wp_hasher->HashPassword( $key ),
+			), array(
+				'ID' => $this->user->ID,
+			)
+		);
 
 		// A valid key should be accepted
 		$check = check_password_reset_key( $key, $this->user->user_login );
@@ -264,11 +268,13 @@ class Tests_Auth extends WP_UnitTestCase {
 		global $wpdb;
 
 		$key  = wp_generate_password( 20, false );
-		$wpdb->update( $wpdb->users, array(
-			'user_activation_key' => strtotime( '-48 hours' ) . ':' . self::$wp_hasher->HashPassword( $key ),
-		), array(
-			'ID' => $this->user->ID,
-		) );
+		$wpdb->update(
+			$wpdb->users, array(
+				'user_activation_key' => strtotime( '-48 hours' ) . ':' . self::$wp_hasher->HashPassword( $key ),
+			), array(
+				'ID' => $this->user->ID,
+			)
+		);
 
 		// An expired but otherwise valid key should be rejected
 		$check = check_password_reset_key( $key, $this->user->user_login );
@@ -297,11 +303,13 @@ class Tests_Auth extends WP_UnitTestCase {
 		// A legacy user_activation_key is one without the `time()` prefix introduced in WordPress 4.3.
 
 		$key  = wp_generate_password( 20, false );
-		$wpdb->update( $wpdb->users, array(
-			'user_activation_key' => self::$wp_hasher->HashPassword( $key ),
-		), array(
-			'ID' => $this->user->ID,
-		) );
+		$wpdb->update(
+			$wpdb->users, array(
+				'user_activation_key' => self::$wp_hasher->HashPassword( $key ),
+			), array(
+				'ID' => $this->user->ID,
+			)
+		);
 
 		// A legacy user_activation_key should not be accepted
 		$check = check_password_reset_key( $key, $this->user->user_login );
@@ -322,11 +330,13 @@ class Tests_Auth extends WP_UnitTestCase {
 		// A plaintext user_activation_key is one stored before hashing was introduced in WordPress 3.7.
 
 		$key  = wp_generate_password( 20, false );
-		$wpdb->update( $wpdb->users, array(
-			'user_activation_key' => $key,
-		), array(
-			'ID' => $this->user->ID,
-		) );
+		$wpdb->update(
+			$wpdb->users, array(
+				'user_activation_key' => $key,
+			), array(
+				'ID' => $this->user->ID,
+			)
+		);
 
 		// A plaintext user_activation_key should not allow an otherwise valid key to be accepted
 		$check = check_password_reset_key( $key, $this->user->user_login );

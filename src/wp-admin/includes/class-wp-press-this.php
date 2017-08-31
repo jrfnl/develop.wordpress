@@ -195,7 +195,12 @@ class WP_Press_This {
 			$redirect = apply_filters( 'press_this_save_redirect', $redirect, $post_id, $post_data['post_status'] );
 
 			if ( $redirect ) {
-				wp_send_json_success( array( 'redirect' => $redirect, 'force' => $forceRedirect ) );
+				wp_send_json_success(
+					array(
+						'redirect' => $redirect,
+						'force' => $forceRedirect,
+					)
+				);
 			} else {
 				wp_send_json_success( array( 'postSaved' => true ) );
 			}
@@ -283,11 +288,13 @@ class WP_Press_This {
 			return new WP_Error( 'invalid-url', __( 'A valid URL was not provided.' ) );
 		}
 
-		$remote_url = wp_safe_remote_get( $url, array(
-			'timeout' => 30,
-			// Use an explicit user-agent for Press This
-			'user-agent' => 'Press This (WordPress/' . get_bloginfo( 'version' ) . '); ' . get_bloginfo( 'url' )
-		) );
+		$remote_url = wp_safe_remote_get(
+			$url, array(
+				'timeout' => 30,
+				// Use an explicit user-agent for Press This
+				'user-agent' => 'Press This (WordPress/' . get_bloginfo( 'version' ) . '); ' . get_bloginfo( 'url' ),
+			)
+		);
 
 		if ( is_wp_error( $remote_url ) ) {
 			return $remote_url;
@@ -311,7 +318,7 @@ class WP_Press_This {
 				'property' => true,
 				'name'     => true,
 				'content'  => true,
-			)
+			),
 		);
 
 		$source_content = wp_remote_retrieve_body( $remote_url );
@@ -357,7 +364,7 @@ class WP_Press_This {
 
 		if ( is_numeric( $value ) || is_bool( $value ) ) {
 			$return = $value;
-		} else if ( is_string( $value ) ) {
+		} elseif ( is_string( $value ) ) {
 			if ( mb_strlen( $value ) > 5000 ) {
 				$return = mb_substr( $value, 0, 5000 );
 			} else {
@@ -426,28 +433,28 @@ class WP_Press_This {
 		if ( preg_match( '!/ad[sx]?/!i', $src ) ) {
 			// Ads
 			return '';
-		} else if ( preg_match( '!(/share-?this[^.]+?\.[a-z0-9]{3,4})(\?.*)?$!i', $src ) ) {
+		} elseif ( preg_match( '!(/share-?this[^.]+?\.[a-z0-9]{3,4})(\?.*)?$!i', $src ) ) {
 			// Share-this type button
 			return '';
-		} else if ( preg_match( '!/(spinner|loading|spacer|blank|rss)\.(gif|jpg|png)!i', $src ) ) {
+		} elseif ( preg_match( '!/(spinner|loading|spacer|blank|rss)\.(gif|jpg|png)!i', $src ) ) {
 			// Loaders, spinners, spacers
 			return '';
-		} else if ( preg_match( '!/([^./]+[-_])?(spinner|loading|spacer|blank)s?([-_][^./]+)?\.[a-z0-9]{3,4}!i', $src ) ) {
+		} elseif ( preg_match( '!/([^./]+[-_])?(spinner|loading|spacer|blank)s?([-_][^./]+)?\.[a-z0-9]{3,4}!i', $src ) ) {
 			// Fancy loaders, spinners, spacers
 			return '';
-		} else if ( preg_match( '!([^./]+[-_])?thumb[^.]*\.(gif|jpg|png)$!i', $src ) ) {
+		} elseif ( preg_match( '!([^./]+[-_])?thumb[^.]*\.(gif|jpg|png)$!i', $src ) ) {
 			// Thumbnails, too small, usually irrelevant to context
 			return '';
-		} else if ( false !== stripos( $src, '/wp-includes/' ) ) {
+		} elseif ( false !== stripos( $src, '/wp-includes/' ) ) {
 			// Classic WordPress interface images
 			return '';
-		} else if ( preg_match( '![^\d]\d{1,2}x\d+\.(gif|jpg|png)$!i', $src ) ) {
+		} elseif ( preg_match( '![^\d]\d{1,2}x\d+\.(gif|jpg|png)$!i', $src ) ) {
 			// Most often tiny buttons/thumbs (< 100px wide)
 			return '';
-		} else if ( preg_match( '!/pixel\.(mathtag|quantserve)\.com!i', $src ) ) {
+		} elseif ( preg_match( '!/pixel\.(mathtag|quantserve)\.com!i', $src ) ) {
 			// See mathtag.com and https://www.quantcast.com/how-we-do-it/iab-standard-measurement/how-we-collect-data/
 			return '';
-		} else if ( preg_match( '!/[gb]\.gif(\?.+)?$!i', $src ) ) {
+		} elseif ( preg_match( '!/[gb]\.gif(\?.+)?$!i', $src ) ) {
 			// WordPress.com stats gif
 			return '';
 		}
@@ -470,22 +477,23 @@ class WP_Press_This {
 	private function _limit_embed( $src ) {
 		$src = $this->_limit_url( $src );
 
-		if ( empty( $src ) )
+		if ( empty( $src ) ) {
 			return '';
+		}
 
 		if ( preg_match( '!//(m|www)\.youtube\.com/(embed|v)/([^?]+)\?.+$!i', $src, $src_matches ) ) {
 			// Embedded Youtube videos (www or mobile)
 			$src = 'https://www.youtube.com/watch?v=' . $src_matches[3];
-		} else if ( preg_match( '!//player\.vimeo\.com/video/([\d]+)([?/].*)?$!i', $src, $src_matches ) ) {
+		} elseif ( preg_match( '!//player\.vimeo\.com/video/([\d]+)([?/].*)?$!i', $src, $src_matches ) ) {
 			// Embedded Vimeo iframe videos
 			$src = 'https://vimeo.com/' . (int) $src_matches[1];
-		} else if ( preg_match( '!//vimeo\.com/moogaloop\.swf\?clip_id=([\d]+)$!i', $src, $src_matches ) ) {
+		} elseif ( preg_match( '!//vimeo\.com/moogaloop\.swf\?clip_id=([\d]+)$!i', $src, $src_matches ) ) {
 			// Embedded Vimeo Flash videos
 			$src = 'https://vimeo.com/' . (int) $src_matches[1];
-		} else if ( preg_match( '!//vine\.co/v/([^/]+)/embed!i', $src, $src_matches ) ) {
+		} elseif ( preg_match( '!//vine\.co/v/([^/]+)/embed!i', $src, $src_matches ) ) {
 			// Embedded Vine videos
 			$src = 'https://vine.co/v/' . $src_matches[1];
-		} else if ( preg_match( '!//(www\.)?dailymotion\.com/embed/video/([^/?]+)([/?].+)?!i', $src, $src_matches ) ) {
+		} elseif ( preg_match( '!//(www\.)?dailymotion\.com/embed/video/([^/?]+)([/?].+)?!i', $src, $src_matches ) ) {
 			// Embedded Daily Motion videos
 			$src = 'https://www.dailymotion.com/video/' . $src_matches[2];
 		} else {
@@ -676,7 +684,7 @@ class WP_Press_This {
 		foreach ( array( 'u', 's', 't', 'v' ) as $key ) {
 			if ( ! empty( $_POST[ $key ] ) ) {
 				$value = wp_unslash( $_POST[ $key ] );
-			} else if ( ! empty( $_GET[ $key ] ) ) {
+			} elseif ( ! empty( $_GET[ $key ] ) ) {
 				$value = wp_unslash( $_GET[ $key ] );
 			} else {
 				continue;
@@ -842,11 +850,11 @@ class WP_Press_This {
 						?>
 						<br />
 						<input type="radio" name="post_format" class="post-format" id="post-format-<?php echo $attr_format; ?>" value="<?php echo $attr_format; ?>" <?php checked( $post_format, $format ); ?> />
-						<label for="post-format-<?php echo $attr_format ?>" class="post-format-icon post-format-<?php echo $attr_format; ?>"><?php echo esc_html( get_post_format_string( $format ) ); ?></label>
+						<label for="post-format-<?php echo $attr_format; ?>" class="post-format-icon post-format-<?php echo $attr_format; ?>"><?php echo esc_html( get_post_format_string( $format ) ); ?></label>
 						<?php
-					 }
+					}
 
-					 ?>
+						?>
 				</fieldset>
 				</div>
 				<?php
@@ -881,14 +889,16 @@ class WP_Press_This {
 				<label class="screen-reader-text" for="new-category-parent"><?php echo $taxonomy->labels->parent_item_colon; ?></label>
 				<div class="postform-wrapper">
 					<?php
-					wp_dropdown_categories( array(
-						'taxonomy'         => 'category',
-						'hide_empty'       => 0,
-						'name'             => 'new-category-parent',
-						'orderby'          => 'name',
-						'hierarchical'     => 1,
-						'show_option_none' => '&mdash; ' . $taxonomy->labels->parent_item . ' &mdash;'
-					) );
+					wp_dropdown_categories(
+						array(
+							'taxonomy'         => 'category',
+							'hide_empty'       => 0,
+							'name'             => 'new-category-parent',
+							'orderby'          => 'name',
+							'hierarchical'     => 1,
+							'show_option_none' => '&mdash; ' . $taxonomy->labels->parent_item . ' &mdash;',
+						)
+					);
 					?>
 				</div>
 				<button type="button" class="add-cat-submit"><?php _e( 'Add' ); ?></button>
@@ -898,14 +908,21 @@ class WP_Press_This {
 		}
 		?>
 		<div class="categories-search-wrapper">
-			<input id="categories-search" type="search" class="categories-search" placeholder="<?php esc_attr_e( 'Search categories by name' ) ?>">
+			<input id="categories-search" type="search" class="categories-search" placeholder="<?php esc_attr_e( 'Search categories by name' ); ?>">
 			<label for="categories-search">
 				<span class="dashicons dashicons-search"></span><span class="screen-reader-text"><?php _e( 'Search categories' ); ?></span>
 			</label>
 		</div>
 		<div aria-label="<?php esc_attr_e( 'Categories' ); ?>">
 			<ul class="categories-select">
-				<?php wp_terms_checklist( $post->ID, array( 'taxonomy' => 'category', 'list_only' => true ) ); ?>
+				<?php
+				wp_terms_checklist(
+					$post->ID, array(
+						'taxonomy' => 'category',
+						'list_only' => true,
+					)
+				);
+?>
 			</ul>
 		</div>
 		<?php
@@ -931,7 +948,7 @@ class WP_Press_This {
 		<div class="tagsdiv" id="post_tag">
 			<div class="jaxtag">
 			<input type="hidden" name="tax_input[post_tag]" class="the-tags" value="<?php echo $esc_tags; // escaped in get_terms_to_edit() ?>">
-		 	<?php
+			<?php
 
 			if ( $user_can_assign_terms ) {
 				?>
@@ -973,7 +990,7 @@ class WP_Press_This {
 		$selected_embeds = array();
 
 		// Make sure to add the Pressed page if it's a valid oembed itself
-		if ( ! empty ( $data['u'] ) && $this->_limit_embed( $data['u'] ) ) {
+		if ( ! empty( $data['u'] ) && $this->_limit_embed( $data['u'] ) ) {
 			$data['_embeds'][] = $data['u'];
 		}
 
@@ -1031,7 +1048,7 @@ class WP_Press_This {
 	 *
 	 * @since 4.2.0
 	 *
- 	 * @param array $data The site's data.
+	 * @param array $data The site's data.
 	 * @return string Discovered canonical URL, or empty
 	 */
 	public function get_canonical_link( $data ) {
@@ -1044,7 +1061,7 @@ class WP_Press_This {
 		} elseif ( ! empty( $data['_meta'] ) ) {
 			if ( ! empty( $data['_meta']['twitter:url'] ) ) {
 				$link = $data['_meta']['twitter:url'];
-			} else if ( ! empty( $data['_meta']['og:url'] ) ) {
+			} elseif ( ! empty( $data['_meta']['og:url'] ) ) {
 				$link = $data['_meta']['og:url'];
 			}
 		}
@@ -1070,7 +1087,7 @@ class WP_Press_This {
 		if ( ! empty( $data['_meta'] ) ) {
 			if ( ! empty( $data['_meta']['og:site_name'] ) ) {
 				$name = $data['_meta']['og:site_name'];
-			} else if ( ! empty( $data['_meta']['application-name'] ) ) {
+			} elseif ( ! empty( $data['_meta']['application-name'] ) ) {
 				$name = $data['_meta']['application-name'];
 			}
 		}
@@ -1094,9 +1111,9 @@ class WP_Press_This {
 		} elseif ( ! empty( $data['_meta'] ) ) {
 			if ( ! empty( $data['_meta']['twitter:title'] ) ) {
 				$title = $data['_meta']['twitter:title'];
-			} else if ( ! empty( $data['_meta']['og:title'] ) ) {
+			} elseif ( ! empty( $data['_meta']['og:title'] ) ) {
 				$title = $data['_meta']['og:title'];
-			} else if ( ! empty( $data['_meta']['title'] ) ) {
+			} elseif ( ! empty( $data['_meta']['title'] ) ) {
 				$title = $data['_meta']['title'];
 			}
 		}
@@ -1119,12 +1136,12 @@ class WP_Press_This {
 
 		if ( ! empty( $data['s'] ) ) {
 			$text = $data['s'];
-		} else if ( ! empty( $data['_meta'] ) ) {
+		} elseif ( ! empty( $data['_meta'] ) ) {
 			if ( ! empty( $data['_meta']['twitter:description'] ) ) {
 				$text = $data['_meta']['twitter:description'];
-			} else if ( ! empty( $data['_meta']['og:description'] ) ) {
+			} elseif ( ! empty( $data['_meta']['og:description'] ) ) {
 				$text = $data['_meta']['og:description'];
-			} else if ( ! empty( $data['_meta']['description'] ) ) {
+			} elseif ( ! empty( $data['_meta']['description'] ) ) {
 				$text = $data['_meta']['description'];
 			}
 
@@ -1134,7 +1151,11 @@ class WP_Press_This {
 			}
 		}
 
-		$default_html = array( 'quote' => '', 'link' => '', 'embed' => '' );
+		$default_html = array(
+			'quote' => '',
+			'link' => '',
+			'embed' => '',
+		);
 
 		if ( ! empty( $data['u'] ) && $this->_limit_embed( $data['u'] ) ) {
 			$default_html['embed'] = '<p>[embed]' . $data['u'] . '[/embed]</p>';
@@ -1250,7 +1271,7 @@ class WP_Press_This {
 <head>
 	<meta http-equiv="Content-Type" content="<?php echo esc_attr( get_bloginfo( 'html_type' ) ); ?>; charset=<?php echo esc_attr( get_option( 'blog_charset' ) ); ?>" />
 	<meta name="viewport" content="width=device-width">
-	<title><?php esc_html_e( 'Press This!' ) ?></title>
+	<title><?php esc_html_e( 'Press This!' ); ?></title>
 
 	<script>
 		window.wpPressThisData   = <?php echo wp_json_encode( $site_data ); ?>;
@@ -1290,13 +1311,13 @@ class WP_Press_This {
 		$supports_formats = false;
 		$post_format      = 0;
 
-		if ( current_theme_supports( 'post-formats' ) && post_type_supports( $post->post_type, 'post-formats' ) ) {
-			$supports_formats = true;
+	if ( current_theme_supports( 'post-formats' ) && post_type_supports( $post->post_type, 'post-formats' ) ) {
+		$supports_formats = true;
 
-			if ( ! ( $post_format = get_post_format( $post_ID ) ) ) {
-				$post_format = 0;
-			}
+		if ( ! ( $post_format = get_post_format( $post_ID ) ) ) {
+			$post_format = 0;
 		}
+	}
 
 		/** This action is documented in wp-admin/admin-header.php */
 		do_action( 'admin_enqueue_scripts', 'press-this.php' );
@@ -1352,8 +1373,8 @@ class WP_Press_This {
 	<div id="scanbar" class="scan">
 		<form method="GET">
 			<label for="url-scan" class="screen-reader-text"><?php _e( 'Scan site for content' ); ?></label>
-			<input type="url" name="u" id="url-scan" class="scan-url" value="<?php echo esc_attr( $site_data['u'] ) ?>" placeholder="<?php esc_attr_e( 'Enter a URL to scan' ) ?>" />
-			<input type="submit" name="url-scan-submit" id="url-scan-submit" class="scan-submit" value="<?php esc_attr_e( 'Scan' ) ?>" />
+			<input type="url" name="u" id="url-scan" class="scan-url" value="<?php echo esc_attr( $site_data['u'] ); ?>" placeholder="<?php esc_attr_e( 'Enter a URL to scan' ); ?>" />
+			<input type="submit" name="url-scan-submit" id="url-scan-submit" class="scan-submit" value="<?php esc_attr_e( 'Scan' ); ?>" />
 			<?php wp_nonce_field( 'scan-site' ); ?>
 		</form>
 	</div>
@@ -1400,27 +1421,29 @@ class WP_Press_This {
 				</div>
 
 				<?php
-				wp_editor( $post_content, 'pressthis', array(
-					'drag_drop_upload' => true,
-					'editor_height'    => 600,
-					'media_buttons'    => false,
-					'textarea_name'    => 'post_content',
-					'teeny'            => true,
-					'tinymce'          => array(
-						'resize'                => false,
-						'wordpress_adv_hidden'  => false,
-						'add_unload_trigger'    => false,
-						'statusbar'             => false,
-						'autoresize_min_height' => 600,
-						'wp_autoresize_on'      => true,
-						'plugins'               => 'lists,media,paste,tabfocus,fullscreen,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
-						'toolbar1'              => 'bold,italic,bullist,numlist,blockquote,link,unlink',
-						'toolbar2'              => 'undo,redo',
-					),
-					'quicktags' => array(
-						'buttons' => 'strong,em,link,block,del,ins,img,ul,ol,li,code,more',
-					),
-				) );
+				wp_editor(
+					$post_content, 'pressthis', array(
+						'drag_drop_upload' => true,
+						'editor_height'    => 600,
+						'media_buttons'    => false,
+						'textarea_name'    => 'post_content',
+						'teeny'            => true,
+						'tinymce'          => array(
+							'resize'                => false,
+							'wordpress_adv_hidden'  => false,
+							'add_unload_trigger'    => false,
+							'statusbar'             => false,
+							'autoresize_min_height' => 600,
+							'wp_autoresize_on'      => true,
+							'plugins'               => 'lists,media,paste,tabfocus,fullscreen,wordpress,wpautoresize,wpeditimage,wpgallery,wplink,wptextpattern,wpview',
+							'toolbar1'              => 'bold,italic,bullist,numlist,blockquote,link,unlink',
+							'toolbar2'              => 'undo,redo',
+						),
+						'quicktags' => array(
+							'buttons' => 'strong,em,link,block,del,ins,img,ul,ol,li,code,more',
+						),
+					)
+				);
 
 				?>
 			</div>
@@ -1461,7 +1484,7 @@ class WP_Press_This {
 					<button type="button" class="modal-close">
 						<span class="dashicons post-option-back"></span>
 						<span class="setting-title" aria-hidden="true"><?php _ex( 'Format', 'post format' ); ?></span>
-						<span class="screen-reader-text"><?php _e( 'Back to post options' ) ?></span>
+						<span class="screen-reader-text"><?php _e( 'Back to post options' ); ?></span>
 					</button>
 					<?php $this->post_formats_html( $post ); ?>
 				</div>
@@ -1472,7 +1495,7 @@ class WP_Press_This {
 					<button type="button" class="modal-close">
 						<span class="dashicons post-option-back"></span>
 						<span class="setting-title" aria-hidden="true"><?php _e( 'Categories' ); ?></span>
-						<span class="screen-reader-text"><?php _e( 'Back to post options' ) ?></span>
+						<span class="screen-reader-text"><?php _e( 'Back to post options' ); ?></span>
 					</button>
 					<?php $this->categories_html( $post ); ?>
 				</div>
@@ -1483,7 +1506,7 @@ class WP_Press_This {
 					<button type="button" class="modal-close">
 						<span class="dashicons post-option-back"></span>
 						<span class="setting-title" aria-hidden="true"><?php _e( 'Tags' ); ?></span>
-						<span class="screen-reader-text"><?php _e( 'Back to post options' ) ?></span>
+						<span class="screen-reader-text"><?php _e( 'Back to post options' ); ?></span>
 					</button>
 					<?php $this->tags_html( $post ); ?>
 				</div>
@@ -1507,7 +1530,7 @@ class WP_Press_This {
 						<span class="saving-draft"><?php _e( 'Saving&hellip;' ); ?></span>
 					</button><button type="button" class="split-button-toggle" aria-haspopup="true" aria-expanded="false">
 						<i class="dashicons dashicons-arrow-down-alt2"></i>
-						<span class="screen-reader-text"><?php _e('More actions'); ?></span>
+						<span class="screen-reader-text"><?php _e( 'More actions' ); ?></span>
 					</button>
 				</div>
 				<ul class="split-button-body">

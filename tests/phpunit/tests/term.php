@@ -15,19 +15,25 @@ class Tests_Term extends WP_UnitTestCase {
 	 * @ticket 29911
 	 */
 	public function test_wp_delete_term_should_invalidate_cache_for_child_terms() {
-		register_taxonomy( 'wptests_tax', 'post', array(
-			'hierarchical' => true,
-		) );
+		register_taxonomy(
+			'wptests_tax', 'post', array(
+				'hierarchical' => true,
+			)
+		);
 
-		$parent = self::factory()->term->create( array(
-			'taxonomy' => 'wptests_tax',
-		) );
+		$parent = self::factory()->term->create(
+			array(
+				'taxonomy' => 'wptests_tax',
+			)
+		);
 
-		$child = self::factory()->term->create( array(
-			'taxonomy' => 'wptests_tax',
-			'parent' => $parent,
-			'slug' => 'foo',
-		) );
+		$child = self::factory()->term->create(
+			array(
+				'taxonomy' => 'wptests_tax',
+				'parent' => $parent,
+				'slug' => 'foo',
+			)
+		);
 
 		// Prime the cache.
 		$child_term = get_term( $child, 'wptests_tax' );
@@ -46,11 +52,11 @@ class Tests_Term extends WP_UnitTestCase {
 		$term = rand_str();
 		$t = wp_insert_term( $term, $this->taxonomy );
 		$this->assertInternalType( 'array', $t );
-		$term_obj = get_term_by('name', $term, $this->taxonomy);
-		$this->assertEquals( $t['term_id'], term_exists($term_obj->slug) );
+		$term_obj = get_term_by( 'name', $term, $this->taxonomy );
+		$this->assertEquals( $t['term_id'], term_exists( $term_obj->slug ) );
 
 		// clean up
-		$this->assertTrue( wp_delete_term($t['term_id'], $this->taxonomy) );
+		$this->assertTrue( wp_delete_term( $t['term_id'], $this->taxonomy ) );
 	}
 
 	/**
@@ -84,17 +90,19 @@ class Tests_Term extends WP_UnitTestCase {
 		$this->assertTrue( wp_remove_object_terms( $posts[1], $three_tags, 'post_tag' ) );
 		$this->assertEquals( 0, count( wp_get_object_terms( $posts[1], 'post_tag' ) ) );
 
-		foreach ( $tags as $term_id )
+		foreach ( $tags as $term_id ) {
 			$this->assertTrue( wp_delete_term( $term_id, 'post_tag' ) );
+		}
 
-		foreach ( $posts as $post_id )
+		foreach ( $posts as $post_id ) {
 			$this->assertTrue( (bool) wp_delete_post( $post_id ) );
+		}
 	}
 
 	/**
 	 * @group category.php
 	 */
-	function test_term_is_ancestor_of( ) {
+	function test_term_is_ancestor_of() {
 		$term = rand_str();
 		$term2 = rand_str();
 
@@ -106,11 +114,11 @@ class Tests_Term extends WP_UnitTestCase {
 			$this->assertTrue( term_is_ancestor_of( $t['term_id'], $t2['term_id'], 'category' ) );
 			$this->assertFalse( term_is_ancestor_of( $t2['term_id'], $t['term_id'], 'category' ) );
 		}
-		$this->assertTrue( cat_is_ancestor_of( $t['term_id'], $t2['term_id']) );
-		$this->assertFalse( cat_is_ancestor_of( $t2['term_id'], $t['term_id']) );
+		$this->assertTrue( cat_is_ancestor_of( $t['term_id'], $t2['term_id'] ) );
+		$this->assertFalse( cat_is_ancestor_of( $t2['term_id'], $t['term_id'] ) );
 
-		wp_delete_term($t['term_id'], 'category');
-		wp_delete_term($t2['term_id'], 'category');
+		wp_delete_term( $t['term_id'], 'category' );
+		wp_delete_term( $t2['term_id'], 'category' );
 	}
 
 	function test_wp_insert_delete_category() {
@@ -120,20 +128,20 @@ class Tests_Term extends WP_UnitTestCase {
 		$initial_count = wp_count_terms( 'category' );
 
 		$t = wp_insert_category( array( 'cat_name' => $term ) );
-		$this->assertTrue( is_numeric($t) );
+		$this->assertTrue( is_numeric( $t ) );
 		$this->assertNotWPError( $t );
 		$this->assertTrue( $t > 0 );
 		$this->assertEquals( $initial_count + 1, wp_count_terms( 'category' ) );
 
 		// make sure the term exists
-		$this->assertTrue( term_exists($term) > 0 );
-		$this->assertTrue( term_exists($t) > 0 );
+		$this->assertTrue( term_exists( $term ) > 0 );
+		$this->assertTrue( term_exists( $t ) > 0 );
 
 		// now delete it
-		$this->assertTrue( wp_delete_category($t) );
-		$this->assertNull( term_exists($term) );
-		$this->assertNull( term_exists($t) );
-		$this->assertEquals( $initial_count, wp_count_terms('category') );
+		$this->assertTrue( wp_delete_category( $t ) );
+		$this->assertNull( term_exists( $term ) );
+		$this->assertNull( term_exists( $t ) );
+		$this->assertEquals( $initial_count, wp_count_terms( 'category' ) );
 	}
 
 	/**
@@ -185,9 +193,11 @@ class Tests_Term extends WP_UnitTestCase {
 	}
 
 	private function assertPostHasTerms( $post_id, $expected_term_ids, $taxonomy ) {
-		$assigned_term_ids = wp_get_object_terms( $post_id, $taxonomy, array(
-			'fields' => 'ids'
-		) );
+		$assigned_term_ids = wp_get_object_terms(
+			$post_id, $taxonomy, array(
+				'fields' => 'ids',
+			)
+		);
 
 		$this->assertEquals( $expected_term_ids, $assigned_term_ids );
 	}

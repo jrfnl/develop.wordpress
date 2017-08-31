@@ -34,9 +34,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 		$this->assertSame( 0, did_action( $error ) );
 
-		$post = self::factory()->post->create_and_get( array(
-			'comment_status' => 'closed',
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'comment_status' => 'closed',
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 		);
@@ -72,9 +74,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 		$this->assertSame( 0, did_action( $error ) );
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_status' => 'draft',
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_status' => 'draft',
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 		);
@@ -93,18 +97,22 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 	public function test_submitting_comment_to_draft_post_returns_error_message_for_user_with_correct_caps() {
 		$error = 'comment_on_draft';
 
-		$user = self::factory()->user->create_and_get( array(
-			'role' => 'author',
-		) );
+		$user = self::factory()->user->create_and_get(
+			array(
+				'role' => 'author',
+			)
+		);
 
 		wp_set_current_user( $user->ID );
 
 		$this->assertSame( 0, did_action( $error ) );
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_status' => 'draft',
-			'post_author' => $user->ID,
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_status' => 'draft',
+				'post_author' => $user->ID,
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 		);
@@ -123,9 +131,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 		$this->assertSame( 0, did_action( $error ) );
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_date' => date( 'Y-m-d H:i:s', strtotime( '+1 day' ) ),
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_date' => date( 'Y-m-d H:i:s', strtotime( '+1 day' ) ),
+			)
+		);
 
 		$this->assertSame( 'future', $post->post_status );
 
@@ -146,9 +156,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 		$this->assertSame( 0, did_action( $error ) );
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_password' => 'password',
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_password' => 'password',
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 		);
@@ -165,11 +177,13 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 		$password = 'password';
 		$hasher   = new PasswordHash( 8, true );
 
-		$_COOKIE['wp-postpass_' . COOKIEHASH] = $hasher->HashPassword( $password );
+		$_COOKIE[ 'wp-postpass_' . COOKIEHASH ] = $hasher->HashPassword( $password );
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_password' => $password,
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_password' => $password,
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 			'comment'         => 'Comment',
@@ -178,7 +192,7 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 		);
 		$comment = wp_handle_comment_submission( $data );
 
-		unset( $_COOKIE['wp-postpass_' . COOKIEHASH] );
+		unset( $_COOKIE[ 'wp-postpass_' . COOKIEHASH ] );
 
 		$this->assertNotWPError( $comment );
 		$this->assertInstanceOf( 'WP_Comment', $comment );
@@ -187,9 +201,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 	public function test_submitting_valid_comment_as_logged_in_user_succeeds() {
 
-		$user = self::factory()->user->create_and_get( array(
-			'user_url' => 'http://user.example.org'
-		) );
+		$user = self::factory()->user->create_and_get(
+			array(
+				'user_url' => 'http://user.example.org',
+			)
+		);
 
 		wp_set_current_user( $user->ID );
 
@@ -203,7 +219,7 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 		$this->assertNotWPError( $comment );
 		$this->assertInstanceOf( 'WP_Comment', $comment );
 
-		$this->assertSame( 'Comment', $comment->comment_content);
+		$this->assertSame( 'Comment', $comment->comment_content );
 		$this->assertSame( $user->display_name, $comment->comment_author );
 		$this->assertSame( $user->user_email, $comment->comment_author_email );
 		$this->assertSame( $user->user_url, $comment->comment_author_url );
@@ -219,14 +235,14 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 			'comment'         => 'Comment',
 			'author'          => 'Comment Author',
 			'email'           => 'comment@example.org',
-			'url'             => 'user.example.org'
+			'url'             => 'user.example.org',
 		);
 		$comment = wp_handle_comment_submission( $data );
 
 		$this->assertNotWPError( $comment );
 		$this->assertInstanceOf( 'WP_Comment', $comment );
 
-		$this->assertSame( 'Comment', $comment->comment_content);
+		$this->assertSame( 'Comment', $comment->comment_content );
 		$this->assertSame( 'Comment Author', $comment->comment_author );
 		$this->assertSame( 'comment@example.org', $comment->comment_author_email );
 		$this->assertSame( 'http://user.example.org', $comment->comment_author_url );
@@ -253,7 +269,7 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 		$this->assertNotWPError( $comment );
 		$this->assertInstanceOf( 'WP_Comment', $comment );
 
-		$this->assertSame( 'Comment with 1 slash: \\', $comment->comment_content);
+		$this->assertSame( 'Comment with 1 slash: \\', $comment->comment_content );
 		$this->assertSame( 'Comment Author with 1 slash: \\', $comment->comment_author );
 		$this->assertSame( 'comment@example.org', $comment->comment_author_email );
 
@@ -263,9 +279,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 		$error = 'comment_id_not_found';
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_status' => 'private',
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_status' => 'private',
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 		);
@@ -281,19 +299,25 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 		$error  = 'comment_id_not_found';
 
-		$author = self::factory()->user->create_and_get( array(
-			'role' => 'author',
-		) );
-		$user   = self::factory()->user->create_and_get( array(
-			'role' => 'author',
-		) );
+		$author = self::factory()->user->create_and_get(
+			array(
+				'role' => 'author',
+			)
+		);
+		$user   = self::factory()->user->create_and_get(
+			array(
+				'role' => 'author',
+			)
+		);
 
 		wp_set_current_user( $user->ID );
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_status' => 'private',
-			'post_author' => $author->ID,
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_status' => 'private',
+				'post_author' => $author->ID,
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 		);
@@ -309,20 +333,26 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 		$error  = 'comment_id_not_found';
 
-		$author = self::factory()->user->create_and_get( array(
-			'role' => 'author',
-		) );
-		$user   = self::factory()->user->create_and_get( array(
-			'role' => 'author',
-		) );
+		$author = self::factory()->user->create_and_get(
+			array(
+				'role' => 'author',
+			)
+		);
+		$user   = self::factory()->user->create_and_get(
+			array(
+				'role' => 'author',
+			)
+		);
 
 		wp_set_current_user( $user->ID );
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_status'    => 'private',
-			'post_author'    => $author->ID,
-			'comment_status' => 'closed',
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_status'    => 'private',
+				'post_author'    => $author->ID,
+				'comment_status' => 'closed',
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 		);
@@ -340,10 +370,12 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 		wp_set_current_user( $user->ID );
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_status' => 'private',
-			'post_author' => $user->ID,
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_status' => 'private',
+				'post_author' => $user->ID,
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 			'comment'         => 'Comment',
@@ -358,19 +390,25 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 	public function test_submitting_comment_to_accessible_private_post_succeeds() {
 
-		$author = self::factory()->user->create_and_get( array(
-			'role' => 'author',
-		) );
-		$user = self::factory()->user->create_and_get( array(
-			'role' => 'editor',
-		) );
+		$author = self::factory()->user->create_and_get(
+			array(
+				'role' => 'author',
+			)
+		);
+		$user = self::factory()->user->create_and_get(
+			array(
+				'role' => 'editor',
+			)
+		);
 
 		wp_set_current_user( $user->ID );
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_status' => 'private',
-			'post_author' => $author->ID,
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_status' => 'private',
+				'post_author' => $author->ID,
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 			'comment'         => 'Comment',
@@ -402,9 +440,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 	public function test_unprivileged_user_cannot_comment_unfiltered_html() {
 
-		$user = self::factory()->user->create_and_get( array(
-			'role' => 'author',
-		) );
+		$user = self::factory()->user->create_and_get(
+			array(
+				'role' => 'author',
+			)
+		);
 		wp_set_current_user( $user->ID );
 
 		$this->assertFalse( current_user_can( 'unfiltered_html' ) );
@@ -424,9 +464,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 	public function test_unprivileged_user_cannot_comment_unfiltered_html_even_with_valid_nonce() {
 
-		$user = self::factory()->user->create_and_get( array(
-			'role' => 'author',
-		) );
+		$user = self::factory()->user->create_and_get(
+			array(
+				'role' => 'author',
+			)
+		);
 		wp_set_current_user( $user->ID );
 
 		$this->assertFalse( current_user_can( 'unfiltered_html' ) );
@@ -454,9 +496,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 		$this->assertFalse( defined( 'DISALLOW_UNFILTERED_HTML' ) );
 
-		$user = self::factory()->user->create_and_get( array(
-			'role' => 'editor',
-		) );
+		$user = self::factory()->user->create_and_get(
+			array(
+				'role' => 'editor',
+			)
+		);
 
 		if ( is_multisite() ) {
 			// In multisite, only Super Admins can post unfiltered HTML
@@ -489,9 +533,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 
 	public function test_privileged_user_cannot_comment_unfiltered_html_without_valid_nonce() {
 
-		$user = self::factory()->user->create_and_get( array(
-			'role' => 'editor',
-		) );
+		$user = self::factory()->user->create_and_get(
+			array(
+				'role' => 'editor',
+			)
+		);
 
 		if ( is_multisite() ) {
 			// In multisite, only Super Admins can post unfiltered HTML
@@ -706,9 +752,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 	 */
 	public function test_comment_submission_sends_all_expected_parameters_to_preprocess_comment_filter() {
 
-		$user = self::factory()->user->create_and_get( array(
-			'role' => 'author',
-		) );
+		$user = self::factory()->user->create_and_get(
+			array(
+				'role' => 'author',
+			)
+		);
 		wp_set_current_user( $user->ID );
 
 		$post = self::factory()->post->create_and_get();
@@ -724,17 +772,19 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 		remove_filter( 'preprocess_comment', array( $this, 'filter_preprocess_comment' ) );
 
 		$this->assertNotWPError( $comment );
-		$this->assertEquals( array(
-			'comment_post_ID'      => $post->ID,
-			'comment_author'       => $user->display_name,
-			'comment_author_email' => $user->user_email,
-			'comment_author_url'   => $user->user_url,
-			'comment_content'      => $data['comment'],
-			'comment_type'         => '',
-			'comment_parent'       => '0',
-			'user_ID'              => $user->ID,
-			'user_id'              => $user->ID,
-		), $this->preprocess_comment_data );
+		$this->assertEquals(
+			array(
+				'comment_post_ID'      => $post->ID,
+				'comment_author'       => $user->display_name,
+				'comment_author_email' => $user->user_email,
+				'comment_author_url'   => $user->user_url,
+				'comment_content'      => $data['comment'],
+				'comment_type'         => '',
+				'comment_parent'       => '0',
+				'user_ID'              => $user->ID,
+				'user_id'              => $user->ID,
+			), $this->preprocess_comment_data
+		);
 
 	}
 
@@ -747,9 +797,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 	 * @ticket 36901
 	 */
 	public function test_submitting_duplicate_comments() {
-		$post = self::factory()->post->create_and_get( array(
-			'post_status' => 'publish',
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_status' => 'publish',
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 			'comment'         => 'Did I say that?',
@@ -766,9 +818,11 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 	 * @ticket 36901
 	 */
 	public function test_comments_flood() {
-		$post = self::factory()->post->create_and_get( array(
-			'post_status' => 'publish',
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_status' => 'publish',
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 			'comment'         => 'Did I say that?',
@@ -788,14 +842,18 @@ class Tests_Comment_Submission extends WP_UnitTestCase {
 	 * @ticket 36901
 	 */
 	public function test_comments_flood_user_is_admin() {
-		$user = self::factory()->user->create_and_get( array(
-			'role' => 'administrator',
-		) );
+		$user = self::factory()->user->create_and_get(
+			array(
+				'role' => 'administrator',
+			)
+		);
 		wp_set_current_user( $user->ID );
 
-		$post = self::factory()->post->create_and_get( array(
-			'post_status' => 'publish',
-		) );
+		$post = self::factory()->post->create_and_get(
+			array(
+				'post_status' => 'publish',
+			)
+		);
 		$data = array(
 			'comment_post_ID' => $post->ID,
 			'comment'         => 'Did I say that?',

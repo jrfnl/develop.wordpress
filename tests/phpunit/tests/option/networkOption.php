@@ -106,18 +106,18 @@ class Tests_Option_NetworkOption extends WP_UnitTestCase {
 	function data_network_id_parameter() {
 		return array(
 			// Numeric values should always be accepted.
-			array( 1,   true ),
+			array( 1, true ),
 			array( '1', true ),
-			array( 2,   true ),
+			array( 2, true ),
 
 			// Null, false, and zero will be treated as the current network.
-			array( null,  true ),
+			array( null, true ),
 			array( false, true ),
-			array( 0,     true ),
-			array( '0',   true ),
+			array( 0, true ),
+			array( '0', true ),
 
 			// Other truthy or string values should be rejected.
-			array( true,     false ),
+			array( true, false ),
 			array( 'string', false ),
 		);
 	}

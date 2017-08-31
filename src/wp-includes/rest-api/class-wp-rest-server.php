@@ -160,7 +160,11 @@ class WP_REST_Server {
 
 		foreach ( (array) $error->errors as $code => $messages ) {
 			foreach ( (array) $messages as $message ) {
-				$errors[] = array( 'code' => $code, 'message' => $message, 'data' => $error->get_error_data( $code ) );
+				$errors[] = array(
+					'code' => $code,
+					'message' => $message,
+					'data' => $error->get_error_data( $code ),
+				);
 			}
 		}
 
@@ -260,7 +264,8 @@ class WP_REST_Server {
 		 *
 		 * @param bool $rest_enabled Whether the REST API is enabled. Default true.
 		 */
-		apply_filters_deprecated( 'rest_enabled', array( true ), '4.7.0', 'rest_authentication_errors',
+		apply_filters_deprecated(
+			'rest_enabled', array( true ), '4.7.0', 'rest_authentication_errors',
 			__( 'The REST API can no longer be completely disabled, the rest_authentication_errors filter can be used to restrict access to the API, instead.' )
 		);
 
@@ -652,20 +657,22 @@ class WP_REST_Server {
 		if ( ! isset( $this->namespaces[ $namespace ] ) ) {
 			$this->namespaces[ $namespace ] = array();
 
-			$this->register_route( $namespace, '/' . $namespace, array(
-				array(
-					'methods' => self::READABLE,
-					'callback' => array( $this, 'get_namespace_index' ),
-					'args' => array(
-						'namespace' => array(
-							'default' => $namespace,
-						),
-						'context' => array(
-							'default' => 'view',
+			$this->register_route(
+				$namespace, '/' . $namespace, array(
+					array(
+						'methods' => self::READABLE,
+						'callback' => array( $this, 'get_namespace_index' ),
+						'args' => array(
+							'namespace' => array(
+								'default' => $namespace,
+							),
+							'context' => array(
+								'default' => 'view',
+							),
 						),
 					),
-				),
-			) );
+				)
+			);
 		}
 
 		// Associative to avoid double-registration.
@@ -1319,7 +1326,11 @@ class WP_REST_Server {
 		$headers = array();
 
 		// CONTENT_* headers are not prefixed with HTTP_.
-		$additional = array( 'CONTENT_LENGTH' => true, 'CONTENT_MD5' => true, 'CONTENT_TYPE' => true );
+		$additional = array(
+			'CONTENT_LENGTH' => true,
+			'CONTENT_MD5' => true,
+			'CONTENT_TYPE' => true,
+		);
 
 		foreach ( $server as $key => $value ) {
 			if ( strpos( $key, 'HTTP_' ) === 0 ) {

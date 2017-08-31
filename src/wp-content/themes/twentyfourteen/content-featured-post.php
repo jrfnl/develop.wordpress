@@ -12,12 +12,12 @@
 	<a class="post-thumbnail" href="<?php the_permalink(); ?>">
 	<?php
 		// Output the featured image.
-		if ( has_post_thumbnail() ) :
-			if ( 'grid' == get_theme_mod( 'featured_content_layout' ) ) {
-				the_post_thumbnail();
-			} else {
-				the_post_thumbnail( 'twentyfourteen-full-width' );
-			}
+	if ( has_post_thumbnail() ) :
+		if ( 'grid' == get_theme_mod( 'featured_content_layout' ) ) {
+			the_post_thumbnail();
+		} else {
+			the_post_thumbnail( 'twentyfourteen-full-width' );
+		}
 		endif;
 	?>
 	</a>

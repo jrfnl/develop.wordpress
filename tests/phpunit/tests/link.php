@@ -105,10 +105,12 @@ class Tests_Link extends WP_UnitTestCase {
 
 		flush_rewrite_rules();
 
-		$p = self::factory()->post->create( array(
-			'post_status' => 'publish',
-			'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', strtotime( '+1 day' ) )
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', strtotime( '+1 day' ) ),
+			)
+		);
 
 		$non_pretty_permalink = add_query_arg( 'p', $p, trailingslashit( home_url() ) );
 
@@ -125,16 +127,20 @@ class Tests_Link extends WP_UnitTestCase {
 
 		flush_rewrite_rules();
 
-		$p = self::factory()->post->create( array(
-			'post_status' => 'future',
-			'post_type'   => 'wptests_pt',
-			'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', strtotime( '+1 day' ) )
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_status' => 'future',
+				'post_type'   => 'wptests_pt',
+				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', strtotime( '+1 day' ) ),
+			)
+		);
 
-		$non_pretty_permalink = add_query_arg( array(
-			'post_type' => 'wptests_pt',
-			'p' => $p,
-		), trailingslashit( home_url() ) );
+		$non_pretty_permalink = add_query_arg(
+			array(
+				'post_type' => 'wptests_pt',
+				'p' => $p,
+			), trailingslashit( home_url() )
+		);
 
 		$this->assertEquals( $non_pretty_permalink, get_permalink( $p ) );
 	}
@@ -145,12 +151,14 @@ class Tests_Link extends WP_UnitTestCase {
 	public function test_unattached_attachment_has_a_pretty_permalink() {
 		$this->set_permalink_structure( '/%year%/%monthnum%/%day%/%postname%/' );
 
-		$attachment_id = self::factory()->attachment->create_object( 'image.jpg', 0, array(
-			'post_mime_type' => 'image/jpeg',
-			'post_type' => 'attachment',
-			'post_title' => 'An Attachment!',
-			'post_status' => 'inherit',
-		) );
+		$attachment_id = self::factory()->attachment->create_object(
+			'image.jpg', 0, array(
+				'post_mime_type' => 'image/jpeg',
+				'post_type' => 'attachment',
+				'post_title' => 'An Attachment!',
+				'post_status' => 'inherit',
+			)
+		);
 
 		$attachment = get_post( $attachment_id );
 
@@ -171,18 +179,20 @@ class Tests_Link extends WP_UnitTestCase {
 
 		$post_id = self::factory()->post->create( array( 'post_type' => 'not_a_post_type' ) );
 
-		$attachment_id = self::factory()->attachment->create_object( 'image.jpg', $post_id, array(
-			'post_mime_type' => 'image/jpeg',
-			'post_type' => 'attachment',
-			'post_title' => 'An Attachment!',
-			'post_status' => 'inherit',
-		) );
+		$attachment_id = self::factory()->attachment->create_object(
+			'image.jpg', $post_id, array(
+				'post_mime_type' => 'image/jpeg',
+				'post_type' => 'attachment',
+				'post_title' => 'An Attachment!',
+				'post_status' => 'inherit',
+			)
+		);
 
 		$attachment = get_post( $attachment_id );
 
 		$this->assertSame( get_permalink( $post_id ) . user_trailingslashit( $attachment->post_name ), get_permalink( $attachment_id ) );
 
-		foreach( $wp_post_types as $id => $pt ) {
+		foreach ( $wp_post_types as $id => $pt ) {
 			if ( 'not_a_post_type' === $pt->name ) {
 				unset( $wp_post_types[ $id ] );
 				break;

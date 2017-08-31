@@ -124,17 +124,19 @@ class Tests_User_Slashes extends WP_UnitTestCase {
 	 *
 	 */
 	function test_wp_insert_user() {
-		$id = wp_insert_user( array(
-			'user_login' => 'slash_example_user_3',
-			'role' => 'subscriber',
-			'email' => 'user3@example.com',
-			'first_name' => $this->slash_1,
-			'last_name' => $this->slash_3,
-			'nickname' => $this->slash_5,
-			'display_name' => $this->slash_7,
-			'description' => $this->slash_3,
-			'user_pass' => ''
-		) );
+		$id = wp_insert_user(
+			array(
+				'user_login' => 'slash_example_user_3',
+				'role' => 'subscriber',
+				'email' => 'user3@example.com',
+				'first_name' => $this->slash_1,
+				'last_name' => $this->slash_3,
+				'nickname' => $this->slash_5,
+				'display_name' => $this->slash_7,
+				'description' => $this->slash_3,
+				'user_pass' => '',
+			)
+		);
 		$user = get_user_to_edit( $id );
 
 		$this->assertEquals( wp_unslash( $this->slash_1 ), $user->first_name );
@@ -143,17 +145,19 @@ class Tests_User_Slashes extends WP_UnitTestCase {
 		$this->assertEquals( wp_unslash( $this->slash_7 ), $user->display_name );
 		$this->assertEquals( wp_unslash( $this->slash_3 ), $user->description );
 
-		$id = wp_insert_user( array(
-			'user_login' => 'slash_example_user_4',
-			'role' => 'subscriber',
-			'email' => 'user3@example.com',
-			'first_name' => $this->slash_2,
-			'last_name' => $this->slash_4,
-			'nickname' => $this->slash_6,
-			'display_name' => $this->slash_2,
-			'description' => $this->slash_4,
-			'user_pass' => ''
-		) );
+		$id = wp_insert_user(
+			array(
+				'user_login' => 'slash_example_user_4',
+				'role' => 'subscriber',
+				'email' => 'user3@example.com',
+				'first_name' => $this->slash_2,
+				'last_name' => $this->slash_4,
+				'nickname' => $this->slash_6,
+				'display_name' => $this->slash_2,
+				'description' => $this->slash_4,
+				'user_pass' => '',
+			)
+		);
 		$user = get_user_to_edit( $id );
 
 		$this->assertEquals( wp_unslash( $this->slash_2 ), $user->first_name );
@@ -169,15 +173,17 @@ class Tests_User_Slashes extends WP_UnitTestCase {
 	 */
 	function test_wp_update_user() {
 		$id = self::factory()->user->create();
-		$id = wp_update_user(array(
-			'ID' => $id,
-			'role' => 'subscriber',
-			'first_name' => $this->slash_1,
-			'last_name' => $this->slash_3,
-			'nickname' => $this->slash_5,
-			'display_name' => $this->slash_7,
-			'description' => $this->slash_3,
-		));
+		$id = wp_update_user(
+			array(
+				'ID' => $id,
+				'role' => 'subscriber',
+				'first_name' => $this->slash_1,
+				'last_name' => $this->slash_3,
+				'nickname' => $this->slash_5,
+				'display_name' => $this->slash_7,
+				'description' => $this->slash_3,
+			)
+		);
 		$user = get_user_to_edit( $id );
 
 		$this->assertEquals( wp_unslash( $this->slash_1 ), $user->first_name );
@@ -186,15 +192,17 @@ class Tests_User_Slashes extends WP_UnitTestCase {
 		$this->assertEquals( wp_unslash( $this->slash_7 ), $user->display_name );
 		$this->assertEquals( wp_unslash( $this->slash_3 ), $user->description );
 
-		$id = wp_update_user(array(
-			'ID' => $id,
-			'role' => 'subscriber',
-			'first_name' => $this->slash_2,
-			'last_name' => $this->slash_4,
-			'nickname' => $this->slash_6,
-			'display_name' => $this->slash_2,
-			'description' => $this->slash_4,
-		));
+		$id = wp_update_user(
+			array(
+				'ID' => $id,
+				'role' => 'subscriber',
+				'first_name' => $this->slash_2,
+				'last_name' => $this->slash_4,
+				'nickname' => $this->slash_6,
+				'display_name' => $this->slash_2,
+				'description' => $this->slash_4,
+			)
+		);
 		$user = get_user_to_edit( $id );
 
 		$this->assertEquals( wp_unslash( $this->slash_2 ), $user->first_name );

@@ -57,9 +57,9 @@ PS.  Not yet subscribed for update notifications?  <a href="%1$s" title="Subscri
 ';
 
 		// On windows environments, the EOL-style is \r\n
-		$expected = str_replace( "\r\n", "\n", $expected);
+		$expected = str_replace( "\r\n", "\n", $expected );
 
-		$this->assertEquals($expected, wpautop($test_data));
+		$this->assertEquals( $expected, wpautop( $test_data ) );
 	}
 
 	/**
@@ -340,7 +340,7 @@ Paragraph two.';
 
 		$this->assertEquals( $expected, trim( wpautop( $input ) ) );
 
-		$input = join( "", $content ); // WS difference
+		$input = join( '', $content ); // WS difference
 
 		$this->assertEquals( $expected, trim( wpautop( $input ) ) );
 
@@ -352,7 +352,7 @@ Paragraph two.';
 		}
 
 		$expected = join( "\n", $content );
-		$input = join( "", $content );
+		$input = join( '', $content );
 
 		$this->assertEquals( $expected, trim( wpautop( $input ) ) );
 
@@ -364,7 +364,7 @@ Paragraph two.';
 		}
 
 		$expected = join( "\n", $content );
-		$input = join( "", $content );
+		$input = join( '', $content );
 
 		$this->assertEquals( $expected, trim( wpautop( $input ) ) );
 	}
@@ -375,8 +375,8 @@ Paragraph two.';
 	 * @ticket 27268
 	 */
 	function test_that_wpautop_does_not_wrap_blockquotes_but_does_autop_their_contents() {
-		$content  = "<blockquote>foo</blockquote>";
-		$expected = "<blockquote><p>foo</p></blockquote>";
+		$content  = '<blockquote>foo</blockquote>';
+		$expected = '<blockquote><p>foo</p></blockquote>';
 
 		$this->assertEquals( $expected, trim( wpautop( $content ) ) );
 	}
@@ -457,20 +457,20 @@ Paragraph two.';
 				"Hello <!-- <object>\n<param/>\n<param/>\n<embed>\n</embed>\n</object>\n -->",
 				"<p>Hello <!-- <object>\n<param/>\n<param/>\n<embed>\n</embed>\n</object>\n --></p>\n",
 			),
-/* Block elements inside comments will fail this test in all versions, it's not a regression.
-			array(
-				"Hello <!-- <hr> a\nhref='world' -->",
-				"<p>Hello <!-- <hr> a\nhref='world' --></p>\n",
-			),
-			array(
-				"Hello <![CDATA[ <hr> a\nhttps://youtu.be/jgz0uSaOZbE\n ]]>",
-				"<p>Hello <![CDATA[ <hr> a\nhttps://youtu.be/jgz0uSaOZbE\n ]]></p>\n",
-			),
-*/
-			array(
-				"Hello <![CDATA[ a\nhttps://youtu.be/jgz0uSaOZbE\n ]]>",
-				"<p>Hello <![CDATA[ a\nhttps://youtu.be/jgz0uSaOZbE\n ]]></p>\n",
-			),
+			/* Block elements inside comments will fail this test in all versions, it's not a regression.
+				array(
+					"Hello <!-- <hr> a\nhref='world' -->",
+					"<p>Hello <!-- <hr> a\nhref='world' --></p>\n",
+				),
+				array(
+					"Hello <![CDATA[ <hr> a\nhttps://youtu.be/jgz0uSaOZbE\n ]]>",
+					"<p>Hello <![CDATA[ <hr> a\nhttps://youtu.be/jgz0uSaOZbE\n ]]></p>\n",
+				),
+			*/
+				array(
+					"Hello <![CDATA[ a\nhttps://youtu.be/jgz0uSaOZbE\n ]]>",
+					"<p>Hello <![CDATA[ a\nhttps://youtu.be/jgz0uSaOZbE\n ]]></p>\n",
+				),
 			array(
 				"Hello <![CDATA[ <!-- a\nhttps://youtu.be/jgz0uSaOZbE\n a\n9 ]]> -->",
 				"<p>Hello <![CDATA[ <!-- a\nhttps://youtu.be/jgz0uSaOZbE\n a\n9 ]]> --></p>\n",

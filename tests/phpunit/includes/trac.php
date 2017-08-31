@@ -15,7 +15,7 @@ class TracTickets {
 	 */
 	public static function isTracTicketClosed( $trac_url, $ticket_id ) {
 		if ( ! extension_loaded( 'openssl' ) ) {
-			$trac_url = preg_replace( "/^https:/", "http:", $trac_url );
+			$trac_url = preg_replace( '/^https:/', 'http:', $trac_url );
 		}
 
 		if ( ! isset( self::$trac_ticket_cache[ $trac_url ] ) ) {

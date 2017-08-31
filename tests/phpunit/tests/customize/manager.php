@@ -112,11 +112,13 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$uuid = wp_generate_uuid4();
 		$theme = 'twentyfifteen';
 		$messenger_channel = 'preview-123';
-		$wp_customize = new WP_Customize_Manager( array(
-			'changeset_uuid' => $uuid,
-			'theme' => $theme,
-			'messenger_channel' => $messenger_channel,
-		) );
+		$wp_customize = new WP_Customize_Manager(
+			array(
+				'changeset_uuid' => $uuid,
+				'theme' => $theme,
+				'messenger_channel' => $messenger_channel,
+			)
+		);
 		$this->assertEquals( $uuid, $wp_customize->changeset_uuid() );
 		$this->assertEquals( $theme, $wp_customize->get_stylesheet() );
 		$this->assertEquals( $messenger_channel, $wp_customize->get_messenger_channel() );
@@ -293,12 +295,14 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	 */
 	function test_find_changeset_post_id() {
 		$uuid = wp_generate_uuid4();
-		$post_id = $this->factory()->post->create( array(
-			'post_name' => $uuid,
-			'post_type' => 'customize_changeset',
-			'post_status' => 'auto-draft',
-			'post_content' => '{}',
-		) );
+		$post_id = $this->factory()->post->create(
+			array(
+				'post_name' => $uuid,
+				'post_type' => 'customize_changeset',
+				'post_status' => 'auto-draft',
+				'post_content' => '{}',
+			)
+		);
 
 		$wp_customize = new WP_Customize_Manager();
 		$this->assertNull( $wp_customize->find_changeset_post_id( wp_generate_uuid4() ) );
@@ -321,12 +325,14 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 
 		$uuid = wp_generate_uuid4();
 		$wp_customize = new WP_Customize_Manager( array( 'changeset_uuid' => $uuid ) );
-		$post_id = $this->factory()->post->create( array(
-			'post_name' => $uuid,
-			'post_type' => 'customize_changeset',
-			'post_status' => 'auto-draft',
-			'post_content' => '{}',
-		) );
+		$post_id = $this->factory()->post->create(
+			array(
+				'post_name' => $uuid,
+				'post_type' => 'customize_changeset',
+				'post_status' => 'auto-draft',
+				'post_content' => '{}',
+			)
+		);
 		$this->assertEquals( $post_id, $wp_customize->changeset_post_id() );
 	}
 
@@ -343,12 +349,14 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 
 		$uuid = wp_generate_uuid4();
 		$data = array( 'blogname' => array( 'value' => 'Hello World' ) );
-		$this->factory()->post->create( array(
-			'post_name' => $uuid,
-			'post_type' => 'customize_changeset',
-			'post_status' => 'auto-draft',
-			'post_content' => wp_json_encode( $data ),
-		) );
+		$this->factory()->post->create(
+			array(
+				'post_name' => $uuid,
+				'post_type' => 'customize_changeset',
+				'post_status' => 'auto-draft',
+				'post_content' => wp_json_encode( $data ),
+			)
+		);
 		$wp_customize = new WP_Customize_Manager( array( 'changeset_uuid' => $uuid ) );
 		$this->assertEquals( $data, $wp_customize->changeset_data() );
 	}
@@ -366,21 +374,27 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		add_theme_support( 'custom-header' );
 		add_theme_support( 'custom-background' );
 
-		$existing_canola_attachment_id = self::factory()->attachment->create_object( $this->test_file, 0, array(
-			'post_mime_type' => 'image/jpeg',
-			'post_type' => 'attachment',
-			'post_name' => 'canola',
-		) );
-		$existing_published_home_page_id = $this->factory()->post->create( array(
-			'post_name' => 'home',
-			'post_type' => 'page',
-			'post_status' => 'publish'
-		) );
-		$existing_auto_draft_about_page_id = $this->factory()->post->create( array(
-			'post_name' => 'about',
-			'post_type' => 'page',
-			'post_status' => 'auto-draft'
-		) );
+		$existing_canola_attachment_id = self::factory()->attachment->create_object(
+			$this->test_file, 0, array(
+				'post_mime_type' => 'image/jpeg',
+				'post_type' => 'attachment',
+				'post_name' => 'canola',
+			)
+		);
+		$existing_published_home_page_id = $this->factory()->post->create(
+			array(
+				'post_name' => 'home',
+				'post_type' => 'page',
+				'post_status' => 'publish',
+			)
+		);
+		$existing_auto_draft_about_page_id = $this->factory()->post->create(
+			array(
+				'post_name' => 'about',
+				'post_type' => 'page',
+				'post_status' => 'auto-draft',
+			)
+		);
 
 		global $wp_customize;
 		$wp_customize = new WP_Customize_Manager();
@@ -388,9 +402,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 			'widgets' => array(
 				'sidebar-1' => array(
 					'text_business_info',
-					'meta_custom' => array( 'meta', array(
-						'title' => 'Pre-hydrated meta widget.',
-					) ),
+					'meta_custom' => array(
+						'meta',
+						array(
+							'title' => 'Pre-hydrated meta widget.',
+						),
+					),
 				),
 			),
 			'nav_menus' => array(
@@ -550,11 +567,13 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$this->assertEqualSets( array_values( $posts_by_name ), $changeset_data['nav_menus_created_posts']['value'] ); // Auto-drafts should not get re-created and amended with each import.
 
 		// Test that saving non-starter content on top of the changeset clears the starter_content flag.
-		$wp_customize->save_changeset_post( array(
-			'data' => array(
-				'blogname' => array( 'value' => 'Starter Content Modified' ),
-			),
-		) );
+		$wp_customize->save_changeset_post(
+			array(
+				'data' => array(
+					'blogname' => array( 'value' => 'Starter Content Modified' ),
+				),
+			)
+		);
 		$changeset_data = $wp_customize->changeset_data();
 		$this->assertArrayNotHasKey( 'starter_content', $changeset_data['blogname'] );
 		$this->assertArrayHasKey( 'starter_content', $changeset_data['blogdescription'] );
@@ -562,12 +581,14 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		// Test that adding blogname starter content is ignored now that it is modified, but updating a non-modified starter content blog description passes.
 		$previous_blogname = $changeset_data['blogname']['value'];
 		$previous_blogdescription = $changeset_data['blogdescription']['value'];
-		$wp_customize->import_theme_starter_content( array(
-			'options' => array(
-				'blogname' => 'Newer Starter Content Title',
-				'blogdescription' => 'Newer Starter Content Description',
-			),
-		) );
+		$wp_customize->import_theme_starter_content(
+			array(
+				'options' => array(
+					'blogname' => 'Newer Starter Content Title',
+					'blogdescription' => 'Newer Starter Content Description',
+				),
+			)
+		);
 		$changeset_data = $wp_customize->changeset_data();
 		$this->assertEquals( $previous_blogname, $changeset_data['blogname']['value'] );
 		$this->assertArrayNotHasKey( 'starter_content', $changeset_data['blogname'] );
@@ -672,10 +693,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 
 		$uuid = wp_generate_uuid4();
 		$messenger_channel = 'preview-0';
-		$wp_customize = new WP_Customize_Manager( array(
-			'changeset_uuid' => $uuid,
-			'messenger_channel' => $messenger_channel,
-		) );
+		$wp_customize = new WP_Customize_Manager(
+			array(
+				'changeset_uuid' => $uuid,
+				'messenger_channel' => $messenger_channel,
+			)
+		);
 		$url = $wp_customize->add_state_query_params( home_url( '/' ) );
 		$parsed_url = wp_parse_url( $url );
 		parse_str( $parsed_url['query'], $query_params );
@@ -686,11 +709,13 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$this->assertEquals( $messenger_channel, $query_params['customize_messenger_channel'] );
 
 		$uuid = wp_generate_uuid4();
-		$wp_customize = new WP_Customize_Manager( array(
-			'changeset_uuid' => $uuid,
-			'messenger_channel' => null,
-			'theme' => $preview_theme,
-		) );
+		$wp_customize = new WP_Customize_Manager(
+			array(
+				'changeset_uuid' => $uuid,
+				'messenger_channel' => null,
+				'theme' => $preview_theme,
+			)
+		);
 		$url = $wp_customize->add_state_query_params( home_url( '/' ) );
 		$parsed_url = wp_parse_url( $url );
 		parse_str( $parsed_url['query'], $query_params );
@@ -701,11 +726,13 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$this->assertEquals( $preview_theme, $query_params['customize_theme'] );
 
 		$uuid = wp_generate_uuid4();
-		$wp_customize = new WP_Customize_Manager( array(
-			'changeset_uuid' => $uuid,
-			'messenger_channel' => null,
-			'theme' => $preview_theme,
-		) );
+		$wp_customize = new WP_Customize_Manager(
+			array(
+				'changeset_uuid' => $uuid,
+				'messenger_channel' => null,
+				'theme' => $preview_theme,
+			)
+		);
 		$url = $wp_customize->add_state_query_params( 'http://not-allowed.example.com/?q=1' );
 		$parsed_url = wp_parse_url( $url );
 		parse_str( $parsed_url['query'], $query_params );
@@ -731,9 +758,11 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		);
 		$uuid = wp_generate_uuid4();
 
-		$wp_customize = $manager = new WP_Customize_Manager( array(
-			'changeset_uuid' => $uuid,
-		) );
+		$wp_customize = $manager = new WP_Customize_Manager(
+			array(
+				'changeset_uuid' => $uuid,
+			)
+		);
 		$wp_customize = $manager;
 		$manager->register_controls();
 		$manager->set_post_value( 'blogname', 'Changeset Title' );
@@ -748,12 +777,14 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 			),
 		);
 		$date = ( gmdate( 'Y' ) + 1 ) . '-12-01 00:00:00';
-		$r = $manager->save_changeset_post( array(
-			'status' => 'auto-draft',
-			'title' => 'Auto Draft',
-			'date_gmt' => $date,
-			'data' => $pre_saved_data,
-		) );
+		$r = $manager->save_changeset_post(
+			array(
+				'status' => 'auto-draft',
+				'title' => 'Auto Draft',
+				'date_gmt' => $date,
+				'data' => $pre_saved_data,
+			)
+		);
 		$this->assertInternalType( 'array', $r );
 
 		$this->assertEquals( $did_action['customize_save_validation_before'] + 1, did_action( 'customize_save_validation_before' ) );
@@ -778,29 +809,35 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 
 		// Test saving with invalid settings, ensuring transaction blocked.
 		$previous_saved_data = $saved_data;
-		$manager->add_setting( 'foo_unauthorized', array(
-			'capability' => 'do_not_allow',
-		) );
-		$manager->add_setting( 'baz_illegal', array(
-			'validate_callback' => array( $this, 'return_illegal_error' ),
-		) );
-		$r = $manager->save_changeset_post( array(
-			'status' => 'auto-draft',
-			'data' => array(
-				'blogname' => array(
-					'value' => 'OK',
+		$manager->add_setting(
+			'foo_unauthorized', array(
+				'capability' => 'do_not_allow',
+			)
+		);
+		$manager->add_setting(
+			'baz_illegal', array(
+				'validate_callback' => array( $this, 'return_illegal_error' ),
+			)
+		);
+		$r = $manager->save_changeset_post(
+			array(
+				'status' => 'auto-draft',
+				'data' => array(
+					'blogname' => array(
+						'value' => 'OK',
+					),
+					'foo_unauthorized' => array(
+						'value' => 'No',
+					),
+					'bar_unknown' => array(
+						'value' => 'No',
+					),
+					'baz_illegal' => array(
+						'value' => 'No',
+					),
 				),
-				'foo_unauthorized' => array(
-					'value' => 'No',
-				),
-				'bar_unknown' => array(
-					'value' => 'No',
-				),
-				'baz_illegal' => array(
-					'value' => 'No',
-				),
-			),
-		) );
+			)
+		);
 		$this->assertInstanceOf( 'WP_Error', $r );
 		$this->assertEquals( 'transaction_fail', $r->get_error_code() );
 		$this->assertInternalType( 'array', $r->get_error_data() );
@@ -822,22 +859,26 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$this->assertEquals( $previous_saved_data, json_decode( get_post( $post_id )->post_content, true ) );
 
 		// Attempt a non-transactional/incremental update.
-		$wp_customize = $manager = new WP_Customize_Manager( array(
-			'changeset_uuid' => $uuid,
-		) );
+		$wp_customize = $manager = new WP_Customize_Manager(
+			array(
+				'changeset_uuid' => $uuid,
+			)
+		);
 		$wp_customize = $manager;
 		$manager->register_controls(); // That is, register settings.
-		$r = $manager->save_changeset_post( array(
-			'status' => null,
-			'data' => array(
-				'blogname' => array(
-					'value' => 'Non-Transactional \o/ <script>unsanitized</script>',
+		$r = $manager->save_changeset_post(
+			array(
+				'status' => null,
+				'data' => array(
+					'blogname' => array(
+						'value' => 'Non-Transactional \o/ <script>unsanitized</script>',
+					),
+					'bar_unknown' => array(
+						'value' => 'No',
+					),
 				),
-				'bar_unknown' => array(
-					'value' => 'No',
-				),
-			),
-		) );
+			)
+		);
 		$this->assertInternalType( 'array', $r );
 		$this->assertArrayHasKey( 'setting_validities', $r );
 		$this->assertTrue( $r['setting_validities']['blogname'] );
@@ -849,14 +890,16 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		// Ensure the filter applies.
 		$customize_changeset_save_data_call_count = $this->customize_changeset_save_data_call_count;
 		add_filter( 'customize_changeset_save_data', array( $this, 'filter_customize_changeset_save_data' ), 10, 2 );
-		$manager->save_changeset_post( array(
-			'status' => null,
-			'data' => array(
-				'blogname' => array(
-					'value' => 'Filtered',
+		$manager->save_changeset_post(
+			array(
+				'status' => null,
+				'data' => array(
+					'blogname' => array(
+						'value' => 'Filtered',
+					),
 				),
-			),
-		) );
+			)
+		);
 		$this->assertEquals( $customize_changeset_save_data_call_count + 1, $this->customize_changeset_save_data_call_count );
 
 		// Publish the changeset: actions will be doubled since also trashed.
@@ -879,24 +922,28 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 
 		$wp_customize = $manager = new WP_Customize_Manager( array( 'changeset_uuid' => $uuid ) );
 		do_action( 'customize_register', $wp_customize );
-		$manager->add_setting( 'scratchpad', array(
-			'type' => 'option',
-			'capability' => 'exist',
-		) );
+		$manager->add_setting(
+			'scratchpad', array(
+				'type' => 'option',
+				'capability' => 'exist',
+			)
+		);
 		$manager->get_setting( 'blogname' )->capability = 'exist';
 		$original_capabilities = wp_list_pluck( $manager->settings(), 'capability' );
 		wp_set_current_user( self::$subscriber_user_id );
-		$r = $manager->save_changeset_post( array(
-			'status' => 'publish',
-			'data' => array(
-				'blogname' => array(
-					'value' => 'Do it live \o/',
+		$r = $manager->save_changeset_post(
+			array(
+				'status' => 'publish',
+				'data' => array(
+					'blogname' => array(
+						'value' => 'Do it live \o/',
+					),
+					'scratchpad' => array(
+						'value' => '<script>console.info( "HELLO" )</script>',
+					),
 				),
-				'scratchpad' => array(
-					'value' => '<script>console.info( "HELLO" )</script>',
-				),
-			),
-		) );
+			)
+		);
 		$this->assertInternalType( 'array', $r );
 		$this->assertEquals( 'Do it live \o/', get_option( 'blogname' ) );
 		$this->assertEquals( 'trash', get_post_status( $post_id ) ); // Auto-trashed.
@@ -990,10 +1037,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		);
 		update_option( 'customize_stashed_theme_mods', $stashed_theme_mods );
 		$uuid = wp_generate_uuid4();
-		$manager = new WP_Customize_Manager( array(
-			'changeset_uuid' => $uuid,
-			'theme' => $preview_theme,
-		) );
+		$manager = new WP_Customize_Manager(
+			array(
+				'changeset_uuid' => $uuid,
+				'theme' => $preview_theme,
+			)
+		);
 		$wp_customize = $manager;
 		do_action( 'customize_register', $manager );
 
@@ -1021,20 +1070,22 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 
 		$uuid = wp_generate_uuid4();
 		$wp_customize = $this->create_test_manager( $uuid );
-		$r = $wp_customize->save_changeset_post( array(
-			'status' => 'auto-draft',
-			'data' => array(
-				'blogname' => array(
-					'value' => 'Admin 1 Title',
+		$r = $wp_customize->save_changeset_post(
+			array(
+				'status' => 'auto-draft',
+				'data' => array(
+					'blogname' => array(
+						'value' => 'Admin 1 Title',
+					),
+					'scratchpad' => array(
+						'value' => 'Admin 1 Scratch',
+					),
+					'background_color' => array(
+						'value' => '#000000',
+					),
 				),
-				'scratchpad' => array(
-					'value' => 'Admin 1 Scratch',
-				),
-				'background_color' => array(
-					'value' => '#000000',
-				),
-			),
-		) );
+			)
+		);
 		$this->assertInternalType( 'array', $r );
 		$this->assertEquals(
 			array_fill_keys( array( 'blogname', 'scratchpad', 'background_color' ), true ),
@@ -1049,17 +1100,19 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		// Attempt to save just one setting under a different user.
 		wp_set_current_user( $other_admin_user_id );
 		$wp_customize = $this->create_test_manager( $uuid );
-		$r = $wp_customize->save_changeset_post( array(
-			'status' => 'auto-draft',
-			'data' => array(
-				'blogname' => array(
-					'value' => 'Admin 2 Title',
+		$r = $wp_customize->save_changeset_post(
+			array(
+				'status' => 'auto-draft',
+				'data' => array(
+					'blogname' => array(
+						'value' => 'Admin 2 Title',
+					),
+					'background_color' => array(
+						'value' => '#FFFFFF',
+					),
 				),
-				'background_color' => array(
-					'value' => '#FFFFFF',
-				),
-			),
-		) );
+			)
+		);
 		$this->assertInternalType( 'array', $r );
 		$this->assertEquals(
 			array_fill_keys( array( 'blogname', 'background_color' ), true ),
@@ -1075,18 +1128,20 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 
 		// Attempt to save now as under-privileged user.
 		$wp_customize = $this->create_test_manager( $uuid );
-		$r = $wp_customize->save_changeset_post( array(
-			'status' => 'auto-draft',
-			'data' => array(
-				'blogname' => array(
-					'value' => 'Admin 2 Title', // Identical to what is already in the changeset so will be skipped.
+		$r = $wp_customize->save_changeset_post(
+			array(
+				'status' => 'auto-draft',
+				'data' => array(
+					'blogname' => array(
+						'value' => 'Admin 2 Title', // Identical to what is already in the changeset so will be skipped.
+					),
+					'scratchpad' => array(
+						'value' => 'Subscriber Scratch',
+					),
 				),
-				'scratchpad' => array(
-					'value' => 'Subscriber Scratch',
-				),
-			),
-			'user_id' => self::$subscriber_user_id,
-		) );
+				'user_id' => self::$subscriber_user_id,
+			)
+		);
 		$this->assertInternalType( 'array', $r );
 		$this->assertEquals(
 			array_fill_keys( array( 'scratchpad', 'blogname' ), true ),
@@ -1100,7 +1155,14 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		// Manually update the changeset so that the user_id context is not included.
 		$data = json_decode( get_post( $post_id )->post_content, true );
 		$data['blogdescription']['value'] = 'Programmatically-supplied Tagline';
-		wp_update_post( wp_slash( array( 'ID' => $post_id, 'post_content' => wp_json_encode( $data ) ) ) );
+		wp_update_post(
+			wp_slash(
+				array(
+					'ID' => $post_id,
+					'post_content' => wp_json_encode( $data ),
+				)
+			)
+		);
 
 		// Ensure the modifying user set as the current user when each is saved, simulating WP Cron envronment.
 		wp_set_current_user( 0 );
@@ -1113,7 +1175,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		foreach ( $wp_customize->settings() as $setting ) {
 			add_filter( sprintf( 'customize_sanitize_%s', $setting->id ), array( $this, 'filter_customize_setting_to_log_current_user' ), 10, 2 );
 		}
-		wp_update_post( array( 'ID' => $post_id, 'post_status' => 'publish' ) );
+		wp_update_post(
+			array(
+				'ID' => $post_id,
+				'post_status' => 'publish',
+			)
+		);
 		foreach ( array_keys( $data ) as $setting_id ) {
 			$setting_id = preg_replace( '/^.+::/', '', $setting_id );
 			$this->assertEquals( $save_counts[ $setting_id ] + 1, did_action( sprintf( 'customize_save_%s', $setting_id ) ), $setting_id );
@@ -1133,21 +1200,29 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	 * @return WP_Customize_Manager Manager.
 	 */
 	protected function create_test_manager( $uuid ) {
-		$manager = new WP_Customize_Manager( array(
-			'changeset_uuid' => $uuid,
-		) );
+		$manager = new WP_Customize_Manager(
+			array(
+				'changeset_uuid' => $uuid,
+			)
+		);
 		do_action( 'customize_register', $manager );
-		$manager->add_setting( 'blogfounded', array(
-			'type' => 'option',
-		) );
-		$manager->add_setting( 'blogterminated', array(
-			'type' => 'option',
-			'capability' => 'do_not_allow',
-		) );
-		$manager->add_setting( 'scratchpad', array(
-			'type' => 'option',
-			'capability' => 'exist',
-		) );
+		$manager->add_setting(
+			'blogfounded', array(
+				'type' => 'option',
+			)
+		);
+		$manager->add_setting(
+			'blogterminated', array(
+				'type' => 'option',
+				'capability' => 'do_not_allow',
+			)
+		);
+		$manager->add_setting(
+			'scratchpad', array(
+				'type' => 'option',
+				'capability' => 'exist',
+			)
+		);
 		return $manager;
 	}
 
@@ -1163,26 +1238,30 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		wp_set_current_user( self::$admin_user_id );
 
 		$uuid = wp_generate_uuid4();
-		$changeset_post_id = wp_insert_post( array(
-			'post_type' => 'customize_changeset',
-			'post_content' => '{}',
-			'post_name' => $uuid,
-			'post_status' => 'auto-draft',
-			'post_date' => gmdate( 'Y-m-d H:i:s', strtotime( '-3 days' ) ),
-		) );
+		$changeset_post_id = wp_insert_post(
+			array(
+				'post_type' => 'customize_changeset',
+				'post_content' => '{}',
+				'post_name' => $uuid,
+				'post_status' => 'auto-draft',
+				'post_date' => gmdate( 'Y-m-d H:i:s', strtotime( '-3 days' ) ),
+			)
+		);
 
 		$post = get_post( $changeset_post_id );
 		$original_post_date = $post->post_date;
 
 		$wp_customize = $this->create_test_manager( $uuid );
-		$wp_customize->save_changeset_post( array(
-			'status' => 'auto-draft',
-			'data' => array(
-				'blogname' => array(
-					'value' => 'Admin 1 Title',
+		$wp_customize->save_changeset_post(
+			array(
+				'status' => 'auto-draft',
+				'data' => array(
+					'blogname' => array(
+						'value' => 'Admin 1 Title',
+					),
 				),
-			),
-		) );
+			)
+		);
 
 		$post = get_post( $changeset_post_id );
 		$this->assertNotEquals( $post->post_date, $original_post_date );
@@ -1203,36 +1282,40 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 
 		$uuid = wp_generate_uuid4();
 		$wp_customize = $this->create_test_manager( $uuid );
-		$wp_customize->save_changeset_post( array(
-			'status' => 'auto-draft',
-			'data' => array(
-				'blogname' => array(
-					'value' => 'Admin 1 Title',
+		$wp_customize->save_changeset_post(
+			array(
+				'status' => 'auto-draft',
+				'data' => array(
+					'blogname' => array(
+						'value' => 'Admin 1 Title',
+					),
+					'blogdescription' => array(
+						'value' => 'Admin 1 Tagline',
+					),
+					'blogfounded' => array(
+						'value' => '2016',
+					),
+					'scratchpad' => array(
+						'value' => 'Admin 1 Scratch',
+					),
 				),
-				'blogdescription' => array(
-					'value' => 'Admin 1 Tagline',
-				),
-				'blogfounded' => array(
-					'value' => '2016',
-				),
-				'scratchpad' => array(
-					'value' => 'Admin 1 Scratch',
-				),
-			),
-		) );
+			)
+		);
 
 		// Make sure that setting properties of unknown and unauthorized settings are rejected.
 		$data = get_post( $wp_customize->changeset_post_id() )->post_content;
-		$r = $wp_customize->save_changeset_post( array(
-			'data' => array(
-				'unknownsetting' => array(
-					'custom' => 'prop',
+		$r = $wp_customize->save_changeset_post(
+			array(
+				'data' => array(
+					'unknownsetting' => array(
+						'custom' => 'prop',
+					),
+					'blogterminated' => array(
+						'custom' => 'prop',
+					),
 				),
-				'blogterminated' => array(
-					'custom' => 'prop',
-				),
-			),
-		) );
+			)
+		);
 		$this->assertInstanceOf( 'WP_Error', $r['setting_validities']['unknownsetting'] );
 		$this->assertEquals( 'unrecognized', $r['setting_validities']['unknownsetting']->get_error_code() );
 		$this->assertInstanceOf( 'WP_Error', $r['setting_validities']['blogterminated'] );
@@ -1242,24 +1325,26 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		// Test submitting data with changed and unchanged settings, creating a new instance so that the post_values are cleared.
 		wp_set_current_user( $other_admin_user_id );
 		$wp_customize = $this->create_test_manager( $uuid );
-		$r = $wp_customize->save_changeset_post( array(
-			'status' => 'auto-draft',
-			'data' => array(
-				'blogname' => array(
-					'value' => 'Admin 1 Title', // Unchanged value.
+		$r = $wp_customize->save_changeset_post(
+			array(
+				'status' => 'auto-draft',
+				'data' => array(
+					'blogname' => array(
+						'value' => 'Admin 1 Title', // Unchanged value.
+					),
+					'blogdescription' => array(
+						'value' => 'Admin 1 Tagline Changed', // Changed value.
+					),
+					'blogfounded' => array(
+						'extra' => 'blogfounded_param', // New param.
+					),
+					'scratchpad' => array(
+						'value' => 'Admin 1 Scratch', // Unchanged value.
+					   'extra' => 'background_scratchpad2', // New param.
+					),
 				),
-				'blogdescription' => array(
-					'value' => 'Admin 1 Tagline Changed', // Changed value.
-				),
-				'blogfounded' => array(
-					'extra' => 'blogfounded_param', // New param.
-				),
-				'scratchpad' => array(
-					'value' => 'Admin 1 Scratch', // Unchanged value.
-					'extra' => 'background_scratchpad2', // New param.
-				),
-			),
-		) );
+			)
+		);
 
 		// Note that blogfounded is not included among setting_validities because no value was supplied and it is not unrecognized/unauthorized.
 		$this->assertEquals( array_fill_keys( array( 'blogname', 'blogdescription', 'scratchpad' ), true ), $r['setting_validities'], 'Expected blogname even though unchanged.' );
@@ -1282,24 +1367,28 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$uuid = wp_generate_uuid4();
 
 		$manager = $this->create_test_manager( $uuid );
-		$manager->save_changeset_post( array(
-			'data' => array(
-				'scratchpad' => array(
-					'value' => 'foo',
+		$manager->save_changeset_post(
+			array(
+				'data' => array(
+					'scratchpad' => array(
+						'value' => 'foo',
+					),
 				),
-			),
-		) );
+			)
+		);
 
 		// Create a new manager so post values are unset.
 		$manager = $this->create_test_manager( $uuid );
 
 		$this->assertArrayHasKey( 'scratchpad', $manager->changeset_data() );
 
-		$manager->save_changeset_post( array(
-			'data' => array(
-				'scratchpad' => null,
-			),
-		) );
+		$manager->save_changeset_post(
+			array(
+				'data' => array(
+					'scratchpad' => null,
+				),
+			)
+		);
 
 		$this->assertArrayNotHasKey( 'scratchpad', $manager->changeset_data() );
 	}
@@ -1323,10 +1412,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$wp_customize = new WP_Customize_Manager();
 		do_action( 'customize_register', $wp_customize );
 		$wp_customize->set_post_value( 'scratchpad', 'Unfiltered<script>evil</script>' );
-		$wp_customize->save_changeset_post( array(
-			'status' => 'auto-draft',
-			'user_id' => self::$admin_user_id,
-		) );
+		$wp_customize->save_changeset_post(
+			array(
+				'status' => 'auto-draft',
+				'user_id' => self::$admin_user_id,
+			)
+		);
 		$wp_customize = new WP_Customize_Manager( array( 'changeset_uuid' => $wp_customize->changeset_uuid() ) );
 		do_action( 'customize_register', $wp_customize );
 		$wp_customize->save_changeset_post( array( 'status' => 'publish' ) );
@@ -1337,10 +1428,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$wp_customize = new WP_Customize_Manager();
 		do_action( 'customize_register', $wp_customize );
 		$wp_customize->set_post_value( 'scratchpad', 'Unfiltered<script>evil</script>' );
-		$wp_customize->save_changeset_post( array(
-			'status' => 'auto-draft',
-			'user_id' => self::$subscriber_user_id,
-		) );
+		$wp_customize->save_changeset_post(
+			array(
+				'status' => 'auto-draft',
+				'user_id' => self::$subscriber_user_id,
+			)
+		);
 		$wp_customize = new WP_Customize_Manager( array( 'changeset_uuid' => $wp_customize->changeset_uuid() ) );
 		do_action( 'customize_register', $wp_customize );
 		$wp_customize->save_changeset_post( array( 'status' => 'publish' ) );
@@ -1351,10 +1444,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$wp_customize = new WP_Customize_Manager();
 		do_action( 'customize_register', $wp_customize );
 		$wp_customize->set_post_value( 'scratchpad', 'Unfiltered<script>evil</script>' );
-		$wp_customize->save_changeset_post( array(
-			'status' => 'auto-draft',
-			'user_id' => self::$admin_user_id,
-		) );
+		$wp_customize->save_changeset_post(
+			array(
+				'status' => 'auto-draft',
+				'user_id' => self::$admin_user_id,
+			)
+		);
 		$changeset_post_id = $wp_customize->changeset_post_id();
 		wp_set_current_user( 0 );
 		$wp_customize = null;
@@ -1389,16 +1484,20 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$this->assertGreaterThan( 2, count( $new_sidebars_widgets['sidebar-1'] ) );
 		$new_sidebar_1 = array_reverse( $new_sidebars_widgets['sidebar-1'] );
 
-		$post_id = $this->factory()->post->create( array(
-			'post_type' => 'customize_changeset',
-			'post_status' => 'draft',
-			'post_name' => wp_generate_uuid4(),
-			'post_content' => wp_json_encode( array(
-				'sidebars_widgets[sidebar-1]' => array(
-					'value' => $new_sidebar_1,
+		$post_id = $this->factory()->post->create(
+			array(
+				'post_type' => 'customize_changeset',
+				'post_status' => 'draft',
+				'post_name' => wp_generate_uuid4(),
+				'post_content' => wp_json_encode(
+					array(
+						'sidebars_widgets[sidebar-1]' => array(
+							'value' => $new_sidebar_1,
+						),
+					)
 				),
-			) ),
-		) );
+			)
+		);
 
 		// Save the updated sidebar widgets into the options table by publishing the changeset.
 		wp_publish_post( $post_id );
@@ -1421,13 +1520,15 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	 */
 	function test_save_changeset_post_for_bad_changeset() {
 		$uuid = wp_generate_uuid4();
-		$post_id = wp_insert_post( array(
-			'post_type' => 'customize_changeset',
-			'post_content' => 'INVALID_JSON',
-			'post_name' => $uuid,
-			'post_status' => 'auto-draft',
-			'post_date' => gmdate( 'Y-m-d H:i:s', strtotime( '-3 days' ) ),
-		) );
+		$post_id = wp_insert_post(
+			array(
+				'post_type' => 'customize_changeset',
+				'post_content' => 'INVALID_JSON',
+				'post_name' => $uuid,
+				'post_status' => 'auto-draft',
+				'post_date' => gmdate( 'Y-m-d H:i:s', strtotime( '-3 days' ) ),
+			)
+		);
 		$manager = $this->create_test_manager( $uuid );
 		$args = array(
 			'data' => array(
@@ -1443,10 +1544,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 			$this->assertEquals( 'json_parse_error', $r->get_error_code() );
 		}
 
-		wp_update_post( array(
-			'ID' => $post_id,
-			'post_content' => 'null',
-		) );
+		wp_update_post(
+			array(
+				'ID' => $post_id,
+				'post_content' => 'null',
+			)
+		);
 		$r = $manager->save_changeset_post( $args );
 		$this->assertInstanceOf( 'WP_Error', $r );
 		$this->assertEquals( 'expected_array', $r->get_error_code() );
@@ -1458,11 +1561,13 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	 * @param WP_Customize_Manager $wp_customize Manager.
 	 */
 	function register_scratchpad_setting( WP_Customize_Manager $wp_customize ) {
-		$wp_customize->add_setting( 'scratchpad', array(
-			'type' => 'option',
-			'capability' => 'exist',
-			'sanitize_callback' => array( $this, 'filter_sanitize_scratchpad' ),
-		) );
+		$wp_customize->add_setting(
+			'scratchpad', array(
+				'type' => 'option',
+				'capability' => 'exist',
+				'sanitize_callback' => array( $this, 'filter_sanitize_scratchpad' ),
+			)
+		);
 	}
 
 	/**
@@ -1633,16 +1738,20 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 				'value' => 'Changeset Tagline',
 			),
 		);
-		$this->factory()->post->create( array(
-			'post_type' => 'customize_changeset',
-			'post_status' => 'auto-draft',
-			'post_name' => $uuid,
-			'post_content' => wp_json_encode( $changeset_data ),
-		) );
+		$this->factory()->post->create(
+			array(
+				'post_type' => 'customize_changeset',
+				'post_status' => 'auto-draft',
+				'post_name' => $uuid,
+				'post_content' => wp_json_encode( $changeset_data ),
+			)
+		);
 
-		$manager = new WP_Customize_Manager( array(
-			'changeset_uuid' => $uuid,
-		) );
+		$manager = new WP_Customize_Manager(
+			array(
+				'changeset_uuid' => $uuid,
+			)
+		);
 		$this->assertTrue( $manager->is_theme_active() );
 
 		$this->assertArrayNotHasKey( 'background_color', $manager->unsanitized_post_values() );
@@ -1678,20 +1787,39 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 			$manager->unsanitized_post_values( array( 'exclude_post_data' => true ) )
 		);
 
-		$this->assertEmpty( $manager->unsanitized_post_values( array( 'exclude_post_data' => true, 'exclude_changeset' => true ) ) );
+		$this->assertEmpty(
+			$manager->unsanitized_post_values(
+				array(
+					'exclude_post_data' => true,
+					'exclude_changeset' => true,
+				)
+			)
+		);
 
 		// Test unstashing theme mods.
-		$manager = new WP_Customize_Manager( array(
-			'changeset_uuid' => $uuid,
-			'theme' => $preview_theme,
-		) );
+		$manager = new WP_Customize_Manager(
+			array(
+				'changeset_uuid' => $uuid,
+				'theme' => $preview_theme,
+			)
+		);
 		$this->assertFalse( $manager->is_theme_active() );
-		$values = $manager->unsanitized_post_values( array( 'exclude_post_data' => true, 'exclude_changeset' => true ) );
+		$values = $manager->unsanitized_post_values(
+			array(
+				'exclude_post_data' => true,
+				'exclude_changeset' => true,
+			)
+		);
 		$this->assertNotEmpty( $values );
 		$this->assertArrayHasKey( 'background_color', $values );
 		$this->assertEquals( '#000000', $values['background_color'] );
 
-		$values = $manager->unsanitized_post_values( array( 'exclude_post_data' => false, 'exclude_changeset' => false ) );
+		$values = $manager->unsanitized_post_values(
+			array(
+				'exclude_post_data' => false,
+				'exclude_changeset' => false,
+			)
+		);
 		$this->assertArrayHasKey( 'background_color', $values );
 		$this->assertArrayHasKey( 'blogname', $values );
 		$this->assertArrayHasKey( 'blogdescription', $values );
@@ -1729,10 +1857,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	function test_invalid_post_value() {
 		wp_set_current_user( self::$admin_user_id );
 		$default_value = 'foo_default';
-		$setting = $this->manager->add_setting( 'foo', array(
-			'validate_callback' => array( $this, 'filter_customize_validate_foo' ),
-			'sanitize_callback' => array( $this, 'filter_customize_sanitize_foo' ),
-		) );
+		$setting = $this->manager->add_setting(
+			'foo', array(
+				'validate_callback' => array( $this, 'filter_customize_validate_foo' ),
+				'sanitize_callback' => array( $this, 'filter_customize_sanitize_foo' ),
+			)
+		);
 		$this->assertEquals( $default_value, $this->manager->post_value( $setting, $default_value ) );
 		$this->assertEquals( $default_value, $setting->post_value( $default_value ) );
 
@@ -1795,10 +1925,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	function test_post_value_validation_sanitization_order() {
 		wp_set_current_user( self::$admin_user_id );
 		$default_value = '0';
-		$setting = $this->manager->add_setting( 'numeric', array(
-			'validate_callback' => array( $this, 'filter_customize_validate_numeric' ),
-			'sanitize_callback' => array( $this, 'filter_customize_sanitize_numeric' ),
-		) );
+		$setting = $this->manager->add_setting(
+			'numeric', array(
+				'validate_callback' => array( $this, 'filter_customize_validate_numeric' ),
+				'sanitize_callback' => array( $this, 'filter_customize_sanitize_numeric' ),
+			)
+		);
 		$this->assertEquals( $default_value, $this->manager->post_value( $setting, $default_value ) );
 		$this->assertEquals( $default_value, $setting->post_value( $default_value ) );
 
@@ -1839,10 +1971,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	 */
 	function test_validate_setting_values() {
 		wp_set_current_user( self::$admin_user_id );
-		$setting = $this->manager->add_setting( 'foo', array(
-			'validate_callback' => array( $this, 'filter_customize_validate_foo' ),
-			'sanitize_callback' => array( $this, 'filter_customize_sanitize_foo' ),
-		) );
+		$setting = $this->manager->add_setting(
+			'foo', array(
+				'validate_callback' => array( $this, 'filter_customize_validate_foo' ),
+				'sanitize_callback' => array( $this, 'filter_customize_sanitize_foo' ),
+			)
+		);
 
 		$post_value = 'bar';
 		$this->manager->set_post_value( 'foo', $post_value );
@@ -1962,10 +2096,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	 */
 	function test_validate_setting_values_validation_sanitization_order() {
 		wp_set_current_user( self::$admin_user_id );
-		$setting = $this->manager->add_setting( 'numeric', array(
-			'validate_callback' => array( $this, 'filter_customize_validate_numeric' ),
-			'sanitize_callback' => array( $this, 'filter_customize_sanitize_numeric' ),
-		) );
+		$setting = $this->manager->add_setting(
+			'numeric', array(
+				'validate_callback' => array( $this, 'filter_customize_validate_numeric' ),
+				'sanitize_callback' => array( $this, 'filter_customize_sanitize_numeric' ),
+			)
+		);
 		$post_value = '42';
 		$this->manager->set_post_value( 'numeric', $post_value );
 		$validities = $this->manager->validate_setting_values( $this->manager->unsanitized_post_values() );
@@ -2004,9 +2140,11 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	 */
 	function test_set_post_value() {
 		wp_set_current_user( self::$admin_user_id );
-		$this->manager->add_setting( 'foo', array(
-			'sanitize_callback' => array( $this, 'sanitize_foo_for_test_set_post_value' ),
-		) );
+		$this->manager->add_setting(
+			'foo', array(
+				'sanitize_callback' => array( $this, 'sanitize_foo_for_test_set_post_value' ),
+			)
+		);
 		$setting = $this->manager->get_setting( 'foo' );
 
 		$this->assertEmpty( $this->captured_customize_post_value_set_actions );
@@ -2089,10 +2227,20 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		}
 		$this->assertFalse( $this->manager->has_published_pages() );
 
-		$this->factory()->post->create( array( 'post_type' => 'page', 'post_status' => 'private' ) );
+		$this->factory()->post->create(
+			array(
+				'post_type' => 'page',
+				'post_status' => 'private',
+			)
+		);
 		$this->assertFalse( $this->manager->has_published_pages() );
 
-		$this->factory()->post->create( array( 'post_type' => 'page', 'post_status' => 'publish' ) );
+		$this->factory()->post->create(
+			array(
+				'post_type' => 'page',
+				'post_status' => 'publish',
+			)
+		);
 		$this->assertTrue( $this->manager->has_published_pages() );
 	}
 
@@ -2113,7 +2261,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$setting_id = 'nav_menus_created_posts';
 		$setting = $this->manager->get_setting( $setting_id );
 		$this->assertInstanceOf( 'WP_Customize_Filter_Setting', $setting );
-		$auto_draft_page = $this->factory()->post->create( array( 'post_type' => 'page', 'post_status' => 'auto-draft' ) );
+		$auto_draft_page = $this->factory()->post->create(
+			array(
+				'post_type' => 'page',
+				'post_status' => 'auto-draft',
+			)
+		);
 		$this->manager->set_post_value( $setting_id, array( $auto_draft_page ) );
 		$setting->preview();
 		$this->assertTrue( $this->manager->has_published_pages() );
@@ -2464,10 +2617,12 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$manager->register_controls();
 		$section_id = 'foo-section';
 		wp_set_current_user( self::$admin_user_id );
-		$manager->add_section( $section_id, array(
-			'title'      => 'Section',
-			'priority'   => 1,
-		) );
+		$manager->add_section(
+			$section_id, array(
+				'title'      => 'Section',
+				'priority'   => 1,
+			)
+		);
 
 		$added_control_ids = array();
 		$count = 9;
@@ -2475,11 +2630,13 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 			$id = 'sort-test-' . $i;
 			$added_control_ids[] = $id;
 			$manager->add_setting( $id );
-			$control = new WP_Customize_Control( $manager, $id, array(
-				'section' => $section_id,
-				'priority' => 1,
-				'setting' => $id,
-			) );
+			$control = new WP_Customize_Control(
+				$manager, $id, array(
+					'section' => $section_id,
+					'priority' => 1,
+					'setting' => $id,
+				)
+			);
 			$manager->add_control( $control );
 		}
 
@@ -2497,18 +2654,22 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		wp_set_current_user( self::$admin_user_id );
 
 		$section_id = 'foo-section';
-		$result_section = $manager->add_section( $section_id, array(
-			'title'    => 'Section',
-			'priority' => 1,
-		) );
+		$result_section = $manager->add_section(
+			$section_id, array(
+				'title'    => 'Section',
+				'priority' => 1,
+			)
+		);
 
 		$this->assertInstanceOf( 'WP_Customize_Section', $result_section );
 		$this->assertEquals( $section_id, $result_section->id );
 
-		$section = new WP_Customize_Section( $manager, $section_id, array(
-			'title'    => 'Section 2',
-			'priority' => 2,
-		) );
+		$section = new WP_Customize_Section(
+			$manager, $section_id, array(
+				'title'    => 'Section 2',
+				'priority' => 2,
+			)
+		);
 		$result_section = $manager->add_section( $section );
 
 		$this->assertInstanceOf( 'WP_Customize_Section', $result_section );
@@ -2595,17 +2756,21 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		wp_set_current_user( self::$admin_user_id );
 
 		$panel_id = 'foo-panel';
-		$result_panel = $manager->add_panel( $panel_id, array(
-			'title'    => 'Test Panel',
-			'priority' => 2,
-		) );
+		$result_panel = $manager->add_panel(
+			$panel_id, array(
+				'title'    => 'Test Panel',
+				'priority' => 2,
+			)
+		);
 
 		$this->assertInstanceOf( 'WP_Customize_Panel', $result_panel );
 		$this->assertEquals( $panel_id, $result_panel->id );
 
-		$panel = new WP_Customize_Panel( $manager, $panel_id, array(
-			'title' => 'Test Panel 2',
-		) );
+		$panel = new WP_Customize_Panel(
+			$manager, $panel_id, array(
+				'title' => 'Test Panel 2',
+			)
+		);
 		$result_panel = $manager->add_panel( $panel );
 
 		$this->assertInstanceOf( 'WP_Customize_Panel', $result_panel );
@@ -2620,27 +2785,33 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 		$manager = new WP_Customize_Manager();
 		$section_id = 'foo-section';
 		wp_set_current_user( self::$admin_user_id );
-		$manager->add_section( $section_id, array(
-			'title'    => 'Section',
-			'priority' => 1,
-		) );
+		$manager->add_section(
+			$section_id, array(
+				'title'    => 'Section',
+				'priority' => 1,
+			)
+		);
 
 		$control_id = 'foo-control';
 		$manager->add_setting( $control_id );
 
-		$result_control = $manager->add_control( $control_id, array(
-			'section'  => $section_id,
-			'priority' => 1,
-			'setting'  => $control_id,
-		) );
+		$result_control = $manager->add_control(
+			$control_id, array(
+				'section'  => $section_id,
+				'priority' => 1,
+				'setting'  => $control_id,
+			)
+		);
 		$this->assertInstanceOf( 'WP_Customize_Control', $result_control );
 		$this->assertEquals( $control_id, $result_control->id );
 
-		$control = new WP_Customize_Control( $manager, $control_id, array(
-			'section'  => $section_id,
-			'priority' => 1,
-			'setting'  => $control_id,
-		) );
+		$control = new WP_Customize_Control(
+			$manager, $control_id, array(
+				'section'  => $section_id,
+				'priority' => 1,
+				'setting'  => $control_id,
+			)
+		);
 		$result_control = $manager->add_control( $control );
 
 		$this->assertInstanceOf( 'WP_Customize_Control', $result_control );
@@ -2717,17 +2888,24 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	function test_prepare_controls_wp_list_sort_controls() {
 		wp_set_current_user( self::$admin_user_id );
 
-		$controls = array( 'foo' => 2, 'bar' => 4, 'foobar' => 3, 'key' => 1 );
+		$controls = array(
+			'foo' => 2,
+			'bar' => 4,
+			'foobar' => 3,
+			'key' => 1,
+		);
 		$controls_sorted = array( 'key', 'foo', 'foobar', 'bar' );
 
 		$this->manager->add_section( 'foosection', array() );
 
 		foreach ( $controls as $control_id => $priority ) {
 			$this->manager->add_setting( $control_id );
-			$this->manager->add_control( $control_id, array(
-				'priority' => $priority,
-				'section'  => 'foosection',
-			) );
+			$this->manager->add_control(
+				$control_id, array(
+					'priority' => $priority,
+					'section'  => 'foosection',
+				)
+			);
 		}
 
 		$this->manager->prepare_controls();
@@ -2742,13 +2920,20 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	function test_prepare_controls_wp_list_sort_sections() {
 		wp_set_current_user( self::$admin_user_id );
 
-		$sections = array( 'foo' => 2, 'bar' => 4, 'foobar' => 3, 'key' => 1 );
+		$sections = array(
+			'foo' => 2,
+			'bar' => 4,
+			'foobar' => 3,
+			'key' => 1,
+		);
 		$sections_sorted = array( 'key', 'foo', 'foobar', 'bar' );
 
 		foreach ( $sections as $section_id => $priority ) {
-			$this->manager->add_section( $section_id, array(
-				'priority' => $priority,
-			) );
+			$this->manager->add_section(
+				$section_id, array(
+					'priority' => $priority,
+				)
+			);
 		}
 
 		$this->manager->prepare_controls();
@@ -2763,13 +2948,20 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 	function test_prepare_controls_wp_list_sort_panels() {
 		wp_set_current_user( self::$admin_user_id );
 
-		$panels = array( 'foo' => 2, 'bar' => 4, 'foobar' => 3, 'key' => 1 );
+		$panels = array(
+			'foo' => 2,
+			'bar' => 4,
+			'foobar' => 3,
+			'key' => 1,
+		);
 		$panels_sorted = array( 'key', 'foo', 'foobar', 'bar' );
 
 		foreach ( $panels as $panel_id => $priority ) {
-			$this->manager->add_panel( $panel_id, array(
-				'priority' => $priority,
-			) );
+			$this->manager->add_panel(
+				$panel_id, array(
+					'priority' => $priority,
+				)
+			);
 		}
 
 		$this->manager->prepare_controls();
@@ -2797,7 +2989,7 @@ class Tests_WP_Customize_Manager extends WP_UnitTestCase {
 			"\v", // vertical tab
 		);
 
-		foreach ( $whitespaces as $whitespace  ) {
+		foreach ( $whitespaces as $whitespace ) {
 			$sanitized = $setting->sanitize( $whitespace . $video_url . $whitespace );
 			$this->assertEquals( $video_url, $sanitized );
 		}

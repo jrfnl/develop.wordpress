@@ -143,7 +143,14 @@ class WP_Test_REST_Schema_Sanitization extends WP_UnitTestCase {
 				'type' => 'string',
 			),
 		);
-		$this->assertEquals( array( '1', '2' ), rest_sanitize_value_from_schema( array( 'first' => '1', 'second' => '2' ), $schema ) );
+		$this->assertEquals(
+			array( '1', '2' ), rest_sanitize_value_from_schema(
+				array(
+					'first' => '1',
+					'second' => '2',
+				), $schema
+			)
+		);
 	}
 
 	public function test_type_unknown() {

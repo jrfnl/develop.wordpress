@@ -47,7 +47,7 @@ class Tests_XMLRPC_wp_getTerms extends WP_XMLRPC_UnitTestCase {
 		$results = $this->myxmlrpcserver->wp_getTerms( array( 1, 'editor', 'editor', 'category' ) );
 		$this->assertNotIXRError( $results );
 
-		foreach( $results as $term ) {
+		foreach ( $results as $term ) {
 			$this->assertInternalType( 'int', $term['count'] );
 
 			// Check custom term meta
@@ -68,9 +68,9 @@ class Tests_XMLRPC_wp_getTerms extends WP_XMLRPC_UnitTestCase {
 		$tax_name = 'wp_getTerms_custom_taxonomy';
 		$num_terms = 12;
 		register_taxonomy( $tax_name, 'post' );
-		for( $i = 0; $i < $num_terms; $i++ )
+		for ( $i = 0; $i < $num_terms; $i++ ) {
 			wp_insert_term( "term_{$i}", $tax_name );
-
+		}
 
 		// test fetching all terms
 		$results = $this->myxmlrpcserver->wp_getTerms( array( 1, 'editor', 'editor', $tax_name ) );
@@ -100,7 +100,7 @@ class Tests_XMLRPC_wp_getTerms extends WP_XMLRPC_UnitTestCase {
 		$this->assertNotIXRError( $results4 );
 		$this->assertEquals( 0, count( $results4 ) );
 
-		unset($GLOBALS['wp_taxonomies'][$tax_name]);
+		unset( $GLOBALS['wp_taxonomies'][ $tax_name ] );
 	}
 
 	function test_term_ordering() {
@@ -112,16 +112,18 @@ class Tests_XMLRPC_wp_getTerms extends WP_XMLRPC_UnitTestCase {
 		self::factory()->post->create_many( 5, array( 'post_category' => array( $cat1 ) ) );
 		self::factory()->post->create_many( 3, array( 'post_category' => array( $cat2 ) ) );
 
-		$filter = array( 'orderby' => 'count', 'order' => 'DESC' );
+		$filter = array(
+			'orderby' => 'count',
+			'order' => 'DESC',
+		);
 		$results = $this->myxmlrpcserver->wp_getTerms( array( 1, 'editor', 'editor', 'category', $filter ) );
 		$this->assertNotIXRError( $results );
 		$this->assertNotEquals( 0, count( $results ) );
 
-		foreach( $results as $term ) {
+		foreach ( $results as $term ) {
 			if ( $term['term_id'] == $cat1 ) {
 				break;  // found cat1 first as expected
-			}
-			else if ( $term['term_id'] == $cat2 ) {
+			} elseif ( $term['term_id'] == $cat2 ) {
 				$this->assertFalse( false, 'Incorrect category ordering.' );
 			}
 		}

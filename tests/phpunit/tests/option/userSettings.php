@@ -5,9 +5,11 @@ class Tests_User_Settings extends WP_UnitTestCase {
 	function setUp() {
 		parent::setUp();
 
-		$this->user_id = self::factory()->user->create( array(
-			'role' => 'administrator'
-		) );
+		$this->user_id = self::factory()->user->create(
+			array(
+				'role' => 'administrator',
+			)
+		);
 
 		wp_set_current_user( $this->user_id );
 	}

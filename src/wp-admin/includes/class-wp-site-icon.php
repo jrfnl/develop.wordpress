@@ -96,7 +96,7 @@ class WP_Site_Icon {
 			'post_content'   => $url,
 			'post_mime_type' => $image_type,
 			'guid'           => $url,
-			'context'        => 'site-icon'
+			'context'        => 'site-icon',
 		);
 
 		return $object;

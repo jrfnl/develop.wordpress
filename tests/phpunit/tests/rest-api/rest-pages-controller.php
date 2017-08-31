@@ -14,9 +14,11 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	protected static $editor_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {
-		self::$editor_id = $factory->user->create( array(
-			'role' => 'editor',
-		) );
+		self::$editor_id = $factory->user->create(
+			array(
+				'role' => 'editor',
+			)
+		);
 	}
 
 	public static function wpTearDownAfterClass() {
@@ -64,31 +66,43 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 		$data = $response->get_data();
 		$keys = array_keys( $data['endpoints'][0]['args'] );
 		sort( $keys );
-		$this->assertEquals( array(
-			'after',
-			'author',
-			'author_exclude',
-			'before',
-			'context',
-			'exclude',
-			'include',
-			'menu_order',
-			'offset',
-			'order',
-			'orderby',
-			'page',
-			'parent',
-			'parent_exclude',
-			'per_page',
-			'search',
-			'slug',
-			'status',
-			), $keys );
+		$this->assertEquals(
+			array(
+				'after',
+				'author',
+				'author_exclude',
+				'before',
+				'context',
+				'exclude',
+				'include',
+				'menu_order',
+				'offset',
+				'order',
+				'orderby',
+				'page',
+				'parent',
+				'parent_exclude',
+				'per_page',
+				'search',
+				'slug',
+				'status',
+			), $keys
+		);
 	}
 
 	public function test_get_items() {
-		$id1 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page' ) );
-		$id2 = $this->factory->post->create( array( 'post_status' => 'draft', 'post_type' => 'page' ) );
+		$id1 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+			)
+		);
+		$id2 = $this->factory->post->create(
+			array(
+				'post_status' => 'draft',
+				'post_type' => 'page',
+			)
+		);
 		$request = new WP_REST_Request( 'GET', '/wp/v2/pages' );
 		$response = $this->server->dispatch( $request );
 		$data = $response->get_data();
@@ -97,8 +111,19 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_get_items_parent_query() {
-		$id1 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page' ) );
-		$id2 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page', 'post_parent' => $id1 ) );
+		$id1 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+			)
+		);
+		$id2 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+				'post_parent' => $id1,
+			)
+		);
 		// No parent
 		$request = new WP_REST_Request( 'GET', '/wp/v2/pages' );
 		$response = $this->server->dispatch( $request );
@@ -117,10 +142,32 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_get_items_parents_query() {
-		$id1 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page' ) );
-		$id2 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page', 'post_parent' => $id1 ) );
-		$id3 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page' ) );
-		$id4 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page', 'post_parent' => $id3 ) );
+		$id1 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+			)
+		);
+		$id2 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+				'post_parent' => $id1,
+			)
+		);
+		$id3 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+			)
+		);
+		$id4 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+				'post_parent' => $id3,
+			)
+		);
 		// No parent
 		$request = new WP_REST_Request( 'GET', '/wp/v2/pages' );
 		$response = $this->server->dispatch( $request );
@@ -135,8 +182,19 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_get_items_parent_exclude_query() {
-		$id1 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page' ) );
-		$this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page', 'post_parent' => $id1 ) );
+		$id1 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+			)
+		);
+		$this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+				'post_parent' => $id1,
+			)
+		);
 		// No parent
 		$request = new WP_REST_Request( 'GET', '/wp/v2/pages' );
 		$response = $this->server->dispatch( $request );
@@ -155,10 +213,33 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_get_items_menu_order_query() {
-		$id1 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page' ) );
-		$id2 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page', 'menu_order' => 2 ) );
-		$id3 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page', 'menu_order' => 3 ) );
-		$id4 = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page', 'menu_order' => 1 ) );
+		$id1 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+			)
+		);
+		$id2 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+				'menu_order' => 2,
+			)
+		);
+		$id3 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+				'menu_order' => 3,
+			)
+		);
+		$id4 = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+				'menu_order' => 1,
+			)
+		);
 		// No parent
 		$request = new WP_REST_Request( 'GET', '/wp/v2/pages' );
 		$response = $this->server->dispatch( $request );
@@ -206,8 +287,18 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	public function test_get_items_private_filter_query_var() {
 		// Private query vars inaccessible to unauthorized users
 		wp_set_current_user( 0 );
-		$page_id = $this->factory->post->create( array( 'post_status' => 'publish', 'post_type' => 'page' ) );
-		$draft_id = $this->factory->post->create( array( 'post_status' => 'draft', 'post_type' => 'page' ) );
+		$page_id = $this->factory->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type' => 'page',
+			)
+		);
+		$draft_id = $this->factory->post->create(
+			array(
+				'post_status' => 'draft',
+				'post_type' => 'page',
+			)
+		);
 		$request = new WP_REST_Request( 'GET', '/wp/v2/pages' );
 		$request->set_param( 'status', 'draft' );
 		$response = $this->server->dispatch( $request );
@@ -230,9 +321,24 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_get_items_valid_date() {
-		$post1 = $this->factory->post->create( array( 'post_date' => '2016-01-15T00:00:00Z', 'post_type' => 'page' ) );
-		$post2 = $this->factory->post->create( array( 'post_date' => '2016-01-16T00:00:00Z', 'post_type' => 'page' ) );
-		$post3 = $this->factory->post->create( array( 'post_date' => '2016-01-17T00:00:00Z', 'post_type' => 'page' ) );
+		$post1 = $this->factory->post->create(
+			array(
+				'post_date' => '2016-01-15T00:00:00Z',
+				'post_type' => 'page',
+			)
+		);
+		$post2 = $this->factory->post->create(
+			array(
+				'post_date' => '2016-01-16T00:00:00Z',
+				'post_type' => 'page',
+			)
+		);
+		$post3 = $this->factory->post->create(
+			array(
+				'post_date' => '2016-01-17T00:00:00Z',
+				'post_type' => 'page',
+			)
+		);
 		$request = new WP_REST_Request( 'GET', '/wp/v2/pages' );
 		$request->set_param( 'after', '2016-01-15T00:00:00Z' );
 		$request->set_param( 'before', '2016-01-17T00:00:00Z' );
@@ -261,9 +367,11 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 		wp_set_current_user( self::$editor_id );
 
 		$request = new WP_REST_Request( 'POST', '/wp/v2/pages' );
-		$params = $this->set_post_data( array(
-			'template'       => 'page-my-test-template.php',
-		) );
+		$params = $this->set_post_data(
+			array(
+				'template'       => 'page-my-test-template.php',
+			)
+		);
 		$request->set_body_params( $params );
 		$response = $this->server->dispatch( $request );
 
@@ -274,15 +382,19 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_create_page_with_parent() {
-		$page_id = $this->factory->post->create( array(
-			'type' => 'page',
-		) );
+		$page_id = $this->factory->post->create(
+			array(
+				'type' => 'page',
+			)
+		);
 		wp_set_current_user( self::$editor_id );
 
 		$request = new WP_REST_Request( 'POST', '/wp/v2/pages' );
-		$params = $this->set_post_data( array(
-			'parent' => $page_id,
-		) );
+		$params = $this->set_post_data(
+			array(
+				'parent' => $page_id,
+			)
+		);
 		$request->set_body_params( $params );
 		$response = $this->server->dispatch( $request );
 
@@ -301,9 +413,11 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 		wp_set_current_user( self::$editor_id );
 
 		$request = new WP_REST_Request( 'POST', '/wp/v2/pages' );
-		$params = $this->set_post_data( array(
-			'parent' => -1,
-		) );
+		$params = $this->set_post_data(
+			array(
+				'parent' => -1,
+			)
+		);
 		$request->set_body_params( $params );
 		$response = $this->server->dispatch( $request );
 
@@ -315,10 +429,12 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_delete_item() {
-		$page_id = $this->factory->post->create( array(
-			'post_type'  => 'page',
-			'post_title' => 'Deleted page',
-		) );
+		$page_id = $this->factory->post->create(
+			array(
+				'post_type'  => 'page',
+				'post_title' => 'Deleted page',
+			)
+		);
 		wp_set_current_user( self::$editor_id );
 
 		$request = new WP_REST_Request( 'DELETE', sprintf( '/wp/v2/pages/%d', $page_id ) );
@@ -336,15 +452,19 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_get_pages_params() {
-		$this->factory->post->create_many( 8, array(
-			'post_type' => 'page',
-		) );
+		$this->factory->post->create_many(
+			8, array(
+				'post_type' => 'page',
+			)
+		);
 
 		$request = new WP_REST_Request( 'GET', '/wp/v2/pages' );
-		$request->set_query_params( array(
-			'page'           => 2,
-			'per_page'       => 4,
-		) );
+		$request->set_query_params(
+			array(
+				'page'           => 2,
+				'per_page'       => 4,
+			)
+		);
 		$response = $this->server->dispatch( $request );
 
 		$this->assertEquals( 200, $response->get_status() );
@@ -362,17 +482,21 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 
 	public function test_update_page_menu_order() {
 
-		$page_id = $this->factory->post->create( array(
-			'post_type' => 'page',
-		) );
+		$page_id = $this->factory->post->create(
+			array(
+				'post_type' => 'page',
+			)
+		);
 
 		wp_set_current_user( self::$editor_id );
 
 		$request = new WP_REST_Request( 'PUT', sprintf( '/wp/v2/pages/%d', $page_id ) );
 
-		$request->set_body_params( array(
-			'menu_order' => 1,
-		) );
+		$request->set_body_params(
+			array(
+				'menu_order' => 1,
+			)
+		);
 		$response = $this->server->dispatch( $request );
 
 		$new_data = $response->get_data();
@@ -381,18 +505,22 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 
 	public function test_update_page_menu_order_to_zero() {
 
-		$page_id = $this->factory->post->create( array(
-			'post_type'  => 'page',
-			'menu_order' => 1,
-		) );
+		$page_id = $this->factory->post->create(
+			array(
+				'post_type'  => 'page',
+				'menu_order' => 1,
+			)
+		);
 
 		wp_set_current_user( self::$editor_id );
 
 		$request = new WP_REST_Request( 'PUT', sprintf( '/wp/v2/pages/%d', $page_id ) );
 
-		$request->set_body_params(array(
-			'menu_order' => 0,
-		));
+		$request->set_body_params(
+			array(
+				'menu_order' => 0,
+			)
+		);
 		$response = $this->server->dispatch( $request );
 
 		$new_data = $response->get_data();
@@ -400,45 +528,59 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_update_page_parent_non_zero() {
-		$page_id1 = $this->factory->post->create( array(
-			'post_type' => 'page',
-		) );
-		$page_id2 = $this->factory->post->create( array(
-			'post_type' => 'page',
-		) );
+		$page_id1 = $this->factory->post->create(
+			array(
+				'post_type' => 'page',
+			)
+		);
+		$page_id2 = $this->factory->post->create(
+			array(
+				'post_type' => 'page',
+			)
+		);
 		wp_set_current_user( self::$editor_id );
 		$request = new WP_REST_Request( 'PUT', sprintf( '/wp/v2/pages/%d', $page_id2 ) );
-		$request->set_body_params( array(
-			'parent' => $page_id1,
-		) );
+		$request->set_body_params(
+			array(
+				'parent' => $page_id1,
+			)
+		);
 		$response = $this->server->dispatch( $request );
 		$new_data = $response->get_data();
 		$this->assertEquals( $page_id1, $new_data['parent'] );
 	}
 
 	public function test_update_page_parent_zero() {
-		$page_id1 = $this->factory->post->create( array(
-			'post_type' => 'page',
-		) );
-		$page_id2 = $this->factory->post->create( array(
-			'post_type'    => 'page',
-			'post_parent'  => $page_id1,
-		) );
+		$page_id1 = $this->factory->post->create(
+			array(
+				'post_type' => 'page',
+			)
+		);
+		$page_id2 = $this->factory->post->create(
+			array(
+				'post_type'    => 'page',
+				'post_parent'  => $page_id1,
+			)
+		);
 		wp_set_current_user( self::$editor_id );
 		$request = new WP_REST_Request( 'PUT', sprintf( '/wp/v2/pages/%d', $page_id2 ) );
-		$request->set_body_params( array(
-			'parent' => 0,
-		) );
+		$request->set_body_params(
+			array(
+				'parent' => 0,
+			)
+		);
 		$response = $this->server->dispatch( $request );
 		$new_data = $response->get_data();
 		$this->assertEquals( 0, $new_data['parent'] );
 	}
 
 	public function test_get_page_with_password() {
-		$page_id = $this->factory->post->create( array(
-			'post_type'     => 'page',
-			'post_password' => '$inthebananastand',
-		) );
+		$page_id = $this->factory->post->create(
+			array(
+				'post_type'     => 'page',
+				'post_password' => '$inthebananastand',
+			)
+		);
 
 		$request = new WP_REST_Request( 'GET', sprintf( '/wp/v2/pages/%d', $page_id ) );
 		$response = $this->server->dispatch( $request );
@@ -451,12 +593,14 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_get_page_with_password_using_password() {
-		$page_id = $this->factory->post->create( array(
-			'post_type'     => 'page',
-			'post_password' => '$inthebananastand',
-			'post_content'  => 'Some secret content.',
-			'post_excerpt'  => 'Some secret excerpt.',
-		) );
+		$page_id = $this->factory->post->create(
+			array(
+				'post_type'     => 'page',
+				'post_password' => '$inthebananastand',
+				'post_content'  => 'Some secret content.',
+				'post_excerpt'  => 'Some secret excerpt.',
+			)
+		);
 
 		$page = get_post( $page_id );
 		$request = new WP_REST_Request( 'GET', sprintf( '/wp/v2/pages/%d', $page_id ) );
@@ -471,10 +615,12 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_get_page_with_password_using_incorrect_password() {
-		$page_id = $this->factory->post->create( array(
-			'post_type'     => 'page',
-			'post_password' => '$inthebananastand',
-		) );
+		$page_id = $this->factory->post->create(
+			array(
+				'post_type'     => 'page',
+				'post_password' => '$inthebananastand',
+			)
+		);
 
 		$page = get_post( $page_id );
 		$request = new WP_REST_Request( 'GET', sprintf( '/wp/v2/pages/%d', $page_id ) );
@@ -485,12 +631,14 @@ class WP_Test_REST_Pages_Controller extends WP_Test_REST_Post_Type_Controller_Te
 	}
 
 	public function test_get_page_with_password_without_permission() {
-		$page_id = $this->factory->post->create( array(
-			'post_type'     => 'page',
-			'post_password' => '$inthebananastand',
-			'post_content'  => 'Some secret content.',
-			'post_excerpt'  => 'Some secret excerpt.',
-		) );
+		$page_id = $this->factory->post->create(
+			array(
+				'post_type'     => 'page',
+				'post_password' => '$inthebananastand',
+				'post_content'  => 'Some secret content.',
+				'post_excerpt'  => 'Some secret excerpt.',
+			)
+		);
 		$request = new WP_REST_Request( 'GET', sprintf( '/wp/v2/pages/%d', $page_id ) );
 		$response = $this->server->dispatch( $request );
 		$data = $response->get_data();

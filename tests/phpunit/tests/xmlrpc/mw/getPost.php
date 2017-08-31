@@ -7,14 +7,18 @@ class Tests_XMLRPC_mw_getPost extends WP_XMLRPC_UnitTestCase {
 	protected static $post_id;
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ) {
-		self::$post_id = $factory->post->create( array(
-			'post_author' => $factory->user->create( array(
-				'user_login' => 'author',
-				'user_pass'  => 'author',
-				'role'       => 'author'
-			) ),
-			'post_date'   => strftime( "%Y-%m-%d %H:%M:%S", strtotime( '+1 day' ) ),
-		) );
+		self::$post_id = $factory->post->create(
+			array(
+				'post_author' => $factory->user->create(
+					array(
+						'user_login' => 'author',
+						'user_pass'  => 'author',
+						'role'       => 'author',
+					)
+				),
+				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', strtotime( '+1 day' ) ),
+			)
+		);
 	}
 
 	function test_invalid_username_password() {
@@ -89,7 +93,7 @@ class Tests_XMLRPC_mw_getPost extends WP_XMLRPC_UnitTestCase {
 		add_theme_support( 'post-thumbnails' );
 
 		// create attachment
-		$filename = ( DIR_TESTDATA.'/images/a2-small.jpg' );
+		$filename = ( DIR_TESTDATA . '/images/a2-small.jpg' );
 		$attachment_id = self::factory()->attachment->create_upload_object( $filename );
 
 		set_post_thumbnail( self::$post_id, $attachment_id );

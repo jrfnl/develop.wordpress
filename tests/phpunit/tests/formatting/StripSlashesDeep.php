@@ -13,14 +13,20 @@ class Tests_Formatting_StripSlashesDeep extends WP_UnitTestCase {
 		$this->assertEquals( false, stripslashes_deep( false ) );
 		$this->assertEquals( 4, stripslashes_deep( 4 ) );
 		$this->assertEquals( 'foo', stripslashes_deep( 'foo' ) );
-		$arr = array( 'a' => true, 'b' => false, 'c' => 4, 'd' => 'foo' );
+		$arr = array(
+			'a' => true,
+			'b' => false,
+			'c' => 4,
+			'd' => 'foo',
+		);
 		$arr['e'] = $arr; // Add a sub-array
 		$this->assertEquals( $arr, stripslashes_deep( $arr ) ); // Keyed array
 		$this->assertEquals( array_values( $arr ), stripslashes_deep( array_values( $arr ) ) ); // Non-keyed
 
 		$obj = new stdClass;
-		foreach ( $arr as $k => $v )
+		foreach ( $arr as $k => $v ) {
 			$obj->$k = $v;
+		}
 		$this->assertEquals( $obj, stripslashes_deep( $obj ) );
 	}
 

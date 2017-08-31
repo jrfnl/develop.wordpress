@@ -70,7 +70,7 @@ class Tests_General_Template extends WP_UnitTestCase {
 	}
 
 	/**
- 	 * @group site_icon
+	 * @group site_icon
 	 * @group multisite
 	 * @group ms-required
 	 */
@@ -234,7 +234,6 @@ class Tests_General_Template extends WP_UnitTestCase {
 		$upload = wp_upload_bits( basename( $filename ), null, $contents );
 		$this->site_icon_url = $upload['url'];
 
-
 		// Save the data
 		$this->site_icon_id = $this->_make_attachment( $upload );
 		return $this->site_icon_id;
@@ -323,7 +322,7 @@ class Tests_General_Template extends WP_UnitTestCase {
 		$image    = wp_get_attachment_image( $this->custom_logo_id, 'full', false, $custom_logo_attr );
 		restore_current_blog();
 
-		$expected_custom_logo =  '<a href="' . $home_url . '" class="custom-logo-link" rel="home" itemprop="url">' . $image . '</a>';
+		$expected_custom_logo = '<a href="' . $home_url . '" class="custom-logo-link" rel="home" itemprop="url">' . $image . '</a>';
 		$this->assertEquals( $expected_custom_logo, get_custom_logo( $blog_id ) );
 	}
 
@@ -366,10 +365,12 @@ class Tests_General_Template extends WP_UnitTestCase {
 
 		update_post_meta( $this->custom_logo_id, '_wp_attachment_image_alt', $image_alt );
 
-		$image = wp_get_attachment_image( $this->custom_logo_id, 'full', false, array(
-			'class'    => 'custom-logo',
-			'itemprop' => 'logo',
-		) );
+		$image = wp_get_attachment_image(
+			$this->custom_logo_id, 'full', false, array(
+				'class'    => 'custom-logo',
+				'itemprop' => 'logo',
+			)
+		);
 
 		$this->expectOutputString( '<a href="http://' . WP_TESTS_DOMAIN . '/" class="custom-logo-link" rel="home" itemprop="url">' . $image . '</a>' );
 		the_custom_logo();
@@ -422,8 +423,8 @@ class Tests_General_Template extends WP_UnitTestCase {
 	 */
 	function test_get_the_modified_time_default() {
 		$details = array(
-				'post_date' => '2016-01-21 15:34:36',
-				'post_date_gmt' => '2016-01-21 15:34:36',
+			'post_date' => '2016-01-21 15:34:36',
+			'post_date_gmt' => '2016-01-21 15:34:36',
 		);
 		$post_id = $this->factory->post->create( $details );
 		$post = get_post( $post_id );
@@ -474,8 +475,8 @@ class Tests_General_Template extends WP_UnitTestCase {
 	 */
 	function test_get_the_modified_date_with_post_id() {
 		$details = array(
-				'post_date' => '2016-01-21 15:34:36',
-				'post_date_gmt' => '2016-01-21 15:34:36',
+			'post_date' => '2016-01-21 15:34:36',
+			'post_date_gmt' => '2016-01-21 15:34:36',
 		);
 		$post_id = $this->factory->post->create( $details );
 		$d = 'Y-m-d';
@@ -493,8 +494,8 @@ class Tests_General_Template extends WP_UnitTestCase {
 	 */
 	function test_get_the_modified_date_default() {
 		$details = array(
-				'post_date' => '2016-01-21 15:34:36',
-				'post_date_gmt' => '2016-01-21 15:34:36',
+			'post_date' => '2016-01-21 15:34:36',
+			'post_date_gmt' => '2016-01-21 15:34:36',
 		);
 		$post_id = $this->factory->post->create( $details );
 		$post = get_post( $post_id );
@@ -545,8 +546,8 @@ class Tests_General_Template extends WP_UnitTestCase {
 	 */
 	function test_get_the_modified_time_with_post_id() {
 		$details = array(
-				'post_date' => '2016-01-21 15:34:36',
-				'post_date_gmt' => '2016-01-21 15:34:36',
+			'post_date' => '2016-01-21 15:34:36',
+			'post_date_gmt' => '2016-01-21 15:34:36',
 		);
 		$post_id = $this->factory->post->create( $details );
 		$d = 'G';

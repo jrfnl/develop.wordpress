@@ -260,24 +260,28 @@ class WP_Customize_Nav_Menu_Setting extends WP_Customize_Setting {
 			}
 		} else {
 			// Handle menus being updated or inserted.
-			$menu_obj = (object) array_merge( array(
-				'term_id'          => $this->term_id,
-				'term_taxonomy_id' => $this->term_id,
-				'slug'             => sanitize_title( $setting_value['name'] ),
-				'count'            => 0,
-				'term_group'       => 0,
-				'taxonomy'         => self::TAXONOMY,
-				'filter'           => 'raw',
-			), $setting_value );
+			$menu_obj = (object) array_merge(
+				array(
+					'term_id'          => $this->term_id,
+					'term_taxonomy_id' => $this->term_id,
+					'slug'             => sanitize_title( $setting_value['name'] ),
+					'count'            => 0,
+					'term_group'       => 0,
+					'taxonomy'         => self::TAXONOMY,
+					'filter'           => 'raw',
+				), $setting_value
+			);
 
 			array_splice( $menus, $index, ( -1 === $index ? 0 : 1 ), array( $menu_obj ) );
 		}
 
 		// Make sure the menu objects get re-sorted after an update/insert.
 		if ( ! $is_delete && ! empty( $args['orderby'] ) ) {
-			$menus = wp_list_sort( $menus, array(
-				$args['orderby'] => 'ASC',
-			) );
+			$menus = wp_list_sort(
+				$menus, array(
+					$args['orderby'] => 'ASC',
+				)
+			);
 		}
 		// @todo add support for $args['hide_empty'] === true
 
@@ -353,7 +357,8 @@ class WP_Customize_Nav_Menu_Setting extends WP_Customize_Setting {
 			return $menu_obj;
 		}
 
-		$menu_obj = (object) array_merge( array(
+		$menu_obj = (object) array_merge(
+			array(
 				'term_id'          => $this->term_id,
 				'term_taxonomy_id' => $this->term_id,
 				'slug'             => sanitize_title( $setting_value['name'] ),
@@ -361,7 +366,8 @@ class WP_Customize_Nav_Menu_Setting extends WP_Customize_Setting {
 				'term_group'       => 0,
 				'taxonomy'         => self::TAXONOMY,
 				'filter'           => 'raw',
-			), $setting_value );
+			), $setting_value
+		);
 
 		return $menu_obj;
 	}

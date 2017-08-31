@@ -25,13 +25,13 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 
 	function __isset( $name ) {
 		return 'factory' === $name;
- 	}
+	}
 
 	function __get( $name ) {
 		if ( 'factory' === $name ) {
 			return self::factory();
- 	    }
- 	}
+		}
+	}
 
 	protected static function factory() {
 		static $factory = null;
@@ -50,7 +50,7 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 		$backtrace = debug_backtrace();
 		// [0] WP_UnitTestCase::get_called_class()
 		// [1] WP_UnitTestCase::setUpBeforeClass()
-		if ( 'call_user_func' ===  $backtrace[2]['function'] ) {
+		if ( 'call_user_func' === $backtrace[2]['function'] ) {
 			return $backtrace[2]['args'][0][0];
 		}
 		return $backtrace[2]['class'];
@@ -62,7 +62,7 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 		$wpdb->suppress_errors = false;
 		$wpdb->show_errors = true;
 		$wpdb->db_connect();
-		ini_set('display_errors', 1 );
+		ini_set( 'display_errors', 1 );
 
 		parent::setUpBeforeClass();
 
@@ -95,7 +95,7 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	function setUp() {
-		set_time_limit(0);
+		set_time_limit( 0 );
 
 		if ( ! self::$ignore_files ) {
 			self::$ignore_files = $this->scan_user_uploads();
@@ -179,7 +179,7 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	/**
 	 * Allow tests to be skipped on some automated runs
 	 *
-	 * For test runs on Travis for something other than trunk/master 
+	 * For test runs on Travis for something other than trunk/master
 	 * we want to skip tests that only need to run for master.
 	 */
 	public function skipOnAutomatedBranches() {
@@ -346,14 +346,16 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	function _create_temporary_tables( $query ) {
-		if ( 'CREATE TABLE' === substr( trim( $query ), 0, 12 ) )
+		if ( 'CREATE TABLE' === substr( trim( $query ), 0, 12 ) ) {
 			return substr_replace( trim( $query ), 'CREATE TEMPORARY TABLE', 0, 12 );
+		}
 		return $query;
 	}
 
 	function _drop_temporary_tables( $query ) {
-		if ( 'DROP TABLE' === substr( trim( $query ), 0, 10 ) )
+		if ( 'DROP TABLE' === substr( trim( $query ), 0, 10 ) ) {
 			return substr_replace( trim( $query ), 'DROP TEMPORARY TABLE', 0, 10 );
+		}
 		return $query;
 	}
 
@@ -372,10 +374,12 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	function expectDeprecated() {
 		$annotations = $this->getAnnotations();
 		foreach ( array( 'class', 'method' ) as $depth ) {
-			if ( ! empty( $annotations[ $depth ]['expectedDeprecated'] ) )
+			if ( ! empty( $annotations[ $depth ]['expectedDeprecated'] ) ) {
 				$this->expected_deprecated = array_merge( $this->expected_deprecated, $annotations[ $depth ]['expectedDeprecated'] );
-			if ( ! empty( $annotations[ $depth ]['expectedIncorrectUsage'] ) )
+			}
+			if ( ! empty( $annotations[ $depth ]['expectedIncorrectUsage'] ) ) {
 				$this->expected_doing_it_wrong = array_merge( $this->expected_doing_it_wrong, $annotations[ $depth ]['expectedIncorrectUsage'] );
+			}
 		}
 		add_action( 'deprecated_function_run', array( $this, 'deprecated_function_run' ) );
 		add_action( 'deprecated_argument_run', array( $this, 'deprecated_function_run' ) );
@@ -465,13 +469,15 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	function deprecated_function_run( $function ) {
-		if ( ! in_array( $function, $this->caught_deprecated ) )
+		if ( ! in_array( $function, $this->caught_deprecated ) ) {
 			$this->caught_deprecated[] = $function;
+		}
 	}
 
 	function doing_it_wrong_run( $function ) {
-		if ( ! in_array( $function, $this->caught_doing_it_wrong ) )
+		if ( ! in_array( $function, $this->caught_doing_it_wrong ) ) {
 			$this->caught_doing_it_wrong[] = $function;
+		}
 	}
 
 	function assertWPError( $actual, $message = '' ) {
@@ -497,7 +503,7 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	function assertEqualFields( $object, $fields ) {
-		foreach( $fields as $field_name => $field_value ) {
+		foreach ( $fields as $field_name => $field_value ) {
 			if ( $object->$field_name != $field_value ) {
 				$this->fail();
 			}
@@ -529,7 +535,7 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( is_array( $array ) );
 		$this->assertNotEmpty( $array );
 
-		foreach( $array as $sub_array ) {
+		foreach ( $array as $sub_array ) {
 			$this->assertTrue( is_array( $sub_array ) );
 			$this->assertNotEmpty( $sub_array );
 		}
@@ -557,16 +563,18 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 		// from all over the place (globals, GET, etc), which makes it tricky
 		// to run them more than once without very carefully clearing everything
 		$_GET = $_POST = array();
-		foreach (array('query_string', 'id', 'postdata', 'authordata', 'day', 'currentmonth', 'page', 'pages', 'multipage', 'more', 'numpages', 'pagenow') as $v) {
-			if ( isset( $GLOBALS[$v] ) ) unset( $GLOBALS[$v] );
+		foreach ( array( 'query_string', 'id', 'postdata', 'authordata', 'day', 'currentmonth', 'page', 'pages', 'multipage', 'more', 'numpages', 'pagenow' ) as $v ) {
+			if ( isset( $GLOBALS[ $v ] ) ) {
+				unset( $GLOBALS[ $v ] );
+			}
 		}
-		$parts = parse_url($url);
-		if (isset($parts['scheme'])) {
+		$parts = parse_url( $url );
+		if ( isset( $parts['scheme'] ) ) {
 			$req = isset( $parts['path'] ) ? $parts['path'] : '';
-			if (isset($parts['query'])) {
+			if ( isset( $parts['query'] ) ) {
 				$req .= '?' . $parts['query'];
 				// parse the url query vars into $_GET
-				parse_str($parts['query'], $_GET);
+				parse_str( $parts['query'], $_GET );
 			}
 		} else {
 			$req = $url;
@@ -576,10 +584,10 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 		}
 
 		$_SERVER['REQUEST_URI'] = $req;
-		unset($_SERVER['PATH_INFO']);
+		unset( $_SERVER['PATH_INFO'] );
 
 		self::flush_cache();
-		unset($GLOBALS['wp_query'], $GLOBALS['wp_the_query']);
+		unset( $GLOBALS['wp_query'], $GLOBALS['wp_the_query'] );
 		$GLOBALS['wp_the_query'] = new WP_Query();
 		$GLOBALS['wp_query'] = $GLOBALS['wp_the_query'];
 
@@ -592,7 +600,7 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 
 		_cleanup_query_vars();
 
-		$GLOBALS['wp']->main($parts['query']);
+		$GLOBALS['wp']->main( $parts['query'] );
 	}
 
 	protected function checkRequirements() {
@@ -614,16 +622,18 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 			return;
 		}
 
-		if ( WP_TESTS_FORCE_KNOWN_BUGS )
+		if ( WP_TESTS_FORCE_KNOWN_BUGS ) {
 			return;
+		}
 		$tickets = PHPUnit_Util_Test::getTickets( get_class( $this ), $this->getName( false ) );
 		foreach ( $tickets as $ticket ) {
 			if ( is_numeric( $ticket ) ) {
 				$this->knownWPBug( $ticket );
 			} elseif ( 'Plugin' == substr( $ticket, 0, 6 ) ) {
 				$ticket = substr( $ticket, 6 );
-				if ( $ticket && is_numeric( $ticket ) )
+				if ( $ticket && is_numeric( $ticket ) ) {
 					$this->knownPluginBug( $ticket );
+				}
 			}
 		}
 	}
@@ -632,10 +642,12 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	 * Skips the current test if there is an open WordPress ticket with id $ticket_id
 	 */
 	function knownWPBug( $ticket_id ) {
-		if ( WP_TESTS_FORCE_KNOWN_BUGS || in_array( $ticket_id, self::$forced_tickets ) )
+		if ( WP_TESTS_FORCE_KNOWN_BUGS || in_array( $ticket_id, self::$forced_tickets ) ) {
 			return;
-		if ( ! TracTickets::isTracTicketClosed( 'https://core.trac.wordpress.org', $ticket_id ) )
+		}
+		if ( ! TracTickets::isTracTicketClosed( 'https://core.trac.wordpress.org', $ticket_id ) ) {
 			$this->markTestSkipped( sprintf( 'WordPress Ticket #%d is not fixed', $ticket_id ) );
+		}
 	}
 
 	/**
@@ -649,10 +661,12 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	 * Skips the current test if there is an open plugin ticket with id $ticket_id
 	 */
 	function knownPluginBug( $ticket_id ) {
-		if ( WP_TESTS_FORCE_KNOWN_BUGS || in_array( 'Plugin' . $ticket_id, self::$forced_tickets ) )
+		if ( WP_TESTS_FORCE_KNOWN_BUGS || in_array( 'Plugin' . $ticket_id, self::$forced_tickets ) ) {
 			return;
-		if ( ! TracTickets::isTracTicketClosed( 'https://plugins.trac.wordpress.org', $ticket_id ) )
+		}
+		if ( ! TracTickets::isTracTicketClosed( 'https://plugins.trac.wordpress.org', $ticket_id ) ) {
 			$this->markTestSkipped( sprintf( 'WordPress Plugin Ticket #%d is not fixed', $ticket_id ) );
+		}
 	}
 
 	public static function forceTicket( $ticket ) {
@@ -674,11 +688,12 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	function temp_filename() {
 		$tmp_dir = '';
 		$dirs = array( 'TMP', 'TMPDIR', 'TEMP' );
-		foreach( $dirs as $dir )
-			if ( isset( $_ENV[$dir] ) && !empty( $_ENV[$dir] ) ) {
+		foreach ( $dirs as $dir ) {
+			if ( isset( $_ENV[ $dir ] ) && ! empty( $_ENV[ $dir ] ) ) {
 				$tmp_dir = $dir;
 				break;
 			}
+		}
 		if ( empty( $tmp_dir ) ) {
 			$tmp_dir = '/tmp';
 		}
@@ -695,7 +710,7 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	 *
 	 * @param string $prop,... Any number of WP_Query properties that are expected to be true for the current request.
 	 */
-	function assertQueryTrue(/* ... */) {
+	function assertQueryTrue() {
 		global $wp_query;
 		$all = array(
 			'is_404',
@@ -744,7 +759,7 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 					$message .= $query_thing . ' is false but is expected to be true. ' . PHP_EOL;
 					$passed = false;
 				}
-			} else if ( $result ) {
+			} elseif ( $result ) {
 				$message .= $query_thing . ' is true but is expected to be false. ' . PHP_EOL;
 				$passed = false;
 			}
@@ -830,7 +845,7 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 	/**
 	 * Helper to Convert a microtime string into a float
 	 */
-	protected function _microtime_to_float($microtime ){
+	protected function _microtime_to_float( $microtime ) {
 		$time_array = explode( ' ', $microtime );
 		return array_sum( $time_array );
 	}
@@ -865,14 +880,15 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 		$wp_rewrite->flush_rules();
 	}
 
-	function _make_attachment($upload, $parent_post_id = 0) {
+	function _make_attachment( $upload, $parent_post_id = 0 ) {
 		$type = '';
-		if ( !empty($upload['type']) ) {
+		if ( ! empty( $upload['type'] ) ) {
 			$type = $upload['type'];
 		} else {
 			$mime = wp_check_filetype( $upload['file'] );
-			if ($mime)
+			if ( $mime ) {
 				$type = $mime['type'];
+			}
 		}
 
 		$attachment = array(
@@ -881,11 +897,11 @@ class WP_UnitTestCase extends PHPUnit_Framework_TestCase {
 			'post_type' => 'attachment',
 			'post_parent' => $parent_post_id,
 			'post_mime_type' => $type,
-			'guid' => $upload[ 'url' ],
+			'guid' => $upload['url'],
 		);
 
 		// Save the data
-		$id = wp_insert_attachment( $attachment, $upload[ 'file' ], $parent_post_id );
+		$id = wp_insert_attachment( $attachment, $upload['file'], $parent_post_id );
 		wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $upload['file'] ) );
 		return $id;
 	}

@@ -40,12 +40,14 @@ final class WP_Customize_Header_Image_Setting extends WP_Customize_Setting {
 
 		// If the value doesn't exist (removed or random),
 		// use the header_image value.
-		if ( ! $value )
-			$value = $this->manager->get_setting('header_image')->post_value();
+		if ( ! $value ) {
+			$value = $this->manager->get_setting( 'header_image' )->post_value();
+		}
 
-		if ( is_array( $value ) && isset( $value['choice'] ) )
+		if ( is_array( $value ) && isset( $value['choice'] ) ) {
 			$custom_image_header->set_header_image( $value['choice'] );
-		else
+		} else {
 			$custom_image_header->set_header_image( $value );
+		}
 	}
 }

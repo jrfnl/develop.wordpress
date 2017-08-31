@@ -35,33 +35,37 @@ class WP_REST_Taxonomies_Controller extends WP_REST_Controller {
 	 */
 	public function register_routes() {
 
-		register_rest_route( $this->namespace, '/' . $this->rest_base, array(
-			array(
-				'methods'         => WP_REST_Server::READABLE,
-				'callback'        => array( $this, 'get_items' ),
-				'permission_callback' => array( $this, 'get_items_permissions_check' ),
-				'args'            => $this->get_collection_params(),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+		register_rest_route(
+			$this->namespace, '/' . $this->rest_base, array(
+				array(
+					'methods'         => WP_REST_Server::READABLE,
+					'callback'        => array( $this, 'get_items' ),
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+					'args'            => $this->get_collection_params(),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 
-		register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<taxonomy>[\w-]+)', array(
-			'args' => array(
-				'taxonomy' => array(
-					'description'  => __( 'An alphanumeric identifier for the taxonomy.' ),
-					'type'         => 'string',
+		register_rest_route(
+			$this->namespace, '/' . $this->rest_base . '/(?P<taxonomy>[\w-]+)', array(
+				'args' => array(
+					'taxonomy' => array(
+						'description'  => __( 'An alphanumeric identifier for the taxonomy.' ),
+						'type'         => 'string',
+					),
 				),
-			),
-			array(
-				'methods'         => WP_REST_Server::READABLE,
-				'callback'        => array( $this, 'get_item' ),
-				'permission_callback' => array( $this, 'get_item_permissions_check' ),
-				'args'            => array(
-					'context'     => $this->get_context_param( array( 'default' => 'view' ) ),
+				array(
+					'methods'         => WP_REST_Server::READABLE,
+					'callback'        => array( $this, 'get_item' ),
+					'permission_callback' => array( $this, 'get_item_permissions_check' ),
+					'args'            => array(
+						'context'     => $this->get_context_param( array( 'default' => 'view' ) ),
+					),
 				),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 	}
 
 	/**
@@ -196,14 +200,16 @@ class WP_REST_Taxonomies_Controller extends WP_REST_Controller {
 		// Wrap the data in a response object.
 		$response = rest_ensure_response( $data );
 
-		$response->add_links( array(
-			'collection'                => array(
-				'href'                  => rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ),
-			),
-			'https://api.w.org/items'   => array(
-				'href'                  => rest_url( sprintf( 'wp/v2/%s', $base ) ),
-			),
-		) );
+		$response->add_links(
+			array(
+				'collection'                => array(
+					'href'                  => rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ),
+				),
+				'https://api.w.org/items'   => array(
+					'href'                  => rest_url( sprintf( 'wp/v2/%s', $base ) ),
+				),
+			)
+		);
 
 		/**
 		 * Filters a taxonomy returned from the REST API.

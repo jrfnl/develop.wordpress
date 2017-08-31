@@ -7,14 +7,22 @@
 class Tests_Ping_and_Trackback_Sending extends WP_UnitTestCase {
 
 	public function test_returns_to_ping_sites_from_post_id() {
-		$post_id = self::factory()->post->create( array( 'to_ping' => 'http://www.example.com
-					http://www.otherexample.com' ) );
+		$post_id = self::factory()->post->create(
+			array(
+				'to_ping' => 'http://www.example.com
+					http://www.otherexample.com',
+			)
+		);
 		$this->assertSame( array( 'http://www.example.com', 'http://www.otherexample.com' ), get_to_ping( $post_id ) );
 	}
 
 	public function test_returns_to_ping_sites_from_post_object() {
-		$post_id = self::factory()->post->create( array( 'to_ping' => 'http://www.example.com
-					http://www.otherexample.com' ) );
+		$post_id = self::factory()->post->create(
+			array(
+				'to_ping' => 'http://www.example.com
+					http://www.otherexample.com',
+			)
+		);
 		$post = get_post( $post_id );
 		$this->assertSame( array( 'http://www.example.com', 'http://www.otherexample.com' ), get_to_ping( $post ) );
 	}

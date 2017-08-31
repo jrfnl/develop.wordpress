@@ -51,9 +51,11 @@ class Tests_Ajax_ReplytoComment extends WP_Ajax_UnitTestCase {
 		$this->_setRole( 'administrator' );
 
 		// Get a comment
-		$comments = get_comments( array(
-		    'post_id' => self::$comment_post->ID
-		) );
+		$comments = get_comments(
+			array(
+				'post_id' => self::$comment_post->ID,
+			)
+		);
 		$comment = array_pop( $comments );
 
 		// Set up a default request
@@ -95,9 +97,11 @@ class Tests_Ajax_ReplytoComment extends WP_Ajax_UnitTestCase {
 		$this->_setRole( 'subscriber' );
 
 		// Get a comment
-		$comments = get_comments( array(
-		'post_id' => self::$comment_post->ID
-		) );
+		$comments = get_comments(
+			array(
+				'post_id' => self::$comment_post->ID,
+			)
+		);
 		$comment = array_pop( $comments );
 
 		// Set up a default request
@@ -122,9 +126,11 @@ class Tests_Ajax_ReplytoComment extends WP_Ajax_UnitTestCase {
 		$this->_setRole( 'administrator' );
 
 		// Get a comment
-		$comments = get_comments( array(
-		    'post_id' => self::$comment_post->ID
-		) );
+		$comments = get_comments(
+			array(
+				'post_id' => self::$comment_post->ID,
+			)
+		);
 		$comment = array_pop( $comments );
 
 		// Set up a default request
@@ -204,7 +210,7 @@ class Tests_Ajax_ReplytoComment extends WP_Ajax_UnitTestCase {
 			$this->_handleAjax( 'replyto-comment' );
 			$wpdb->suppress_errors( false );
 			$this->fail();
-		} catch ( WPAjaxDieStopException $e )  {
+		} catch ( WPAjaxDieStopException $e ) {
 			$wpdb->suppress_errors( false );
 			$this->assertContains( '1', $e->getMessage() );
 		}
@@ -217,7 +223,7 @@ class Tests_Ajax_ReplytoComment extends WP_Ajax_UnitTestCase {
 	 */
 	public function _block_comments( $sql ) {
 		global $wpdb;
-		if ( false !== strpos( $sql, $wpdb->comments ) && 0 === stripos( trim ( $sql ), 'INSERT INTO') ) {
+		if ( false !== strpos( $sql, $wpdb->comments ) && 0 === stripos( trim( $sql ), 'INSERT INTO' ) ) {
 			return '';
 		}
 		return $sql;

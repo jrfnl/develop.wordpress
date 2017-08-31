@@ -251,10 +251,12 @@ class Tests_Locale_Switcher extends WP_UnitTestCase {
 
 		$site_locale = get_locale();
 
-		$user_id = $this->factory()->user->create( array(
-			'role'   => 'administrator',
-			'locale' => 'de_DE',
-		) );
+		$user_id = $this->factory()->user->create(
+			array(
+				'role'   => 'administrator',
+				'locale' => 'de_DE',
+			)
+		);
 
 		wp_set_current_user( $user_id );
 		set_current_screen( 'dashboard' );
@@ -300,10 +302,12 @@ class Tests_Locale_Switcher extends WP_UnitTestCase {
 
 		$site_locale = get_locale();
 
-		$user_id = $this->factory()->user->create( array(
-			'role'   => 'administrator',
-			'locale' => 'de_DE',
-		) );
+		$user_id = $this->factory()->user->create(
+			array(
+				'role'   => 'administrator',
+				'locale' => 'de_DE',
+			)
+		);
 
 		wp_set_current_user( $user_id );
 		set_current_screen( 'dashboard' );
@@ -348,10 +352,12 @@ class Tests_Locale_Switcher extends WP_UnitTestCase {
 
 		$site_locale = get_locale();
 
-		$user_id = $this->factory()->user->create( array(
-			'role'   => 'administrator',
-			'locale' => 'en_GB',
-		) );
+		$user_id = $this->factory()->user->create(
+			array(
+				'role'   => 'administrator',
+				'locale' => 'en_GB',
+			)
+		);
 
 		wp_set_current_user( $user_id );
 		set_current_screen( 'dashboard' );

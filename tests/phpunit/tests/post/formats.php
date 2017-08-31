@@ -100,13 +100,13 @@ class Tests_Post_Formats extends WP_UnitTestCase {
 	function test_get_url_in_content() {
 		$link = 'http://nytimes.com';
 		$commentary = 'This is my favorite link';
-		$link_with_commentary =<<<DATA
+		$link_with_commentary = <<<DATA
 $link
 
 $commentary
 DATA;
 		$href = '<a href="http://nytimes.com">NYT</a>';
-		$href_with_commentary =<<<DATA
+		$href_with_commentary = <<<DATA
 $href
 
 $commentary

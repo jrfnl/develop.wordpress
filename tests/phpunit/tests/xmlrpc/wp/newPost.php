@@ -40,7 +40,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_ignore_id() {
 		$this->make_user_by_role( 'author' );
 
-		$post = array( 'post_title' => 'Test', 'ID' => 103948 );
+		$post = array(
+			'post_title' => 'Test',
+			'ID' => 103948,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'author', 'author', $post ) );
 		$this->assertNotIXRError( $result );
 		$this->assertNotEquals( '103948', $result );
@@ -49,7 +52,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_capable_publish() {
 		$this->make_user_by_role( 'author' );
 
-		$post = array( 'post_title' => 'Test', 'post_status' => 'publish' );
+		$post = array(
+			'post_title' => 'Test',
+			'post_status' => 'publish',
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'author', 'author', $post ) );
 		$this->assertNotIXRError( $result );
 	}
@@ -57,7 +63,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_incapable_publish() {
 		$this->make_user_by_role( 'contributor' );
 
-		$post = array( 'post_title' => 'Test', 'post_status' => 'publish' );
+		$post = array(
+			'post_title' => 'Test',
+			'post_status' => 'publish',
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'contributor', 'contributor', $post ) );
 		$this->assertIXRError( $result );
 		$this->assertEquals( 401, $result->code );
@@ -66,7 +75,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_capable_private() {
 		$this->make_user_by_role( 'editor' );
 
-		$post = array( 'post_title' => 'Test', 'post_status' => 'private' );
+		$post = array(
+			'post_title' => 'Test',
+			'post_status' => 'private',
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post ) );
 		$this->assertNotIXRError( $result );
 	}
@@ -74,7 +86,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_incapable_private() {
 		$this->make_user_by_role( 'contributor' );
 
-		$post = array( 'post_title' => 'Test', 'post_status' => 'private' );
+		$post = array(
+			'post_title' => 'Test',
+			'post_status' => 'private',
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'contributor', 'contributor', $post ) );
 		$this->assertIXRError( $result );
 		$this->assertEquals( 401, $result->code );
@@ -84,7 +99,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 		$other_author_id = $this->make_user_by_role( 'author' );
 		$this->make_user_by_role( 'editor' );
 
-		$post = array( 'post_title' => 'Test', 'post_author' => $other_author_id );
+		$post = array(
+			'post_title' => 'Test',
+			'post_author' => $other_author_id,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post ) );
 		$this->assertNotIXRError( $result );
 	}
@@ -93,7 +111,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 		$other_author_id = $this->make_user_by_role( 'author' );
 		$this->make_user_by_role( 'contributor' );
 
-		$post = array( 'post_title' => 'Test', 'post_author' => $other_author_id );
+		$post = array(
+			'post_title' => 'Test',
+			'post_author' => $other_author_id,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'contributor', 'contributor', $post ) );
 		$this->assertIXRError( $result );
 		$this->assertEquals( 401, $result->code );
@@ -102,7 +123,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_invalid_author() {
 		$this->make_user_by_role( 'editor' );
 
-		$post = array( 'post_title' => 'Test', 'post_author' => 99999999 );
+		$post = array(
+			'post_title' => 'Test',
+			'post_author' => 99999999,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post ) );
 		$this->assertIXRError( $result );
 		$this->assertEquals( 404, $result->code );
@@ -127,10 +151,13 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 		$this->make_user_by_role( 'author' );
 
 		// create attachment
-		$filename = ( DIR_TESTDATA.'/images/a2-small.jpg' );
+		$filename = ( DIR_TESTDATA . '/images/a2-small.jpg' );
 		$attachment_id = self::factory()->attachment->create_upload_object( $filename );
 
-		$post = array( 'post_title' => 'Post Thumbnail Test', 'post_thumbnail' => $attachment_id );
+		$post = array(
+			'post_title' => 'Post Thumbnail Test',
+			'post_thumbnail' => $attachment_id,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'author', 'author', $post ) );
 		$this->assertNotIXRError( $result );
 		$this->assertEquals( $attachment_id, get_post_meta( $result, '_thumbnail_id', true ) );
@@ -141,7 +168,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_invalid_post_status() {
 		$this->make_user_by_role( 'author' );
 
-		$post = array( 'post_title' => 'Test', 'post_status' => 'foobar_status' );
+		$post = array(
+			'post_title' => 'Test',
+			'post_status' => 'foobar_status',
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'author', 'author', $post ) );
 		$this->assertNotIXRError( $result );
 		$this->assertEquals( 'draft', get_post_status( $result ) );
@@ -150,7 +180,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_incapable_sticky() {
 		$this->make_user_by_role( 'contributor' );
 
-		$post = array( 'post_title' => 'Test', 'sticky' => true );
+		$post = array(
+			'post_title' => 'Test',
+			'sticky' => true,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'contributor', 'contributor', $post ) );
 		$this->assertIXRError( $result );
 		$this->assertEquals( 401, $result->code );
@@ -159,7 +192,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_capable_sticky() {
 		$this->make_user_by_role( 'editor' );
 
-		$post = array( 'post_title' => 'Test', 'sticky' => true );
+		$post = array(
+			'post_title' => 'Test',
+			'sticky' => true,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post ) );
 		$this->assertNotIXRError( $result );
 		$this->assertTrue( is_sticky( $result ) );
@@ -168,7 +204,11 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_private_sticky() {
 		$this->make_user_by_role( 'editor' );
 
-		$post = array( 'post_title' => 'Test', 'post_status' => 'private', 'sticky' => true );
+		$post = array(
+			'post_title' => 'Test',
+			'post_status' => 'private',
+			'sticky' => true,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post ) );
 		$this->assertIXRError( $result );
 		$this->assertEquals( 401, $result->code );
@@ -177,7 +217,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_post_format() {
 		$this->make_user_by_role( 'editor' );
 
-		$post = array( 'post_title' => 'Test', 'post_format' => 'quote' );
+		$post = array(
+			'post_title' => 'Test',
+			'post_format' => 'quote',
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post ) );
 		$this->assertNotIXRError( $result );
 		$this->assertEquals( 'quote', get_post_format( $result ) );
@@ -186,7 +229,10 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_invalid_post_format() {
 		$this->make_user_by_role( 'editor' );
 
-		$post = array( 'post_title' => 'Test', 'post_format' => 'tumblr' );
+		$post = array(
+			'post_title' => 'Test',
+			'post_format' => 'tumblr',
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post ) );
 		$this->assertNotIXRError( $result );
 		$this->assertEquals( '', get_post_format( $result ) );
@@ -198,8 +244,8 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 		$post = array(
 			'post_title' => 'Test',
 			'terms' => array(
-				'foobar_nonexistant' => array( 1 )
-			)
+				'foobar_nonexistant' => array( 1 ),
+			),
 		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post ) );
 		$this->assertIXRError( $result );
@@ -208,8 +254,8 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 		$post2 = array(
 			'post_title' => 'Test',
 			'terms_names' => array(
-				'foobar_nonexistant' => array( 1 )
-			)
+				'foobar_nonexistant' => array( 1 ),
+			),
 		);
 		$result2 = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post2 ) );
 		$this->assertIXRError( $result2 );
@@ -222,8 +268,8 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 		$post = array(
 			'post_title' => 'Test',
 			'terms' => array(
-				'post_tag' => array( 1390490823409 )
-			)
+				'post_tag' => array( 1390490823409 ),
+			),
 		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post ) );
 		$this->assertIXRError( $result );
@@ -243,8 +289,8 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 		$post = array(
 			'post_title' => 'Test',
 			'terms' => array(
-				'post_tag' => array( $tag2['term_id'], $tag3['term_id'] )
-			)
+				'post_tag' => array( $tag2['term_id'], $tag3['term_id'] ),
+			),
 		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post ) );
 		$this->assertNotIXRError( $result );
@@ -270,8 +316,8 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 		$post = array(
 			'post_title' => 'Test',
 			'terms_names' => array(
-				'category' => array( $cat1_name, $cat2_name )
-			)
+				'category' => array( $cat1_name, $cat2_name ),
+			),
 		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post ) );
 		$this->assertNotIXRError( $result );
@@ -287,8 +333,8 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 		$post2 = array(
 			'post_title' => 'Test',
 			'terms_names' => array(
-				'category' => array( $cat1_name, $ambiguous_name )
-			)
+				'category' => array( $cat1_name, $ambiguous_name ),
+			),
 		);
 		$result2 = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', $post2 ) );
 		$this->assertIXRError( $result2 );
@@ -301,7 +347,11 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_invalid_post_date_does_not_fatal() {
 		$this->make_user_by_role( 'author' );
 		$date_string = 'invalid_date';
-		$post = array( 'post_title' => 'test', 'post_content' => 'test', 'post_date' => $date_string );
+		$post = array(
+			'post_title' => 'test',
+			'post_content' => 'test',
+			'post_date' => $date_string,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'author', 'author', $post ) );
 		$fetched_post = get_post( $result );
 		$this->assertStringMatchesFormat( '%d', $result );
@@ -314,7 +364,11 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_invalid_post_date_gmt_does_not_fatal() {
 		$this->make_user_by_role( 'author' );
 		$date_string = 'invalid date';
-		$post = array( 'post_title' => 'test', 'post_content' => 'test', 'post_date_gmt' => $date_string );
+		$post = array(
+			'post_title' => 'test',
+			'post_content' => 'test',
+			'post_date_gmt' => $date_string,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'author', 'author', $post ) );
 		$fetched_post = get_post( $result );
 		$this->assertStringMatchesFormat( '%d', $result );
@@ -327,7 +381,11 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_valid_string_post_date() {
 		$this->make_user_by_role( 'author' );
 		$date_string = '1984-01-11 05:00:00';
-		$post = array( 'post_title' => 'test', 'post_content' => 'test', 'post_date' => $date_string );
+		$post = array(
+			'post_title' => 'test',
+			'post_content' => 'test',
+			'post_date' => $date_string,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'author', 'author', $post ) );
 		$fetched_post = get_post( $result );
 		$this->assertStringMatchesFormat( '%d', $result );
@@ -340,7 +398,11 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_valid_string_post_date_gmt() {
 		$this->make_user_by_role( 'author' );
 		$date_string = '1984-01-11 05:00:00';
-		$post = array( 'post_title' => 'test', 'post_content' => 'test', 'post_date_gmt' => $date_string );
+		$post = array(
+			'post_title' => 'test',
+			'post_content' => 'test',
+			'post_date_gmt' => $date_string,
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'author', 'author', $post ) );
 		$fetched_post = get_post( $result );
 		$this->assertStringMatchesFormat( '%d', $result );
@@ -353,7 +415,11 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_valid_IXR_post_date() {
 		$this->make_user_by_role( 'author' );
 		$date_string = '1984-01-11 05:00:00';
-		$post = array( 'post_title' => 'test', 'post_content' => 'test', 'post_date' => new IXR_Date( mysql2date( 'Ymd\TH:i:s', $date_string, false ) ) );
+		$post = array(
+			'post_title' => 'test',
+			'post_content' => 'test',
+			'post_date' => new IXR_Date( mysql2date( 'Ymd\TH:i:s', $date_string, false ) ),
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'author', 'author', $post ) );
 		$fetched_post = get_post( $result );
 		$this->assertStringMatchesFormat( '%d', $result );
@@ -366,7 +432,11 @@ class Tests_XMLRPC_wp_newPost extends WP_XMLRPC_UnitTestCase {
 	function test_valid_IXR_post_date_gmt() {
 		$this->make_user_by_role( 'author' );
 		$date_string = '1984-01-11 05:00:00';
-		$post = array( 'post_title' => 'test', 'post_content' => 'test', 'post_date_gmt' => new IXR_Date( mysql2date( 'Ymd\TH:i:s', $date_string, false ) ) );
+		$post = array(
+			'post_title' => 'test',
+			'post_content' => 'test',
+			'post_date_gmt' => new IXR_Date( mysql2date( 'Ymd\TH:i:s', $date_string, false ) ),
+		);
 		$result = $this->myxmlrpcserver->wp_newPost( array( 1, 'author', 'author', $post ) );
 		$fetched_post = get_post( $result );
 		$this->assertStringMatchesFormat( '%d', $result );

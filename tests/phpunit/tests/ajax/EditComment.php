@@ -42,9 +42,11 @@ class Tests_Ajax_EditComment extends WP_Ajax_UnitTestCase {
 		$this->_setRole( 'administrator' );
 
 		// Get a comment
-		$comments = get_comments( array(
-			'post_id' => $this->_comment_post->ID
-		) );
+		$comments = get_comments(
+			array(
+				'post_id' => $this->_comment_post->ID,
+			)
+		);
 		$comment = array_pop( $comments );
 
 		// Set up a default request
@@ -84,9 +86,11 @@ class Tests_Ajax_EditComment extends WP_Ajax_UnitTestCase {
 		$this->_setRole( 'editor' );
 
 		// Get a comment
-		$comments = get_comments( array(
-			'post_id' => $this->_comment_post->ID
-		) );
+		$comments = get_comments(
+			array(
+				'post_id' => $this->_comment_post->ID,
+			)
+		);
 		$comment = array_pop( $comments );
 
 		// Manually update the comment_post_ID, because wp_update_comment() will prevent it.
@@ -131,9 +135,11 @@ class Tests_Ajax_EditComment extends WP_Ajax_UnitTestCase {
 		$this->_setRole( 'subscriber' );
 
 		// Get a comment
-		$comments = get_comments( array(
-			'post_id' => $this->_comment_post->ID
-		) );
+		$comments = get_comments(
+			array(
+				'post_id' => $this->_comment_post->ID,
+			)
+		);
 		$comment = array_pop( $comments );
 
 		// Set up a default request
@@ -157,9 +163,11 @@ class Tests_Ajax_EditComment extends WP_Ajax_UnitTestCase {
 		$this->_setRole( 'administrator' );
 
 		// Get a comment
-		$comments = get_comments( array(
-			'post_id' => $this->_comment_post->ID
-		) );
+		$comments = get_comments(
+			array(
+				'post_id' => $this->_comment_post->ID,
+			)
+		);
 		$comment = array_pop( $comments );
 
 		// Set up a default request

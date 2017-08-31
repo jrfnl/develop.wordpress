@@ -25,11 +25,11 @@ class Tests_Category extends WP_UnitTestCase {
 
 		// create new taxonomy to ensure not included
 		register_taxonomy( 'test_tax_cat', 'post' );
-		wp_insert_term( "test1", 'test_tax_cat' );
+		wp_insert_term( 'test1', 'test_tax_cat' );
 
 		// Validate length is 1 + created due to uncategorized
 		$cat_ids = get_all_category_ids();
-		$this->assertEquals( 3, count($cat_ids));
+		$this->assertEquals( 3, count( $cat_ids ) );
 	}
 
 	/**
@@ -41,13 +41,13 @@ class Tests_Category extends WP_UnitTestCase {
 		$testcat = self::factory()->category->create_and_get(
 			array(
 				'slug' => 'testcat',
-				'name' => 'Test Category 1'
+				'name' => 'Test Category 1',
 			)
 		);
 		$testcat2 = self::factory()->category->create_and_get(
 			array(
 				'slug' => 'testcat2',
-				'name' => 'Test Category 2'
+				'name' => 'Test Category 2',
 			)
 		);
 
@@ -71,7 +71,7 @@ class Tests_Category extends WP_UnitTestCase {
 		$testcat_array = array(
 			'slug' => 'testmcc',
 			'name' => 'Test MCC',
-			'description' => 'Category Test'
+			'description' => 'Category Test',
 		);
 		$testcat = self::factory()->category->create_and_get( $testcat_array );
 		$testcat_array['term_id'] = $testcat->term_id;
@@ -80,7 +80,7 @@ class Tests_Category extends WP_UnitTestCase {
 			'slug' => 'testmcc',
 			'name' => 'Test MCC',
 			'description' => 'Category Test',
-			'parent' => $testcat->term_id
+			'parent' => $testcat->term_id,
 		);
 		$testcat2 = self::factory()->category->create_and_get( $testcat2_array );
 		$testcat2_array['term_id'] = $testcat2->term_id;
@@ -148,7 +148,7 @@ class Tests_Category extends WP_UnitTestCase {
 		$testcat = self::factory()->category->create_and_get(
 			array(
 				'slug' => 'testcat',
-				'name' => 'Test Category 1'
+				'name' => 'Test Category 1',
 			)
 		);
 
@@ -168,13 +168,13 @@ class Tests_Category extends WP_UnitTestCase {
 		$testcat = self::factory()->category->create_and_get(
 			array(
 				'slug' => 'testcat',
-				'name' => 'Test Category 1'
+				'name' => 'Test Category 1',
 			)
 		);
 
 		// Validate
 		$this->assertEquals( $testcat->term_id, get_cat_ID( $testcat->name ) );
-		$this->assertEquals( 0, get_cat_ID( "NO CAT" ) );
+		$this->assertEquals( 0, get_cat_ID( 'NO CAT' ) );
 		$this->assertEquals( 0, get_cat_ID( 12 ) );
 
 	}
@@ -193,37 +193,37 @@ class Tests_Category extends WP_UnitTestCase {
 		$root_cat_id = self::factory()->category->create(
 			array(
 				'slug' => 'cat',
-				'parent' => $root_id
+				'parent' => $root_id,
 			)
 		);
 		$root_cat_cat_id = self::factory()->category->create(
 			array(
 				'slug' => 'cat', //note this is modified on create
-				'parent' => $root_cat_id
+				'parent' => $root_cat_id,
 			)
 		);
 		$root_path_id = self::factory()->category->create(
 			array(
 				'slug' => 'path',
-				'parent' => $root_id
+				'parent' => $root_id,
 			)
 		);
 		$root_path_cat_id = self::factory()->category->create(
 			array(
 				'slug' => 'cat', //note this is modified on create
-				'parent' => $root_path_id
+				'parent' => $root_path_id,
 			)
 		);
 		$root_level_id = self::factory()->category->create(
 			array(
 				'slug' => 'level-1',
-				'parent' => $root_id
+				'parent' => $root_id,
 			)
 		);
 		$root_level_cat_id = self::factory()->category->create(
 			array(
 				'slug' => 'cat', //note this is modified on create
-				'parent' => $root_level_id
+				'parent' => $root_level_id,
 			)
 		);
 
@@ -231,7 +231,7 @@ class Tests_Category extends WP_UnitTestCase {
 		$ret_cat = get_category_by_path( '/root/level-1', true );
 		$this->assertEquals( $root_level_id, $ret_cat->term_id );
 		$this->assertNull( get_category_by_path( 'level-1', true ) );
-		$this->assertNull( get_category_by_path( 'nocat/nocat/', true) );
+		$this->assertNull( get_category_by_path( 'nocat/nocat/', true ) );
 
 		// Validate Partial Match
 		$ret_cat = get_category_by_path( 'level-1', false );
@@ -240,6 +240,6 @@ class Tests_Category extends WP_UnitTestCase {
 		$this->assertEquals( $root_level_id, $ret_cat->term_id );
 		$ret_cat = get_category_by_path( 'root$2Fcat%20%2Flevel-1', false );
 		$this->assertEquals( $root_level_id, $ret_cat->term_id );
-		$this->assertNull( get_category_by_path( 'nocat/nocat/', false) );
+		$this->assertNull( get_category_by_path( 'nocat/nocat/', false ) );
 	}
 }

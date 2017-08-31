@@ -45,9 +45,9 @@ class Tests_Date_I18n extends WP_UnitTestCase {
 		$locale = clone $GLOBALS['wp_locale'];
 
 		$locale->weekday[6] = 'Saturday_Translated';
-		$locale->weekday_abbrev[ 'Saturday_Translated' ] = 'Sat_Translated';
+		$locale->weekday_abbrev['Saturday_Translated'] = 'Sat_Translated';
 		$locale->month[12] = 'December_Translated';
-		$locale->month_abbrev[ 'December_Translated' ] = 'Dec_Translated';
+		$locale->month_abbrev['December_Translated'] = 'Dec_Translated';
 		$locale->meridiem['am'] = 'am_Translated';
 		$locale->meridiem['AM'] = 'AM_Translated';
 

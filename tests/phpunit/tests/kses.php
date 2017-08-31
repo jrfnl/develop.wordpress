@@ -142,14 +142,23 @@ EOF;
 			$result = wp_kses_bad_protocol( wp_kses_normalize_entities( $x ), wp_allowed_protocols() );
 			if ( ! empty( $result ) && $result != 'alert(1);' && $result != 'alert(1)' ) {
 				switch ( $k ) {
-					case 6: $this->assertEquals( 'javascript&amp;#0000058alert(1);', $result ); break;
+					case 6:
+						$this->assertEquals( 'javascript&amp;#0000058alert(1);', $result );
+						break;
 					case 12:
 						$this->assertEquals( str_replace( '&', '&amp;', $x ), $result );
 						break;
-					case 22: $this->assertEquals( 'javascript&amp;#0000058alert(1);', $result ); break;
-					case 23: $this->assertEquals( 'javascript&amp;#0000058alert(1)//?:', $result ); break;
-					case 24: $this->assertEquals( 'feed:alert(1)', $result ); break;
-					default: $this->fail( "wp_kses_bad_protocol failed on $x. Result: $result" );
+					case 22:
+						$this->assertEquals( 'javascript&amp;#0000058alert(1);', $result );
+						break;
+					case 23:
+						$this->assertEquals( 'javascript&amp;#0000058alert(1)//?:', $result );
+						break;
+					case 24:
+						$this->assertEquals( 'feed:alert(1)', $result );
+						break;
+					default:
+						$this->fail( "wp_kses_bad_protocol failed on $x. Result: $result" );
 				}
 			}
 		}
@@ -166,60 +175,64 @@ EOF;
 		);
 		foreach ( $safe as $x ) {
 			$result = wp_kses_bad_protocol( wp_kses_normalize_entities( $x ), array( 'http', 'https', 'dummy' ) );
-			if ( $result != $x && $result != 'http://example.org/' )
+			if ( $result != $x && $result != 'http://example.org/' ) {
 				$this->fail( "wp_kses_bad_protocol incorrectly blocked $x" );
+			}
 		}
 	}
 
 	public function test_hackers_attacks() {
 		$xss = simplexml_load_file( DIR_TESTDATA . '/formatting/xssAttacks.xml' );
 		foreach ( $xss->attack as $attack ) {
-			if ( in_array( $attack->name, array( 'IMG Embedded commands 2', 'US-ASCII encoding', 'OBJECT w/Flash 2', 'Character Encoding Example' ) ) )
+			if ( in_array( $attack->name, array( 'IMG Embedded commands 2', 'US-ASCII encoding', 'OBJECT w/Flash 2', 'Character Encoding Example' ) ) ) {
 				continue;
+			}
 
 			$code = (string) $attack->code;
 
-			if ( $code == 'See Below' )
+			if ( $code == 'See Below' ) {
 				continue;
+			}
 
 			if ( substr( $code, 0, 4 ) == 'perl' ) {
 				$pos = strpos( $code, '"' ) + 1;
-				$code = substr( $code, $pos, strrpos($code, '"') - $pos );
+				$code = substr( $code, $pos, strrpos( $code, '"' ) - $pos );
 				$code = str_replace( '\0', "\0", $code );
 			}
 
 			$result = trim( wp_kses_data( $code ) );
 
-			if ( $result == '' || $result == 'XSS' || $result == 'alert("XSS");' || $result == "alert('XSS');" )
+			if ( $result == '' || $result == 'XSS' || $result == 'alert("XSS");' || $result == "alert('XSS');" ) {
 				continue;
+			}
 
 			switch ( $attack->name ) {
 				case 'XSS Locator':
-					$this->assertEquals('\';alert(String.fromCharCode(88,83,83))//\\\';alert(String.fromCharCode(88,83,83))//";alert(String.fromCharCode(88,83,83))//\\";alert(String.fromCharCode(88,83,83))//--&gt;"&gt;\'&gt;alert(String.fromCharCode(88,83,83))=&amp;{}', $result);
+					$this->assertEquals( '\';alert(String.fromCharCode(88,83,83))//\\\';alert(String.fromCharCode(88,83,83))//";alert(String.fromCharCode(88,83,83))//\\";alert(String.fromCharCode(88,83,83))//--&gt;"&gt;\'&gt;alert(String.fromCharCode(88,83,83))=&amp;{}', $result );
 					break;
 				case 'XSS Quick Test':
-					$this->assertEquals('\'\';!--"=&amp;{()}', $result);
+					$this->assertEquals( '\'\';!--"=&amp;{()}', $result );
 					break;
 				case 'SCRIPT w/Alert()':
 					$this->assertEquals( "alert('XSS')", $result );
 					break;
 				case 'SCRIPT w/Char Code':
-					$this->assertEquals('alert(String.fromCharCode(88,83,83))', $result);
+					$this->assertEquals( 'alert(String.fromCharCode(88,83,83))', $result );
 					break;
 				case 'IMG STYLE w/expression':
-					$this->assertEquals('exp/*', $result);
+					$this->assertEquals( 'exp/*', $result );
 					break;
 				case 'List-style-image':
-					$this->assertEquals('li {list-style-image: url("javascript:alert(\'XSS\')");}XSS', $result);
+					$this->assertEquals( 'li {list-style-image: url("javascript:alert(\'XSS\')");}XSS', $result );
 					break;
 				case 'STYLE':
-					$this->assertEquals( "alert('XSS');", $result);
+					$this->assertEquals( "alert('XSS');", $result );
 					break;
 				case 'STYLE w/background-image':
-					$this->assertEquals('.XSS{background-image:url("javascript:alert(\'XSS\')");}<A></A>', $result);
+					$this->assertEquals( '.XSS{background-image:url("javascript:alert(\'XSS\')");}<A></A>', $result );
 					break;
 				case 'STYLE w/background':
-					$this->assertEquals('BODY{background:url("javascript:alert(\'XSS\')")}', $result);
+					$this->assertEquals( 'BODY{background:url("javascript:alert(\'XSS\')")}', $result );
 					break;
 				case 'Remote Stylesheet 2':
 					$this->assertEquals( "@import'http://ha.ckers.org/xss.css';", $result );
@@ -228,10 +241,10 @@ EOF;
 					$this->assertEquals( '&lt;META HTTP-EQUIV=&quot;Link&quot; Content=&quot;; REL=stylesheet"&gt;', $result );
 					break;
 				case 'Remote Stylesheet 4':
-					$this->assertEquals('BODY{-moz-binding:url("http://ha.ckers.org/xssmoz.xml#xss")}', $result);
+					$this->assertEquals( 'BODY{-moz-binding:url("http://ha.ckers.org/xssmoz.xml#xss")}', $result );
 					break;
 				case 'XML data island w/CDATA':
-					$this->assertEquals( "&lt;![CDATA[]]&gt;", $result );
+					$this->assertEquals( '&lt;![CDATA[]]&gt;', $result );
 					break;
 				case 'XML data island w/comment':
 					$this->assertEquals( "<I><B>&lt;IMG SRC=&quot;javas<!-- -->cript:alert('XSS')\"&gt;</B></I>", $result );
@@ -255,7 +268,7 @@ EOF;
 					$this->assertEquals( '+ADw-SCRIPT+AD4-alert(\'XSS\');+ADw-/SCRIPT+AD4-', $result );
 					break;
 				case 'Escaping JavaScript escapes':
-					$this->assertEquals('\";alert(\'XSS\');//', $result);
+					$this->assertEquals( '\";alert(\'XSS\');//', $result );
 					break;
 				case 'STYLE w/broken up JavaScript':
 					$this->assertEquals( '@im\port\'\ja\vasc\ript:alert("XSS")\';', $result );
@@ -276,7 +289,7 @@ EOF;
 					$this->assertEquals( '&lt;alert("XSS");//&lt;', $result );
 					break;
 				case 'Malformed IMG Tags':
-					$this->assertEquals('alert("XSS")"&gt;', $result);
+					$this->assertEquals( 'alert("XSS")"&gt;', $result );
 					break;
 				case 'No Quotes/Semicolons':
 					$this->assertEquals( "a=/XSS/\nalert(a.source)", $result );
@@ -303,10 +316,11 @@ EOF;
 	}
 
 	function _wp_kses_allowed_html_filter( $html, $context ) {
-		if ( 'post' == $context )
+		if ( 'post' == $context ) {
 			return array( 'a' => array( 'href' => true ) );
-		else
+		} else {
 			return array( 'a' => array( 'href' => false ) );
+		}
 	}
 
 	/**
@@ -317,7 +331,7 @@ EOF;
 
 		$this->assertEquals( $allowedposttags, wp_kses_allowed_html( 'post' ) );
 
-		$tags = wp_kses_allowed_html( 'post' ) ;
+		$tags = wp_kses_allowed_html( 'post' );
 
 		foreach ( $tags as $tag ) {
 			$this->assertTrue( $tag['class'] );
@@ -361,7 +375,7 @@ EOF;
 	}
 
 	function test_hyphenated_tag() {
-		$string = "<hyphenated-tag attribute=\"value\" otherattribute=\"value2\">Alot of hyphens.</hyphenated-tag>";
+		$string = '<hyphenated-tag attribute="value" otherattribute="value2">Alot of hyphens.</hyphenated-tag>';
 		$custom_tags = array(
 			'hyphenated-tag' => array(
 				'attribute' => true,
@@ -369,7 +383,7 @@ EOF;
 		);
 		$expect_stripped_string = 'Alot of hyphens.';
 
-		$expect_valid_string = "<hyphenated-tag attribute=\"value\">Alot of hyphens.</hyphenated-tag>";
+		$expect_valid_string = '<hyphenated-tag attribute="value">Alot of hyphens.</hyphenated-tag>';
 		$this->assertEquals( $expect_stripped_string, wp_kses_post( $string ) );
 		$this->assertEquals( $expect_valid_string, wp_kses( $string, $custom_tags ) );
 	}
@@ -562,7 +576,7 @@ EOF;
 			),
 			array(
 				'<a title="hello"disabled href=# id=\'my_id\'>',
-				array( '<a ', 'title="hello"', 'disabled ', 'href=# ', "id='my_id'", ">" ),
+				array( '<a ', 'title="hello"', 'disabled ', 'href=# ', "id='my_id'", '>' ),
 			),
 			array(
 				'<a     >',

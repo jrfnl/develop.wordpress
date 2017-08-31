@@ -18,9 +18,9 @@ class Tests_XMLRPC_wp_getMediaItem extends WP_XMLRPC_UnitTestCase {
 
 		add_theme_support( 'post-thumbnails' );
 
-		$filename = ( DIR_TESTDATA.'/images/waffles.jpg' );
+		$filename = ( DIR_TESTDATA . '/images/waffles.jpg' );
 		$contents = file_get_contents( $filename );
-		$upload = wp_upload_bits(basename($filename), null, $contents);
+		$upload = wp_upload_bits( basename( $filename ), null, $contents );
 
 		$this->attachment_id = $this->_make_attachment( $upload, self::$post_id );
 		$this->attachment_data = get_post( $this->attachment_id, ARRAY_A );

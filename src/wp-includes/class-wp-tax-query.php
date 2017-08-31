@@ -47,7 +47,10 @@ class WP_Tax_Query {
 	 * @static
 	 * @var string
 	 */
-	private static $no_results = array( 'join' => array( '' ), 'where' => array( '0 = 1' ) );
+	private static $no_results = array(
+		'join' => array( '' ),
+		'where' => array( '0 = 1' ),
+	);
 
 	/**
 	 * A flat list of table aliases used in the JOIN clauses.
@@ -146,7 +149,7 @@ class WP_Tax_Query {
 			if ( 'relation' === $key ) {
 				$cleaned_query['relation'] = $this->sanitize_relation( $query );
 
-			// First-order clause.
+				// First-order clause.
 			} elseif ( self::is_first_order_clause( $query ) ) {
 
 				$cleaned_clause = array_merge( $defaults, $query );
@@ -176,7 +179,7 @@ class WP_Tax_Query {
 					}
 				}
 
-			// Otherwise, it's a nested query, so we recurse.
+				// Otherwise, it's a nested query, so we recurse.
 			} elseif ( is_array( $query ) ) {
 				$cleaned_subquery = $this->sanitize_query( $query );
 
@@ -314,7 +317,7 @@ class WP_Tax_Query {
 
 		$indent = '';
 		for ( $i = 0; $i < $depth; $i++ ) {
-			$indent .= "  ";
+			$indent .= '  ';
 		}
 
 		foreach ( $query as $key => &$clause ) {
@@ -336,7 +339,7 @@ class WP_Tax_Query {
 					}
 
 					$sql_chunks['join'] = array_merge( $sql_chunks['join'], $clause_sql['join'] );
-				// This is a subquery, so we recurse.
+					// This is a subquery, so we recurse.
 				} else {
 					$clause_sql = $this->get_sql_for_query( $clause, $depth + 1 );
 
@@ -430,7 +433,6 @@ class WP_Tax_Query {
 				$join .= " ON ($this->primary_table.$this->primary_id_column = $alias.object_id)";
 			}
 
-
 			$where = "$alias.term_taxonomy_id $operator ($terms)";
 
 		} elseif ( 'NOT IN' == $operator ) {
@@ -466,14 +468,16 @@ class WP_Tax_Query {
 
 		} elseif ( 'NOT EXISTS' === $operator || 'EXISTS' === $operator ) {
 
-			$where = $wpdb->prepare( "$operator (
+			$where = $wpdb->prepare(
+				"$operator (
 				SELECT 1
 				FROM $wpdb->term_relationships
 				INNER JOIN $wpdb->term_taxonomy
 				ON $wpdb->term_taxonomy.term_taxonomy_id = $wpdb->term_relationships.term_taxonomy_id
 				WHERE $wpdb->term_taxonomy.taxonomy = %s
 				AND $wpdb->term_relationships.object_id = $this->primary_table.$this->primary_id_column
-			)", $clause['taxonomy'] );
+			)", $clause['taxonomy']
+			);
 
 		}
 
@@ -561,8 +565,9 @@ class WP_Tax_Query {
 		if ( is_taxonomy_hierarchical( $query['taxonomy'] ) && $query['include_children'] ) {
 			$this->transform_query( $query, 'term_id' );
 
-			if ( is_wp_error( $query ) )
+			if ( is_wp_error( $query ) ) {
 				return;
+			}
 
 			$children = array();
 			foreach ( $query['terms'] as $term ) {
@@ -590,11 +595,13 @@ class WP_Tax_Query {
 	 *                                or 'term_id'. Default 'term_id'.
 	 */
 	public function transform_query( &$query, $resulting_field ) {
-		if ( empty( $query['terms'] ) )
+		if ( empty( $query['terms'] ) ) {
 			return;
+		}
 
-		if ( $query['field'] == $resulting_field )
+		if ( $query['field'] == $resulting_field ) {
 			return;
+		}
 
 		$resulting_field = sanitize_key( $resulting_field );
 

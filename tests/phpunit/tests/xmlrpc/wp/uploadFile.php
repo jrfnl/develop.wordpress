@@ -20,9 +20,8 @@ class Tests_XMLRPC_wp_uploadFile extends WP_XMLRPC_UnitTestCase {
 		$data = array(
 			'name' => 'a2-small.jpg',
 			'type' => 'image/jpeg',
-			'bits' => $contents
+			'bits' => $contents,
 		);
-
 
 		$result = $this->myxmlrpcserver->mw_newMediaObject( array( 0, 'editor', 'editor', $data ) );
 		$this->assertNotIXRError( $result );

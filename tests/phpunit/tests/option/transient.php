@@ -31,7 +31,10 @@ class Tests_Option_Transient extends WP_UnitTestCase {
 
 	function test_serialized_data() {
 		$key = rand_str();
-		$value = array( 'foo' => true, 'bar' => true );
+		$value = array(
+			'foo' => true,
+			'bar' => true,
+		);
 
 		$this->assertTrue( set_transient( $key, $value ) );
 		$this->assertEquals( $value, get_transient( $key ) );

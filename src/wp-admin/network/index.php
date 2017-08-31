@@ -13,8 +13,9 @@ require_once( dirname( __FILE__ ) . '/admin.php' );
 /** Load WordPress dashboard API */
 require_once( ABSPATH . 'wp-admin/includes/dashboard.php' );
 
-if ( ! current_user_can( 'manage_network' ) )
+if ( ! current_user_can( 'manage_network' ) ) {
 	wp_die( __( 'Sorry, you are not allowed to access this page.' ), 403 );
+}
 
 $title = __( 'Dashboard' );
 $parent_file = 'index.php';
@@ -26,11 +27,13 @@ $overview .= '<li>' . __( 'Install and activate themes or plugins' ) . '</li>';
 $overview .= '<li>' . __( 'Update your network' ) . '</li>';
 $overview .= '<li>' . __( 'Modify global network settings' ) . '</li></ul>';
 
-get_current_screen()->add_help_tab( array(
-	'id'      => 'overview',
-	'title'   => __( 'Overview' ),
-	'content' => $overview
-) );
+get_current_screen()->add_help_tab(
+	array(
+		'id'      => 'overview',
+		'title'   => __( 'Overview' ),
+		'content' => $overview,
+	)
+);
 
 $quick_tasks = '<p>' . __( 'The Right Now widget on this screen provides current user and site counts on your network.' ) . '</p>';
 $quick_tasks .= '<ul><li>' . __( 'To add a new user, <strong>click Create a New User</strong>.' ) . '</li>';
@@ -39,16 +42,18 @@ $quick_tasks .= '<p>' . __( 'To search for a user or site, use the search boxes.
 $quick_tasks .= '<ul><li>' . __( 'To search for a user, <strong>enter an email address or username</strong>. Use a wildcard to search for a partial username, such as user&#42;.' ) . '</li>';
 $quick_tasks .= '<li>' . __( 'To search for a site, <strong>enter the path or domain</strong>.' ) . '</li></ul>';
 
-get_current_screen()->add_help_tab( array(
-	'id'      => 'quick-tasks',
-	'title'   => __( 'Quick Tasks' ),
-	'content' => $quick_tasks
-) );
+get_current_screen()->add_help_tab(
+	array(
+		'id'      => 'quick-tasks',
+		'title'   => __( 'Quick Tasks' ),
+		'content' => $quick_tasks,
+	)
+);
 
 get_current_screen()->set_help_sidebar(
-	'<p><strong>' . __('For more information:') . '</strong></p>' .
-	'<p>' . __('<a href="https://codex.wordpress.org/Network_Admin">Documentation on the Network Admin</a>') . '</p>' .
-	'<p>' . __('<a href="https://wordpress.org/support/forum/multisite/">Support Forums</a>') . '</p>'
+	'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
+	'<p>' . __( '<a href="https://codex.wordpress.org/Network_Admin">Documentation on the Network Admin</a>' ) . '</p>' .
+	'<p>' . __( '<a href="https://wordpress.org/support/forum/multisite/">Support Forums</a>' ) . '</p>'
 );
 
 wp_dashboard_setup();

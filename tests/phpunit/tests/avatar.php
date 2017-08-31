@@ -92,7 +92,12 @@ class Tests_Avatar extends WP_UnitTestCase {
 		$url2 = get_avatar_url( $post );
 		$this->assertEquals( $url, $url2 );
 
-		$comment_id = self::factory()->comment->create( array( 'comment_post_ID' => $post_id, 'user_id' => 1 ) );
+		$comment_id = self::factory()->comment->create(
+			array(
+				'comment_post_ID' => $post_id,
+				'user_id' => 1,
+			)
+		);
 		$comment = get_comment( $comment_id );
 		$url2 = get_avatar_url( $comment );
 		$this->assertEquals( $url, $url2 );
@@ -139,7 +144,13 @@ class Tests_Avatar extends WP_UnitTestCase {
 		$url = get_avatar_url( 1 );
 
 		$post_id = self::factory()->post->create( array( 'post_author' => 1 ) );
-		$comment_id = self::factory()->comment->create( array( 'comment_post_ID' => $post_id, 'user_id' => 1, 'comment_type' => 'pingback' ) );
+		$comment_id = self::factory()->comment->create(
+			array(
+				'comment_post_ID' => $post_id,
+				'user_id' => 1,
+				'comment_type' => 'pingback',
+			)
+		);
 		$comment = get_comment( $comment_id );
 
 		$url2 = get_avatar_url( $comment );

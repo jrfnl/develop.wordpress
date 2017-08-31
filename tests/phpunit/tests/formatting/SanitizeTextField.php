@@ -29,7 +29,7 @@ class Tests_Formatting_SanitizeTextField extends WP_UnitTestCase {
 				"foo <div\n> bar",
 				array(
 					'oneline' => 'foo bar',
-					'multiline' => "foo  bar",
+					'multiline' => 'foo  bar',
 				),
 			),
 			array(
@@ -76,7 +76,7 @@ class Tests_Formatting_SanitizeTextField extends WP_UnitTestCase {
 				'We don\'t need to wory about %A
 				B removing %a
 				b octets even when %a	B they are obscured by whitespace',
-				array (
+				array(
 					'oneline' => 'We don\'t need to wory about %A B removing %a b octets even when %a B they are obscured by whitespace',
 					'multiline' => "We don't need to wory about %A\n				B removing %a\n				b octets even when %a	B they are obscured by whitespace",
 				),

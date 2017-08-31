@@ -36,5 +36,5 @@ add_action( 'admin_notices',         'site_admin_notice' );
 add_action( 'network_admin_notices', 'site_admin_notice' );
 
 // Update Hooks
-add_action( 'network_admin_notices', 'update_nag',      3  );
+add_action( 'network_admin_notices', 'update_nag',      3 );
 add_action( 'network_admin_notices', 'maintenance_nag', 10 );

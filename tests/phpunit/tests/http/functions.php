@@ -20,7 +20,7 @@ class Tests_HTTP_Functions extends WP_UnitTestCase {
 		$headers = wp_remote_retrieve_headers( $response );
 
 		$this->assertInternalType( 'array', $response );
-		
+
 		$this->assertEquals( 'image/jpeg', $headers['content-type'] );
 		$this->assertEquals( '40148', $headers['content-length'] );
 		$this->assertEquals( '200', wp_remote_retrieve_response_code( $response ) );
@@ -47,7 +47,7 @@ class Tests_HTTP_Functions extends WP_UnitTestCase {
 		$headers = wp_remote_retrieve_headers( $response );
 
 		$this->assertInternalType( 'array', $response );
-	
+
 		// should return the same headers as a head request
 		$this->assertEquals( 'image/jpeg', $headers['content-type'] );
 		$this->assertEquals( '40148', $headers['content-length'] );
@@ -108,11 +108,18 @@ class Tests_HTTP_Functions extends WP_UnitTestCase {
 	function test_get_response_cookies_with_wp_http_cookie_object() {
 		$url = 'http://example.org';
 
-		$response = wp_remote_get( $url, array(
-			'cookies' => array(
-				new WP_Http_Cookie( array( 'name' => 'test', 'value' => 'foo' ) ),
-			),
-		) );
+		$response = wp_remote_get(
+			$url, array(
+				'cookies' => array(
+					new WP_Http_Cookie(
+						array(
+							'name' => 'test',
+							'value' => 'foo',
+						)
+					),
+				),
+			)
+		);
 		$cookies  = wp_remote_retrieve_cookies( $response );
 
 		$this->assertNotEmpty( $cookies );
@@ -129,11 +136,13 @@ class Tests_HTTP_Functions extends WP_UnitTestCase {
 	function test_get_response_cookies_with_name_value_array() {
 		$url = 'http://example.org';
 
-		$response = wp_remote_get( $url, array(
-			'cookies' => array(
-				'test' => 'foo',
-			),
-		) );
+		$response = wp_remote_get(
+			$url, array(
+				'cookies' => array(
+					'test' => 'foo',
+				),
+			)
+		);
 		$cookies  = wp_remote_retrieve_cookies( $response );
 
 		$this->assertNotEmpty( $cookies );

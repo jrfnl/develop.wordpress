@@ -16,19 +16,27 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 	protected static $subscriber;
 
 	public static function wpSetUpBeforeClass( $factory ) {
-		self::$superadmin = $factory->user->create( array(
-			'role'       => 'administrator',
-			'user_login' => 'superadmin',
-		) );
-		self::$administrator = $factory->user->create( array(
-			'role' => 'administrator',
-		) );
-		self::$editor = $factory->user->create( array(
-			'role' => 'editor',
-		) );
-		self::$subscriber = $factory->user->create( array(
-			'role' => 'subscriber',
-		) );
+		self::$superadmin = $factory->user->create(
+			array(
+				'role'       => 'administrator',
+				'user_login' => 'superadmin',
+			)
+		);
+		self::$administrator = $factory->user->create(
+			array(
+				'role' => 'administrator',
+			)
+		);
+		self::$editor = $factory->user->create(
+			array(
+				'role' => 'editor',
+			)
+		);
+		self::$subscriber = $factory->user->create(
+			array(
+				'role' => 'subscriber',
+			)
+		);
 		if ( is_multisite() ) {
 			update_site_option( 'site_admins', array( 'superadmin' ) );
 		}
@@ -69,20 +77,22 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 		$data = $response->get_data();
 		$keys = array_keys( $data['endpoints'][0]['args'] );
 		sort( $keys );
-		$this->assertEquals( array(
-			'context',
-			'exclude',
-			'hide_empty',
-			'include',
-			'offset',
-			'order',
-			'orderby',
-			'page',
-			'per_page',
-			'post',
-			'search',
-			'slug',
-			), $keys );
+		$this->assertEquals(
+			array(
+				'context',
+				'exclude',
+				'hide_empty',
+				'include',
+				'offset',
+				'order',
+				'orderby',
+				'page',
+				'per_page',
+				'post',
+				'search',
+				'slug',
+			), $keys
+		);
 	}
 
 	public function test_get_items() {
@@ -278,9 +288,11 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 		$tag_ids = array();
 
 		for ( $i = 0; $i < 30; $i++ ) {
-			$tag_ids[] = $this->factory->tag->create( array(
-				'name'   => "Tag {$i}",
-			) );
+			$tag_ids[] = $this->factory->tag->create(
+				array(
+					'name'   => "Tag {$i}",
+				)
+			);
 		}
 		wp_set_object_terms( $post_id, $tag_ids, 'post_tag' );
 
@@ -328,9 +340,24 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 		register_taxonomy( 'batman', 'post', array( 'show_in_rest' => true ) );
 		$controller = new WP_REST_Terms_Controller( 'batman' );
 		$controller->register_routes();
-		$term1 = $this->factory->term->create( array( 'name' => 'Cape', 'taxonomy' => 'batman' ) );
-		$term2 = $this->factory->term->create( array( 'name' => 'Mask', 'taxonomy' => 'batman' ) );
-		$this->factory->term->create( array( 'name' => 'Car', 'taxonomy' => 'batman' ) );
+		$term1 = $this->factory->term->create(
+			array(
+				'name' => 'Cape',
+				'taxonomy' => 'batman',
+			)
+		);
+		$term2 = $this->factory->term->create(
+			array(
+				'name' => 'Mask',
+				'taxonomy' => 'batman',
+			)
+		);
+		$this->factory->term->create(
+			array(
+				'name' => 'Car',
+				'taxonomy' => 'batman',
+			)
+		);
 		$post_id = $this->factory->post->create();
 		wp_set_object_terms( $post_id, array( $term1, $term2 ), 'batman' );
 
@@ -384,11 +411,13 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 		$id3 = $this->factory->tag->create( array( 'name' => 'Burrito' ) );
 		$this->factory->tag->create( array( 'name' => 'Pizza' ) );
 		$request = new WP_REST_Request( 'GET', '/wp/v2/tags' );
-		$request->set_param( 'slug', array(
-			'taco',
-			'burrito',
-			'enchilada',
-		) );
+		$request->set_param(
+			'slug', array(
+				'taco',
+				'burrito',
+				'enchilada',
+			)
+		);
 		$response = $this->server->dispatch( $request );
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
@@ -403,7 +432,7 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 		$id3 = $this->factory->tag->create( array( 'name' => 'Burrito' ) );
 		$this->factory->tag->create( array( 'name' => 'Pizza' ) );
 		$request = new WP_REST_Request( 'GET', '/wp/v2/tags' );
-		$request->set_param( 'slug', 'taco,burrito, enchilada');
+		$request->set_param( 'slug', 'taco,burrito, enchilada' );
 		$response = $this->server->dispatch( $request );
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
@@ -414,8 +443,18 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 
 	public function test_get_terms_private_taxonomy() {
 		register_taxonomy( 'robin', 'post', array( 'public' => false ) );
-		$term1 = $this->factory->term->create( array( 'name' => 'Cape', 'taxonomy' => 'robin' ) );
-		$term2 = $this->factory->term->create( array( 'name' => 'Mask', 'taxonomy' => 'robin' ) );
+		$term1 = $this->factory->term->create(
+			array(
+				'name' => 'Cape',
+				'taxonomy' => 'robin',
+			)
+		);
+		$term2 = $this->factory->term->create(
+			array(
+				'name' => 'Mask',
+				'taxonomy' => 'robin',
+			)
+		);
 
 		$request = new WP_REST_Request( 'GET', '/wp/v2/terms/robin' );
 		$response = $this->server->dispatch( $request );
@@ -425,37 +464,47 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 	public function test_get_terms_pagination_headers() {
 		// Start of the index
 		for ( $i = 0; $i < 50; $i++ ) {
-			$this->factory->tag->create( array(
-				'name'   => "Tag {$i}",
-				) );
+			$this->factory->tag->create(
+				array(
+					'name'   => "Tag {$i}",
+				)
+			);
 		}
 		$request = new WP_REST_Request( 'GET', '/wp/v2/tags' );
 		$response = $this->server->dispatch( $request );
 		$headers = $response->get_headers();
 		$this->assertEquals( 50, $headers['X-WP-Total'] );
 		$this->assertEquals( 5, $headers['X-WP-TotalPages'] );
-		$next_link = add_query_arg( array(
-			'page'    => 2,
-			), rest_url( 'wp/v2/tags' ) );
+		$next_link = add_query_arg(
+			array(
+				'page'    => 2,
+			), rest_url( 'wp/v2/tags' )
+		);
 		$this->assertFalse( stripos( $headers['Link'], 'rel="prev"' ) );
 		$this->assertContains( '<' . $next_link . '>; rel="next"', $headers['Link'] );
 		// 3rd page
-		$this->factory->tag->create( array(
+		$this->factory->tag->create(
+			array(
 				'name'   => 'Tag 51',
-				) );
+			)
+		);
 		$request = new WP_REST_Request( 'GET', '/wp/v2/tags' );
 		$request->set_param( 'page', 3 );
 		$response = $this->server->dispatch( $request );
 		$headers = $response->get_headers();
 		$this->assertEquals( 51, $headers['X-WP-Total'] );
 		$this->assertEquals( 6, $headers['X-WP-TotalPages'] );
-		$prev_link = add_query_arg( array(
-			'page'    => 2,
-			), rest_url( 'wp/v2/tags' ) );
+		$prev_link = add_query_arg(
+			array(
+				'page'    => 2,
+			), rest_url( 'wp/v2/tags' )
+		);
 		$this->assertContains( '<' . $prev_link . '>; rel="prev"', $headers['Link'] );
-		$next_link = add_query_arg( array(
-			'page'    => 4,
-			), rest_url( 'wp/v2/tags' ) );
+		$next_link = add_query_arg(
+			array(
+				'page'    => 4,
+			), rest_url( 'wp/v2/tags' )
+		);
 		$this->assertContains( '<' . $next_link . '>; rel="next"', $headers['Link'] );
 		// Last page
 		$request = new WP_REST_Request( 'GET', '/wp/v2/tags' );
@@ -464,9 +513,11 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 		$headers = $response->get_headers();
 		$this->assertEquals( 51, $headers['X-WP-Total'] );
 		$this->assertEquals( 6, $headers['X-WP-TotalPages'] );
-		$prev_link = add_query_arg( array(
-			'page'    => 5,
-			), rest_url( 'wp/v2/tags' ) );
+		$prev_link = add_query_arg(
+			array(
+				'page'    => 5,
+			), rest_url( 'wp/v2/tags' )
+		);
 		$this->assertContains( '<' . $prev_link . '>; rel="prev"', $headers['Link'] );
 		$this->assertFalse( stripos( $headers['Link'], 'rel="next"' ) );
 		// Out of bounds
@@ -476,9 +527,11 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 		$headers = $response->get_headers();
 		$this->assertEquals( 51, $headers['X-WP-Total'] );
 		$this->assertEquals( 6, $headers['X-WP-TotalPages'] );
-		$prev_link = add_query_arg( array(
-			'page'    => 6,
-			), rest_url( 'wp/v2/tags' ) );
+		$prev_link = add_query_arg(
+			array(
+				'page'    => 6,
+			), rest_url( 'wp/v2/tags' )
+		);
 		$this->assertContains( '<' . $prev_link . '>; rel="prev"', $headers['Link'] );
 		$this->assertFalse( stripos( $headers['Link'], 'rel="next"' ) );
 	}
@@ -514,7 +567,12 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 
 	public function test_get_term_private_taxonomy() {
 		register_taxonomy( 'robin', 'post', array( 'public' => false ) );
-		$term1 = $this->factory->term->create( array( 'name' => 'Cape', 'taxonomy' => 'robin' ) );
+		$term1 = $this->factory->term->create(
+			array(
+				'name' => 'Cape',
+				'taxonomy' => 'robin',
+			)
+		);
 
 		$request = new WP_REST_Request( 'GET', '/wp/v2/terms/robin/' . $term1 );
 		$response = $this->server->dispatch( $request );
@@ -523,7 +581,12 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 
 	public function test_get_item_incorrect_taxonomy() {
 		register_taxonomy( 'robin', 'post' );
-		$term1 = $this->factory->term->create( array( 'name' => 'Cape', 'taxonomy' => 'robin' ) );
+		$term1 = $this->factory->term->create(
+			array(
+				'name' => 'Cape',
+				'taxonomy' => 'robin',
+			)
+		);
 		$request = new WP_REST_Request( 'GET', '/wp/v2/tags/' . $term1 );
 		$response = $this->server->dispatch( $request );
 		$this->assertErrorResponse( 'rest_term_invalid', $response, 404 );
@@ -576,7 +639,7 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 			'name'        => 'Original Name',
 			'description' => 'Original Description',
 			'slug'        => 'original-slug',
-			);
+		);
 		$term = get_term_by( 'id', $this->factory->tag->create( $orig_args ), 'post_tag' );
 		$request = new WP_REST_Request( 'POST', '/wp/v2/tags/' . $term->term_id );
 		$request->set_param( 'name', 'New Name' );
@@ -725,60 +788,70 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 	public function test_tag_roundtrip_as_editor() {
 		wp_set_current_user( self::$editor );
 		$this->assertEquals( ! is_multisite(), current_user_can( 'unfiltered_html' ) );
-		$this->verify_tag_roundtrip( array(
-			'name'        => '\o/ ¯\_(ツ)_/¯',
-			'description' => '\o/ ¯\_(ツ)_/¯',
-		), array(
-			'name'        => '\o/ ¯\_(ツ)_/¯',
-			'description' => '\o/ ¯\_(ツ)_/¯',
-		) );
+		$this->verify_tag_roundtrip(
+			array(
+				'name'        => '\o/ ¯\_(ツ)_/¯',
+				'description' => '\o/ ¯\_(ツ)_/¯',
+			), array(
+				'name'        => '\o/ ¯\_(ツ)_/¯',
+				'description' => '\o/ ¯\_(ツ)_/¯',
+			)
+		);
 	}
 
 	public function test_tag_roundtrip_as_editor_html() {
 		wp_set_current_user( self::$editor );
 		if ( is_multisite() ) {
 			$this->assertFalse( current_user_can( 'unfiltered_html' ) );
-			$this->verify_tag_roundtrip( array(
-				'name'        => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
-				'description' => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
-			), array(
-				'name'        => 'div strong',
-				'description' => 'div <strong>strong</strong> oh noes',
-			) );
+			$this->verify_tag_roundtrip(
+				array(
+					'name'        => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
+					'description' => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
+				), array(
+					'name'        => 'div strong',
+					'description' => 'div <strong>strong</strong> oh noes',
+				)
+			);
 		} else {
 			$this->assertTrue( current_user_can( 'unfiltered_html' ) );
-			$this->verify_tag_roundtrip( array(
-				'name'        => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
-				'description' => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
-			), array(
-				'name'        => 'div strong',
-				'description' => 'div <strong>strong</strong> oh noes',
-			) );
+			$this->verify_tag_roundtrip(
+				array(
+					'name'        => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
+					'description' => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
+				), array(
+					'name'        => 'div strong',
+					'description' => 'div <strong>strong</strong> oh noes',
+				)
+			);
 		}
 	}
 
 	public function test_tag_roundtrip_as_superadmin() {
 		wp_set_current_user( self::$superadmin );
 		$this->assertTrue( current_user_can( 'unfiltered_html' ) );
-		$this->verify_tag_roundtrip( array(
-			'name'        => '\\\&\\\ &amp; &invalid; < &lt; &amp;lt;',
-			'description' => '\\\&\\\ &amp; &invalid; < &lt; &amp;lt;',
-		), array(
-			'name'        => '\\\&amp;\\\ &amp; &amp;invalid; &lt; &lt; &amp;lt;',
-			'description' => '\\\&amp;\\\ &amp; &amp;invalid; &lt; &lt; &amp;lt;',
-		) );
+		$this->verify_tag_roundtrip(
+			array(
+				'name'        => '\\\&\\\ &amp; &invalid; < &lt; &amp;lt;',
+				'description' => '\\\&\\\ &amp; &invalid; < &lt; &amp;lt;',
+			), array(
+				'name'        => '\\\&amp;\\\ &amp; &amp;invalid; &lt; &lt; &amp;lt;',
+				'description' => '\\\&amp;\\\ &amp; &amp;invalid; &lt; &lt; &amp;lt;',
+			)
+		);
 	}
 
 	public function test_tag_roundtrip_as_superadmin_html() {
 		wp_set_current_user( self::$superadmin );
 		$this->assertTrue( current_user_can( 'unfiltered_html' ) );
-		$this->verify_tag_roundtrip( array(
-			'name'        => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
-			'description' => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
-		), array(
-			'name'        => 'div strong',
-			'description' => 'div <strong>strong</strong> oh noes',
-		) );
+		$this->verify_tag_roundtrip(
+			array(
+				'name'        => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
+				'description' => '<div>div</div> <strong>strong</strong> <script>oh noes</script>',
+			), array(
+				'name'        => 'div strong',
+				'description' => 'div <strong>strong</strong> oh noes',
+			)
+		);
 	}
 
 	public function test_delete_item() {
@@ -914,10 +987,12 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 			'context'     => array( 'view', 'edit' ),
 		);
 
-		register_rest_field( 'tag', 'my_custom_int', array(
-			'schema'          => $schema,
-			'get_callback'    => array( $this, 'additional_field_get_callback' ),
-		) );
+		register_rest_field(
+			'tag', 'my_custom_int', array(
+				'schema'          => $schema,
+				'get_callback'    => array( $this, 'additional_field_get_callback' ),
+			)
+		);
 
 		$request = new WP_REST_Request( 'OPTIONS', '/wp/v2/tags' );
 
@@ -944,19 +1019,23 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 			'context'     => array( 'view', 'edit' ),
 		);
 
-		register_rest_field( 'tag', 'my_custom_int', array(
-			'schema'          => $schema,
-			'get_callback'    => array( $this, 'additional_field_get_callback' ),
-			'update_callback' => array( $this, 'additional_field_update_callback' ),
-		) );
+		register_rest_field(
+			'tag', 'my_custom_int', array(
+				'schema'          => $schema,
+				'get_callback'    => array( $this, 'additional_field_get_callback' ),
+				'update_callback' => array( $this, 'additional_field_update_callback' ),
+			)
+		);
 
 		wp_set_current_user( self::$administrator );
 		$tag_id = $this->factory->tag->create();
 		// Check for error on update.
 		$request = new WP_REST_Request( 'POST', sprintf( '/wp/v2/tags/%d', $tag_id ) );
-		$request->set_body_params( array(
-			'my_custom_int' => 'returnError',
-		) );
+		$request->set_body_params(
+			array(
+				'my_custom_int' => 'returnError',
+			)
+		);
 
 		$response = $this->server->dispatch( $request );
 

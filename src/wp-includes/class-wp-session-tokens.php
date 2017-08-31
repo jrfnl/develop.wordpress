@@ -135,7 +135,7 @@ abstract class WP_Session_Tokens {
 		$session['expiration'] = $expiration;
 
 		// IP address.
-		if ( !empty( $_SERVER['REMOTE_ADDR'] ) ) {
+		if ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
 			$session['ip'] = $_SERVER['REMOTE_ADDR'];
 		}
 

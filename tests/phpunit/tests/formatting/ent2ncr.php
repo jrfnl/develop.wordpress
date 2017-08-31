@@ -22,11 +22,12 @@ class Tests_Formatting_Ent2NCR extends WP_UnitTestCase {
 		$data_provided = array();
 		foreach ( $entities as $line ) {
 			// comment
-			$commentpos = strpos( $line, "###" );
+			$commentpos = strpos( $line, '###' );
 			if ( false !== $commentpos ) {
 				$line = trim( substr( $line, 0, $commentpos ) );
-				if ( ! $line )
+				if ( ! $line ) {
 					continue;
+				}
 			}
 			$data_provided[] = array_map( 'trim', explode( '|', $line ) );
 		}

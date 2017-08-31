@@ -35,32 +35,36 @@ class WP_REST_Post_Types_Controller extends WP_REST_Controller {
 	 */
 	public function register_routes() {
 
-		register_rest_route( $this->namespace, '/' . $this->rest_base, array(
-			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_items' ),
-				'permission_callback' => array( $this, 'get_items_permissions_check' ),
-				'args'                => $this->get_collection_params(),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+		register_rest_route(
+			$this->namespace, '/' . $this->rest_base, array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_items' ),
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
+					'args'                => $this->get_collection_params(),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 
-		register_rest_route( $this->namespace, '/' . $this->rest_base . '/(?P<type>[\w-]+)', array(
-			'args' => array(
-				'type' => array(
-					'description' => __( 'An alphanumeric identifier for the post type.' ),
-					'type'        => 'string',
+		register_rest_route(
+			$this->namespace, '/' . $this->rest_base . '/(?P<type>[\w-]+)', array(
+				'args' => array(
+					'type' => array(
+						'description' => __( 'An alphanumeric identifier for the post type.' ),
+						'type'        => 'string',
+					),
 				),
-			),
-			array(
-				'methods'  => WP_REST_Server::READABLE,
-				'callback' => array( $this, 'get_item' ),
-				'args'     => array(
-					'context' => $this->get_context_param( array( 'default' => 'view' ) ),
+				array(
+					'methods'  => WP_REST_Server::READABLE,
+					'callback' => array( $this, 'get_item' ),
+					'args'     => array(
+						'context' => $this->get_context_param( array( 'default' => 'view' ) ),
+					),
 				),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
+		);
 	}
 
 	/**
@@ -169,14 +173,16 @@ class WP_REST_Post_Types_Controller extends WP_REST_Controller {
 		// Wrap the data in a response object.
 		$response = rest_ensure_response( $data );
 
-		$response->add_links( array(
-			'collection' => array(
-				'href'   => rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ),
-			),
-			'https://api.w.org/items' => array(
-				'href' => rest_url( sprintf( 'wp/v2/%s', $base ) ),
-			),
-		) );
+		$response->add_links(
+			array(
+				'collection' => array(
+					'href'   => rest_url( sprintf( '%s/%s', $this->namespace, $this->rest_base ) ),
+				),
+				'https://api.w.org/items' => array(
+					'href' => rest_url( sprintf( 'wp/v2/%s', $base ) ),
+				),
+			)
+		);
 
 		/**
 		 * Filters a post type returned from the API.

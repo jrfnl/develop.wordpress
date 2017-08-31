@@ -40,10 +40,12 @@ function get_categories( $args = '' ) {
 	$taxonomy = apply_filters( 'get_categories_taxonomy', $taxonomy, $args );
 
 	// Back compat
-	if ( isset($args['type']) && 'link' == $args['type'] ) {
-		_deprecated_argument( __FUNCTION__, '3.0.0',
+	if ( isset( $args['type'] ) && 'link' == $args['type'] ) {
+		_deprecated_argument(
+			__FUNCTION__, '3.0.0',
 			/* translators: 1: "type => link", 2: "taxonomy => link_category" */
-			sprintf( __( '%1$s is deprecated. Use %2$s instead.' ),
+			sprintf(
+				__( '%1$s is deprecated. Use %2$s instead.' ),
 				'<code>type => link</code>',
 				'<code>taxonomy => link_category</code>'
 			)
@@ -91,8 +93,9 @@ function get_categories( $args = '' ) {
 function get_category( $category, $output = OBJECT, $filter = 'raw' ) {
 	$category = get_term( $category, 'category', $output, $filter );
 
-	if ( is_wp_error( $category ) )
+	if ( is_wp_error( $category ) ) {
 		return $category;
+	}
 
 	_make_cat_compat( $category );
 
@@ -130,7 +133,12 @@ function get_category_by_path( $category_path, $full_match = true, $output = OBJ
 	foreach ( (array) $category_paths as $pathdir ) {
 		$full_path .= ( $pathdir != '' ? '/' : '' ) . sanitize_title( $pathdir );
 	}
-	$categories = get_terms( 'category', array('get' => 'all', 'slug' => $leaf_path) );
+	$categories = get_terms(
+		'category', array(
+			'get' => 'all',
+			'slug' => $leaf_path,
+		)
+	);
 
 	if ( empty( $categories ) ) {
 		return;
@@ -170,10 +178,11 @@ function get_category_by_path( $category_path, $full_match = true, $output = OBJ
  * @param string $slug The category slug.
  * @return object Category data object
  */
-function get_category_by_slug( $slug  ) {
+function get_category_by_slug( $slug ) {
 	$category = get_term_by( 'slug', $slug, 'category' );
-	if ( $category )
+	if ( $category ) {
 		_make_cat_compat( $category );
+	}
 
 	return $category;
 }
@@ -188,8 +197,9 @@ function get_category_by_slug( $slug  ) {
  */
 function get_cat_ID( $cat_name ) {
 	$cat = get_term_by( 'name', $cat_name, 'category' );
-	if ( $cat )
+	if ( $cat ) {
 		return $cat->term_id;
+	}
 	return 0;
 }
 
@@ -204,8 +214,9 @@ function get_cat_ID( $cat_name ) {
 function get_cat_name( $cat_id ) {
 	$cat_id = (int) $cat_id;
 	$category = get_term( $cat_id, 'category' );
-	if ( ! $category || is_wp_error( $category ) )
+	if ( ! $category || is_wp_error( $category ) ) {
 		return '';
+	}
 	return $category->name;
 }
 

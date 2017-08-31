@@ -38,17 +38,17 @@ class Tests_Ajax_DeleteComment extends WP_Ajax_UnitTestCase {
 	 * Clear the POST actions in between requests
 	 */
 	protected function _clear_post_action() {
-		unset($_POST['trash']);
-		unset($_POST['untrash']);
-		unset($_POST['spam']);
-		unset($_POST['unspam']);
-		unset($_POST['delete']);
+		unset( $_POST['trash'] );
+		unset( $_POST['untrash'] );
+		unset( $_POST['spam'] );
+		unset( $_POST['unspam'] );
+		unset( $_POST['delete'] );
 		$this->_last_response = '';
 	}
 
 	/***********************************************************/
 	/** Test prototype
-    /***********************************************************/
+	/***********************************************************/
 
 	/**
 	 * Test as a privilged user (administrator)
@@ -68,7 +68,7 @@ class Tests_Ajax_DeleteComment extends WP_Ajax_UnitTestCase {
 		// Set up a default request
 		$_POST['id']          = $comment->comment_ID;
 		$_POST['_ajax_nonce'] = wp_create_nonce( 'delete-comment_' . $comment->comment_ID );
-		$_POST[$action]       = 1;
+		$_POST[ $action ]       = 1;
 		$_POST['_total']      = count( self::$comments );
 		$_POST['_per_page']   = 100;
 		$_POST['_page']       = 1;
@@ -94,7 +94,7 @@ class Tests_Ajax_DeleteComment extends WP_Ajax_UnitTestCase {
 		if ( in_array( $action, array( 'trash', 'spam', 'delete' ) ) ) {
 			$total = $_POST['_total'] - 1;
 
-		// unspam, untrash should make the total go up
+			// unspam, untrash should make the total go up
 		} elseif ( in_array( $action, array( 'untrash', 'unspam' ) ) ) {
 			$total = $_POST['_total'] + 1;
 		}
@@ -104,7 +104,7 @@ class Tests_Ajax_DeleteComment extends WP_Ajax_UnitTestCase {
 		$recalc_total = $comment_count->total_comments;
 
 		// Check for either possible total
-		$message = sprintf( 'returned value: %1$d $total: %2$d  $recalc_total: %3$d', (int)  $xml->response[0]->comment[0]->supplemental[0]->total[0], $total, $recalc_total );
+		$message = sprintf( 'returned value: %1$d $total: %2$d  $recalc_total: %3$d', (int) $xml->response[0]->comment[0]->supplemental[0]->total[0], $total, $recalc_total );
 		$this->assertTrue( in_array( (int) $xml->response[0]->comment[0]->supplemental[0]->total[0] , array( $total, $recalc_total ) ), $message );
 	}
 
@@ -126,7 +126,7 @@ class Tests_Ajax_DeleteComment extends WP_Ajax_UnitTestCase {
 		// Set up the $_POST request
 		$_POST['id']          = $comment->comment_ID;
 		$_POST['_ajax_nonce'] = wp_create_nonce( 'delete-comment_' . $comment->comment_ID );
-		$_POST[$action]       = 1;
+		$_POST[ $action ]       = 1;
 		$_POST['_total']      = count( self::$comments );
 		$_POST['_per_page']   = 100;
 		$_POST['_page']       = 1;
@@ -156,7 +156,7 @@ class Tests_Ajax_DeleteComment extends WP_Ajax_UnitTestCase {
 		// Set up the $_POST request
 		$_POST['id']          = $comment->comment_ID;
 		$_POST['_ajax_nonce'] = wp_create_nonce( uniqid() );
-		$_POST[$action]       = 1;
+		$_POST[ $action ]       = 1;
 		$_POST['_total']      = count( self::$comments );
 		$_POST['_per_page']   = 100;
 		$_POST['_page']       = 1;
@@ -185,7 +185,7 @@ class Tests_Ajax_DeleteComment extends WP_Ajax_UnitTestCase {
 		// Set up the $_POST request
 		$_POST['id']          = 12346789;
 		$_POST['_ajax_nonce'] = wp_create_nonce( 'delete-comment_12346789' );
-		$_POST[$action]       = 1;
+		$_POST[ $action ]       = 1;
 		$_POST['_total']      = count( self::$comments );
 		$_POST['_per_page']   = 100;
 		$_POST['_page']       = 1;
@@ -221,7 +221,7 @@ class Tests_Ajax_DeleteComment extends WP_Ajax_UnitTestCase {
 		// Set up the $_POST request
 		$_POST['id']          = $comment->comment_ID;
 		$_POST['_ajax_nonce'] = wp_create_nonce( 'delete-comment_' . $comment->comment_ID );
-		$_POST[$action]       = 1;
+		$_POST[ $action ]       = 1;
 		$_POST['_total']      = count( self::$comments );
 		$_POST['_per_page']   = 100;
 		$_POST['_page']       = 1;

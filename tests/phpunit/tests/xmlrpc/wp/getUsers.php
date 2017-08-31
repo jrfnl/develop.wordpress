@@ -44,8 +44,9 @@ class Tests_XMLRPC_wp_getUsers extends WP_XMLRPC_UnitTestCase {
 
 	function test_invalid_role() {
 		$administrator_id = $this->make_user_by_role( 'administrator' );
-		if ( is_multisite() )
+		if ( is_multisite() ) {
 			grant_super_admin( $administrator_id );
+		}
 
 		$filter = array( 'role' => 'invalidrole' );
 		$results = $this->myxmlrpcserver->wp_getUsers( array( 1, 'administrator', 'administrator', $filter ) );
@@ -57,8 +58,9 @@ class Tests_XMLRPC_wp_getUsers extends WP_XMLRPC_UnitTestCase {
 		$author_id = $this->make_user_by_role( 'author' );
 		$editor_id = $this->make_user_by_role( 'editor' );
 		$administrator_id = $this->make_user_by_role( 'administrator' );
-		if ( is_multisite() )
+		if ( is_multisite() ) {
 			grant_super_admin( $administrator_id );
+		}
 
 		// test a single role ('editor')
 		$filter = array( 'role' => 'editor' );
@@ -76,8 +78,9 @@ class Tests_XMLRPC_wp_getUsers extends WP_XMLRPC_UnitTestCase {
 
 	function test_paging_filters() {
 		$administrator_id = $this->make_user_by_role( 'administrator' );
-		if ( is_multisite() )
+		if ( is_multisite() ) {
 			grant_super_admin( $administrator_id );
+		}
 
 		self::factory()->user->create_many( 5 );
 
@@ -86,7 +89,10 @@ class Tests_XMLRPC_wp_getUsers extends WP_XMLRPC_UnitTestCase {
 		$users_found = array();
 		$page_size = 2;
 
-		$filter = array( 'number' => $page_size, 'offset' => 0 );
+		$filter = array(
+			'number' => $page_size,
+			'offset' => 0,
+		);
 		do {
 			$presults = $this->myxmlrpcserver->wp_getUsers( array( 1, 'administrator', 'administrator', $filter ) );
 			foreach ( $presults as $user ) {
@@ -102,7 +108,10 @@ class Tests_XMLRPC_wp_getUsers extends WP_XMLRPC_UnitTestCase {
 	function test_order_filters() {
 		$this->make_user_by_role( 'administrator' );
 
-		$filter = array( 'orderby' => 'email', 'order' => 'ASC' );
+		$filter = array(
+			'orderby' => 'email',
+			'order' => 'ASC',
+		);
 		$results = $this->myxmlrpcserver->wp_getUsers( array( 1, 'administrator', 'administrator', $filter ) );
 		$this->assertNotIXRError( $results );
 

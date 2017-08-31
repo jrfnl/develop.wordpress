@@ -35,7 +35,7 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 			}
 
 			$post = get_post( $id );
-			$this->assertEquals( $outputs[$k], urldecode( $post->post_name ) );
+			$this->assertEquals( $outputs[ $k ], urldecode( $post->post_name ) );
 		}
 	}
 
@@ -104,7 +104,7 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 		$args = array(
 			'post_mime_type' => 'image/jpeg',
 			'post_type' => 'attachment',
-			'post_name' => 'image'
+			'post_name' => 'image',
 		);
 		$attachment = self::factory()->attachment->create_object( 'image.jpg', $one, $args );
 
@@ -112,7 +112,7 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 			'post_type' => 'post-type-1',
 			'post_name' => 'image',
 			'post_status' => 'publish',
-			'post_parent' => $one
+			'post_parent' => $one,
 		);
 		$two = self::factory()->post->create( $args );
 
@@ -130,14 +130,18 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	 * @dataProvider whitelist_post_statuses
 	 */
 	public function test_whitelisted_post_statuses_should_not_be_forced_to_be_unique( $status ) {
-		$p1 = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'foo',
-		) );
+		$p1 = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'foo',
+			)
+		);
 
-		$p2 = self::factory()->post->create( array(
-			'post_type' => 'post',
-		) );
+		$p2 = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+			)
+		);
 
 		$actual = wp_unique_post_slug( 'foo', $p2, $status, 'post', 0 );
 
@@ -153,14 +157,18 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	}
 
 	public function test_revisions_should_not_be_forced_to_be_unique() {
-		$p1 = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'foo',
-		) );
+		$p1 = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'foo',
+			)
+		);
 
-		$p2 = self::factory()->post->create( array(
-			'post_type' => 'post',
-		) );
+		$p2 = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+			)
+		);
 
 		$actual = wp_unique_post_slug( 'foo', $p2, 'inherit', 'revision', 0 );
 
@@ -173,10 +181,12 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_slugs_resulting_in_permalinks_that_resemble_year_archives_should_be_suffixed() {
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'foo',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'foo',
+			)
+		);
 
 		$found = wp_unique_post_slug( '2015', $p, 'publish', 'post', 0 );
 		$this->assertEquals( '2015-2', $found );
@@ -188,11 +198,13 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_slugs_resulting_in_permalinks_that_resemble_year_archives_should_not_be_suffixed_for_already_published_posts() {
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'foo',
-			'post_status' => 'publish',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'foo',
+				'post_status' => 'publish',
+			)
+		);
 
 		$found = wp_unique_post_slug( '2015', $p, 'publish', 'post', 0 );
 		$this->assertEquals( '2015-2', $found );
@@ -204,10 +216,12 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_yearlike_slugs_should_not_be_suffixed_if_permalink_structure_does_not_result_in_a_clash_with_year_archives() {
 		$this->set_permalink_structure( '/%year%/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'foo',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'foo',
+			)
+		);
 
 		$found = wp_unique_post_slug( '2015', $p, 'publish', 'post', 0 );
 		$this->assertEquals( '2015', $found );
@@ -219,10 +233,12 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_slugs_resulting_in_permalinks_that_resemble_month_archives_should_be_suffixed() {
 		$this->set_permalink_structure( '/%year%/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'foo',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'foo',
+			)
+		);
 
 		$found = wp_unique_post_slug( '11', $p, 'publish', 'post', 0 );
 		$this->assertEquals( '11-2', $found );
@@ -234,10 +250,12 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_monthlike_slugs_should_not_be_suffixed_if_permalink_structure_does_not_result_in_a_clash_with_month_archives() {
 		$this->set_permalink_structure( '/%year%/foo/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'foo',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'foo',
+			)
+		);
 
 		$found = wp_unique_post_slug( '11', $p, 'publish', 'post', 0 );
 		$this->assertEquals( '11', $found );
@@ -249,10 +267,12 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_monthlike_slugs_should_not_be_suffixed_for_invalid_month_numbers() {
 		$this->set_permalink_structure( '/%year%/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'foo',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'foo',
+			)
+		);
 
 		$found = wp_unique_post_slug( '13', $p, 'publish', 'post', 0 );
 		$this->assertEquals( '13', $found );
@@ -264,10 +284,12 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_slugs_resulting_in_permalinks_that_resemble_day_archives_should_be_suffixed() {
 		$this->set_permalink_structure( '/%year%/%monthnum%/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'foo',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'foo',
+			)
+		);
 
 		$found = wp_unique_post_slug( '30', $p, 'publish', 'post', 0 );
 		$this->assertEquals( '30-2', $found );
@@ -279,10 +301,12 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_daylike_slugs_should_not_be_suffixed_if_permalink_structure_does_not_result_in_a_clash_with_day_archives() {
 		$this->set_permalink_structure( '/%year%/%monthnum%/%day%/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'foo',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'foo',
+			)
+		);
 
 		$found = wp_unique_post_slug( '30', $p, 'publish', 'post', 0 );
 		$this->assertEquals( '30', $found );
@@ -294,10 +318,12 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_daylike_slugs_should_not_be_suffixed_for_invalid_day_numbers() {
 		$this->set_permalink_structure( '/%year%/%monthnum%/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'foo',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'foo',
+			)
+		);
 
 		$found = wp_unique_post_slug( '32', $p, 'publish', 'post', 0 );
 		$this->assertEquals( '32', $found );
@@ -309,10 +335,12 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_embed_slug_should_be_suffixed_for_posts() {
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'post',
-			'post_name' => 'embed',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'post',
+				'post_name' => 'embed',
+			)
+		);
 
 		$found = wp_unique_post_slug( 'embed', $p, 'publish', 'post', 0 );
 		$this->assertSame( 'embed-2', $found );
@@ -324,10 +352,12 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_embed_slug_should_be_suffixed_for_pages() {
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'page',
-			'post_name' => 'embed',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'page',
+				'post_name' => 'embed',
+			)
+		);
 
 		$found = wp_unique_post_slug( 'embed', $p, 'publish', 'paage', 0 );
 		$this->assertSame( 'embed-2', $found );
@@ -339,10 +369,12 @@ class Tests_Post_WpUniquePostSlug extends WP_UnitTestCase {
 	public function test_embed_slug_should_be_suffixed_for_attachments() {
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$p = self::factory()->post->create( array(
-			'post_type' => 'attachment',
-			'post_name' => 'embed',
-		) );
+		$p = self::factory()->post->create(
+			array(
+				'post_type' => 'attachment',
+				'post_name' => 'embed',
+			)
+		);
 
 		$found = wp_unique_post_slug( 'embed', $p, 'publish', 'attachment', 0 );
 		$this->assertSame( 'embed-2', $found );

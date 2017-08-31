@@ -22,13 +22,18 @@ class Theme_Upgrader_Skin extends WP_Upgrader_Skin {
 	 *
 	 * @param array $args
 	 */
-	public function __construct($args = array()) {
-		$defaults = array( 'url' => '', 'theme' => '', 'nonce' => '', 'title' => __('Update Theme') );
-		$args = wp_parse_args($args, $defaults);
+	public function __construct( $args = array() ) {
+		$defaults = array(
+			'url' => '',
+			'theme' => '',
+			'nonce' => '',
+			'title' => __( 'Update Theme' ),
+		);
+		$args = wp_parse_args( $args, $defaults );
 
 		$this->theme = $args['theme'];
 
-		parent::__construct($args);
+		parent::__construct( $args );
 	}
 
 	/**
@@ -38,15 +43,17 @@ class Theme_Upgrader_Skin extends WP_Upgrader_Skin {
 
 		$update_actions = array();
 		if ( ! empty( $this->upgrader->result['destination_name'] ) && $theme_info = $this->upgrader->theme_info() ) {
-			$name       = $theme_info->display('Name');
+			$name       = $theme_info->display( 'Name' );
 			$stylesheet = $this->upgrader->result['destination_name'];
 			$template   = $theme_info->get_template();
 
-			$activate_link = add_query_arg( array(
-				'action'     => 'activate',
-				'template'   => urlencode( $template ),
-				'stylesheet' => urlencode( $stylesheet ),
-			), admin_url('themes.php') );
+			$activate_link = add_query_arg(
+				array(
+					'action'     => 'activate',
+					'template'   => urlencode( $template ),
+					'stylesheet' => urlencode( $stylesheet ),
+				), admin_url( 'themes.php' )
+			);
 			$activate_link = wp_nonce_url( $activate_link, 'switch-theme_' . $stylesheet );
 
 			if ( get_stylesheet() == $stylesheet ) {
@@ -60,8 +67,9 @@ class Theme_Upgrader_Skin extends WP_Upgrader_Skin {
 				$update_actions['activate'] = '<a href="' . esc_url( $activate_link ) . '" class="activatelink"><span aria-hidden="true">' . __( 'Activate' ) . '</span><span class="screen-reader-text">' . sprintf( __( 'Activate &#8220;%s&#8221;' ), $name ) . '</span></a>';
 			}
 
-			if ( ! $this->result || is_wp_error( $this->result ) || is_network_admin() )
+			if ( ! $this->result || is_wp_error( $this->result ) || is_network_admin() ) {
 				unset( $update_actions['preview'], $update_actions['activate'] );
+			}
 		}
 
 		$update_actions['themes_page'] = '<a href="' . self_admin_url( 'themes.php' ) . '" target="_parent">' . __( 'Return to Themes page' ) . '</a>';
@@ -76,7 +84,8 @@ class Theme_Upgrader_Skin extends WP_Upgrader_Skin {
 		 */
 		$update_actions = apply_filters( 'update_theme_complete_actions', $update_actions, $this->theme );
 
-		if ( ! empty($update_actions) )
-			$this->feedback(implode(' | ', (array)$update_actions));
+		if ( ! empty( $update_actions ) ) {
+			$this->feedback( implode( ' | ', (array) $update_actions ) );
+		}
 	}
 }

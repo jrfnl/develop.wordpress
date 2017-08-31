@@ -11,7 +11,7 @@ function default_after_setup_theme() {
 	add_theme_support( 'post-thumbnails' );
 
 	// Don't call it after wp_loaded has happened, for tests that manually re-run load actions.
-	if( ! did_action( 'wp_loaded' ) ) {
+	if ( ! did_action( 'wp_loaded' ) ) {
 		add_theme_support( 'title-tag' );
 	}
 }

@@ -11,14 +11,16 @@ class Tests_Comment_WpAllowComment extends WP_UnitTestCase {
 		parent::setUp();
 
 		self::$post_id = self::factory()->post->create();
-		self::$comment_id = self::factory()->comment->create( array(
-			'comment_post_ID' => self::$post_id,
-			'comment_approved' => '1',
-			'comment_author' => 'Bob',
-			'comment_author_email' => 'bobthebuilder@example.com',
-			'comment_author_url' => 'http://example.com',
-			'comment_content' => 'Yes, we can!',
-		) );
+		self::$comment_id = self::factory()->comment->create(
+			array(
+				'comment_post_ID' => self::$post_id,
+				'comment_approved' => '1',
+				'comment_author' => 'Bob',
+				'comment_author_email' => 'bobthebuilder@example.com',
+				'comment_author_url' => 'http://example.com',
+				'comment_content' => 'Yes, we can!',
+			)
+		);
 
 		update_option( 'comment_whitelist', 0 );
 	}

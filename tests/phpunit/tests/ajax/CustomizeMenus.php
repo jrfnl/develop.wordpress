@@ -129,10 +129,12 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 	 */
 	function test_ajax_load_available_items_error_messages( $post_args, $expected_results ) {
 
-		$_POST = array_merge( array(
-			'action'                => 'load-available-menu-items-customizer',
-			'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
-		), $post_args );
+		$_POST = array_merge(
+			array(
+				'action'                => 'load-available-menu-items-customizer',
+				'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
+			), $post_args
+		);
 
 		// Make the request.
 		$this->make_ajax_call( 'load-available-menu-items-customizer' );
@@ -236,10 +238,12 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 	 */
 	function test_ajax_load_available_items_success_status( $post_args, $success_status ) {
 
-		$_POST = array_merge( array(
-			'action'                => 'load-available-menu-items-customizer',
-			'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
-		), $post_args );
+		$_POST = array_merge(
+			array(
+				'action'                => 'load-available-menu-items-customizer',
+				'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
+			), $post_args
+		);
 
 		// Make the request.
 		$this->make_ajax_call( 'load-available-menu-items-customizer' );
@@ -337,14 +341,21 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 		// Create some terms and pages.
 		self::factory()->term->create_many( 5 );
 		self::factory()->post->create_many( 5, array( 'post_type' => 'page' ) );
-		$auto_draft_post = $this->wp_customize->nav_menus->insert_auto_draft_post( array( 'post_title' => 'Test Auto Draft', 'post_type' => 'post' ) );
+		$auto_draft_post = $this->wp_customize->nav_menus->insert_auto_draft_post(
+			array(
+				'post_title' => 'Test Auto Draft',
+				'post_type' => 'post',
+			)
+		);
 		$this->wp_customize->set_post_value( 'nav_menus_created_posts', array( $auto_draft_post->ID ) );
 		$this->wp_customize->get_setting( 'nav_menus_created_posts' )->preview();
 
-		$_POST = array_merge( array(
-			'action'                => 'load-available-menu-items-customizer',
-			'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
-		), $post_args );
+		$_POST = array_merge(
+			array(
+				'action'                => 'load-available-menu-items-customizer',
+				'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
+			), $post_args
+		);
 
 		// Make the request.
 		$this->make_ajax_call( 'load-available-menu-items-customizer' );
@@ -507,15 +518,27 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 		do_action( 'customize_register', $this->wp_customize );
 
 		self::factory()->post->create_many( 5, array( 'post_title' => 'Test Post' ) );
-		$included_auto_draft_post = $this->wp_customize->nav_menus->insert_auto_draft_post( array( 'post_title' => 'Test Included Auto Draft', 'post_type' => 'post' ) );
-		$excluded_auto_draft_post = $this->wp_customize->nav_menus->insert_auto_draft_post( array( 'post_title' => 'Excluded Auto Draft', 'post_type' => 'post' ) );
+		$included_auto_draft_post = $this->wp_customize->nav_menus->insert_auto_draft_post(
+			array(
+				'post_title' => 'Test Included Auto Draft',
+				'post_type' => 'post',
+			)
+		);
+		$excluded_auto_draft_post = $this->wp_customize->nav_menus->insert_auto_draft_post(
+			array(
+				'post_title' => 'Excluded Auto Draft',
+				'post_type' => 'post',
+			)
+		);
 		$this->wp_customize->set_post_value( 'nav_menus_created_posts', array( $included_auto_draft_post->ID, $excluded_auto_draft_post->ID ) );
 		$this->wp_customize->get_setting( 'nav_menus_created_posts' )->preview();
 
-		$_POST = array_merge( array(
-			'action'                => 'search-available-menu-items-customizer',
-			'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
-		), $post_args );
+		$_POST = array_merge(
+			array(
+				'action'                => 'search-available-menu-items-customizer',
+				'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
+			), $post_args
+		);
 
 		$this->make_ajax_call( 'search-available-menu-items-customizer' );
 
@@ -584,13 +607,15 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 	 * @covers WP_Customize_Nav_Menus::ajax_insert_auto_draft_post()
 	 */
 	function test_ajax_insert_auto_draft_post_success() {
-		$_POST = wp_slash( array(
-			'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
-			'params' => array(
-				'post_type' => 'post',
-				'post_title' => 'Hello World',
-			),
-		) );
+		$_POST = wp_slash(
+			array(
+				'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
+				'params' => array(
+					'post_type' => 'post',
+					'post_title' => 'Hello World',
+				),
+			)
+		);
 		$this->_last_response = '';
 		$this->make_ajax_call( 'customize-nav-menus-insert-auto-draft' );
 		$response = json_decode( $this->_last_response, true );
@@ -620,9 +645,11 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 		$this->assertEquals( 'bad_nonce', $response['data'] );
 
 		// Bad nonce.
-		$_POST = wp_slash( array(
-			'customize-menus-nonce' => 'bad',
-		) );
+		$_POST = wp_slash(
+			array(
+				'customize-menus-nonce' => 'bad',
+			)
+		);
 		$this->_last_response = '';
 		$this->make_ajax_call( 'customize-nav-menus-insert-auto-draft' );
 		$response = json_decode( $this->_last_response, true );
@@ -631,9 +658,11 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 
 		// Bad nonce.
 		wp_set_current_user( $this->factory()->user->create( array( 'role' => 'subscriber' ) ) );
-		$_POST = wp_slash( array(
-			'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
-		) );
+		$_POST = wp_slash(
+			array(
+				'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
+			)
+		);
 		$this->_last_response = '';
 		$this->make_ajax_call( 'customize-nav-menus-insert-auto-draft' );
 		$response = json_decode( $this->_last_response, true );
@@ -642,9 +671,11 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 
 		// Missing params.
 		wp_set_current_user( $this->factory()->user->create( array( 'role' => 'administrator' ) ) );
-		$_POST = wp_slash( array(
-			'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
-		) );
+		$_POST = wp_slash(
+			array(
+				'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
+			)
+		);
 		$this->_last_response = '';
 		$this->make_ajax_call( 'customize-nav-menus-insert-auto-draft' );
 		$response = json_decode( $this->_last_response, true );
@@ -653,12 +684,14 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 
 		// insufficient_post_permissions.
 		register_post_type( 'privilege', array( 'capability_type' => 'privilege' ) );
-		$_POST = wp_slash( array(
-			'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
-			'params' => array(
-				'post_type' => 'privilege',
-			),
-		) );
+		$_POST = wp_slash(
+			array(
+				'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
+				'params' => array(
+					'post_type' => 'privilege',
+				),
+			)
+		);
 		$this->_last_response = '';
 		$this->make_ajax_call( 'customize-nav-menus-insert-auto-draft' );
 		$response = json_decode( $this->_last_response, true );
@@ -666,12 +699,14 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 		$this->assertEquals( 'insufficient_post_permissions', $response['data'] );
 
 		// insufficient_post_permissions.
-		$_POST = wp_slash( array(
-			'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
-			'params' => array(
-				'post_type' => 'non-existent',
-			),
-		) );
+		$_POST = wp_slash(
+			array(
+				'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
+				'params' => array(
+					'post_type' => 'non-existent',
+				),
+			)
+		);
 		$this->_last_response = '';
 		$this->make_ajax_call( 'customize-nav-menus-insert-auto-draft' );
 		$response = json_decode( $this->_last_response, true );
@@ -679,13 +714,15 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 		$this->assertEquals( 'missing_post_type_param', $response['data'] );
 
 		// missing_post_title.
-		$_POST = wp_slash( array(
-			'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
-			'params' => array(
-				'post_type' => 'post',
-				'post_title' => '    ',
-			),
-		) );
+		$_POST = wp_slash(
+			array(
+				'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
+				'params' => array(
+					'post_type' => 'post',
+					'post_title' => '    ',
+				),
+			)
+		);
 		$this->_last_response = '';
 		$this->make_ajax_call( 'customize-nav-menus-insert-auto-draft' );
 		$response = json_decode( $this->_last_response, true );
@@ -693,15 +730,17 @@ class Tests_Ajax_CustomizeMenus extends WP_Ajax_UnitTestCase {
 		$this->assertEquals( 'missing_post_title', $response['data'] );
 
 		// illegal_params.
-		$_POST = wp_slash( array(
-			'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
-			'params' => array(
-				'post_type' => 'post',
-				'post_title' => 'OK',
-				'post_name' => 'bad',
-				'post_content' => 'bad',
-			),
-		) );
+		$_POST = wp_slash(
+			array(
+				'customize-menus-nonce' => wp_create_nonce( 'customize-menus' ),
+				'params' => array(
+					'post_type' => 'post',
+					'post_title' => 'OK',
+					'post_name' => 'bad',
+					'post_content' => 'bad',
+				),
+			)
+		);
 		$this->_last_response = '';
 		$this->make_ajax_call( 'customize-nav-menus-insert-auto-draft' );
 		$response = json_decode( $this->_last_response, true );
