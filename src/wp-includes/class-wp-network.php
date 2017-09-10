@@ -125,7 +125,7 @@ class WP_Network {
 	 * @param WP_Network|object $network A network object.
 	 */
 	public function __construct( $network ) {
-		foreach( get_object_vars( $network ) as $key => $value ) {
+		foreach ( get_object_vars( $network ) as $key => $value ) {
 			$this->$key = $value;
 		}
 
@@ -211,7 +211,7 @@ class WP_Network {
 			return;
 		}
 
-		$default = ucfirst( $this->domain );
+		$default         = ucfirst( $this->domain );
 		$this->site_name = get_network_option( $this->id, 'site_name', $default );
 	}
 
@@ -279,12 +279,14 @@ class WP_Network {
 		if ( wp_using_ext_object_cache() ) {
 			$using_paths = wp_cache_get( 'networks_have_paths', 'site-options' );
 			if ( false === $using_paths ) {
-				$using_paths = get_networks( array(
-					'number'       => 1,
-					'count'        => true,
-					'path__not_in' => '/',
-				) );
-				wp_cache_add( 'networks_have_paths', $using_paths, 'site-options'  );
+				$using_paths = get_networks(
+					array(
+						'number'       => 1,
+						'count'        => true,
+						'path__not_in' => '/',
+					)
+				);
+				wp_cache_add( 'networks_have_paths', $using_paths, 'site-options' );
 			}
 		}
 
@@ -342,13 +344,15 @@ class WP_Network {
 		}
 
 		if ( ! $using_paths ) {
-			$networks = get_networks( array(
-				'number'     => 1,
-				'orderby'    => array(
-					'domain_length' => 'DESC',
-				),
-				'domain__in' => $domains,
-			) );
+			$networks = get_networks(
+				array(
+					'number'     => 1,
+					'orderby'    => array(
+						'domain_length' => 'DESC',
+					),
+					'domain__in' => $domains,
+				)
+			);
 
 			if ( ! empty( $networks ) ) {
 				return array_shift( $networks );
@@ -357,14 +361,16 @@ class WP_Network {
 			return false;
 		}
 
-		$networks = get_networks( array(
-			'orderby'    => array(
-				'domain_length' => 'DESC',
-				'path_length'   => 'DESC',
-			),
-			'domain__in' => $domains,
-			'path__in'   => $paths,
-		) );
+		$networks = get_networks(
+			array(
+				'orderby'    => array(
+					'domain_length' => 'DESC',
+					'path_length'   => 'DESC',
+				),
+				'domain__in' => $domains,
+				'path__in'   => $paths,
+			)
+		);
 
 		/*
 		 * Domains are sorted by length of domain, then by length of path.

@@ -53,15 +53,17 @@ class WP_Customize_Media_Control extends WP_Customize_Control {
 		parent::__construct( $manager, $id, $args );
 
 		if ( ! ( $this instanceof WP_Customize_Image_Control ) ) {
-			$this->button_labels = wp_parse_args( $this->button_labels, array(
-				'select'       => __( 'Select File' ),
-				'change'       => __( 'Change File' ),
-				'default'      => __( 'Default' ),
-				'remove'       => __( 'Remove' ),
-				'placeholder'  => __( 'No file selected' ),
-				'frame_title'  => __( 'Select File' ),
-				'frame_button' => __( 'Choose File' ),
-			) );
+			$this->button_labels = wp_parse_args(
+				$this->button_labels, array(
+					'select'       => __( 'Select File' ),
+					'change'       => __( 'Change File' ),
+					'default'      => __( 'Default' ),
+					'remove'       => __( 'Remove' ),
+					'placeholder'  => __( 'No file selected' ),
+					'frame_title'  => __( 'Select File' ),
+					'frame_button' => __( 'Choose File' ),
+				)
+			);
 		}
 	}
 
@@ -85,10 +87,10 @@ class WP_Customize_Media_Control extends WP_Customize_Control {
 	 */
 	public function to_json() {
 		parent::to_json();
-		$this->json['label'] = html_entity_decode( $this->label, ENT_QUOTES, get_bloginfo( 'charset' ) );
-		$this->json['mime_type'] = $this->mime_type;
+		$this->json['label']         = html_entity_decode( $this->label, ENT_QUOTES, get_bloginfo( 'charset' ) );
+		$this->json['mime_type']     = $this->mime_type;
 		$this->json['button_labels'] = $this->button_labels;
-		$this->json['canUpload'] = current_user_can( 'upload_files' );
+		$this->json['canUpload']     = current_user_can( 'upload_files' );
 
 		$value = $this->value();
 
@@ -96,12 +98,12 @@ class WP_Customize_Media_Control extends WP_Customize_Control {
 			if ( $this->setting->default ) {
 				// Fake an attachment model - needs all fields used by template.
 				// Note that the default value must be a URL, NOT an attachment ID.
-				$type = in_array( substr( $this->setting->default, -3 ), array( 'jpg', 'png', 'gif', 'bmp' ) ) ? 'image' : 'document';
+				$type               = in_array( substr( $this->setting->default, -3 ), array( 'jpg', 'png', 'gif', 'bmp' ) ) ? 'image' : 'document';
 				$default_attachment = array(
-					'id' => 1,
-					'url' => $this->setting->default,
-					'type' => $type,
-					'icon' => wp_mime_type_icon( $type ),
+					'id'    => 1,
+					'url'   => $this->setting->default,
+					'type'  => $type,
+					'icon'  => wp_mime_type_icon( $type ),
 					'title' => basename( $this->setting->default ),
 				);
 

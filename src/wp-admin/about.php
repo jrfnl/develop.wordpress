@@ -13,16 +13,18 @@ if ( ! wp_is_mobile() ) {
 	wp_enqueue_style( 'wp-mediaelement' );
 	wp_enqueue_script( 'mediaelement-vimeo' );
 	wp_enqueue_script( 'wp-mediaelement' );
-	wp_localize_script( 'mediaelement', '_wpmejsSettings', array(
-		'pluginPath'        => includes_url( 'js/mediaelement/', 'relative' ),
-		'classPrefix'       => 'mejs-',
-		'stretching'        => 'responsive',
-		'pauseOtherPlayers' => '',
-	) );
+	wp_localize_script(
+		'mediaelement', '_wpmejsSettings', array(
+			'pluginPath'        => includes_url( 'js/mediaelement/', 'relative' ),
+			'classPrefix'       => 'mejs-',
+			'stretching'        => 'responsive',
+			'pauseOtherPlayers' => '',
+		)
+	);
 }
 
-$video_url = 'https://videopress.com/embed/AHz0Ca46?hd=true';
-$lang_code = str_replace( '_', '-', get_user_locale() );
+$video_url         = 'https://videopress.com/embed/AHz0Ca46?hd=true';
+$lang_code         = str_replace( '_', '-', get_user_locale() );
 list( $lang_code ) = explode( '-', $lang_code );
 if ( 'en' !== $lang_code ) {
 	$video_url = add_query_arg( 'defaultLangCode', $lang_code, $video_url );
@@ -114,7 +116,7 @@ include( ABSPATH . 'wp-admin/admin-header.php' );
 			</div>
 			<div class="col">
 				<h3><?php _e( 'Audio Widget' ); ?></h3>
-				<p><?php _e( 'Are you a podcaster, musician, or avid blogger? Adding a widget with your audio file has never been easier. Upload your audio file to the Media Library, go to the widget settings, select your file, and you&#8217;re ready for listeners. This would be a easy way to add a more personal welcome message, too!' );?></p>
+				<p><?php _e( 'Are you a podcaster, musician, or avid blogger? Adding a widget with your audio file has never been easier. Upload your audio file to the Media Library, go to the widget settings, select your file, and you&#8217;re ready for listeners. This would be a easy way to add a more personal welcome message, too!' ); ?></p>
 			</div>
 			<div class="col">
 				<h3><?php _e( 'Rich Text Widget' ); ?></h3>
@@ -131,13 +133,15 @@ include( ABSPATH . 'wp-admin/admin-header.php' );
 			</div>
 			<div class="col">
 				<?php
-				echo wp_video_shortcode( array(
-					'mp4'      => 'https://s.w.org/images/core/4.8/link-boundaries.mp4',
-					'poster'   => 'https://s.w.org/images/core/4.8/link-boundaries.png',
-					'width'    => 1140,
-					'height'   => 624,
+				echo wp_video_shortcode(
+					array(
+						'mp4'    => 'https://s.w.org/images/core/4.8/link-boundaries.mp4',
+						'poster' => 'https://s.w.org/images/core/4.8/link-boundaries.png',
+						'width'  => 1140,
+						'height' => 624,
 					// 'class'    => 'wp-video-shortcode feature-video',
-				) );
+					)
+				);
 				?>
 			</div>
 		</div>
@@ -178,13 +182,15 @@ include( ABSPATH . 'wp-admin/admin-header.php' );
 		<hr />
 
 		<div class="changelog">
-			<h2><?php
+			<h2>
+			<?php
 				printf(
 					/* translators: %s: smiling face with smiling eyes emoji */
 					__( 'Even More Developer Happiness %s' ),
 					'&#x1F60A'
 				);
-			?></h2>
+			?>
+			</h2>
 
 			<div class="under-the-hood three-col">
 				<div class="col">
@@ -248,16 +254,22 @@ __( '<strong>Version %s</strong> addressed one security issue.' );
 __( '<strong>Version %s</strong> addressed some security issues.' );
 
 /* translators: 1: WordPress version number, 2: plural number of bugs. */
-_n_noop( '<strong>Version %1$s</strong> addressed %2$s bug.',
-         '<strong>Version %1$s</strong> addressed %2$s bugs.' );
+_n_noop(
+	'<strong>Version %1$s</strong> addressed %2$s bug.',
+	'<strong>Version %1$s</strong> addressed %2$s bugs.'
+);
 
 /* translators: 1: WordPress version number, 2: plural number of bugs. Singular security issue. */
-_n_noop( '<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bug.',
-         '<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bugs.' );
+_n_noop(
+	'<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bug.',
+	'<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bugs.'
+);
 
 /* translators: 1: WordPress version number, 2: plural number of bugs. More than one security issue. */
-_n_noop( '<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bug.',
-         '<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bugs.' );
+_n_noop(
+	'<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bug.',
+	'<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bugs.'
+);
 
 /* translators: %s: Codex URL */
 __( 'For more information, see <a href="%s">the release notes</a>.' );

@@ -23,7 +23,7 @@ class WP_Widget_Custom_HTML extends WP_Widget {
 	 * @var array
 	 */
 	protected $default_instance = array(
-		'title' => '',
+		'title'   => '',
 		'content' => '',
 	);
 
@@ -33,13 +33,13 @@ class WP_Widget_Custom_HTML extends WP_Widget {
 	 * @since 4.8.1
 	 */
 	public function __construct() {
-		$widget_ops = array(
-			'classname' => 'widget_custom_html',
-			'description' => __( 'Arbitrary HTML code.' ),
+		$widget_ops  = array(
+			'classname'                   => 'widget_custom_html',
+			'description'                 => __( 'Arbitrary HTML code.' ),
 			'customize_selective_refresh' => true,
 		);
 		$control_ops = array(
-			'width' => 400,
+			'width'  => 400,
 			'height' => 350,
 		);
 		parent::__construct( 'custom_html', __( 'Custom HTML' ), $widget_ops, $control_ops );
@@ -62,11 +62,13 @@ class WP_Widget_Custom_HTML extends WP_Widget {
 		$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
 
 		// Prepare instance data that looks like a normal Text widget.
-		$simulated_text_widget_instance = array_merge( $instance, array(
-			'text' => isset( $instance['content'] ) ? $instance['content'] : '',
-			'filter' => false, // Because wpautop is not applied.
-			'visual' => false, // Because it wasn't created in TinyMCE.
-		) );
+		$simulated_text_widget_instance = array_merge(
+			$instance, array(
+				'text'   => isset( $instance['content'] ) ? $instance['content'] : '',
+				'filter' => false, // Because wpautop is not applied.
+			'visual'     => false, // Because it wasn't created in TinyMCE.
+			)
+		);
 		unset( $simulated_text_widget_instance['content'] ); // Was moved to 'text' prop.
 
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-text.php */
@@ -107,7 +109,7 @@ class WP_Widget_Custom_HTML extends WP_Widget {
 	 * @return array Settings to save or bool false to cancel saving.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance = array_merge( $this->default_instance, $old_instance );
+		$instance          = array_merge( $this->default_instance, $old_instance );
 		$instance['title'] = sanitize_text_field( $new_instance['title'] );
 		if ( current_user_can( 'unfiltered_html' ) ) {
 			$instance['content'] = $new_instance['content'];
@@ -141,8 +143,8 @@ class WP_Widget_Custom_HTML extends WP_Widget {
 		<?php if ( ! current_user_can( 'unfiltered_html' ) ) : ?>
 			<?php
 			$probably_unsafe_html = array( 'script', 'iframe', 'form', 'input', 'style' );
-			$allowed_html = wp_kses_allowed_html( 'post' );
-			$disallowed_html = array_diff( $probably_unsafe_html, array_keys( $allowed_html ) );
+			$allowed_html         = wp_kses_allowed_html( 'post' );
+			$disallowed_html      = array_diff( $probably_unsafe_html, array_keys( $allowed_html ) );
 			?>
 			<?php if ( ! empty( $disallowed_html ) ) : ?>
 				<p>

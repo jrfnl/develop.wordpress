@@ -46,8 +46,20 @@ class Tests_Canonical_NoRewrite extends WP_Canonical_UnitTestCase {
 			// Strip an existing but incorrect post_type arg
 			array( '/?post_type=page&page_id=1', '/?p=1' ),
 
-			array( '/?p=358 ', array('url' => '/?p=358',  'qv' => array('p' => '358') ) ), // Trailing spaces
-			array( '/?p=358%20', array('url' => '/?p=358',  'qv' => array('p' => '358') ) ),
+			array(
+			'/?p=358 ',
+			array(
+			'url' => '/?p=358',
+			'qv'  => array( 'p' => '358' ),
+				),
+			), // Trailing spaces
+			array(
+		'/?p=358%20',
+		array(
+		'url' => '/?p=358',
+		'qv'  => array( 'p' => '358' ),
+			),
+		),
 
 			array( '/?page_id=1', '/?p=1' ), // redirect page_id to p (should cover page_id|p|attachment_id to one another
 			array( '/?page_id=1&post_type=revision', '/?p=1' ),
