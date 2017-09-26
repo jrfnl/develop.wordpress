@@ -3,17 +3,16 @@
 	<description>Apply WordPress Coding Standards to all Core files</description>
 
 	<!--
-	phpcbf --standard=phpcs8.xml.dist --report-summary --report-source --report-full=./20170926-11-phpcbf-all-incl-new-sniffs.txt --basepath=I:/000_GitHub/WP_test_suite/
-
+	phpcbf -.-standard=phpcs8.xml.dist -.-report-summary -.-report-source -.-report-full=./20170926-11-phpcbf-all-incl-new-sniffs.txt -.-basepath=I:/000_GitHub/WP_test_suite/
 	-->
 
-	<rule ref="WordPress-Core" />
+	<rule ref="WordPress-Core"/>
 	<rule ref="WordPress.CodeAnalysis.EmptyStatement"/>
 
-	<arg name="extensions" value="php" />
+	<arg name="extensions" value="php"/>
 
 	<!-- Show sniff codes in all reports -->
-	<arg value="ps" />
+	<arg value="ps"/>
 
 	<file>.</file>
 
@@ -22,24 +21,24 @@
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 
 	<exclude-pattern>/src/wp-admin/includes/class-ftp*</exclude-pattern>
-	<exclude-pattern>/src/wp-admin/includes/class-pclzip.php</exclude-pattern>
-	<exclude-pattern>/src/wp-admin/includes/deprecated.php</exclude-pattern>
-	<exclude-pattern>/src/wp-admin/includes/ms-deprecated.php</exclude-pattern>
+	<exclude-pattern>/src/wp-admin/includes/class-pclzip\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-admin/includes/deprecated\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-admin/includes/ms-deprecated\.php</exclude-pattern>
 
-	<exclude-pattern>/src/wp-includes/atomlib.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/class-IXR.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/class-json.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/class-phpass.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/class-phpmailer.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/class-pop3.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/class-requests.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/class-simplepie.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/class-smtp.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/class-snoopy.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/deprecated.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/ms-deprecated.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/pluggable-deprecated.php</exclude-pattern>
-	<exclude-pattern>/src/wp-includes/rss.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/atomlib\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-IXR\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-json\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-phpass\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-phpmailer\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-pop3\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-requests\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-simplepie\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-smtp\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-snoopy\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/deprecated\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/ms-deprecated\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/pluggable-deprecated\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/rss\.php</exclude-pattern>
 
 	<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
 	<exclude-pattern>/src/wp-includes/IXR/*</exclude-pattern>
@@ -50,7 +49,7 @@
 
 	<exclude-pattern>/tests/phpunit/build*</exclude-pattern>
 	<exclude-pattern>/tests/phpunit/data/plugins/wordpress-importer*</exclude-pattern>
-	<exclude-pattern>/tests/phpunit/data/.trac-ticket-cache*</exclude-pattern>
+	<exclude-pattern>/tests/phpunit/data/\.trac-ticket-cache*</exclude-pattern>
 	
 	<!-- https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/pull/1136 -->
 	<rule ref="Generic.Formatting.MultipleStatementAlignment">
@@ -61,7 +60,8 @@
 
 	<!-- Whitelist the WP DB Class and related tests for usage of direct database access functions. -->
 	<rule ref="WordPress.DB.RestrictedFunctions">
-		<exclude-pattern>/src/wp-includes/wp-db\.php|/tests/phpunit/tests/db/charset\.php</exclude-pattern>
+		<exclude-pattern>/src/wp-includes/wp-db\.php</exclude-pattern>
+		<exclude-pattern>/tests/phpunit/tests/db/charset\.php</exclude-pattern>
 	</rule>
 
 	<!-- Whitelist test classes for select sniffs. -->
@@ -83,5 +83,5 @@
 	<rule ref="PEAR.NamingConventions.ValidClassName.Invalid">
 		<exclude-pattern>/tests/phpunit/tests/*</exclude-pattern>
 	</rule>
--->
+
 </ruleset>
