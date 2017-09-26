@@ -10,5 +10,5 @@ Text Domain: hello-dolly
 
 */
 
-// Test for 
-?>
+// Test for
+

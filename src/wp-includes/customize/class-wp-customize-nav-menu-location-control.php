@@ -73,7 +73,12 @@ class WP_Customize_Nav_Menu_Location_Control extends WP_Customize_Control {
 				?>
 			</select>
 		</label>
-		<button type="button" class="button-link edit-menu<?php if ( ! $this->value() ) { echo ' hidden'; } ?>" aria-label="<?php esc_attr_e( 'Edit selected menu' ); ?>"><?php _e( 'Edit Menu' ); ?></button>
+		<button type="button" class="button-link edit-menu
+		<?php
+		if ( ! $this->value() ) {
+			echo ' hidden'; }
+?>
+" aria-label="<?php esc_attr_e( 'Edit selected menu' ); ?>"><?php _e( 'Edit Menu' ); ?></button>
 		<?php
 	}
 }

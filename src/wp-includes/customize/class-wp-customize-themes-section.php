@@ -81,5 +81,6 @@ class WP_Customize_Themes_Section extends WP_Customize_Section {
 				</div>
 			</div>
 		</li>
-<?php }
+<?php
+	}
 }

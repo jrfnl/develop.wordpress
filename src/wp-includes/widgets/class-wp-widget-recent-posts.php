@@ -23,8 +23,8 @@ class WP_Widget_Recent_Posts extends WP_Widget {
 	 */
 	public function __construct() {
 		$widget_ops = array(
-			'classname' => 'widget_recent_entries',
-			'description' => __( 'Your site&#8217;s most recent Posts.' ),
+			'classname'                   => 'widget_recent_entries',
+			'description'                 => __( 'Your site&#8217;s most recent Posts.' ),
 			'customize_selective_refresh' => true,
 		);
 		parent::__construct( 'recent-posts', __( 'Recent Posts' ), $widget_ops );
@@ -51,8 +51,9 @@ class WP_Widget_Recent_Posts extends WP_Widget {
 		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 
 		$number = ( ! empty( $instance['number'] ) ) ? absint( $instance['number'] ) : 5;
-		if ( ! $number )
+		if ( ! $number ) {
 			$number = 5;
+		}
 		$show_date = isset( $instance['show_date'] ) ? $instance['show_date'] : false;
 
 		/**
@@ -64,21 +65,30 @@ class WP_Widget_Recent_Posts extends WP_Widget {
 		 *
 		 * @param array $args An array of arguments used to retrieve the recent posts.
 		 */
-		$r = new WP_Query( apply_filters( 'widget_posts_args', array(
-			'posts_per_page'      => $number,
-			'no_found_rows'       => true,
-			'post_status'         => 'publish',
-			'ignore_sticky_posts' => true
-		) ) );
+		$r = new WP_Query(
+			apply_filters(
+				'widget_posts_args', array(
+					'posts_per_page'      => $number,
+					'no_found_rows'       => true,
+					'post_status'         => 'publish',
+					'ignore_sticky_posts' => true,
+				)
+			)
+		);
 
-		if ($r->have_posts()) :
+		if ( $r->have_posts() ) :
 		?>
 		<?php echo $args['before_widget']; ?>
-		<?php if ( $title ) {
+		<?php
+		if ( $title ) {
 			echo $args['before_title'] . $title . $args['after_title'];
-		} ?>
+		}
+		?>
 		<ul>
-		<?php while ( $r->have_posts() ) : $r->the_post(); ?>
+		<?php
+		while ( $r->have_posts() ) :
+			$r->the_post();
+			?>
 			<li>
 				<a href="<?php the_permalink(); ?>"><?php get_the_title() ? the_title() : _e( '(no title)' ); ?></a>
 			<?php if ( $show_date ) : ?>
@@ -106,9 +116,9 @@ class WP_Widget_Recent_Posts extends WP_Widget {
 	 * @return array Updated settings to save.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance = $old_instance;
-		$instance['title'] = sanitize_text_field( $new_instance['title'] );
-		$instance['number'] = (int) $new_instance['number'];
+		$instance              = $old_instance;
+		$instance['title']     = sanitize_text_field( $new_instance['title'] );
+		$instance['number']    = (int) $new_instance['number'];
 		$instance['show_date'] = isset( $new_instance['show_date'] ) ? (bool) $new_instance['show_date'] : false;
 		return $instance;
 	}
