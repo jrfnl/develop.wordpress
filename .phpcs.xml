@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Coding Standards">
+	<description>Apply WordPress Coding Standards to all Core files</description>
+
+	<arg name="report-width" value="110"/>
+	<arg name="report" value="full,summary,source"/>
+
+	<!-- Strip the filepaths down to the relevant bit. -->
+	<arg name="basepath" value="./"/>
+
+	<!-- Check up to 8 files simultanously. -->
+	<arg name="parallel" value="8"/>
+
+    <!--
+        Minimal code style check.
+    -->
+    <rule ref="./phpcs.xml.dist">
+        <exclude name="Generic.Files.LineEndings"/>
+        <!--<exclude name="WordPress.Commenting.DocblockFormat"/>-->
+    </rule>
+
+	<arg name="parallel" value="8"/>
+
+	<!-- Verify that all gettext calls use the correct text domain. -->
+	<rule ref="WordPress.WP.I18n">
+		<exclude name="WordPress.WP.I18n.MissingArgDomainDefault"/>
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="default"/>
+				<element value="continents-cities"/> <!-- ??? - file: wp-admin\includes\continents-cities.php -->
+				<element value="twentyten"/>
+				<element value="twentyeleven"/>
+				<element value="twentytwelve"/>
+				<element value="twentythirteen"/>
+				<element value="twentyfourteen"/>
+				<element value="twentyfifteen"/>
+				<element value="twentysixteen"/>
+				<element value="twentyseventeen"/>
+			</property>
+		</properties>
+	</rule>
+
+</ruleset>
