@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Coding Standards">
+	<description>Apply WordPress Coding Standards to all Core files</description>
+
+	<arg name="extensions" value="php"/>
+
+	<!-- Show sniff codes in all reports -->
+	<arg value="ps"/>
+
+	<arg name="report-width" value="110"/>
+	<arg name="report" value="full,summary,source"/>
+
+	<!-- Strip the filepaths down to the relevant bit. -->
+	<arg name="basepath" value="./"/>
+
+	<!-- Check up to 8 files simultanously. -->
+	<arg name="parallel" value="8"/>
+
+	<file>.</file>
+
+	<!-- Directories and third party library exclusions -->
+	<exclude-pattern>/build/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/vendor/*</exclude-pattern>
+
+	<exclude-pattern>/src/wp-admin/includes/class-ftp*</exclude-pattern>
+	<exclude-pattern>/src/wp-admin/includes/class-pclzip\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-admin/includes/deprecated\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-admin/includes/ms-deprecated\.php</exclude-pattern>
+
+	<exclude-pattern>/src/wp-includes/atomlib\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-IXR\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-json\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-phpass\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-phpmailer\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-pop3\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-requests\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-simplepie\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-smtp\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/class-snoopy\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/deprecated\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/ms-deprecated\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/pluggable-deprecated\.php</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/rss\.php</exclude-pattern>
+
+	<exclude-pattern>/src/wp-includes/ID3/*</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/IXR/*</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/random_compat/*</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/Requests/*</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/SimplePie/*</exclude-pattern>
+	<exclude-pattern>/src/wp-includes/Text/*</exclude-pattern>
+
+	<!-- Test data and fixtures -->
+	<exclude-pattern>/tests/phpunit/build*</exclude-pattern>
+	<exclude-pattern>/tests/phpunit/data/*</exclude-pattern>
+
+	<exclude-pattern>/tools/*</exclude-pattern>
+
+    <rule ref="PHPCompatibility">
+        <!-- Contained in /wp-includes/compat.php. -->
+        <exclude name="PHPCompatibility.PHP.NewFunctions.hash_hmacFound"/>
+        <exclude name="PHPCompatibility.PHP.NewFunctions.json_encodeFound"/>
+        <exclude name="PHPCompatibility.PHP.NewFunctions.json_decodeFound"/>
+        <exclude name="PHPCompatibility.PHP.NewFunctions.hash_equalsFound"/>
+        <exclude name="PHPCompatibility.PHP.NewConstants.json_pretty_printFound"/>
+        <exclude name="PHPCompatibility.PHP.NewFunctions.json_last_error_msgFound"/>
+        <exclude name="PHPCompatibility.PHP.NewInterfaces.jsonserializableFound"/>
+        <exclude name="PHPCompatibility.PHP.NewFunctions.array_replace_recursiveFound"/>
+        <exclude name="PHPCompatibility.PHP.NewFunctions.is_iterableFound"/>
+        <exclude name="PHPCompatibility.PHP.NewFunctions.is_countableFound"/>
+
+        <!-- Contained in /wp-includes/spl-autoload-compat.php. -->
+        <exclude name="PHPCompatibility.PHP.NewFunctions.spl_autoload_registerFound"/>
+        <exclude name="PHPCompatibility.PHP.NewFunctions.spl_autoload_unregisterFound"/>
+        <exclude name="PHPCompatibility.PHP.NewFunctions.spl_autoload_functionsFound"/>
+
+        <!-- Contained in /wp-includes/random_compat/random.php. -->
+        <exclude name="PHPCompatibility.PHP.NewConstants.php_version_idFound"/>
+
+        <!-- Contained in /wp-includes/random_compat/*.php (various files). -->
+        <exclude name="PHPCompatibility.PHP.NewFunctions.random_bytesFound"/>
+
+        <!-- Contained in /wp-includes/random_compat/random_int.php. -->
+        <exclude name="PHPCompatibility.PHP.NewFunctions.random_intFound"/>
+
+        <!-- Contained in /wp-includes/random_compat/error_polyfill.php. -->
+        <exclude name="PHPCompatibility.PHP.NewClasses.errorFound"/>
+        <exclude name="PHPCompatibility.PHP.NewClasses.typeerrorFound"/>
+    </rule>
+
+    <!-- Whitelist the WP Core mysql_to_rfc3339() function. -->
+    <rule ref="PHPCompatibility.PHP.RemovedExtensions">
+        <properties>
+            <!-- Contained in /wp-includes/functions.php. -->
+            <property name="functionWhitelist" type="array" value="mysql_to_rfc3339"/>
+        </properties>
+    </rule>
+
+</ruleset>
