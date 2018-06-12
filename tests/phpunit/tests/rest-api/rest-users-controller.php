@@ -43,7 +43,7 @@ class WP_Test_REST_Users_Controller extends WP_Test_REST_Controller_Testcase {
 				'user_email' => 'draft-editor@example.com',
 			)
 		);
-		self::$subscriber    = $factory->user->create(
+		self::$subscriber   = $factory->user->create(
 			array(
 				'role'         => 'subscriber',
 				'display_name' => 'subscriber',
@@ -856,10 +856,12 @@ class WP_Test_REST_Users_Controller extends WP_Test_REST_Controller_Testcase {
 		$request->set_param( '_fields', 'id,name' );
 		$user     = get_user_by( 'id', get_current_user_id() );
 		$response = $this->endpoint->prepare_item_for_response( $user, $request );
-		$this->assertEquals( array(
-			'id',
-			'name',
-		), array_keys( $response->get_data() ) );
+		$this->assertEquals(
+			array(
+				'id',
+				'name',
+			), array_keys( $response->get_data() )
+		);
 	}
 
 	public function test_get_user_avatar_urls() {

@@ -331,7 +331,7 @@ class Tests_Term_Query extends WP_UnitTestCase {
 		}
 
 		$query = new WP_Term_Query();
-		$args = array(
+		$args  = array(
 			'taxonomy'   => 'wptests_tax_1',
 			'object_ids' => $posts,
 			'fields'     => 'all_with_object_id',
@@ -656,17 +656,21 @@ class Tests_Term_Query extends WP_UnitTestCase {
 	public function test_null_term_object_should_be_discarded() {
 		register_taxonomy( 'wptests_tax', 'post' );
 
-		$terms = self::factory()->term->create_many( 3, array(
-			'taxonomy' => 'wptests_tax',
-		) );
+		$terms = self::factory()->term->create_many(
+			3, array(
+				'taxonomy' => 'wptests_tax',
+			)
+		);
 
 		$this->term_id = $terms[1];
 
 		add_filter( 'get_term', array( $this, 'filter_term_to_null' ) );
-		$found = get_terms( array(
-			'taxonomy'   => 'wptests_tax',
-			'hide_empty' => false,
-		) );
+		$found = get_terms(
+			array(
+				'taxonomy'   => 'wptests_tax',
+				'hide_empty' => false,
+			)
+		);
 		remove_filter( 'get_term', array( $this, 'filter_term_to_null' ) );
 
 		$expected = array( $terms[0], $terms[2] );
@@ -688,17 +692,21 @@ class Tests_Term_Query extends WP_UnitTestCase {
 	public function test_error_term_object_should_be_discarded() {
 		register_taxonomy( 'wptests_tax', 'post' );
 
-		$terms = self::factory()->term->create_many( 3, array(
-			'taxonomy' => 'wptests_tax',
-		) );
+		$terms = self::factory()->term->create_many(
+			3, array(
+				'taxonomy' => 'wptests_tax',
+			)
+		);
 
 		$this->term_id = $terms[1];
 
 		add_filter( 'get_term', array( $this, 'filter_term_to_wp_error' ) );
-		$found = get_terms( array(
-			'taxonomy'   => 'wptests_tax',
-			'hide_empty' => false,
-		) );
+		$found = get_terms(
+			array(
+				'taxonomy'   => 'wptests_tax',
+				'hide_empty' => false,
+			)
+		);
 		remove_filter( 'get_term', array( $this, 'filter_term_to_wp_error' ) );
 
 		$expected = array( $terms[0], $terms[2] );

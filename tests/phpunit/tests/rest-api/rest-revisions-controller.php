@@ -245,10 +245,12 @@ class WP_Test_REST_Revisions_Controller extends WP_Test_REST_Controller_Testcase
 		$request->set_param( '_fields', 'id,slug' );
 		$revision = get_post( $this->revision_id1 );
 		$response = $endpoint->prepare_item_for_response( $revision, $request );
-		$this->assertEquals( array(
-			'id',
-			'slug',
-		), array_keys( $response->get_data() ) );
+		$this->assertEquals(
+			array(
+				'id',
+				'slug',
+			), array_keys( $response->get_data() )
+		);
 	}
 
 	public function test_get_item_schema() {

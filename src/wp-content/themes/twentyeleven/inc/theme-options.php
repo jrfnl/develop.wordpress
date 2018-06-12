@@ -274,7 +274,7 @@ function twentyeleven_settings_field_color_scheme() {
 	$options = twentyeleven_get_theme_options();
 
 	foreach ( twentyeleven_color_schemes() as $scheme ) {
-	?>
+		?>
 	<div class="layout image-radio-option color-scheme">
 	<label class="description">
 		<input type="radio" name="twentyeleven_theme_options[color_scheme]" value="<?php echo esc_attr( $scheme['value'] ); ?>" <?php checked( $options['color_scheme'], $scheme['value'] ); ?> />
@@ -285,7 +285,7 @@ function twentyeleven_settings_field_color_scheme() {
 		</span>
 	</label>
 	</div>
-	<?php
+		<?php
 	}
 }
 
@@ -438,7 +438,7 @@ function twentyeleven_print_link_color_style() {
 	if ( $default_options['link_color'] == $link_color ) {
 		return;
 	}
-?>
+	?>
 	<style>
 		/* Link color */
 		a,
@@ -466,7 +466,7 @@ function twentyeleven_print_link_color_style() {
 			background-color: <?php echo $link_color; ?>;
 		}
 	</style>
-<?php
+	<?php
 }
 add_action( 'wp_head', 'twentyeleven_print_link_color_style' );
 

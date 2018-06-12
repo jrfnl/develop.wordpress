@@ -334,7 +334,7 @@ if ( ! function_exists( 'twentythirteen_paging_nav' ) ) :
 
 		</div><!-- .nav-links -->
 	</nav><!-- .navigation -->
-	<?php
+		<?php
 	}
 endif;
 
@@ -364,7 +364,7 @@ if ( ! function_exists( 'twentythirteen_post_nav' ) ) :
 
 		</div><!-- .nav-links -->
 	</nav><!-- .navigation -->
-	<?php
+		<?php
 	}
 endif;
 

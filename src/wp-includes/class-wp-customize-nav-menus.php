@@ -387,7 +387,7 @@ final class WP_Customize_Nav_Menus {
 
 		// Add "Home" link if search term matches. Treat as a page, but switch to custom on add.
 		if ( isset( $args['s'] ) ) {
-			$title = _x( 'Home', 'nav menu home label' );
+			$title   = _x( 'Home', 'nav menu home label' );
 			$matches = function_exists( 'mb_stripos' ) ? false !== mb_stripos( $title, $args['s'] ) : false !== stripos( $title, $args['s'] );
 			if ( $matches ) {
 				$items[] = array(
@@ -1036,7 +1036,7 @@ final class WP_Customize_Nav_Menus {
 				</button>
 			</h3>
 		</script>
-	<?php
+		<?php
 	}
 
 	/**
@@ -1094,7 +1094,7 @@ final class WP_Customize_Nav_Menus {
 			}
 			?>
 		</div><!-- #available-menu-items -->
-	<?php
+		<?php
 	}
 
 	/**
@@ -1120,7 +1120,7 @@ final class WP_Customize_Nav_Menus {
 					<?php
 						/* translators: %s: Title of a section with menu items */
 						printf( __( 'Toggle section: %s' ), esc_html( $available_item_type['title'] ) );
-						?>
+					?>
 						</span>
 					<span class="toggle-indicator" aria-hidden="true"></span>
 				</button>

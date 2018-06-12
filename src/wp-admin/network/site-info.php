@@ -155,15 +155,15 @@ if ( ! empty( $messages ) ) {
 		<?php
 		// The main site of the network should not be updated on this page.
 		if ( $is_main_site ) :
-		?>
+			?>
 		<tr class="form-field">
 			<th scope="row"><?php _e( 'Site Address (URL)' ); ?></th>
 			<td><?php echo esc_url( $parsed_scheme . '://' . $details->domain . $details->path ); ?></td>
 		</tr>
-		<?php
-		// For any other site, the scheme, domain, and path can all be changed.
+			<?php
+			// For any other site, the scheme, domain, and path can all be changed.
 		else :
-		?>
+			?>
 		<tr class="form-field form-required">
 			<th scope="row"><?php _e( 'Site Address (URL)' ); ?></th>
 			<td><input name="blog[url]" type="text" id="url" value="<?php echo $parsed_scheme . '://' . esc_attr( $details->domain ) . esc_attr( $details->path ); ?>" /></td>
@@ -197,7 +197,7 @@ if ( ! empty( $messages ) ) {
 																	<?php
 																	checked( (bool) $details->$field_key, true );
 																	disabled( ! in_array( $details->$field_key, array( 0, 1 ) ) );
-?>
+																	?>
  />
 				<?php echo $field_label; ?></label><br/>
 			<?php endforeach; ?>

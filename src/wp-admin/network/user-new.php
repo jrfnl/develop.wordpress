@@ -109,7 +109,7 @@ if ( ! empty( $messages ) ) {
 }
 
 if ( isset( $add_user_errors ) && is_wp_error( $add_user_errors ) ) {
-?>
+	?>
 	<div class="error">
 		<?php
 		foreach ( $add_user_errors->get_error_messages() as $message ) {

@@ -3072,12 +3072,12 @@ function wp_targeted_link_rel_callback( $matches ) {
 	}
 
 	if ( ! empty( $rel_match[0] ) ) {
-		$parts = preg_split( '|\s+|', strtolower( $rel_match[2] ) );
-		$parts = array_map( 'esc_attr', $parts );
-		$needed = explode( ' ', $rel );
-		$parts = array_unique( array_merge( $parts, $needed ) );
+		$parts     = preg_split( '|\s+|', strtolower( $rel_match[2] ) );
+		$parts     = array_map( 'esc_attr', $parts );
+		$needed    = explode( ' ', $rel );
+		$parts     = array_unique( array_merge( $parts, $needed ) );
 		$delimiter = trim( $rel_match[1] ) ? $rel_match[1] : '"';
-		$rel = 'rel=' . $delimiter . trim( implode( ' ', $parts ) ) . $delimiter;
+		$rel       = 'rel=' . $delimiter . trim( implode( ' ', $parts ) ) . $delimiter;
 		$link_html = str_replace( $rel_match[0], $rel, $link_html );
 	} else {
 		$link_html .= " rel=\"$rel\"";
@@ -5336,7 +5336,7 @@ function print_emoji_styles() {
 	}
 
 	$printed = true;
-?>
+	?>
 <style type="text/css">
 img.wp-smiley,
 img.emoji {
@@ -5351,7 +5351,7 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-<?php
+	<?php
 }
 
 /**

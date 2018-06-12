@@ -1677,11 +1677,11 @@ function _custom_background_cb() {
 
 		$style .= $image . $position . $size . $repeat . $attachment;
 	}
-?>
+	?>
 <style type="text/css" id="custom-background-css">
 body.custom-background { <?php echo trim( $style ); ?> }
 </style>
-<?php
+	<?php
 }
 
 /**
@@ -1692,11 +1692,11 @@ body.custom-background { <?php echo trim( $style ); ?> }
 function wp_custom_css_cb() {
 	$styles = wp_get_custom_css();
 	if ( $styles || is_customize_preview() ) :
-	?>
+		?>
 		<style type="text/css" id="wp-custom-css">
 			<?php echo strip_tags( $styles ); // Note that esc_html() cannot be used because `div &gt; span` is not interpreted properly. ?>
 		</style>
-	<?php
+		<?php
 	endif;
 }
 
@@ -2613,7 +2613,7 @@ function _custom_logo_header_styles() {
 				clip: rect(1px, 1px, 1px, 1px);
 			}
 		</style>
-	<?php
+		<?php
 	}
 }
 

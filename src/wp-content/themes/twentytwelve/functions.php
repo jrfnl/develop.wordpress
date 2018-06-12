@@ -330,7 +330,7 @@ if ( ! function_exists( 'twentytwelve_content_nav' ) ) :
 				<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'twentytwelve' ) ); ?></div>
 				<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'twentytwelve' ) ); ?></div>
 			</nav><!-- .navigation -->
-		<?php
+			<?php
 	endif;
 	}
 endif;
@@ -352,15 +352,15 @@ if ( ! function_exists( 'twentytwelve_comment' ) ) :
 			case 'pingback':
 			case 'trackback':
 				// Display trackbacks differently than normal comments.
-		?>
+				?>
 		<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
 		<p><?php _e( 'Pingback:', 'twentytwelve' ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( __( '(Edit)', 'twentytwelve' ), '<span class="edit-link">', '</span>' ); ?></p>
-	<?php
+				<?php
 				break;
 			default:
 				// Proceed with normal comments.
 				global $post;
-		?>
+				?>
 		<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
 		<article id="comment-<?php comment_ID(); ?>" class="comment">
 			<header class="comment-meta comment-author vcard">
@@ -379,7 +379,7 @@ if ( ! function_exists( 'twentytwelve_comment' ) ) :
 						/* translators: 1: date, 2: time */
 						sprintf( __( '%1$s at %2$s', 'twentytwelve' ), get_comment_date(), get_comment_time() )
 					);
-					?>
+				?>
 				</header><!-- .comment-meta -->
 
 				<?php if ( '0' == $comment->comment_approved ) : ?>
@@ -403,10 +403,10 @@ if ( ! function_exists( 'twentytwelve_comment' ) ) :
 						)
 					)
 				);
-?>
+				?>
 				</div><!-- .reply -->
 			</article><!-- #comment-## -->
-		<?php
+				<?php
 				break;
 		endswitch; // end comment_type check
 	}

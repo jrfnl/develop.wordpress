@@ -172,9 +172,9 @@ require_once( ABSPATH . 'wp-admin/admin-header.php' );
 	<hr class="wp-header-end">
 <?php
 if ( ! validate_current_theme() || isset( $_GET['broken'] ) ) :
-?>
+	?>
 <div id="message1" class="updated notice is-dismissible"><p><?php _e( 'The active theme is broken. Reverting to the default theme.' ); ?></p></div>
-<?php
+	<?php
 elseif ( isset( $_GET['activated'] ) ) :
 	if ( isset( $_GET['previewed'] ) ) {
 		?>
@@ -184,11 +184,11 @@ elseif ( isset( $_GET['activated'] ) ) :
 																		<?php
 }
 	elseif ( isset( $_GET['deleted'] ) ) :
-	?>
+		?>
 <div id="message3" class="updated notice is-dismissible"><p><?php _e( 'Theme deleted.' ); ?></p></div>
 <?php elseif ( isset( $_GET['delete-active-child'] ) ) : ?>
 	<div id="message4" class="error"><p><?php _e( 'You cannot delete a theme while it has an active child theme.' ); ?></p></div>
-<?php
+	<?php
 endif;
 
 $ct = wp_get_theme();
@@ -335,16 +335,16 @@ foreach ( $themes as $theme ) :
 <?php
 // List broken themes, if any.
 if ( ! is_multisite() && current_user_can( 'edit_themes' ) && $broken_themes = wp_get_themes( array( 'errors' => true ) ) ) {
-?>
+	?>
 
 <div class="broken-themes">
 <h3><?php _e( 'Broken Themes' ); ?></h3>
 <p><?php _e( 'The following themes are installed but incomplete.' ); ?></p>
 
-<?php
-$can_delete  = current_user_can( 'delete_themes' );
-$can_install = current_user_can( 'install_themes' );
-?>
+	<?php
+	$can_delete  = current_user_can( 'delete_themes' );
+	$can_install = current_user_can( 'install_themes' );
+	?>
 <table>
 	<tr>
 		<th><?php _ex( 'Name', 'theme name' ); ?></th>
@@ -398,7 +398,7 @@ $can_install = current_user_can( 'install_themes' );
 </table>
 </div>
 
-<?php
+	<?php
 }
 ?>
 </div><!-- .wrap -->

@@ -2032,7 +2032,7 @@ function plugin_sandbox_scrape( $plugin ) {
  *
  * @param string $plugin_name The name of the plugin or theme that is suggesting content for the site's privacy policy.
  * @param string $policy_text The suggested content for inclusion in the policy.
- *                            For more information see the Plugins Handbook https://developer.wordpress.org/plugins/. 
+ *                            For more information see the Plugins Handbook https://developer.wordpress.org/plugins/.
  */
 function wp_add_privacy_policy_content( $plugin_name, $policy_text ) {
 	if ( ! class_exists( 'WP_Privacy_Policy_Content' ) ) {

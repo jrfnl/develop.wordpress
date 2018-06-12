@@ -37,7 +37,7 @@ get_header(); ?>
 								'number'     => 10,
 							)
 						);
-?>
+						?>
 						</ul>
 					</div>
 

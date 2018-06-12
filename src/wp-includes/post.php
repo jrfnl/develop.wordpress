@@ -5815,7 +5815,7 @@ function wp_check_for_changed_slugs( $post_id, $post, $post_before ) {
  */
 function wp_check_for_changed_dates( $post_id, $post, $post_before ) {
 	$previous_date = date( 'Y-m-d', strtotime( $post_before->post_date ) );
-	$new_date = date( 'Y-m-d', strtotime( $post->post_date ) );
+	$new_date      = date( 'Y-m-d', strtotime( $post->post_date ) );
 	// Don't bother if it hasn't changed.
 	if ( $new_date == $previous_date ) {
 		return;

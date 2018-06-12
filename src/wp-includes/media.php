@@ -1897,7 +1897,7 @@ function gallery_shortcode( $attr ) {
  * @since 3.9.0
  */
 function wp_underscore_playlist_templates() {
-?>
+	?>
 <script type="text/html" id="tmpl-wp-playlist-current-item">
 	<# if ( data.image ) { #>
 	<img src="{{ data.thumb.src }}" alt="" />
@@ -1936,7 +1936,7 @@ function wp_underscore_playlist_templates() {
 		<# } #>
 	</div>
 </script>
-<?php
+	<?php
 }
 
 /**
@@ -1949,9 +1949,9 @@ function wp_underscore_playlist_templates() {
 function wp_playlist_scripts( $type ) {
 	wp_enqueue_style( 'wp-mediaelement' );
 	wp_enqueue_script( 'wp-playlist' );
-?>
+	?>
 <!--[if lt IE 9]><script>document.createElement('<?php echo esc_js( $type ); ?>');</script><![endif]-->
-<?php
+	<?php
 	add_action( 'wp_footer', 'wp_underscore_playlist_templates', 0 );
 	add_action( 'admin_footer', 'wp_underscore_playlist_templates', 0 );
 }
@@ -2188,7 +2188,7 @@ function wp_playlist_shortcode( $attr ) {
 	<<?php echo $safe_type; ?> controls="controls" preload="none" width="
 				<?php
 				echo (int) $theme_width;
-	?>
+				?>
 	"
 	<?php
 	if ( 'video' === $safe_type ) :
@@ -4126,7 +4126,7 @@ function wp_media_personal_data_exporter( $email_address, $page = 1 ) {
 
 	$data_to_export = array();
 
-	$user = get_user_by( 'email' , $email_address );
+	$user = get_user_by( 'email', $email_address );
 	if ( false === $user ) {
 		return array(
 			'data' => $data_to_export,
@@ -4151,7 +4151,10 @@ function wp_media_personal_data_exporter( $email_address, $page = 1 ) {
 
 		if ( $attachment_url ) {
 			$post_data_to_export = array(
-				array( 'name'  => __( 'URL' ), 'value' => $attachment_url ),
+				array(
+					'name'  => __( 'URL' ),
+					'value' => $attachment_url,
+				),
 			);
 
 			$data_to_export[] = array(

@@ -855,10 +855,12 @@ class WP_Test_REST_Comments_Controller extends WP_Test_REST_Controller_Testcase 
 		$request->set_param( '_fields', 'id,status' );
 		$obj      = get_comment( self::$approved_id );
 		$response = $endpoint->prepare_item_for_response( $obj, $request );
-		$this->assertEquals( array(
-			'id',
-			'status',
-		), array_keys( $response->get_data() ) );
+		$this->assertEquals(
+			array(
+				'id',
+				'status',
+			), array_keys( $response->get_data() )
+		);
 	}
 
 	public function test_get_comment_author_avatar_urls() {

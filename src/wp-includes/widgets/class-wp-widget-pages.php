@@ -87,11 +87,11 @@ class WP_Widget_Pages extends WP_Widget {
 			if ( $title ) {
 				echo $args['before_title'] . $title . $args['after_title'];
 			}
-		?>
+			?>
 		<ul>
 			<?php echo $out; ?>
 		</ul>
-		<?php
+			<?php
 			echo $args['after_widget'];
 		}
 	}

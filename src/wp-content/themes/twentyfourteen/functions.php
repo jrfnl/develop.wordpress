@@ -423,7 +423,7 @@ if ( ! function_exists( 'twentyfourteen_list_authors' ) ) :
 			if ( ! $post_count ) {
 				continue;
 			}
-		?>
+			?>
 
 		<div class="contributor">
 		<div class="contributor-info">
@@ -440,7 +440,7 @@ if ( ! function_exists( 'twentyfourteen_list_authors' ) ) :
 		</div><!-- .contributor-info -->
 	</div><!-- .contributor -->
 
-	<?php
+			<?php
 	endforeach;
 	}
 endif;

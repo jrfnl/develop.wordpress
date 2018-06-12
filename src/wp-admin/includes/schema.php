@@ -1079,7 +1079,7 @@ We hope you enjoy your new site. Thanks!
 --The Team @ SITE_NAME'
 	);
 
-	$misc_exts = array(
+	$misc_exts        = array(
 		// Images.
 		'jpg',
 		'jpeg',

@@ -1676,23 +1676,23 @@ function get_comment_reply_link( $args = array(), $comment = null, $post = null 
 		);
 	} else {
 		$data_attributes = array(
-			'commentid'        => $comment->comment_ID,
-			'postid'           => $post->ID,
-			'belowelement'     => $args['add_below'] . '-' . $comment->comment_ID,
-			'respondelement'   => $args['respond_id'],
+			'commentid'      => $comment->comment_ID,
+			'postid'         => $post->ID,
+			'belowelement'   => $args['add_below'] . '-' . $comment->comment_ID,
+			'respondelement' => $args['respond_id'],
 		);
 
 		$data_attribute_string = '';
 
 		foreach ( $data_attributes as $name => $value ) {
-			$data_attribute_string .= " data-${name}=\"" . esc_attr( $value ) . "\"";
+			$data_attribute_string .= " data-${name}=\"" . esc_attr( $value ) . '"';
 		}
 
 		$data_attribute_string = trim( $data_attribute_string );
 
 		$link = sprintf(
 			"<a rel='nofollow' class='comment-reply-link' href='%s' %s aria-label='%s'>%s</a>",
-			esc_url( add_query_arg( 'replytocom', $comment->comment_ID ) ) . "#" . $args['respond_id'],
+			esc_url( add_query_arg( 'replytocom', $comment->comment_ID ) ) . '#' . $args['respond_id'],
 			$data_attribute_string,
 			esc_attr( sprintf( $args['reply_to_text'], $comment->comment_author ) ),
 			$args['reply_text']
@@ -2368,7 +2368,7 @@ function comment_form( $args = array(), $post_id = null ) {
 			 */
 			do_action( 'comment_form_must_log_in_after' );
 		else :
-		?>
+			?>
 			<form action="<?php echo esc_url( $args['action'] ); ?>" method="post" id="<?php echo esc_attr( $args['id_form'] ); ?>" class="<?php echo esc_attr( $args['class_form'] ); ?>"<?php echo $html5 ? ' novalidate' : ''; ?>>
 				<?php
 				/**

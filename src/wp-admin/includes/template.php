@@ -424,9 +424,9 @@ function wp_comment_reply( $position = 1, $checkbox = false, $mode = 'single', $
 		}
 	}
 
-?>
+	?>
 <form method="get">
-<?php if ( $table_row ) : ?>
+	<?php if ( $table_row ) : ?>
 <table style="display:none;"><tbody id="com-reply"><tr id="replyrow" class="inline-edit-row" style="display:none;"><td colspan="<?php echo $wp_list_table->get_column_count(); ?>" class="colspanchange">
 <?php else : ?>
 <div id="com-reply" style="display:none;"><div id="replyrow" style="display:none;">
@@ -499,13 +499,13 @@ function wp_comment_reply( $position = 1, $checkbox = false, $mode = 'single', $
 	}
 	?>
 	</fieldset>
-<?php if ( $table_row ) : ?>
+	<?php if ( $table_row ) : ?>
 </td></tr></tbody></table>
-<?php else : ?>
+	<?php else : ?>
 </div></div>
-<?php endif; ?>
+	<?php endif; ?>
 </form>
-<?php
+	<?php
 }
 
 /**
@@ -514,14 +514,14 @@ function wp_comment_reply( $position = 1, $checkbox = false, $mode = 'single', $
  * @since 2.9.0
  */
 function wp_comment_trashnotice() {
-?>
+	?>
 <div class="hidden" id="trash-undo-holder">
 	<div class="trash-undo-inside"><?php printf( __( 'Comment by %s moved to the trash.' ), '<strong></strong>' ); ?> <span class="undo untrash"><a href="#"><?php _e( 'Undo' ); ?></a></span></div>
 </div>
 <div class="hidden" id="spam-undo-holder">
 	<div class="spam-undo-inside"><?php printf( __( 'Comment by %s marked as spam.' ), '<strong></strong>' ); ?> <span class="undo unspam"><a href="#"><?php _e( 'Undo' ); ?></a></span></div>
 </div>
-<?php
+	<?php
 }
 
 /**
@@ -549,7 +549,7 @@ function list_meta( $meta ) {
 		return;
 	}
 	$count = 0;
-?>
+	?>
 <table id="list-table">
 	<thead>
 	<tr>
@@ -558,14 +558,14 @@ function list_meta( $meta ) {
 	</tr>
 	</thead>
 	<tbody id='the-list' data-wp-lists='list:meta'>
-<?php
-foreach ( $meta as $entry ) {
-	echo _list_meta_row( $entry, $count );
-}
-?>
+	<?php
+	foreach ( $meta as $entry ) {
+		echo _list_meta_row( $entry, $count );
+	}
+	?>
 	</tbody>
 </table>
-<?php
+	<?php
 }
 
 /**
@@ -676,7 +676,7 @@ function meta_form( $post = null ) {
 	} else {
 		$meta_key_input_id = 'metakeyinput';
 	}
-?>
+	?>
 <p><strong><?php _e( 'Add New Custom Field:' ); ?></strong></p>
 <table id="newmeta">
 <thead>
@@ -689,18 +689,18 @@ function meta_form( $post = null ) {
 <tbody>
 <tr>
 <td id="newmetaleft" class="left">
-<?php if ( $keys ) { ?>
+	<?php if ( $keys ) { ?>
 <select id="metakeyselect" name="metakeyselect">
 <option value="#NONE#"><?php _e( '&mdash; Select &mdash;' ); ?></option>
-<?php
+		<?php
 
-foreach ( $keys as $key ) {
-	if ( is_protected_meta( $key, 'post' ) || ! current_user_can( 'add_post_meta', $post->ID, $key ) ) {
-		continue;
-	}
-	echo "\n<option value='" . esc_attr( $key ) . "'>" . esc_html( $key ) . '</option>';
-}
-?>
+		foreach ( $keys as $key ) {
+			if ( is_protected_meta( $key, 'post' ) || ! current_user_can( 'add_post_meta', $post->ID, $key ) ) {
+				continue;
+			}
+			echo "\n<option value='" . esc_attr( $key ) . "'>" . esc_html( $key ) . '</option>';
+		}
+		?>
 </select>
 <input class="hide-if-js" type="text" id="metakeyinput" name="metakeyinput" value="" />
 <a href="#postcustomstuff" class="hide-if-no-js" onclick="jQuery('#metakeyinput, #metakeyselect, #enternew, #cancelnew').toggle();return false;">
@@ -715,20 +715,20 @@ foreach ( $keys as $key ) {
 
 <tr><td colspan="2">
 <div class="submit">
-<?php
-submit_button(
-	__( 'Add Custom Field' ), '', 'addmeta', false, array(
-		'id'            => 'newmeta-submit',
-		'data-wp-lists' => 'add:the-list:newmeta',
-	)
-);
-?>
+	<?php
+	submit_button(
+		__( 'Add Custom Field' ), '', 'addmeta', false, array(
+			'id'            => 'newmeta-submit',
+			'data-wp-lists' => 'add:the-list:newmeta',
+		)
+	);
+	?>
 </div>
-<?php wp_nonce_field( 'add-meta', '_ajax_nonce-add-meta', false ); ?>
+	<?php wp_nonce_field( 'add-meta', '_ajax_nonce-add-meta', false ); ?>
 </td></tr>
 </tbody>
 </table>
-<?php
+	<?php
 
 }
 
@@ -817,13 +817,13 @@ function touch_time( $edit = 1, $for_post = 1, $tab_index = 0, $multi = 0 ) {
 		$cur_timeunit = 'cur_' . $timeunit;
 		echo '<input type="hidden" id="' . $cur_timeunit . '" name="' . $cur_timeunit . '" value="' . $curr . '" />' . "\n";
 	}
-?>
+	?>
 
 <p>
 <a href="#edit_timestamp" class="save-timestamp hide-if-no-js button"><?php _e( 'OK' ); ?></a>
 <a href="#edit_timestamp" class="cancel-timestamp hide-if-no-js button-cancel"><?php _e( 'Cancel' ); ?></a>
 </p>
-<?php
+	<?php
 }
 
 /**
@@ -934,7 +934,7 @@ function wp_import_upload_form( $action ) {
 		<p><strong><?php echo $upload_dir['error']; ?></strong></p></div>
 								<?php
 	else :
-?>
+		?>
 <form enctype="multipart/form-data" id="import-upload-form" method="post" class="wp-upload-form" action="<?php echo esc_url( wp_nonce_url( $action, 'import-upload' ) ); ?>">
 <p>
 <label for="upload"><?php _e( 'Choose a file from your computer:' ); ?></label> (<?php printf( __( 'Maximum size: %s' ), $size ); ?>)
@@ -942,9 +942,9 @@ function wp_import_upload_form( $action ) {
 <input type="hidden" name="action" value="save" />
 <input type="hidden" name="max_file_size" value="<?php echo $bytes; ?>" />
 </p>
-<?php submit_button( __( 'Upload file and import' ), 'primary' ); ?>
+		<?php submit_button( __( 'Upload file and import' ), 'primary' ); ?>
 </form>
-<?php
+		<?php
 	endif;
 }
 
@@ -1243,7 +1243,7 @@ function do_accordion_sections( $screen, $context, $object ) {
 
 	$page = $screen->id;
 
-	$hidden     = get_hidden_meta_boxes( $screen );
+	$hidden = get_hidden_meta_boxes( $screen );
 	?>
 	<div id="side-sortables" class="accordion-container">
 		<ul class="outer-border">
@@ -1650,7 +1650,7 @@ function settings_errors( $setting = '', $sanitize = false, $hide_on_update = fa
  * @param string $found_action
  */
 function find_posts_div( $found_action = '' ) {
-?>
+	?>
 	<div id="find-posts" class="find-box" style="display: none;">
 		<div id="find-posts-head" class="find-box-head">
 			<?php _e( 'Attach to existing content' ); ?>
@@ -1676,7 +1676,7 @@ function find_posts_div( $found_action = '' ) {
 			<div class="clear"></div>
 		</div>
 	</div>
-<?php
+	<?php
 }
 
 /**
@@ -1745,11 +1745,11 @@ function iframe_header( $title = '', $deprecated = false ) {
 
 	@header( 'Content-Type: ' . get_option( 'html_type' ) . '; charset=' . get_option( 'blog_charset' ) );
 	_wp_admin_html_begin();
-?>
+	?>
 <title><?php bloginfo( 'name' ); ?> &rsaquo; <?php echo $title; ?> &#8212; <?php _e( 'WordPress' ); ?></title>
-<?php
-wp_enqueue_style( 'colors' );
-?>
+	<?php
+	wp_enqueue_style( 'colors' );
+	?>
 <script type="text/javascript">
 addLoadEvent = function(func){if(typeof jQuery!="undefined")jQuery(document).ready(func);else if(typeof wpOnload!='function'){wpOnload=func;}else{var oldonload=wpOnload;wpOnload=function(){oldonload();func();}}};
 function tb_close(){var win=window.dialogArguments||opener||parent||top;win.tb_remove();}
@@ -1761,50 +1761,50 @@ var ajaxurl = '<?php echo admin_url( 'admin-ajax.php', 'relative' ); ?>',
 	decimalPoint = '<?php echo addslashes( $wp_locale->number_format['decimal_point'] ); ?>',
 	isRtl = <?php echo (int) is_rtl(); ?>;
 </script>
-<?php
-/** This action is documented in wp-admin/admin-header.php */
-do_action( 'admin_enqueue_scripts', $hook_suffix );
+	<?php
+	/** This action is documented in wp-admin/admin-header.php */
+	do_action( 'admin_enqueue_scripts', $hook_suffix );
 
-/** This action is documented in wp-admin/admin-header.php */
-do_action( "admin_print_styles-$hook_suffix" );
+	/** This action is documented in wp-admin/admin-header.php */
+	do_action( "admin_print_styles-$hook_suffix" );
 
-/** This action is documented in wp-admin/admin-header.php */
-do_action( 'admin_print_styles' );
+	/** This action is documented in wp-admin/admin-header.php */
+	do_action( 'admin_print_styles' );
 
-/** This action is documented in wp-admin/admin-header.php */
-do_action( "admin_print_scripts-$hook_suffix" );
+	/** This action is documented in wp-admin/admin-header.php */
+	do_action( "admin_print_scripts-$hook_suffix" );
 
-/** This action is documented in wp-admin/admin-header.php */
-do_action( 'admin_print_scripts' );
+	/** This action is documented in wp-admin/admin-header.php */
+	do_action( 'admin_print_scripts' );
 
-/** This action is documented in wp-admin/admin-header.php */
-do_action( "admin_head-$hook_suffix" );
+	/** This action is documented in wp-admin/admin-header.php */
+	do_action( "admin_head-$hook_suffix" );
 
-/** This action is documented in wp-admin/admin-header.php */
-do_action( 'admin_head' );
+	/** This action is documented in wp-admin/admin-header.php */
+	do_action( 'admin_head' );
 
-$admin_body_class .= ' locale-' . sanitize_html_class( strtolower( str_replace( '_', '-', get_user_locale() ) ) );
+	$admin_body_class .= ' locale-' . sanitize_html_class( strtolower( str_replace( '_', '-', get_user_locale() ) ) );
 
-if ( is_rtl() ) {
-	$admin_body_class .= ' rtl';
-}
+	if ( is_rtl() ) {
+		$admin_body_class .= ' rtl';
+	}
 
-?>
+	?>
 </head>
-<?php
-/** This filter is documented in wp-admin/admin-header.php */
-$admin_body_classes = apply_filters( 'admin_body_class', '' );
-$admin_body_classes = ltrim( $admin_body_classes . ' ' . $admin_body_class );
-?>
+	<?php
+	/** This filter is documented in wp-admin/admin-header.php */
+	$admin_body_classes = apply_filters( 'admin_body_class', '' );
+	$admin_body_classes = ltrim( $admin_body_classes . ' ' . $admin_body_class );
+	?>
 <body
-<?php
-/**
- * @global string $body_id
- */
-if ( isset( $GLOBALS['body_id'] ) ) {
-	echo ' id="' . $GLOBALS['body_id'] . '"';
-}
-?>
+	<?php
+	/**
+	 * @global string $body_id
+	 */
+	if ( isset( $GLOBALS['body_id'] ) ) {
+		echo ' id="' . $GLOBALS['body_id'] . '"';
+	}
+	?>
  class="wp-admin wp-core-ui no-js iframe <?php echo $admin_body_classes; ?>">
 <script type="text/javascript">
 (function(){
@@ -1813,7 +1813,7 @@ c = c.replace(/no-js/, 'js');
 document.body.className = c;
 })();
 </script>
-<?php
+	<?php
 }
 
 /**
@@ -1834,7 +1834,7 @@ function iframe_footer() {
 	global $hook_suffix;
 	?>
 	<div class="hidden">
-<?php
+	<?php
 	/** This action is documented in wp-admin/admin-footer.php */
 	do_action( 'admin_footer', $hook_suffix );
 
@@ -1843,12 +1843,12 @@ function iframe_footer() {
 
 	/** This action is documented in wp-admin/admin-footer.php */
 	do_action( 'admin_print_footer_scripts' );
-?>
+	?>
 	</div>
 <script type="text/javascript">if(typeof wpOnload=="function")wpOnload();</script>
 </body>
 </html>
-<?php
+	<?php
 }
 
 /**
@@ -2009,7 +2009,7 @@ function _media_states( $post ) {
  * @since 2.8.0
  */
 function compression_test() {
-?>
+	?>
 	<script type="text/javascript">
 	var compressionNonce = <?php echo wp_json_encode( wp_create_nonce( 'update_can_compress_scripts' ) ); ?>;
 	var testCompression = {
@@ -2059,7 +2059,7 @@ function compression_test() {
 	};
 	testCompression.check();
 	</script>
-<?php
+	<?php
 }
 
 /**
@@ -2169,7 +2169,7 @@ function _wp_admin_html_begin() {
 		@header( 'X-UA-Compatible: IE=edge' );
 	}
 
-?>
+	?>
 <!DOCTYPE html>
 <!--[if IE 8]>
 <html xmlns="http://www.w3.org/1999/xhtml" class="ie8 <?php echo $admin_html_class; ?>"
@@ -2180,7 +2180,7 @@ function _wp_admin_html_begin() {
 																	 * @since 2.2.0
 																	 */
 																	do_action( 'admin_xml_ns' );
-?>
+																	?>
 	<?php language_attributes(); ?>>
 <![endif]-->
 <!--[if !(IE 8) ]><!-->
@@ -2188,12 +2188,12 @@ function _wp_admin_html_begin() {
 																<?php
 																/** This action is documented in wp-admin/includes/template.php */
 																do_action( 'admin_xml_ns' );
-?>
+																?>
 	<?php language_attributes(); ?>>
 <!--<![endif]-->
 <head>
 <meta http-equiv="Content-Type" content="<?php bloginfo( 'html_type' ); ?>; charset=<?php echo get_option( 'blog_charset' ); ?>" />
-<?php
+	<?php
 }
 
 /**

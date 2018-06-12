@@ -97,7 +97,7 @@ if ( ! function_exists( 'twentyfifteen_header_style' ) ) :
 		<?php
 		// Short header for when there is no Custom Header and Header Text is hidden.
 		if ( empty( $header_image ) && ! display_header_text() ) :
-	?>
+			?>
 		.site-header {
 			padding-top: 14px;
 			padding-bottom: 14px;
@@ -134,12 +134,12 @@ if ( ! function_exists( 'twentyfifteen_header_style' ) ) :
 				min-height: 0;
 			}
 		}
-	<?php
+			<?php
 		endif;
 
 		// Has a Custom Header been added?
 		if ( ! empty( $header_image ) ) :
-	?>
+			?>
 		.site-header {
 
 			/*
@@ -176,12 +176,12 @@ if ( ! function_exists( 'twentyfifteen_header_style' ) ) :
 				background: transparent;
 			}
 		}
-	<?php
+			<?php
 		endif;
 
 		// Has the text been hidden?
 		if ( ! display_header_text() ) :
-	?>
+			?>
 		.site-title,
 		.site-description {
 			clip: rect(1px, 1px, 1px, 1px);
@@ -189,7 +189,7 @@ if ( ! function_exists( 'twentyfifteen_header_style' ) ) :
 		}
 	<?php endif; ?>
 	</style>
-	<?php
+		<?php
 	}
 endif; // twentyfifteen_header_style
 

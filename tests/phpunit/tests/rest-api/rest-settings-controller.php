@@ -21,7 +21,7 @@ class WP_Test_REST_Settings_Controller extends WP_Test_REST_Controller_Testcase 
 			)
 		);
 
-		self::$author        = $factory->user->create(
+		self::$author = $factory->user->create(
 			array(
 				'role' => 'author',
 			)

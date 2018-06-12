@@ -974,10 +974,12 @@ class WP_Test_REST_Tags_Controller extends WP_Test_REST_Controller_Testcase {
 		$request->set_param( '_fields', 'id,name' );
 		$term     = get_term_by( 'id', $this->factory->tag->create(), 'post_tag' );
 		$response = $endpoint->prepare_item_for_response( $term, $request );
-		$this->assertEquals( array(
-			'id',
-			'name',
-		), array_keys( $response->get_data() ) );
+		$this->assertEquals(
+			array(
+				'id',
+				'name',
+			), array_keys( $response->get_data() )
+		);
 	}
 
 	public function test_get_item_schema() {

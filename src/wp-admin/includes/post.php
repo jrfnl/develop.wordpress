@@ -1701,7 +1701,7 @@ function _admin_notice_post_locked() {
 		<a class="button" href="<?php echo esc_url( $sendback ); ?>"><?php echo $sendback_text; ?></a>
 		<?php if ( $preview_link ) { ?>
 		<a class="button<?php echo $tab_last; ?>" href="<?php echo esc_url( $preview_link ); ?>"><?php _e( 'Preview' ); ?></a>
-		<?php
+			<?php
 }
 
 		// Allow plugins to prevent some users overriding the post lock
@@ -1711,7 +1711,7 @@ if ( $override ) {
 			<?php
 }
 
-		?>
+?>
 		</p>
 		</div>
 		<?php

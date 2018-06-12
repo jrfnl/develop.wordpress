@@ -1781,7 +1781,7 @@ function wp_normalize_path( $path ) {
 	$wrapper = '';
 	if ( wp_is_stream( $path ) ) {
 		list( $wrapper, $path ) = explode( '://', $path, 2 );
-		$wrapper .= '://';
+		$wrapper               .= '://';
 	}
 
 	// Standardise all paths to use /
@@ -2886,17 +2886,17 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ) {
 		} else {
 			$dir_attr = "dir='$text_direction'";
 		}
-?>
+		?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" <?php echo $dir_attr; ?>>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width">
-	<?php
-	if ( function_exists( 'wp_no_robots' ) ) {
-		wp_no_robots();
-	}
-	?>
+		<?php
+		if ( function_exists( 'wp_no_robots' ) ) {
+			wp_no_robots();
+		}
+		?>
 	<title><?php echo $title; ?></title>
 	<style type="text/css">
 		html {
@@ -3020,7 +3020,7 @@ function _default_wp_die_handler( $message, $title = '', $args = array() ) {
 	<?php echo $message; ?>
 </body>
 </html>
-<?php
+	<?php
 	die();
 }
 
@@ -3923,7 +3923,7 @@ function dead_db() {
 	if ( is_rtl() ) {
 		$dir_attr = ' dir="rtl"';
 	}
-?>
+	?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"<?php echo $dir_attr; ?>>
 <head>
@@ -3935,7 +3935,7 @@ function dead_db() {
 	<h1><?php _e( 'Error establishing a database connection' ); ?></h1>
 </body>
 </html>
-<?php
+	<?php
 	die();
 }
 
@@ -5427,7 +5427,7 @@ function wp_debug_backtrace_summary( $ignore_class = null, $skip_frames = 0, $pr
 	if ( ! isset( $truncate_paths ) ) {
 		$truncate_paths = array(
 			wp_normalize_path( WP_CONTENT_DIR ),
-			wp_normalize_path( ABSPATH )
+			wp_normalize_path( ABSPATH ),
 		);
 	}
 
@@ -6182,7 +6182,7 @@ function wp_privacy_anonymize_ip( $ip_addr, $ipv6_fallback = false ) {
 		// Partially anonymize the IP by reducing it to the corresponding network ID.
 		if ( function_exists( 'inet_pton' ) && function_exists( 'inet_ntop' ) ) {
 			$ip_addr = inet_ntop( inet_pton( $ip_addr ) & inet_pton( $netmask ) );
-			if ( false === $ip_addr) {
+			if ( false === $ip_addr ) {
 				return '::';
 			}
 		} elseif ( ! $ipv6_fallback ) {

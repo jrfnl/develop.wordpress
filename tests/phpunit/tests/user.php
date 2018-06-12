@@ -1562,7 +1562,7 @@ class Tests_User extends WP_UnitTestCase {
 		$_POST['role']     = 'subscriber';
 		$_POST['email']    = 'subscriber@subscriber.test';
 		$_POST['nickname'] = 'subscriber';
-		$this->assertSame(  $administrator, edit_user( $administrator ) );
+		$this->assertSame( $administrator, edit_user( $administrator ) );
 
 		// Should still have the old role.
 		$this->assertSame( array( 'administrator' ), get_userdata( $administrator )->roles );
@@ -1577,7 +1577,7 @@ class Tests_User extends WP_UnitTestCase {
 		$_POST['role']     = 'administrator';
 		$_POST['email']    = 'administrator@administrator.test';
 		$_POST['nickname'] = 'administrator';
-		$this->assertSame(  $editor, edit_user( $editor ) );
+		$this->assertSame( $editor, edit_user( $editor ) );
 
 		// Should have the new role.
 		$this->assertSame( array( 'administrator' ), get_userdata( $editor )->roles );

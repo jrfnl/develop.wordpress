@@ -343,7 +343,7 @@ if ( current_user_can( 'create_users' ) ) {
 		?>
 		</ul>
 	</div>
-<?php
+	<?php
 endif;
 
 if ( ! empty( $messages ) ) {
@@ -378,19 +378,19 @@ if ( is_multisite() && current_user_can( 'promote_users' ) ) {
 		$label = __( 'Email or Username' );
 		$type  = 'text';
 	}
-?>
+	?>
 <form method="post" name="adduser" id="adduser" class="validate" novalidate="novalidate"
-<?php
+	<?php
 	/**
 	 * Fires inside the adduser form tag.
 	 *
 	 * @since 3.0.0
 	 */
 	do_action( 'user_new_form_tag' );
-?>
+	?>
 >
 <input name="action" type="hidden" value="adduser" />
-<?php wp_nonce_field( 'add-user', '_wpnonce_add-user' ); ?>
+	<?php wp_nonce_field( 'add-user', '_wpnonce_add-user' ); ?>
 
 <table class="form-table">
 	<tr class="form-field form-required">
@@ -404,7 +404,7 @@ if ( is_multisite() && current_user_can( 'promote_users' ) ) {
 			</select>
 		</td>
 	</tr>
-<?php if ( current_user_can( 'manage_network_users' ) ) { ?>
+	<?php if ( current_user_can( 'manage_network_users' ) ) { ?>
 	<tr>
 		<th scope="row"><?php _e( 'Skip Confirmation Email' ); ?></th>
 		<td>
@@ -414,53 +414,53 @@ if ( is_multisite() && current_user_can( 'promote_users' ) ) {
 	</tr>
 <?php } ?>
 </table>
-<?php
-/**
- * Fires at the end of the new user form.
- *
- * Passes a contextual string to make both types of new user forms
- * uniquely targetable. Contexts are 'add-existing-user' (Multisite),
- * and 'add-new-user' (single site and network admin).
- *
- * @since 3.7.0
- *
- * @param string $type A contextual string specifying which type of new user form the hook follows.
- */
-do_action( 'user_new_form', 'add-existing-user' );
-?>
-<?php submit_button( __( 'Add Existing User' ), 'primary', 'adduser', true, array( 'id' => 'addusersub' ) ); ?>
+	<?php
+	/**
+	 * Fires at the end of the new user form.
+	 *
+	 * Passes a contextual string to make both types of new user forms
+	 * uniquely targetable. Contexts are 'add-existing-user' (Multisite),
+	 * and 'add-new-user' (single site and network admin).
+	 *
+	 * @since 3.7.0
+	 *
+	 * @param string $type A contextual string specifying which type of new user form the hook follows.
+	 */
+	do_action( 'user_new_form', 'add-existing-user' );
+	?>
+	<?php submit_button( __( 'Add Existing User' ), 'primary', 'adduser', true, array( 'id' => 'addusersub' ) ); ?>
 </form>
-<?php
+	<?php
 } // is_multisite()
 
 if ( current_user_can( 'create_users' ) ) {
 	if ( $do_both ) {
 		echo '<h2 id="create-new-user">' . __( 'Add New User' ) . '</h2>';
 	}
-?>
+	?>
 <p><?php _e( 'Create a brand new user and add them to this site.' ); ?></p>
 <form method="post" name="createuser" id="createuser" class="validate" novalidate="novalidate"
-<?php
+	<?php
 	/** This action is documented in wp-admin/user-new.php */
 	do_action( 'user_new_form_tag' );
-?>
+	?>
 >
 <input name="action" type="hidden" value="createuser" />
-<?php wp_nonce_field( 'create-user', '_wpnonce_create-user' ); ?>
-<?php
-// Load up the passed data, else set to a default.
-$creating = isset( $_POST['createuser'] );
+	<?php wp_nonce_field( 'create-user', '_wpnonce_create-user' ); ?>
+	<?php
+	// Load up the passed data, else set to a default.
+	$creating = isset( $_POST['createuser'] );
 
-$new_user_login             = $creating && isset( $_POST['user_login'] ) ? wp_unslash( $_POST['user_login'] ) : '';
-$new_user_firstname         = $creating && isset( $_POST['first_name'] ) ? wp_unslash( $_POST['first_name'] ) : '';
-$new_user_lastname          = $creating && isset( $_POST['last_name'] ) ? wp_unslash( $_POST['last_name'] ) : '';
-$new_user_email             = $creating && isset( $_POST['email'] ) ? wp_unslash( $_POST['email'] ) : '';
-$new_user_uri               = $creating && isset( $_POST['url'] ) ? wp_unslash( $_POST['url'] ) : '';
-$new_user_role              = $creating && isset( $_POST['role'] ) ? wp_unslash( $_POST['role'] ) : '';
-$new_user_send_notification = $creating && ! isset( $_POST['send_user_notification'] ) ? false : true;
-$new_user_ignore_pass       = $creating && isset( $_POST['noconfirmation'] ) ? wp_unslash( $_POST['noconfirmation'] ) : '';
+	$new_user_login             = $creating && isset( $_POST['user_login'] ) ? wp_unslash( $_POST['user_login'] ) : '';
+	$new_user_firstname         = $creating && isset( $_POST['first_name'] ) ? wp_unslash( $_POST['first_name'] ) : '';
+	$new_user_lastname          = $creating && isset( $_POST['last_name'] ) ? wp_unslash( $_POST['last_name'] ) : '';
+	$new_user_email             = $creating && isset( $_POST['email'] ) ? wp_unslash( $_POST['email'] ) : '';
+	$new_user_uri               = $creating && isset( $_POST['url'] ) ? wp_unslash( $_POST['url'] ) : '';
+	$new_user_role              = $creating && isset( $_POST['role'] ) ? wp_unslash( $_POST['role'] ) : '';
+	$new_user_send_notification = $creating && ! isset( $_POST['send_user_notification'] ) ? false : true;
+	$new_user_ignore_pass       = $creating && isset( $_POST['noconfirmation'] ) ? wp_unslash( $_POST['noconfirmation'] ) : '';
 
-?>
+	?>
 <table class="form-table">
 	<tr class="form-field form-required">
 		<th scope="row"><label for="user_login"><?php _e( 'Username' ); ?> <span class="description"><?php _e( '(required)' ); ?></span></label></th>
@@ -470,7 +470,7 @@ $new_user_ignore_pass       = $creating && isset( $_POST['noconfirmation'] ) ? w
 		<th scope="row"><label for="email"><?php _e( 'Email' ); ?> <span class="description"><?php _e( '(required)' ); ?></span></label></th>
 		<td><input name="email" type="email" id="email" value="<?php echo esc_attr( $new_user_email ); ?>" /></td>
 	</tr>
-<?php if ( ! is_multisite() ) { ?>
+	<?php if ( ! is_multisite() ) { ?>
 	<tr class="form-field">
 		<th scope="row"><label for="first_name"><?php _e( 'First Name' ); ?> </label></th>
 		<td><input name="first_name" type="text" id="first_name" value="<?php echo esc_attr( $new_user_firstname ); ?>" /></td>
@@ -555,12 +555,12 @@ $new_user_ignore_pass       = $creating && isset( $_POST['noconfirmation'] ) ? w
 	<?php } ?>
 </table>
 
-<?php
-/** This action is documented in wp-admin/user-new.php */
-do_action( 'user_new_form', 'add-new-user' );
-?>
+	<?php
+	/** This action is documented in wp-admin/user-new.php */
+	do_action( 'user_new_form', 'add-new-user' );
+	?>
 
-<?php submit_button( __( 'Add New User' ), 'primary', 'createuser', true, array( 'id' => 'createusersub' ) ); ?>
+	<?php submit_button( __( 'Add New User' ), 'primary', 'createuser', true, array( 'id' => 'createusersub' ) ); ?>
 
 </form>
 <?php } // current_user_can('create_users') ?>

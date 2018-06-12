@@ -62,16 +62,16 @@ if ( ! in_array( get_option( 'blog_charset' ), array( 'utf8', 'utf-8', 'UTF8', '
 <?php if ( ! get_pages() ) : ?>
 <input name="show_on_front" type="hidden" value="posts" />
 <table class="form-table">
-<?php
-if ( 'posts' != get_option( 'show_on_front' ) ) :
-	update_option( 'show_on_front', 'posts' );
+	<?php
+	if ( 'posts' != get_option( 'show_on_front' ) ) :
+		update_option( 'show_on_front', 'posts' );
 	endif;
 
 else :
 	if ( 'page' == get_option( 'show_on_front' ) && ! get_option( 'page_on_front' ) && ! get_option( 'page_for_posts' ) ) {
 		update_option( 'show_on_front', 'posts' );
 	}
-?>
+	?>
 <table class="form-table">
 <tr>
 <th scope="row"><?php _e( 'Your homepage displays' ); ?></th>
@@ -100,7 +100,7 @@ else :
 			)
 		)
 	);
-?>
+	?>
 </label></li>
 	<li><label for="page_for_posts">
 	<?php
@@ -115,10 +115,10 @@ else :
 			)
 		)
 	);
-?>
+	?>
 </label></li>
 </ul>
-<?php if ( 'page' == get_option( 'show_on_front' ) && get_option( 'page_for_posts' ) == get_option( 'page_on_front' ) ) : ?>
+	<?php if ( 'page' == get_option( 'show_on_front' ) && get_option( 'page_for_posts' ) == get_option( 'page_on_front' ) ) : ?>
 <div id="front-page-warning" class="error inline"><p><?php _e( '<strong>Warning:</strong> these pages should not be the same!' ); ?></p></div>
 <?php endif; ?>
 </fieldset></td>

@@ -138,10 +138,12 @@ class WP_Test_REST_Post_Statuses_Controller extends WP_Test_REST_Controller_Test
 		$request->set_param( 'context', 'edit' );
 		$request->set_param( '_fields', 'id,name' );
 		$response = $endpoint->prepare_item_for_response( $obj, $request );
-		$this->assertEquals( array(
-			// 'id' doesn't exist in this context.
-			'name',
-		), array_keys( $response->get_data() ) );
+		$this->assertEquals(
+			array(
+				// 'id' doesn't exist in this context.
+				'name',
+			), array_keys( $response->get_data() )
+		);
 	}
 
 	public function test_get_item_schema() {

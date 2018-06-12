@@ -537,7 +537,7 @@ jQuery(document).ready( function($) {
 	});
 });
 </script>
-<?php
+	<?php
 }
 
 /**
@@ -550,12 +550,12 @@ jQuery(document).ready( function($) {
  * @param object $user User data object
  */
 function use_ssl_preference( $user ) {
-?>
+	?>
 	<tr class="user-use-ssl-wrap">
 		<th scope="row"><?php _e( 'Use https' ); ?></th>
 		<td><label for="use_ssl"><input name="use_ssl" type="checkbox" id="use_ssl" value="1" <?php checked( '1', $user->use_ssl ); ?> /> <?php _e( 'Always use https when visiting the admin' ); ?></label></td>
 	</tr>
-<?php
+	<?php
 }
 
 /**
@@ -627,10 +627,12 @@ function _wp_privacy_completed_request( $request_id ) {
 
 	update_post_meta( $request_id, '_wp_user_request_completed_timestamp', time() );
 
-	$request = wp_update_post( array(
-		'ID'          => $request_id,
-		'post_status' => 'request-completed',
-	) );
+	$request = wp_update_post(
+		array(
+			'ID'          => $request_id,
+			'post_status' => 'request-completed',
+		)
+	);
 
 	return $request;
 }
@@ -753,29 +755,33 @@ function _wp_personal_data_handle_actions() {
  */
 function _wp_personal_data_cleanup_requests() {
 	/** This filter is documented in wp-includes/user.php */
-	$expires        = (int) apply_filters( 'user_request_key_expiration', DAY_IN_SECONDS );
+	$expires = (int) apply_filters( 'user_request_key_expiration', DAY_IN_SECONDS );
 
-	$requests_query = new WP_Query( array(
-		'post_type'      => 'user_request',
-		'posts_per_page' => -1,
-		'post_status'    => 'request-pending',
-		'fields'         => 'ids',
-		'date_query'     => array(
-			array(
-				'column' => 'post_modified_gmt',
-				'before' => $expires . ' seconds ago',
+	$requests_query = new WP_Query(
+		array(
+			'post_type'      => 'user_request',
+			'posts_per_page' => -1,
+			'post_status'    => 'request-pending',
+			'fields'         => 'ids',
+			'date_query'     => array(
+				array(
+					'column' => 'post_modified_gmt',
+					'before' => $expires . ' seconds ago',
+				),
 			),
-		),
-	) );
+		)
+	);
 
 	$request_ids = $requests_query->posts;
 
 	foreach ( $request_ids as $request_id ) {
-		wp_update_post( array(
-			'ID'            => $request_id,
-			'post_status'   => 'request-failed',
-			'post_password' => '',
-		) );
+		wp_update_post(
+			array(
+				'ID'            => $request_id,
+				'post_status'   => 'request-failed',
+				'post_password' => '',
+			)
+		);
 	}
 }
 
@@ -796,10 +802,12 @@ function _wp_personal_data_export_page() {
 	// "Borrow" xfn.js for now so we don't have to create new files.
 	wp_enqueue_script( 'xfn' );
 
-	$requests_table = new WP_Privacy_Data_Export_Requests_Table( array(
-		'plural'   => 'privacy_requests',
-		'singular' => 'privacy_request',
-	) );
+	$requests_table = new WP_Privacy_Data_Export_Requests_Table(
+		array(
+			'plural'   => 'privacy_requests',
+			'singular' => 'privacy_request',
+		)
+	);
 	$requests_table->process_bulk_action();
 	$requests_table->prepare_items();
 	?>
@@ -867,10 +875,12 @@ function _wp_personal_data_removal_page() {
 	// "Borrow" xfn.js for now so we don't have to create new files.
 	wp_enqueue_script( 'xfn' );
 
-	$requests_table = new WP_Privacy_Data_Removal_Requests_Table( array(
-		'plural'   => 'privacy_requests',
-		'singular' => 'privacy_request',
-	) );
+	$requests_table = new WP_Privacy_Data_Removal_Requests_Table(
+		array(
+			'plural'   => 'privacy_requests',
+			'singular' => 'privacy_request',
+		)
+	);
 
 	$requests_table->process_bulk_action();
 	$requests_table->prepare_items();
@@ -1488,10 +1498,16 @@ class WP_Privacy_Data_Export_Requests_Table extends WP_Privacy_Requests_Table {
 				submit_button( __( 'Retry' ), 'secondary', 'privacy_action_email_retry[' . $item->ID . ']', false );
 				break;
 			case 'request-completed':
-				echo '<a href="' . esc_url( wp_nonce_url( add_query_arg( array(
-					'action'     => 'delete',
-					'request_id' => array( $item->ID ),
-				), admin_url( 'tools.php?page=export_personal_data' ) ), 'bulk-privacy_requests' ) ) . '" class="button">' . esc_html__( 'Remove request' ) . '</a>';
+				echo '<a href="' . esc_url(
+					wp_nonce_url(
+						add_query_arg(
+							array(
+								'action'     => 'delete',
+								'request_id' => array( $item->ID ),
+							), admin_url( 'tools.php?page=export_personal_data' )
+						), 'bulk-privacy_requests'
+					)
+				) . '" class="button">' . esc_html__( 'Remove request' ) . '</a>';
 				break;
 		}
 	}
@@ -1602,10 +1618,16 @@ class WP_Privacy_Data_Removal_Requests_Table extends WP_Privacy_Requests_Table {
 				submit_button( __( 'Retry' ), 'secondary', 'privacy_action_email_retry[' . $item->ID . ']', false );
 				break;
 			case 'request-completed':
-				echo '<a href="' . esc_url( wp_nonce_url( add_query_arg( array(
-					'action'     => 'delete',
-					'request_id' => array( $item->ID ),
-				), admin_url( 'tools.php?page=remove_personal_data' ) ), 'bulk-privacy_requests' ) ) . '" class="button">' . esc_html__( 'Remove request' ) . '</a>';
+				echo '<a href="' . esc_url(
+					wp_nonce_url(
+						add_query_arg(
+							array(
+								'action'     => 'delete',
+								'request_id' => array( $item->ID ),
+							), admin_url( 'tools.php?page=remove_personal_data' )
+						), 'bulk-privacy_requests'
+					)
+				) . '" class="button">' . esc_html__( 'Remove request' ) . '</a>';
 				break;
 		}
 	}

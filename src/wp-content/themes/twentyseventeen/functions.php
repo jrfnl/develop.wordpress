@@ -418,11 +418,11 @@ function twentyseventeen_colors_css_wrap() {
 	if ( is_customize_preview() ) {
 		$customize_preview_data_hue = 'data-hue="' . $hue . '"';
 	}
-?>
+	?>
 	<style type="text/css" id="custom-theme-colors" <?php echo $customize_preview_data_hue; ?>>
 		<?php echo twentyseventeen_custom_colors_css(); ?>
 	</style>
-<?php
+	<?php
 }
 add_action( 'wp_head', 'twentyseventeen_colors_css_wrap' );
 

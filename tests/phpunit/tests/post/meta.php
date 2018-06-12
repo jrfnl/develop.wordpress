@@ -13,19 +13,23 @@ class Tests_Post_Meta extends WP_UnitTestCase {
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$author = $factory->user->create_and_get( array( 'role' => 'editor' ) );
 
-		self::$post_id = $factory->post->create( array(
-			'post_author'  => self::$author->ID,
-			'post_status'  => 'publish',
-			'post_content' => rand_str(),
-			'post_title'   => rand_str(),
-		) );
+		self::$post_id = $factory->post->create(
+			array(
+				'post_author'  => self::$author->ID,
+				'post_status'  => 'publish',
+				'post_content' => rand_str(),
+				'post_title'   => rand_str(),
+			)
+		);
 
-		self::$post_id_2 = $factory->post->create( array(
-			'post_author'  => self::$author->ID,
-			'post_status'  => 'publish',
-			'post_content' => rand_str(),
-			'post_title'   => rand_str(),
-		) );
+		self::$post_id_2 = $factory->post->create(
+			array(
+				'post_author'  => self::$author->ID,
+				'post_status'  => 'publish',
+				'post_content' => rand_str(),
+				'post_title'   => rand_str(),
+			)
+		);
 	}
 
 	public static function wpTearDownAfterClass() {

@@ -89,7 +89,7 @@ get_header( 'wp-activate' );
 			</p>
 		</form>
 
-	<?php
+		<?php
 } else {
 
 	$key    = ! empty( $_GET['key'] ) ? $_GET['key'] : $_POST['key'];
@@ -161,7 +161,7 @@ get_header( 'wp-activate' );
 			endif;
 	}
 }
-	?>
+?>
 	</div>
 </div>
 <script type="text/javascript">

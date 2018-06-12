@@ -4011,14 +4011,14 @@ final class WP_Customize_Manager {
 		if ( $this->branching() ) {
 			$l10n = array(
 				/* translators: %s: User who is customizing the changeset in customizer. */
-				'locked' => __( '%s is already customizing this changeset. Please wait until they are done to try customizing. Your latest changes have been autosaved.' ),
+				'locked'                => __( '%s is already customizing this changeset. Please wait until they are done to try customizing. Your latest changes have been autosaved.' ),
 				/* translators: %s: User who is customizing the changeset in customizer. */
 				'locked_allow_override' => __( '%s is already customizing this changeset. Do you want to take over?' ),
 			);
 		} else {
 			$l10n = array(
 				/* translators: %s: User who is customizing the changeset in customizer. */
-				'locked' => __( '%s is already customizing this site. Please wait until they are done to try customizing. Your latest changes have been autosaved.' ),
+				'locked'                => __( '%s is already customizing this site. Please wait until they are done to try customizing. Your latest changes have been autosaved.' ),
 				/* translators: %s: User who is customizing the changeset in customizer. */
 				'locked_allow_override' => __( '%s is already customizing this site. Do you want to take over?' ),
 			);
@@ -4837,7 +4837,7 @@ final class WP_Customize_Manager {
 				}
 			}
 			echo "})( _wpCustomizeSettings.controls );\n";
-		?>
+			?>
 		</script>
 		<?php
 	}

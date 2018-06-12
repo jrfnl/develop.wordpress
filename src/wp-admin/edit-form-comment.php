@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php
 if ( 'approved' === wp_get_comment_status( $comment ) && $comment->comment_post_ID > 0 ) :
 	$comment_link = get_comment_link( $comment );
-?>
+	?>
 <div class="inside">
 	<div id="comment-link-box">
 		<strong><?php _ex( 'Permalink:', 'comment' ); ?></strong>
@@ -146,7 +146,7 @@ if ( $comment->comment_parent ) :
 	if ( $parent ) :
 		$parent_link = esc_url( get_comment_link( $parent ) );
 		$name        = get_comment_author( $parent );
-	?>
+		?>
 	<div class="misc-pub-section misc-pub-reply-to">
 		<?php
 		printf(
@@ -156,7 +156,7 @@ if ( $comment->comment_parent ) :
 		);
 		?>
 	</div>
-<?php
+		<?php
 endif;
 endif;
 ?>
@@ -226,5 +226,5 @@ $referer = wp_get_referer();
 <script type="text/javascript">
 try{document.post.name.focus();}catch(e){}
 </script>
-<?php
+	<?php
 endif;

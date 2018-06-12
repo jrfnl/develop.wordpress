@@ -65,7 +65,7 @@ $parent_file = 'tools.php';
 								<?php
 								/* translators: %s: importer slug */
 								printf( __( 'The %s importer is invalid or is not installed.' ), '<strong>' . esc_html( $_GET['invalid'] ) . '</strong>' );
-		?>
+								?>
 		</p>
 	</div>
 <?php endif; ?>
@@ -96,7 +96,7 @@ if ( empty( $importers ) ) {
 	echo '<p>' . __( 'No importers are available.' ) . '</p>'; // TODO: make more helpful
 } else {
 	uasort( $importers, '_usort_by_first_member' );
-?>
+	?>
 <table class="widefat importers striped">
 
 	<?php
@@ -212,7 +212,7 @@ if ( empty( $importers ) ) {
 	}
 	?>
 </table>
-<?php
+	<?php
 }
 
 if ( current_user_can( 'install_plugins' ) ) {
