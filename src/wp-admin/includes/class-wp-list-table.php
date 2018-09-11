@@ -1232,7 +1232,8 @@ class WP_List_Table {
 	 *
 	 * @param string $which
 	 */
-	protected function extra_tablenav( $which ) {}
+	protected function extra_tablenav( $which ) {
+	}
 
 	/**
 	 * Generate the tbody element for the list table.
@@ -1277,12 +1278,14 @@ class WP_List_Table {
 	 * @param object $item
 	 * @param string $column_name
 	 */
-	protected function column_default( $item, $column_name ) {}
+	protected function column_default( $item, $column_name ) {
+	}
 
 	/**
 	 * @param object $item
 	 */
-	protected function column_cb( $item ) {}
+	protected function column_cb( $item ) {
+	}
 
 	/**
 	 * Generates the columns for a single row of the table

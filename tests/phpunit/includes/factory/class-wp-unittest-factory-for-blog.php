@@ -38,7 +38,8 @@ class WP_UnitTest_Factory_For_Blog extends WP_UnitTest_Factory_For_Thing {
 		return $blog;
 	}
 
-	function update_object( $blog_id, $fields ) {}
+	function update_object( $blog_id, $fields ) {
+	}
 
 	function get_object_by_id( $blog_id ) {
 		return get_site( $blog_id );

@@ -304,7 +304,8 @@ class WP_Customize_Section {
 	 *
 	 * @since 3.4.0
 	 */
-	protected function render() {}
+	protected function render() {
+	}
 
 	/**
 	 * Render the section's JS template.

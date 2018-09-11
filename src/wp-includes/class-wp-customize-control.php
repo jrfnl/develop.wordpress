@@ -240,7 +240,8 @@ class WP_Customize_Control {
 	 *
 	 * @since 3.4.0
 	 */
-	public function enqueue() {}
+	public function enqueue() {
+	}
 
 	/**
 	 * Check whether control is active to current Customizer preview.
@@ -686,7 +687,8 @@ class WP_Customize_Control {
 	 *
 	 * @since 4.1.0
 	 */
-	protected function content_template() {}
+	protected function content_template() {
+	}
 
 }
 

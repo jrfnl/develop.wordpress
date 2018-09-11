@@ -293,5 +293,6 @@ abstract class WP_Session_Tokens {
 	 *
 	 * @since 4.0.0
 	 */
-	public static function drop_sessions() {}
+	public static function drop_sessions() {
+	}
 }

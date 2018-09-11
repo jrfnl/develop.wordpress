@@ -287,7 +287,8 @@ class WP_Customize_Panel {
 	 *
 	 * @since 4.0.0
 	 */
-	protected function render() {}
+	protected function render() {
+	}
 
 	/**
 	 * Render the panel UI in a subclass.
@@ -296,7 +297,8 @@ class WP_Customize_Panel {
 	 *
 	 * @since 4.1.0
 	 */
-	protected function render_content() {}
+	protected function render_content() {
+	}
 
 	/**
 	 * Render the panel's JS templates.

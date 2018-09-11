@@ -29,7 +29,8 @@ class WP_Customize_Background_Position_Control extends WP_Customize_Control {
 	 *
 	 * @since 4.7.0
 	 */
-	public function render_content() {}
+	public function render_content() {
+	}
 
 	/**
 	 * Render a JS template for the content of the position control.

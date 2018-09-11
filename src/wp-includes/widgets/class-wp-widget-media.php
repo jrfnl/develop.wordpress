@@ -384,7 +384,8 @@ abstract class WP_Widget_Media extends WP_Widget {
 	 *
 	 * @since 4.8.0
 	 */
-	public function enqueue_preview_scripts() {}
+	public function enqueue_preview_scripts() {
+	}
 
 	/**
 	 * Loads the required scripts and styles for the widget control.

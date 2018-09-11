@@ -13,7 +13,8 @@ class WP_Filesystem_MockFS extends WP_Filesystem_Base {
 	public $errors  = array();
 	public $method  = 'MockFS';
 
-	function __construct() {}
+	function __construct() {
+	}
 
 	function connect() {
 		return true;

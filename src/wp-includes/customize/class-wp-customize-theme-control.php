@@ -49,7 +49,8 @@ class WP_Customize_Theme_Control extends WP_Customize_Control {
 	 *
 	 * @since 4.2.0
 	 */
-	public function render_content() {}
+	public function render_content() {
+	}
 
 	/**
 	 * Render a JS template for theme display.

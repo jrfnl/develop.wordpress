@@ -29,7 +29,8 @@ class WP_Customize_Nav_Menu_Auto_Add_Control extends WP_Customize_Control {
 	 *
 	 * @since 4.3.0
 	 */
-	protected function render_content() {}
+	protected function render_content() {
+	}
 
 	/**
 	 * Render the Underscore template for this control.

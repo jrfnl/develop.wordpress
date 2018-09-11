@@ -1712,7 +1712,8 @@ function wp_check_php_version() {
 /**
  * Empty function usable by plugins to output empty dashboard widget (to be populated later by JS).
  */
-function wp_dashboard_empty() {}
+function wp_dashboard_empty() {
+}
 
 /**
  * Displays a welcome panel to introduce users to WordPress.

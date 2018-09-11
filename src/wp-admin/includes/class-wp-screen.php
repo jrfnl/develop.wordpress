@@ -391,7 +391,8 @@ final class WP_Screen {
 	 *
 	 * @since 3.3.0
 	 */
-	private function __construct() {}
+	private function __construct() {
+	}
 
 	/**
 	 * Indicates whether the screen is in a particular admin

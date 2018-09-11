@@ -144,16 +144,26 @@ final class WP_Internal_Pointers {
 		<?php
 	}
 
-	public static function pointer_wp330_toolbar() {}
-	public static function pointer_wp330_media_uploader() {}
-	public static function pointer_wp330_saving_widgets() {}
-	public static function pointer_wp340_customize_current_theme_link() {}
-	public static function pointer_wp340_choose_image_from_library() {}
-	public static function pointer_wp350_media() {}
-	public static function pointer_wp360_revisions() {}
-	public static function pointer_wp360_locks() {}
-	public static function pointer_wp390_widgets() {}
-	public static function pointer_wp410_dfw() {}
+	public static function pointer_wp330_toolbar() {
+	}
+	public static function pointer_wp330_media_uploader() {
+	}
+	public static function pointer_wp330_saving_widgets() {
+	}
+	public static function pointer_wp340_customize_current_theme_link() {
+	}
+	public static function pointer_wp340_choose_image_from_library() {
+	}
+	public static function pointer_wp350_media() {
+	}
+	public static function pointer_wp360_revisions() {
+	}
+	public static function pointer_wp360_locks() {
+	}
+	public static function pointer_wp390_widgets() {
+	}
+	public static function pointer_wp410_dfw() {
+	}
 
 	/**
 	 * Display a pointer for the new privacy tools.

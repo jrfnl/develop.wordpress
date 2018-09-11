@@ -1390,7 +1390,8 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @param WP_User_Request $item Item being shown.
 	 */
-	public function column_next_steps( $item ) {}
+	public function column_next_steps( $item ) {
+	}
 
 	/**
 	 * Generates content for a single row of the table,
@@ -1412,7 +1413,8 @@ abstract class WP_Privacy_Requests_Table extends WP_List_Table {
 	 *
 	 * @since 4.9.6
 	 */
-	public function embed_scripts() {}
+	public function embed_scripts() {
+	}
 }
 
 /**

@@ -30,7 +30,8 @@ final class _WP_Editors {
 	private static $tinymce_scripts_printed = false;
 	private static $link_dialog_printed     = false;
 
-	private function __construct() {}
+	private function __construct() {
+	}
 
 	/**
 	 * Parse default arguments for the editor instance.
