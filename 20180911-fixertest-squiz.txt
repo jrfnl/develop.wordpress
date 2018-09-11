@@ -1,0 +1,197 @@
+PHP 7.2.7 (cli) (built: Jun 19 2018 23:43:47) ( ZTS MSVC15 (Visual C++ 2017) x86 )
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
+    with Xdebug v2.6.0, Copyright (c) 2002-2018, by Derick Rethans
+
+PHP_CodeSniffer version 3.3.2 (stable) by Squiz (http://www.squiz.net)
+
+..........F.FF..FF..F........................F.........FF..F   60 / 1265 (5%)
+....E..FF.F..F......F.FF....F.FF...FF.E.EF...FF....FF...F...  120 / 1265 (9%)
+......F............F...............E..............FF.FFF....  180 / 1265 (14%)
+F......F.F.EF...F..........EFE..............F..F....F..F.FFF  240 / 1265 (19%)
+......F.........F...F..FF.F.F......FFFFFFFFFF..FFFF.F.F.F..F  300 / 1265 (24%)
+FFFFFF...FFF....F....F.............F................FF..F...  360 / 1265 (28%)
+...............F.FF.FFFF....F...F..................F.F......  420 / 1265 (33%)
+...F............F.FF........................F.......F..FF...  480 / 1265 (38%)
+F................................F..........F...F........F..  540 / 1265 (43%)
+..FFF..FF..FFFFF..FF.........F....F......F.F.FF..F..........  600 / 1265 (47%)
+............................................................  660 / 1265 (52%)
+....FF......E........F........F..F.E..E.....FF..F..F........  720 / 1265 (57%)
+.F...............F..........................................  780 / 1265 (62%)
+............................................................  840 / 1265 (66%)
+............................................................  900 / 1265 (71%)
+............................................................  960 / 1265 (76%)
+............................................................ 1020 / 1265 (81%)
+............................................................ 1080 / 1265 (85%)
+............................................................ 1140 / 1265 (90%)
+............................................................ 1200 / 1265 (95%)
+............................................................ 1260 / 1265 (100%)
+.....                                                        1265 / 1265 (100%)
+
+
+
+PHPCBF RESULT SUMMARY
+------------------------------------------------------------------------------------------
+FILE                                                                      FIXED  REMAINING
+------------------------------------------------------------------------------------------
+src\wp-admin\comment.php                                                  2      8
+src\wp-admin\custom-background.php                                        5      4
+src\wp-admin\custom-header.php                                            6      9
+src\wp-admin\edit-form-advanced.php                                       1      13
+src\wp-admin\edit-form-comment.php                                        1      0
+src\wp-admin\edit-tags.php                                                2      16
+src\wp-admin\includes\class-walker-nav-menu-edit.php                      2      1
+src\wp-admin\includes\class-wp-importer.php                               1      6
+src\wp-admin\includes\class-wp-internal-pointers.php                      10     0
+src\wp-admin\includes\class-wp-list-table.php                             3      13
+src\wp-admin\includes\class-wp-plugin-install-list-table.php              FAILED TO FIX
+src\wp-admin\includes\class-wp-posts-list-table.php                       21     19
+src\wp-admin\includes\class-wp-screen.php                                 3      6
+src\wp-admin\includes\class-wp-terms-list-table.php                       1      4
+src\wp-admin\includes\class-wp-upgrader-skin.php                          4      0
+src\wp-admin\includes\dashboard.php                                       1      14
+src\wp-admin\includes\export.php                                          4      13
+src\wp-admin\includes\file.php                                            1      23
+src\wp-admin\includes\media.php                                           3      61
+src\wp-admin\includes\meta-boxes.php                                      22     10
+src\wp-admin\includes\misc.php                                            1      43
+src\wp-admin\includes\network.php                                         1      7
+src\wp-admin\includes\noop.php                                            18     0
+src\wp-admin\includes\plugin-install.php                                  FAILED TO FIX
+src\wp-admin\includes\post.php                                            FAILED TO FIX
+src\wp-admin\includes\revision.php                                        1      8
+src\wp-admin\includes\template.php                                        2      23
+src\wp-admin\includes\theme-install.php                                   1      1
+src\wp-admin\includes\upgrade.php                                         1      104
+src\wp-admin\includes\user.php                                            2      10
+src\wp-admin\install.php                                                  2      4
+src\wp-admin\media.php                                                    1      6
+src\wp-admin\nav-menus.php                                                1      6
+src\wp-admin\network\site-new.php                                         FAILED TO FIX
+src\wp-admin\options-discussion.php                                       1      4
+src\wp-admin\options-general.php                                          1      7
+src\wp-admin\options-media.php                                            1      0
+src\wp-admin\options-permalink.php                                        3      2
+src\wp-admin\options-reading.php                                          1      4
+src\wp-admin\plugins.php                                                  1      11
+src\wp-admin\setup-config.php                                             2      5
+src\wp-admin\theme-editor.php                                             2      17
+src\wp-admin\themes.php                                                   FAILED TO FIX
+src\wp-admin\tools.php                                                    1      1
+src\wp-admin\upgrade.php                                                  1      6
+src\wp-admin\user-edit.php                                                FAILED TO FIX
+src\wp-admin\user-new.php                                                 2      9
+src\wp-admin\users.php                                                    FAILED TO FIX
+src\wp-content\themes\twentyeleven\comments.php                           1      3
+src\wp-content\themes\twentyeleven\content-gallery.php                    5      4
+src\wp-content\themes\twentyeleven\content-quote.php                      1      2
+src\wp-content\themes\twentyeleven\content.php                            1      2
+src\wp-content\themes\twentyeleven\functions.php                          4      7
+src\wp-content\themes\twentyeleven\header.php                             2      2
+src\wp-content\themes\twentyeleven\image.php                              1      1
+src\wp-content\themes\twentyeleven\showcase.php                           2      2
+src\wp-content\themes\twentyfifteen\content-link.php                      2      1
+src\wp-content\themes\twentyfifteen\content.php                           2      1
+src\wp-content\themes\twentyfifteen\header.php                            2      0
+src\wp-content\themes\twentyfifteen\image.php                             3      0
+src\wp-content\themes\twentyfifteen\inc\custom-header.php                 1      0
+src\wp-content\themes\twentyfifteen\inc\template-tags.php                 3      3
+src\wp-content\themes\twentyfourteen\archive.php                          3      3
+src\wp-content\themes\twentyfourteen\author.php                           2      1
+src\wp-content\themes\twentyfourteen\category.php                         3      1
+src\wp-content\themes\twentyfourteen\comments.php                         3      0
+src\wp-content\themes\twentyfourteen\content-aside.php                    2      1
+src\wp-content\themes\twentyfourteen\content-audio.php                    2      1
+src\wp-content\themes\twentyfourteen\content-featured-post.php            1      0
+src\wp-content\themes\twentyfourteen\content-gallery.php                  2      1
+src\wp-content\themes\twentyfourteen\content-image.php                    2      1
+src\wp-content\themes\twentyfourteen\content-link.php                     2      1
+src\wp-content\themes\twentyfourteen\content-quote.php                    2      1
+src\wp-content\themes\twentyfourteen\content-video.php                    2      1
+src\wp-content\themes\twentyfourteen\content.php                          3      1
+src\wp-content\themes\twentyfourteen\featured-content.php                 1      0
+src\wp-content\themes\twentyfourteen\functions.php                        1      3
+src\wp-content\themes\twentyfourteen\image.php                            2      0
+src\wp-content\themes\twentyfourteen\inc\custom-header.php                1      2
+src\wp-content\themes\twentyfourteen\inc\template-tags.php                3      1
+src\wp-content\themes\twentyfourteen\inc\widgets.php                      7      2
+src\wp-content\themes\twentyfourteen\index.php                            2      0
+src\wp-content\themes\twentyfourteen\page-templates\contributors.php      1      0
+src\wp-content\themes\twentyfourteen\page-templates\full-width.php        1      0
+src\wp-content\themes\twentyfourteen\page.php                             1      0
+src\wp-content\themes\twentyfourteen\search.php                           2      1
+src\wp-content\themes\twentyfourteen\single.php                           1      0
+src\wp-content\themes\twentyfourteen\tag.php                              3      1
+src\wp-content\themes\twentyfourteen\taxonomy-post_format.php             3      1
+src\wp-content\themes\twentyseventeen\front-page.php                      1      0
+src\wp-content\themes\twentyseventeen\inc\custom-header.php               1      0
+...ontent\themes\twentyseventeen\template-parts\header\site-branding.php  1      0
+src\wp-content\themes\twentysixteen\header.php                            1      0
+src\wp-content\themes\twentysixteen\image.php                             1      0
+src\wp-content\themes\twentysixteen\inc\template-tags.php                 1      2
+src\wp-content\themes\twentyten\comments.php                              1      3
+src\wp-content\themes\twentyten\functions.php                             1      8
+src\wp-content\themes\twentyten\header.php                                1      2
+src\wp-content\themes\twentyten\loop-attachment.php                       3      5
+src\wp-content\themes\twentyten\loop-page.php                             1      0
+src\wp-content\themes\twentyten\loop-single.php                           1      2
+src\wp-content\themes\twentyten\loop.php                                  1      5
+src\wp-content\themes\twentyten\sidebar.php                               1      0
+src\wp-content\themes\twentythirteen\archive.php                          1      3
+src\wp-content\themes\twentythirteen\image.php                            1      1
+src\wp-content\themes\twentythirteen\inc\custom-header.php                3      2
+src\wp-content\themes\twentytwelve\archive.php                            1      3
+src\wp-content\themes\twentytwelve\functions.php                          2      5
+src\wp-content\themes\twentytwelve\image.php                              3      1
+src\wp-content\themes\twentytwelve\inc\custom-header.php                  2      1
+src\wp-includes\class-walker-comment.php                                  2      2
+src\wp-includes\class-wp-customize-control.php                            2      0
+src\wp-includes\class-wp-customize-panel.php                              2      0
+src\wp-includes\class-wp-customize-section.php                            1      0
+src\wp-includes\class-wp-editor.php                                       1      49
+src\wp-includes\class-wp-session-tokens.php                               1      0
+src\wp-includes\class-wp-theme.php                                        2      21
+src\wp-includes\class-wp-walker.php                                       4      3
+src\wp-includes\comment.php                                               1      82
+...includes\customize\class-wp-customize-background-position-control.php  1      0
+src\wp-includes\customize\class-wp-customize-code-editor-control.php      1      0
+src\wp-includes\customize\class-wp-customize-color-control.php            1      0
+src\wp-includes\customize\class-wp-customize-date-time-control.php        1      0
+src\wp-includes\customize\class-wp-customize-filter-setting.php           1      0
+src\wp-includes\customize\class-wp-customize-image-control.php            1      0
+src\wp-includes\customize\class-wp-customize-media-control.php            1      0
+...p-includes\customize\class-wp-customize-nav-menu-auto-add-control.php  1      0
+src\wp-includes\customize\class-wp-customize-nav-menu-control.php         1      0
+src\wp-includes\customize\class-wp-customize-nav-menu-item-control.php    1      0
+...-includes\customize\class-wp-customize-nav-menu-locations-control.php  1      0
+src\wp-includes\customize\class-wp-customize-nav-menu-name-control.php    1      0
+src\wp-includes\customize\class-wp-customize-theme-control.php            1      0
+src\wp-includes\customize\class-wp-widget-form-customize-control.php      1      0
+src\wp-includes\feed-atom-comments.php                                    4      2
+src\wp-includes\feed-rdf.php                                              1      0
+src\wp-includes\feed-rss2-comments.php                                    2      1
+src\wp-includes\feed-rss2.php                                             1      0
+src\wp-includes\functions.php                                             1      77
+src\wp-includes\theme-compat\header.php                                   2      0
+src\wp-includes\theme-compat\sidebar.php                                  3      8
+src\wp-includes\widgets\class-wp-widget-archives.php                      FAILED TO FIX
+src\wp-includes\widgets\class-wp-widget-media.php                         1      0
+src\wp-includes\widgets.php                                               3      6
+src\wp-links-opml.php                                                     1      0
+src\wp-login.php                                                          FAILED TO FIX
+src\wp-signup.php                                                         FAILED TO FIX
+tests\phpunit\includes\class-basic-subclass.php                           1      0
+tests\phpunit\includes\exceptions.php                                     3      1
+tests\phpunit\includes\factory\class-wp-unittest-factory-for-blog.php     1      0
+tests\phpunit\includes\factory\class-wp-unittest-factory-for-network.php  1      0
+tests\phpunit\includes\mock-fs.php                                        1      3
+tests\phpunit\includes\utils.php                                          2      10
+------------------------------------------------------------------------------------------
+A TOTAL OF 334 ERRORS WERE FIXED IN 152 FILES
+------------------------------------------------------------------------------------------
+PHPCBF FAILED TO FIX 10 FILES
+------------------------------------------------------------------------------------------
+
+Time: 32 mins, 12.89 secs; Memory: 74Mb
+
+

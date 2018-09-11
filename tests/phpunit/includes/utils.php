@@ -217,7 +217,8 @@ class testXMLParser {
 	function startHandler( $parser, $name, $attributes ) {
 		$data['name'] = $name;
 		if ( $attributes ) {
-			$data['attributes'] = $attributes; }
+			$data['attributes'] = $attributes;
+		}
 		$this->data[] = $data;
 	}
 

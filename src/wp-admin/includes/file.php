@@ -1849,7 +1849,8 @@ function request_filesystem_credentials( $form_post, $type = '', $error = false,
 		<em>
 		<?php
 		if ( ! defined( 'FTP_PASS' ) ) {
-			_e( 'This password will not be stored on the server.' );}
+			_e( 'This password will not be stored on the server.' );
+		}
 		?>
 </em>
 	</label>
