@@ -26,7 +26,8 @@ class Walker_Nav_Menu_Edit extends Walker_Nav_Menu {
 	 * @param int    $depth  Depth of menu item. Used for padding.
 	 * @param array  $args   Not used.
 	 */
-	public function start_lvl( &$output, $depth = 0, $args = array() ) {}
+	public function start_lvl( &$output, $depth = 0, $args = array() ) {
+	}
 
 	/**
 	 * Ends the list of after the elements are added.
@@ -39,7 +40,8 @@ class Walker_Nav_Menu_Edit extends Walker_Nav_Menu {
 	 * @param int    $depth  Depth of menu item. Used for padding.
 	 * @param array  $args   Not used.
 	 */
-	public function end_lvl( &$output, $depth = 0, $args = array() ) {}
+	public function end_lvl( &$output, $depth = 0, $args = array() ) {
+	}
 
 	/**
 	 * Start the element output.

@@ -1311,7 +1311,8 @@ final class WP_Privacy_Policy_Content {
 	 *
 	 * @since 4.9.6
 	 */
-	private function __construct() {}
+	private function __construct() {
+	}
 
 	/**
 	 * Add content to the postbox shown when editing the privacy policy.

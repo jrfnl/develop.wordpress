@@ -36,7 +36,8 @@ class WP_UnitTest_Factory_For_Network extends WP_UnitTest_Factory_For_Thing {
 		return $args['network_id'];
 	}
 
-	function update_object( $network_id, $fields ) {}
+	function update_object( $network_id, $fields ) {
+	}
 
 	function get_object_by_id( $network_id ) {
 		return get_network( $network_id );

@@ -27,7 +27,8 @@ class WP_Customize_Nav_Menu_Control extends WP_Customize_Control {
 	 *
 	 * @since 4.3.0
 	 */
-	public function render_content() {}
+	public function render_content() {
+	}
 
 	/**
 	 * JS/Underscore template for the control UI.

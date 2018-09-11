@@ -70,7 +70,8 @@ class WP_Customize_Date_Time_Control extends WP_Customize_Control {
 	 *
 	 * @since 4.9.0
 	 */
-	public function render_content() {}
+	public function render_content() {
+	}
 
 	/**
 	 * Export data to JS.

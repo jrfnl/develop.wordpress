@@ -480,7 +480,8 @@ final class WP_Theme implements ArrayAccess {
 	 * @param mixed $offset
 	 * @param mixed $value
 	 */
-	public function offsetSet( $offset, $value ) {}
+	public function offsetSet( $offset, $value ) {
+	}
 
 	/**
 	 * Method to implement ArrayAccess for keys formerly returned by get_themes()
@@ -489,7 +490,8 @@ final class WP_Theme implements ArrayAccess {
 	 *
 	 * @param mixed $offset
 	 */
-	public function offsetUnset( $offset ) {}
+	public function offsetUnset( $offset ) {
+	}
 
 	/**
 	 * Method to implement ArrayAccess for keys formerly returned by get_themes()

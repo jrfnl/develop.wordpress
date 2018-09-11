@@ -1881,7 +1881,8 @@ function upgrade_400() {
  * @global int   $wp_current_db_version
  * @global wpdb  $wpdb
  */
-function upgrade_420() {}
+function upgrade_420() {
+}
 
 /**
  * Executes changes made in WordPress 4.3.0.

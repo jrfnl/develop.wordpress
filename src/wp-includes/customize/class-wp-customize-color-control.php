@@ -80,7 +80,8 @@ class WP_Customize_Color_Control extends WP_Customize_Control {
 	 *
 	 * @since 3.4.0
 	 */
-	public function render_content() {}
+	public function render_content() {
+	}
 
 	/**
 	 * Render a JS template for the content of the color picker control.

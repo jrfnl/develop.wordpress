@@ -2866,7 +2866,8 @@ function media_upload_html_bypass() {
  *
  * @since 3.3.0
  */
-function media_upload_text_after() {}
+function media_upload_text_after() {
+}
 
 /**
  * Displays the checkbox to scale images.

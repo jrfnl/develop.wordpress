@@ -163,11 +163,13 @@ class WP_Upgrader_Skin {
 
 	/**
 	 */
-	public function before() {}
+	public function before() {
+	}
 
 	/**
 	 */
-	public function after() {}
+	public function after() {
+	}
 
 	/**
 	 * Output JavaScript that calls function to decrement the update counts.
@@ -201,9 +203,11 @@ class WP_Upgrader_Skin {
 
 	/**
 	 */
-	public function bulk_header() {}
+	public function bulk_header() {
+	}
 
 	/**
 	 */
-	public function bulk_footer() {}
+	public function bulk_footer() {
+	}
 }

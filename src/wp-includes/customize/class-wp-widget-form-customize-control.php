@@ -70,7 +70,8 @@ class WP_Widget_Form_Customize_Control extends WP_Customize_Control {
 	 *
 	 * @since 3.9.0
 	 */
-	public function render_content() {}
+	public function render_content() {
+	}
 
 	/**
 	 * Whether the current widget is rendered on the page.
