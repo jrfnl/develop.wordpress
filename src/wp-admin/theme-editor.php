@@ -212,7 +212,8 @@ if ( 'POST' === $_SERVER['REQUEST_METHOD'] ) {
 <?php
 echo $theme->display( 'Name' );
 if ( $description ) {
-	echo ': ' . $description;}
+	echo ': ' . $description;
+}
 ?>
 </h2>
 </div>

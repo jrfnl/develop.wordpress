@@ -2949,7 +2949,8 @@ function edit_form_image_editor( $post ) {
 		<div<?php echo $not_open_style; ?> class="image-editor" id="image-editor-<?php echo $attachment_id; ?>">
 			<?php
 			if ( $open ) {
-				wp_image_editor( $attachment_id );}
+				wp_image_editor( $attachment_id );
+			}
 			?>
 		</div>
 		<?php
