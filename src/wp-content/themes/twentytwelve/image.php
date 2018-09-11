@@ -72,7 +72,7 @@ get_header(); ?>
 				if ( $attachment->ID == $post->ID ) {
 					break;
 				}
-endforeach;
+			endforeach;
 
 			// If there is more than 1 attachment in a gallery
 			if ( count( $attachments ) > 1 ) :
@@ -84,11 +84,11 @@ endforeach;
 					// or get the URL of the first image attachment
 					$next_attachment_url = get_attachment_link( $attachments[0]->ID );
 				endif;
-else :
-	// or, if there's only 1 image, get the URL of the image
-	$next_attachment_url = wp_get_attachment_url();
-endif;
-?>
+			else :
+				// or, if there's only 1 image, get the URL of the image
+				$next_attachment_url = wp_get_attachment_url();
+			endif;
+			?>
 								<a href="<?php echo esc_url( $next_attachment_url ); ?>" title="<?php the_title_attribute(); ?>" rel="attachment">
 													<?php
 													/**
@@ -133,7 +133,7 @@ endif;
 
 				<?php comments_template(); ?>
 
-			<?php endwhile; // end of the loop. ?>
+		<?php endwhile; // end of the loop. ?>
 
 		</div><!-- #content -->
 	</div><!-- #primary -->

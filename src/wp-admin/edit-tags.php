@@ -437,7 +437,7 @@ if ( current_user_can( $tax->cap->edit_terms ) ) {
 	<input name="slug" id="tag-slug" type="text" value="" size="40" />
 	<p><?php _e( 'The &#8220;slug&#8221; is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.' ); ?></p>
 </div>
-<?php endif; // global_terms_enabled() ?>
+	<?php endif; // global_terms_enabled() ?>
 	<?php if ( is_taxonomy_hierarchical( $taxonomy ) ) : ?>
 <div class="form-field term-parent-wrap">
 	<label for="parent"><?php echo esc_html( $tax->labels->parent_item ); ?></label>
@@ -479,9 +479,9 @@ if ( current_user_can( $tax->cap->edit_terms ) ) {
 		?>
 		<?php if ( 'category' == $taxonomy ) : ?>
 		<p><?php _e( 'Categories, unlike tags, can have a hierarchy. You might have a Jazz category, and under that have children categories for Bebop and Big Band. Totally optional.' ); ?></p>
-	<?php else : ?>
+		<?php else : ?>
 		<p><?php _e( 'Assign a parent term to create a hierarchy. The term Jazz, for example, would be the parent of Bebop and Big Band.' ); ?></p>
-	<?php endif; ?>
+		<?php endif; ?>
 </div>
 	<?php endif; // is_taxonomy_hierarchical() ?>
 <div class="form-field term-description-wrap">

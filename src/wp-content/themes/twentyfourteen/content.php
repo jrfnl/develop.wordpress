@@ -19,14 +19,14 @@
 			<span class="cat-links"><?php echo get_the_category_list( _x( ', ', 'Used between list items, there is a space after the comma.', 'twentyfourteen' ) ); ?></span>
 		</div>
 			<?php
-			endif;
+		endif;
 
 if ( is_single() ) :
 	the_title( '<h1 class="entry-title">', '</h1>' );
-			else :
+else :
 				the_title( '<h1 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h1>' );
-			endif;
-			?>
+endif;
+?>
 
 		<div class="entry-meta">
 			<?php
@@ -38,7 +38,7 @@ if ( is_single() ) :
 				?>
 			<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'twentyfourteen' ), __( '1 Comment', 'twentyfourteen' ), __( '% Comments', 'twentyfourteen' ) ); ?></span>
 				<?php
-				endif;
+			endif;
 
 				edit_post_link( __( 'Edit', 'twentyfourteen' ), '<span class="edit-link">', '</span>' );
 			?>

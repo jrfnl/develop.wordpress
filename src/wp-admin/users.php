@@ -310,7 +310,7 @@ switch ( $wp_list_table->current_action() ) {
 			</li>
 		</ul></fieldset>
 	<?php
-	endif;
+			endif;
 	/**
 	 * Fires at the end of the delete users form prior to the confirm button.
 	 *
@@ -324,9 +324,9 @@ switch ( $wp_list_table->current_action() ) {
 ?>
 	<input type="hidden" name="action" value="dodelete" />
 			<?php submit_button( __( 'Confirm Deletion' ), 'primary' ); ?>
-	<?php else : ?>
+		<?php else : ?>
 	<p><?php _e( 'There are no valid users selected for deletion.' ); ?></p>
-	<?php endif; ?>
+		<?php endif; ?>
 	</div>
 	</form>
 		<?php
@@ -422,9 +422,9 @@ switch ( $wp_list_table->current_action() ) {
 		<?php if ( $go_remove ) : ?>
 		<input type="hidden" name="action" value="doremove" />
 			<?php submit_button( __( 'Confirm Removal' ), 'primary' ); ?>
-	<?php else : ?>
+		<?php else : ?>
 	<p><?php _e( 'There are no valid users selected for removal.' ); ?></p>
-	<?php endif; ?>
+		<?php endif; ?>
 	</div>
 	</form>
 		<?php
@@ -520,7 +520,7 @@ switch ( $wp_list_table->current_action() ) {
 			</ul>
 		</div>
 			<?php
-	endif;
+		endif;
 
 if ( ! empty( $messages ) ) {
 	foreach ( $messages as $msg ) {
@@ -540,10 +540,10 @@ if ( ! empty( $messages ) ) {
 		if ( current_user_can( 'create_users' ) ) {
 			?>
 	<a href="<?php echo admin_url( 'user-new.php' ); ?>" class="page-title-action"><?php echo esc_html_x( 'Add New', 'user' ); ?></a>
-<?php } elseif ( is_multisite() && current_user_can( 'promote_users' ) ) { ?>
+		<?php } elseif ( is_multisite() && current_user_can( 'promote_users' ) ) { ?>
 	<a href="<?php echo admin_url( 'user-new.php' ); ?>" class="page-title-action"><?php echo esc_html_x( 'Add Existing', 'user' ); ?></a>
 			<?php
-}
+        }
 
 if ( strlen( $usersearch ) ) {
 	/* translators: %s: search keywords */
@@ -561,7 +561,7 @@ if ( strlen( $usersearch ) ) {
 
 		<?php if ( ! empty( $_REQUEST['role'] ) ) { ?>
 <input type="hidden" name="role" value="<?php echo esc_attr( $_REQUEST['role'] ); ?>" />
-<?php } ?>
+		<?php } ?>
 
 		<?php $wp_list_table->display(); ?>
 </form>

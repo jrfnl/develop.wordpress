@@ -240,7 +240,7 @@ switch ( $step ) {
 		<?php
 		if ( isset( $_GET['noapi'] ) ) {
 			?>
-<input name="noapi" type="hidden" value="1" /><?php } ?>
+<input n<?php } ?>
 	<input type="hidden" name="language" value="<?php echo esc_attr( $language ); ?>" />
 	<p class="step"><input name="submit" type="submit" value="<?php echo htmlspecialchars( __( 'Submit' ), ENT_QUOTES ); ?>" class="button button-large" /></p>
 </form>
@@ -419,31 +419,31 @@ if ( ! /iPad|iPod|iPhone/.test( navigator.userAgent ) ) {
 })();
 </script>
 			<?php
-	else :
-		/*
-		 * If this file doesn't exist, then we are using the wp-config-sample.php
-		 * file one level up, which is for the develop repo.
-		 */
-		if ( file_exists( ABSPATH . 'wp-config-sample.php' ) ) {
-			$path_to_wp_config = ABSPATH . 'wp-config.php';
-		} else {
-			$path_to_wp_config = dirname( ABSPATH ) . '/wp-config.php';
-		}
+		else :
+			/*
+			* If this file doesn't exist, then we are using the wp-config-sample.php
+			* file one level up, which is for the develop repo.
+			*/
+			if ( file_exists( ABSPATH . 'wp-config-sample.php' ) ) {
+				$path_to_wp_config = ABSPATH . 'wp-config.php';
+			} else {
+				$path_to_wp_config = dirname( ABSPATH ) . '/wp-config.php';
+			}
 
-		$handle = fopen( $path_to_wp_config, 'w' );
-		foreach ( $config_file as $line ) {
-			fwrite( $handle, $line );
-		}
-		fclose( $handle );
-		chmod( $path_to_wp_config, 0666 );
-		setup_config_display_header();
-		?>
+			$handle = fopen( $path_to_wp_config, 'w' );
+			foreach ( $config_file as $line ) {
+				fwrite( $handle, $line );
+			}
+			fclose( $handle );
+			chmod( $path_to_wp_config, 0666 );
+			setup_config_display_header();
+			?>
 <h1 class="screen-reader-text"><?php _e( 'Successful database connection' ); ?></h1>
 <p><?php _e( 'All right, sparky! You&#8217;ve made it through this part of the installation. WordPress can now communicate with your database. If you are ready, time now to&hellip;' ); ?></p>
 
 <p class="step"><a href="<?php echo $install; ?>" class="button button-large"><?php _e( 'Run the installation' ); ?></a></p>
-		<?php
-	endif;
+			<?php
+		endif;
 		break;
 }
 ?>

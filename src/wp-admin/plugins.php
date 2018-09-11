@@ -510,7 +510,7 @@ elseif ( isset( $_GET['deleted'] ) ) :
 	if ( is_wp_error( $delete_result ) ) :
 		?>
 		<div id="message" class="error notice is-dismissible"><p><?php printf( __( 'Plugin could not be deleted due to an error: %s' ), $delete_result->get_error_message() ); ?></p></div>
-		<?php else : ?>
+	<?php else : ?>
 		<div id="message" class="updated notice is-dismissible">
 			<p>
 				<?php
@@ -522,7 +522,7 @@ elseif ( isset( $_GET['deleted'] ) ) :
 				?>
 			</p>
 		</div>
-		<?php endif; ?>
+	<?php endif; ?>
 <?php elseif ( isset( $_GET['activate'] ) ) : ?>
 	<div id="message" class="updated notice is-dismissible"><p><?php _e( 'Plugin <strong>activated</strong>.' ); ?></p></div>
 <?php elseif ( isset( $_GET['activate-multi'] ) ) : ?>

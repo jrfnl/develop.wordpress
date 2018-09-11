@@ -63,7 +63,7 @@ if ( ! function_exists( 'twentyfourteen_paging_nav' ) ) :
 		</div><!-- .pagination -->
 	</nav><!-- .navigation -->
 			<?php
-	endif;
+		endif;
 	}
 endif;
 
@@ -89,11 +89,11 @@ if ( ! function_exists( 'twentyfourteen_post_nav' ) ) :
 			<?php
 			if ( is_attachment() ) :
 				previous_post_link( '%link', __( '<span class="meta-nav">Published In</span>%title', 'twentyfourteen' ) );
-				else :
+			else :
 					previous_post_link( '%link', __( '<span class="meta-nav">Previous Post</span>%title', 'twentyfourteen' ) );
 					next_post_link( '%link', __( '<span class="meta-nav">Next Post</span>%title', 'twentyfourteen' ) );
-				endif;
-				?>
+			endif;
+			?>
 			</div><!-- .nav-links -->
 		</nav><!-- .navigation -->
 		<?php
@@ -207,7 +207,7 @@ if ( ! function_exists( 'twentyfourteen_post_thumbnail' ) ) :
 	</a>
 
 	<?php
-	endif; // End is_singular()
+		endif; // End is_singular()
 	}
 endif;
 

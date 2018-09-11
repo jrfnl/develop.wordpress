@@ -898,7 +898,7 @@ if ( $this->show_screen_options() ) :
 			<div id="screen-options-link-wrap" class="hide-if-no-js screen-meta-toggle">
 			<button type="button" id="show-settings-link" class="button show-settings" aria-controls="screen-options-wrap" aria-expanded="false"><?php _e( 'Screen Options' ); ?></button>
 			</div>
-		<?php endif; ?>
+<?php endif; ?>
 		</div>
 		<?php
 	}
@@ -1127,7 +1127,7 @@ if ( $this->show_screen_options() ) :
 													<?php printf( _n( '%s column', '%s columns', $i ), number_format_i18n( $i ) ); ?>
 				</label>
 													<?php
-			endfor;
+												endfor;
 												?>
 		</fieldset>
 		<?php

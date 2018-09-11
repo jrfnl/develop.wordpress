@@ -32,7 +32,7 @@ if ( is_front_page() && twentyfourteen_has_featured_posts() ) {
 				if ( comments_open() || get_comments_number() ) {
 					comments_template();
 				}
-				endwhile;
+			endwhile;
 			?>
 		</div><!-- #content -->
 	</div><!-- #primary -->

@@ -133,8 +133,8 @@ if ( is_singular() && get_option( 'thread_comments' ) ) {
 				<?php get_search_form(); ?>
 			</div>
 				<?php
-				else :
-					?>
+			else :
+				?>
 					<?php get_search_form(); ?>
 			<?php endif; ?>
 

@@ -125,7 +125,7 @@ else :
 
 			<?php
 			break;
-endswitch;
+	endswitch;
 endif;
 ?>
 </body>

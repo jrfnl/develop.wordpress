@@ -669,7 +669,7 @@ do_action( 'edit_form_top', $post );
 	</div>
 			<?php
 		}
-endif;
+	endif;
 	?>
 </div>
 	<?php

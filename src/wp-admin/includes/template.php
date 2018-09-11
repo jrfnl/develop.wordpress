@@ -435,9 +435,9 @@ function wp_comment_reply( $position = 1, $checkbox = false, $mode = 'single', $
 <form method="get">
 	<?php if ( $table_row ) : ?>
 <table style="display:none;"><tbody id="com-reply"><tr id="replyrow" class="inline-edit-row" style="display:none;"><td colspan="<?php echo $wp_list_table->get_column_count(); ?>" class="colspanchange">
-<?php else : ?>
+	<?php else : ?>
 <div id="com-reply" style="display:none;"><div id="replyrow" style="display:none;">
-<?php endif; ?>
+	<?php endif; ?>
 	<fieldset class="comment-reply">
 	<legend>
 		<span class="hidden" id="editlegend"><?php _e( 'Edit Comment' ); ?></span>
@@ -715,9 +715,9 @@ function meta_form( $post = null ) {
 <a href="#postcustomstuff" class="hide-if-no-js" onclick="jQuery('#metakeyinput, #metakeyselect, #enternew, #cancelnew').toggle();return false;">
 <span id="enternew"><?php _e( 'Enter new' ); ?></span>
 <span id="cancelnew" class="hidden"><?php _e( 'Cancel' ); ?></span></a>
-<?php } else { ?>
+	<?php } else { ?>
 <input type="text" id="metakeyinput" name="metakeyinput" value="" />
-<?php } ?>
+	<?php } ?>
 </td>
 <td><textarea id="metavalue" name="metavalue" rows="2" cols="25"></textarea></td>
 </tr>

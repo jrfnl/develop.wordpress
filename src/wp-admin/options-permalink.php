@@ -347,7 +347,7 @@ printf( __( 'If you like, you may enter custom structures for your category and 
 				);
 				?>
 </p>
-		<?php else : ?>
+			<?php else : ?>
 <p>
 	<?php
 	printf(
@@ -372,31 +372,31 @@ printf( __( 'If you like, you may enter custom structures for your category and 
 	);
 	?>
 </p>
+			<?php endif; ?>
 		<?php endif; ?>
-	<?php endif; ?>
-<?php elseif ( $is_nginx ) : ?>
+	<?php elseif ( $is_nginx ) : ?>
 	<p><?php _e( '<a href="https://codex.wordpress.org/Nginx">Documentation on Nginx configuration</a>.' ); ?></p>
 	<?php
-else :
-	if ( $permalink_structure && ! $using_index_permalinks && ! $writable && $update_required ) :
-		?>
+	else :
+		if ( $permalink_structure && ! $using_index_permalinks && ! $writable && $update_required ) :
+			?>
 <p>
-		<?php
-		printf(
-			/* translators: 1: .htaccess, 2: Codex URL, 3: CTRL + a */
-			__( 'If your %1$s file was <a href="%2$s">writable</a>, we could do this automatically, but it isn&#8217;t so these are the mod_rewrite rules you should have in your %1$s file. Click in the field and press %3$s to select all.' ),
-			'<code>.htaccess</code>',
-			__( 'https://codex.wordpress.org/Changing_File_Permissions' ),
-			'<kbd>CTRL + a</kbd>'
-		);
-		?>
+			<?php
+			printf(
+				/* translators: 1: .htaccess, 2: Codex URL, 3: CTRL + a */
+				__( 'If your %1$s file was <a href="%2$s">writable</a>, we could do this automatically, but it isn&#8217;t so these are the mod_rewrite rules you should have in your %1$s file. Click in the field and press %3$s to select all.' ),
+				'<code>.htaccess</code>',
+				__( 'https://codex.wordpress.org/Changing_File_Permissions' ),
+				'<kbd>CTRL + a</kbd>'
+			);
+			?>
 </p>
 <form action="options-permalink.php" method="post">
-		<?php wp_nonce_field( 'update-permalink' ); ?>
+			<?php wp_nonce_field( 'update-permalink' ); ?>
 	<p><textarea rows="6" class="large-text readonly" name="rules" id="rules" readonly="readonly"><?php echo esc_textarea( $wp_rewrite->mod_rewrite_rules() ); ?></textarea></p>
 </form>
+		<?php endif; ?>
 	<?php endif; ?>
-<?php endif; ?>
 <?php } // multisite ?>
 
 </div>

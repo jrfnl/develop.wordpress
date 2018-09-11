@@ -911,7 +911,7 @@ if ( isset( $_GET['menu'] ) && '0' == $_GET['menu'] ) {
 									<input type="hidden" name="use-location" value="<?php echo esc_attr( $_GET['use-location'] ); ?>" />
 								<?php endif; ?>
 								<?php
-								endif;
+							endif;
 
 								$no_menus_style = '';
 if ( $one_theme_location_no_menus ) {

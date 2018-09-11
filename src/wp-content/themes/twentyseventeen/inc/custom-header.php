@@ -111,7 +111,7 @@ if ( ! function_exists( 'twentyseventeen_header_style' ) ) :
 		body.has-header-video.colors-custom .site-description {
 			color: #<?php echo esc_attr( $header_text_color ); ?>;
 		}
-	<?php endif; ?>
+		<?php endif; ?>
 	</style>
 		<?php
 	}

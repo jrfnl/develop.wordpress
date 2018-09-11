@@ -281,9 +281,9 @@ class Custom_Background {
 			<?php if ( $background_image_thumb ) { ?>
 		<img class="custom-background-image" src="<?php echo $background_image_thumb; ?>" style="visibility:hidden;" alt="" /><br />
 		<img class="custom-background-image" src="<?php echo $background_image_thumb; ?>" style="visibility:hidden;" alt="" />
-		<?php } ?>
+			<?php } ?>
 	</div>
-	<?php } ?>
+		<?php } ?>
 </td>
 </tr>
 
@@ -409,9 +409,9 @@ class Custom_Background {
 			<span class="button display-options position"><span class="<?php echo esc_attr( $input['icon'] ); ?>" aria-hidden="true"></span></span>
 			<span class="screen-reader-text"><?php echo $input['label']; ?></span>
 		</label>
-	<?php endforeach; ?>
+				<?php endforeach; ?>
 	</div>
-<?php endforeach; ?>
+			<?php endforeach; ?>
 </div>
 </fieldset></td>
 </tr>
@@ -442,7 +442,7 @@ class Custom_Background {
 <label><input name="background-attachment" type="checkbox" value="scroll" <?php checked( 'scroll', get_theme_mod( 'background_attachment', get_theme_support( 'custom-background', 'default-attachment' ) ) ); ?>> <?php _e( 'Scroll with Page' ); ?></label>
 </fieldset></td>
 </tr>
-<?php endif; // get_background_image() ?>
+		<?php endif; // get_background_image() ?>
 <tr>
 <th scope="row"><?php _e( 'Background Color' ); ?></th>
 <td><fieldset><legend class="screen-reader-text"><span><?php _e( 'Background Color' ); ?></span></legend>

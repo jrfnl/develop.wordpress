@@ -139,7 +139,7 @@ if ( have_posts() ) {
 						</div><!-- #nav-below -->
 		<?php else : ?>
 						<a href="<?php echo esc_url( wp_get_attachment_url() ); ?>" title="<?php the_title_attribute(); ?>" rel="attachment"><?php echo esc_html( basename( get_permalink() ) ); ?></a>
-	<?php endif; ?>
+		<?php endif; ?>
 						</div><!-- .entry-attachment -->
 						<div class="entry-caption">
 						<?php
@@ -169,5 +169,5 @@ if ( have_posts() ) {
 
 		<?php comments_template(); ?>
 
-<?php endwhile;
+	<?php endwhile;
 }; // end of the loop. ?>

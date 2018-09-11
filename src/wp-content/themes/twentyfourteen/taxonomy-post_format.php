@@ -29,29 +29,29 @@ get_header(); ?>
 					if ( is_tax( 'post_format', 'post-format-aside' ) ) :
 						_e( 'Asides', 'twentyfourteen' );
 
-						elseif ( is_tax( 'post_format', 'post-format-image' ) ) :
+					elseif ( is_tax( 'post_format', 'post-format-image' ) ) :
 							_e( 'Images', 'twentyfourteen' );
 
-						elseif ( is_tax( 'post_format', 'post-format-video' ) ) :
+					elseif ( is_tax( 'post_format', 'post-format-video' ) ) :
 							_e( 'Videos', 'twentyfourteen' );
 
-						elseif ( is_tax( 'post_format', 'post-format-audio' ) ) :
+					elseif ( is_tax( 'post_format', 'post-format-audio' ) ) :
 							_e( 'Audio', 'twentyfourteen' );
 
-						elseif ( is_tax( 'post_format', 'post-format-quote' ) ) :
+					elseif ( is_tax( 'post_format', 'post-format-quote' ) ) :
 							_e( 'Quotes', 'twentyfourteen' );
 
-						elseif ( is_tax( 'post_format', 'post-format-link' ) ) :
+					elseif ( is_tax( 'post_format', 'post-format-link' ) ) :
 							_e( 'Links', 'twentyfourteen' );
 
-						elseif ( is_tax( 'post_format', 'post-format-gallery' ) ) :
+					elseif ( is_tax( 'post_format', 'post-format-gallery' ) ) :
 							_e( 'Galleries', 'twentyfourteen' );
 
-						else :
+					else :
 							_e( 'Archives', 'twentyfourteen' );
 
-						endif;
-						?>
+					endif;
+					?>
 				</h1>
 			</header><!-- .archive-header -->
 
@@ -67,16 +67,16 @@ get_header(); ?>
 					 */
 					get_template_part( 'content', get_post_format() );
 
-					endwhile;
+				endwhile;
 					// Previous/next page navigation.
 					twentyfourteen_paging_nav();
 
-				else :
+			else :
 					// If no content, include the "No posts found" template.
 					get_template_part( 'content', 'none' );
 
-				endif;
-				?>
+			endif;
+			?>
 		</div><!-- #content -->
 	</section><!-- #primary -->
 

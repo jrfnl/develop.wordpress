@@ -159,7 +159,7 @@ function install_themes_dashboard() {
 	<label for="feature-id-<?php echo $feature; ?>"><?php echo $feature_name; ?></label>
 </li>
 
-<?php	} ?>
+		<?php	} ?>
 </ol>
 <br class="clear" />
 		<?php

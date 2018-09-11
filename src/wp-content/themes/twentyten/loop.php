@@ -73,7 +73,7 @@ while ( have_posts() ) :
 			<div class="entry-content">
 		<?php if ( post_password_required() ) : ?>
 				<?php the_content(); ?>
-<?php else : ?>
+		<?php else : ?>
 				<?php
 					$images = twentyten_get_gallery_images();
 				if ( $images ) :
@@ -94,7 +94,7 @@ while ( have_posts() ) :
 							</em></p>
 				<?php endif; // end twentyten_get_gallery_images() check ?>
 						<?php the_excerpt(); ?>
-<?php endif; ?>
+		<?php endif; ?>
 			</div><!-- .entry-content -->
 
 			<div class="entry-utility">

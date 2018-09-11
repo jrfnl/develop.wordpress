@@ -34,9 +34,9 @@ _deprecated_file(
 	if ( empty( $withcomments ) && ! is_single() ) {
 		?>
 	#page { background: url("<?php bloginfo( 'stylesheet_directory' ); ?>/images/kubrickbg-<?php bloginfo( 'text_direction' ); ?>.jpg") repeat-y top; border: none; }
-<?php } else { // No sidebar ?>
+	<?php } else { // No sidebar ?>
 	#page { background: url("<?php bloginfo( 'stylesheet_directory' ); ?>/images/kubrickbgwide.jpg") repeat-y top; border: none; }
-<?php } ?>
+	<?php } ?>
 
 </style>
 <?php } ?>

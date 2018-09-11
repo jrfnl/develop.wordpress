@@ -165,13 +165,13 @@ switch ( $action ) {
 <th scope="row"><?php _e( 'Email' ); ?></th>
 <td><?php comment_author_email( $comment ); ?></td>
 </tr>
-<?php } ?>
+		<?php } ?>
 		<?php if ( get_comment_author_url( $comment ) ) { ?>
 <tr>
 <th scope="row"><?php _e( 'URL' ); ?></th>
 <td><a href="<?php comment_author_url( $comment ); ?>"><?php comment_author_url( $comment ); ?></a></td>
 </tr>
-<?php } ?>
+		<?php } ?>
 <tr>
 	<th scope="row"><?php /* translators: column name or table row header */ _e( 'In Response To' ); ?></th>
 	<td>

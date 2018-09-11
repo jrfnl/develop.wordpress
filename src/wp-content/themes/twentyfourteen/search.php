@@ -30,16 +30,16 @@ get_header(); ?>
 					 */
 					get_template_part( 'content', get_post_format() );
 
-					endwhile;
+				endwhile;
 					// Previous/next post navigation.
 					twentyfourteen_paging_nav();
 
-				else :
+			else :
 					// If no content, include the "No posts found" template.
 					get_template_part( 'content', 'none' );
 
-				endif;
-				?>
+			endif;
+			?>
 
 		</div><!-- #content -->
 	</section><!-- #primary -->

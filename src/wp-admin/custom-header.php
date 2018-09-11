@@ -641,7 +641,7 @@ class Custom_Image_Header {
 </td>
 </tr>
 			<?php
-	endif;
+		endif;
 if ( ! empty( $this->default_headers ) ) :
 	?>
 <tr>
@@ -658,7 +658,7 @@ if ( ! empty( $this->default_headers ) ) :
 </td>
 </tr>
 	<?php
-	endif;
+endif;
 if ( get_header_image() ) :
 	?>
 <tr>
@@ -669,7 +669,7 @@ if ( get_header_image() ) :
 </td>
 </tr>
 	<?php
-	endif;
+endif;
 
 	$default_image = sprintf( get_theme_support( 'custom-header', 'default-image' ), get_template_directory_uri(), get_stylesheet_directory_uri() );
 if ( $default_image && get_header_image() != $default_image ) :
@@ -681,7 +681,7 @@ if ( $default_image && get_header_image() != $default_image ) :
 	<?php submit_button( __( 'Restore Original Header Image' ), '', 'resetheader', false ); ?>
 </td>
 </tr>
-	<?php endif; ?>
+<?php endif; ?>
 </tbody>
 </table>
 
@@ -731,7 +731,7 @@ if ( $default_image && get_header_image() != $default_image ) :
 </tbody>
 </table>
 			<?php
-endif;
+		endif;
 
 		/**
 		 * Fires just before the submit button in the custom header options form.
@@ -855,7 +855,7 @@ endif;
 	<input type="hidden" name="oitar" id="oitar" value="<?php echo esc_attr( $oitar ); ?>" />
 		<?php if ( empty( $_POST ) && isset( $_GET['file'] ) ) { ?>
 	<input type="hidden" name="create-new-attachment" value="true" />
-	<?php } ?>
+		<?php } ?>
 		<?php wp_nonce_field( 'custom-header-crop-image' ); ?>
 
 	<p class="submit">

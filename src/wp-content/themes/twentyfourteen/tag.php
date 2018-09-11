@@ -26,7 +26,7 @@ get_header(); ?>
 					$term_description = term_description();
 				if ( ! empty( $term_description ) ) :
 					printf( '<div class="taxonomy-description">%s</div>', $term_description );
-					endif;
+				endif;
 				?>
 			</header><!-- .archive-header -->
 
@@ -42,16 +42,16 @@ get_header(); ?>
 					 */
 					get_template_part( 'content', get_post_format() );
 
-					endwhile;
+				endwhile;
 					// Previous/next page navigation.
 					twentyfourteen_paging_nav();
 
-				else :
+			else :
 					// If no content, include the "No posts found" template.
 					get_template_part( 'content', 'none' );
 
-				endif;
-				?>
+			endif;
+			?>
 		</div><!-- #content -->
 	</section><!-- #primary -->
 

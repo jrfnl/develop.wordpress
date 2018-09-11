@@ -417,7 +417,7 @@ if ( is_multisite() && current_user_can( 'promote_users' ) ) {
 			<label for="adduser-noconfirmation"><?php _e( 'Add the user without sending an email that requires their confirmation.' ); ?></label>
 		</td>
 	</tr>
-<?php } ?>
+	<?php } ?>
 </table>
 	<?php
 	/**
@@ -536,7 +536,7 @@ if ( current_user_can( 'create_users' ) ) {
 			<label for="send_user_notification"><?php _e( 'Send the new user an email about their account.' ); ?></label>
 		</td>
 	</tr>
-<?php } // !is_multisite ?>
+	<?php } // !is_multisite ?>
 	<tr class="form-field">
 		<th scope="row"><label for="role"><?php _e( 'Role' ); ?></label></th>
 		<td><select name="role" id="role">

@@ -28,14 +28,14 @@ get_header(); ?>
 				<?php
 				if ( is_day() ) :
 					printf( __( 'Daily Archives: %s', 'twentythirteen' ), get_the_date() );
-					elseif ( is_month() ) :
+				elseif ( is_month() ) :
 						printf( __( 'Monthly Archives: %s', 'twentythirteen' ), get_the_date( _x( 'F Y', 'monthly archives date format', 'twentythirteen' ) ) );
-					elseif ( is_year() ) :
+				elseif ( is_year() ) :
 						printf( __( 'Yearly Archives: %s', 'twentythirteen' ), get_the_date( _x( 'Y', 'yearly archives date format', 'twentythirteen' ) ) );
-					else :
+				else :
 						_e( 'Archives', 'twentythirteen' );
-					endif;
-					?>
+				endif;
+				?>
 				</h1>
 			</header><!-- .archive-header -->
 

@@ -332,7 +332,7 @@ if ( ! function_exists( 'twentytwelve_content_nav' ) ) :
 				<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'twentytwelve' ) ); ?></div>
 			</nav><!-- .navigation -->
 			<?php
-	endif;
+		endif;
 	}
 endif;
 
@@ -385,7 +385,7 @@ if ( ! function_exists( 'twentytwelve_comment' ) ) :
 
 				<?php if ( '0' == $comment->comment_approved ) : ?>
 				<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'twentytwelve' ); ?></p>
-			<?php endif; ?>
+				<?php endif; ?>
 
 				<section class="comment-content comment">
 				<?php comment_text(); ?>

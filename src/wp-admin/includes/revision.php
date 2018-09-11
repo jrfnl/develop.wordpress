@@ -424,11 +424,11 @@ function wp_print_revision_templates() {
 				<# if ( 'to' === data.type && data.attributes.restoreUrl ) { #>
 					<input  <?php if ( wp_check_post_lock( $post->ID ) ) { ?>
 						disabled="disabled"
-					<?php } else { ?>
+							<?php } else { ?>
 						<# if ( data.attributes.current ) { #>
 							disabled="disabled"
 						<# } #>
-					<?php } ?>
+							<?php } ?>
 					<# if ( data.attributes.autosave ) { #>
 						type="button" class="restore-revision button button-primary" value="<?php esc_attr_e( 'Restore This Autosave' ); ?>" />
 					<# } else { #>

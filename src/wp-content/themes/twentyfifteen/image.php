@@ -50,7 +50,7 @@ get_header(); ?>
 								<div class="entry-caption">
 									<?php the_excerpt(); ?>
 								</div><!-- .entry-caption -->
-							<?php endif; ?>
+						<?php endif; ?>
 
 						</div><!-- .entry-attachment -->
 
@@ -80,7 +80,7 @@ get_header(); ?>
 				// If comments are open or we have at least one comment, load up the comment template
 				if ( comments_open() || get_comments_number() ) :
 					comments_template();
-					endif;
+				endif;
 
 				// Previous/next post navigation.
 				the_post_navigation(
@@ -90,7 +90,7 @@ get_header(); ?>
 				);
 
 				// End the loop.
-				endwhile;
+			endwhile;
 			?>
 
 		</main><!-- .site-main -->

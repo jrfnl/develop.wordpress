@@ -84,10 +84,10 @@ while ( have_posts() ) :
 	<?php the_category_rss( 'rdf' ); ?>
 	<?php if ( get_option( 'rss_use_excerpt' ) ) : ?>
 	<description><![CDATA[<?php the_excerpt_rss(); ?>]]></description>
-<?php else : ?>
+	<?php else : ?>
 	<description><![CDATA[<?php the_excerpt_rss(); ?>]]></description>
 	<content:encoded><![CDATA[<?php the_content_feed( 'rdf' ); ?>]]></content:encoded>
-<?php endif; ?>
+	<?php endif; ?>
 	<?php
 	/**
 	 * Fires at the end of each RDF feed item.

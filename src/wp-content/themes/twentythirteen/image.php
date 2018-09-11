@@ -70,7 +70,7 @@ get_header(); ?>
 							<div class="entry-caption">
 								<?php the_excerpt(); ?>
 							</div>
-							<?php endif; ?>
+						<?php endif; ?>
 						</div><!-- .attachment -->
 					</div><!-- .entry-attachment -->
 

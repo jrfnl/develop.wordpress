@@ -38,7 +38,7 @@ _deprecated_file(
 			 <li>
 
 					<?php if ( is_404() ) : /* If this is a 404 page */ ?>
-			<?php elseif ( is_category() ) : /* If this is a category archive */ ?>
+					<?php elseif ( is_category() ) : /* If this is a category archive */ ?>
 				<p>
 				<?php
 				/* translators: %s: category name */
@@ -49,7 +49,7 @@ _deprecated_file(
 				?>
 				</p>
 
-			<?php elseif ( is_day() ) : /* If this is a daily archive */ ?>
+					<?php elseif ( is_day() ) : /* If this is a daily archive */ ?>
 				<p>
 				<?php
 				/* translators: 1: site link, 2: archive date */
@@ -61,7 +61,7 @@ _deprecated_file(
 				?>
 				</p>
 
-			<?php elseif ( is_month() ) : /* If this is a monthly archive */ ?>
+					<?php elseif ( is_month() ) : /* If this is a monthly archive */ ?>
 				<p>
 				<?php
 				/* translators: 1: site link, 2: archive month */
@@ -73,7 +73,7 @@ _deprecated_file(
 				?>
 				</p>
 
-			<?php elseif ( is_year() ) : /* If this is a yearly archive */ ?>
+					<?php elseif ( is_year() ) : /* If this is a yearly archive */ ?>
 				<p>
 				<?php
 				/* translators: 1: site link, 2: archive year */
@@ -85,7 +85,7 @@ _deprecated_file(
 				?>
 				</p>
 
-			<?php elseif ( is_search() ) : /* If this is a search result */ ?>
+					<?php elseif ( is_search() ) : /* If this is a search result */ ?>
 				<p>
 				<?php
 				/* translators: 1: site link, 2: search query */
@@ -97,7 +97,7 @@ _deprecated_file(
 				?>
 				</p>
 
-			<?php elseif ( isset( $_GET['paged'] ) && ! empty( $_GET['paged'] ) ) : /* If this set is paginated */ ?>
+					<?php elseif ( isset( $_GET['paged'] ) && ! empty( $_GET['paged'] ) ) : /* If this set is paginated */ ?>
 				<p>
 				<?php
 				/* translators: %s: site link */
@@ -108,10 +108,10 @@ _deprecated_file(
 				?>
 				</p>
 
-			<?php endif; ?>
+					<?php endif; ?>
 
 			</li>
-			<?php endif; ?>
+				<?php endif; ?>
 		</ul>
 		<ul role="navigation">
 				<?php wp_list_pages( 'title_li=<h2>' . __( 'Pages' ) . '</h2>' ); ?>
@@ -142,7 +142,7 @@ _deprecated_file(
 					<?php wp_meta(); ?>
 				</ul>
 				</li>
-			<?php } ?>
+				<?php } ?>
 
 			<?php endif; /* ! dynamic_sidebar() */ ?>
 		</ul>

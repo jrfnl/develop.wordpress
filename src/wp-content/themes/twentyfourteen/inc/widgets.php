@@ -151,41 +151,41 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 
 						if ( post_password_required() ) :
 							the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ) );
-							else :
+						else :
 								$images = array();
 
 								$galleries = get_post_galleries( get_the_ID(), false );
-								if ( isset( $galleries[0]['ids'] ) ) {
-									$images = explode( ',', $galleries[0]['ids'] );
-								}
+							if ( isset( $galleries[0]['ids'] ) ) {
+								$images = explode( ',', $galleries[0]['ids'] );
+							}
 
-								if ( ! $images ) :
-									$images = get_posts(
-										array(
-											'fields'      => 'ids',
-											'numberposts' => -1,
-											'order'       => 'ASC',
-											'orderby'     => 'menu_order',
-											'post_mime_type' => 'image',
-											'post_parent' => get_the_ID(),
-											'post_type'   => 'attachment',
-										)
-									);
-								endif;
+							if ( ! $images ) :
+								$images = get_posts(
+									array(
+										'fields'         => 'ids',
+										'numberposts'    => -1,
+										'order'          => 'ASC',
+										'orderby'        => 'menu_order',
+										'post_mime_type' => 'image',
+										'post_parent'    => get_the_ID(),
+										'post_type'      => 'attachment',
+									)
+								);
+							endif;
 
 								$total_images = count( $images );
 
-								if ( has_post_thumbnail() ) :
-									$post_thumbnail = get_the_post_thumbnail();
-									elseif ( $total_images > 0 ) :
+							if ( has_post_thumbnail() ) :
+								$post_thumbnail = get_the_post_thumbnail();
+							elseif ( $total_images > 0 ) :
 										$image          = reset( $images );
 										$post_thumbnail = wp_get_attachment_image( $image, 'post-thumbnail' );
-									endif;
+							endif;
 
-									if ( ! empty( $post_thumbnail ) ) :
-										?>
+							if ( ! empty( $post_thumbnail ) ) :
+								?>
 						<a href="<?php the_permalink(); ?>"><?php echo $post_thumbnail; ?></a>
-						<?php endif; ?>
+							<?php endif; ?>
 						<p class="wp-caption-text">
 								<?php
 								printf(
@@ -198,10 +198,10 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 								<?php
 						endif;
 
-							else :
+					else :
 								the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ) );
-							endif;
-							?>
+					endif;
+					?>
 					</div><!-- .entry-content -->
 
 					<header class="entry-header">
@@ -209,7 +209,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 						<?php
 						if ( ! has_post_format( 'link' ) ) :
 							the_title( '<h1 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h1>' );
-							endif;
+						endif;
 
 							printf(
 								'<span class="entry-date"><a href="%1$s" rel="bookmark"><time class="entry-date" datetime="%2$s">%3$s</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="%4$s" rel="author">%5$s</a></span></span>',
@@ -223,7 +223,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 						if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
 							?>
 							<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'twentyfourteen' ), __( '1 Comment', 'twentyfourteen' ), __( '% Comments', 'twentyfourteen' ) ); ?></span>
-							<?php endif; ?>
+						<?php endif; ?>
 						</div><!-- .entry-meta -->
 					</header><!-- .entry-header -->
 				</article><!-- #post-## -->

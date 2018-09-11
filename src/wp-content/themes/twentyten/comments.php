@@ -24,7 +24,7 @@
 		 * to fully load the template.
 		 */
 		return;
-	endif;
+endif;
 ?>
 
 <?php

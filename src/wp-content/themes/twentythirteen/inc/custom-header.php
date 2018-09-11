@@ -115,7 +115,7 @@ function twentythirteen_header_style() {
 		}
 	}
 		<?php
-		endif;
+	endif;
 
 		// Has the text been hidden?
 	if ( ! display_header_text() ) :
@@ -136,8 +136,8 @@ function twentythirteen_header_style() {
 		endif;
 
 		// If the user has set a custom color for the text, use that.
-		elseif ( $text_color != get_theme_support( 'custom-header', 'default-text-color' ) ) :
-			?>
+	elseif ( $text_color != get_theme_support( 'custom-header', 'default-text-color' ) ) :
+		?>
 		.site-title,
 		.site-description {
 			color: #<?php echo esc_attr( $text_color ); ?>;

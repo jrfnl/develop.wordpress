@@ -17,10 +17,10 @@
 		<?php
 		if ( is_single() ) :
 			the_title( sprintf( '<h1 class="entry-title"><a href="%s">', esc_url( twentyfifteen_get_link_url() ) ), '</a></h1>' );
-			else :
+		else :
 				the_title( sprintf( '<h2 class="entry-title"><a href="%s">', esc_url( twentyfifteen_get_link_url() ) ), '</a></h2>' );
-			endif;
-			?>
+		endif;
+		?>
 	</header>
 	<!-- .entry-header -->
 
@@ -52,7 +52,7 @@
 		// Author bio.
 	if ( is_single() && get_the_author_meta( 'description' ) ) :
 		get_template_part( 'author-bio' );
-		endif;
+	endif;
 	?>
 
 	<footer class="entry-footer">

@@ -448,7 +448,7 @@ if ( ! function_exists( 'twentyfourteen_list_authors' ) ) :
 	</div><!-- .contributor -->
 
 			<?php
-	endforeach;
+		endforeach;
 	}
 endif;
 

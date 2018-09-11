@@ -24,7 +24,7 @@
 
 		// Include the featured content template.
 		get_template_part( 'content', 'featured-post' );
-		endforeach;
+	endforeach;
 
 		/**
 		 * Fires after the Twenty Fourteen featured content.

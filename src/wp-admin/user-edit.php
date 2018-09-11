@@ -188,24 +188,24 @@ switch ( $action ) {
 
 		<?php if ( ! IS_PROFILE_PAGE && is_super_admin( $profileuser->ID ) && current_user_can( 'manage_network_options' ) ) { ?>
 	<div class="notice notice-info"><p><strong><?php _e( 'Important:' ); ?></strong> <?php _e( 'This user has super admin privileges.' ); ?></p></div>
-<?php } ?>
+		<?php } ?>
 		<?php if ( isset( $_GET['updated'] ) ) : ?>
 <div id="message" class="updated notice is-dismissible">
 			<?php if ( IS_PROFILE_PAGE ) : ?>
 	<p><strong><?php _e( 'Profile updated.' ); ?></strong></p>
-	<?php else : ?>
+			<?php else : ?>
 	<p><strong><?php _e( 'User updated.' ); ?></strong></p>
-	<?php endif; ?>
+			<?php endif; ?>
 			<?php if ( $wp_http_referer && false === strpos( $wp_http_referer, 'user-new.php' ) && ! IS_PROFILE_PAGE ) : ?>
 	<p><a href="<?php echo esc_url( wp_validate_redirect( esc_url_raw( $wp_http_referer ), self_admin_url( 'users.php' ) ) ); ?>"><?php _e( '&larr; Back to Users' ); ?></a></p>
-	<?php endif; ?>
+			<?php endif; ?>
 </div>
 		<?php endif; ?>
 		<?php if ( isset( $_GET['error'] ) ) : ?>
 <div class="notice notice-error">
 			<?php if ( 'new-email' == $_GET['error'] ) : ?>
 	<p><?php _e( 'Error while saving the new email address. Please try again.' ); ?></p>
-	<?php endif; ?>
+			<?php endif; ?>
 </div>
 		<?php endif; ?>
 		<?php if ( isset( $errors ) && is_wp_error( $errors ) ) : ?>
@@ -224,10 +224,10 @@ switch ( $action ) {
 			if ( current_user_can( 'create_users' ) ) {
 				?>
 		<a href="user-new.php" class="page-title-action"><?php echo esc_html_x( 'Add New', 'user' ); ?></a>
-	<?php } elseif ( is_multisite() && current_user_can( 'promote_users' ) ) { ?>
+			<?php } elseif ( is_multisite() && current_user_can( 'promote_users' ) ) { ?>
 		<a href="user-new.php" class="page-title-action"><?php echo esc_html_x( 'Add Existing', 'user' ); ?></a>
 				<?php
-}
+        }
 		}
 		?>
 
@@ -280,7 +280,7 @@ switch ( $action ) {
 			<label for="syntax_highlighting"><input name="syntax_highlighting" type="checkbox" id="syntax_highlighting" value="false" <?php checked( 'false', $profileuser->syntax_highlighting ); ?> /> <?php _e( 'Disable syntax highlighting when editing code' ); ?></label>
 		</td>
 	</tr>
-<?php endif; ?>
+		<?php endif; ?>
 		<?php if ( count( $_wp_admin_css_colors ) > 1 && has_action( 'admin_color_scheme_picker' ) ) : ?>
 <tr class="user-admin-color-wrap">
 <th scope="row"><?php _e( 'Admin Color Scheme' ); ?></th>
@@ -302,7 +302,7 @@ switch ( $action ) {
 </td>
 </tr>
 			<?php
-endif; // $_wp_admin_css_colors
+		endif; // $_wp_admin_css_colors
 if ( ! ( IS_PROFILE_PAGE && ! $user_can_edit ) ) :
 	?>
 <tr class="user-comment-shortcuts-wrap">
@@ -353,7 +353,7 @@ if ( ! ( IS_PROFILE_PAGE && ! $user_can_edit ) ) :
 	</td>
 </tr>
 			<?php
-endif;
+		endif;
 		?>
 
 		<?php
@@ -411,7 +411,7 @@ endif;
 			?>
 </select></td></tr>
 			<?php
-endif; //!IS_PROFILE_PAGE
+		endif; //!IS_PROFILE_PAGE
 
 if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_can( 'manage_network_options' ) && ! isset( $super_admins ) ) {
 	?>
@@ -419,9 +419,9 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 <td>
 	<?php if ( $profileuser->user_email != get_site_option( 'admin_email' ) || ! is_super_admin( $profileuser->ID ) ) : ?>
 <p><label><input type="checkbox" id="super_admin" name="super_admin"<?php checked( is_super_admin( $profileuser->ID ) ); ?> /> <?php _e( 'Grant this user super admin privileges for the Network.' ); ?></label></p>
-<?php else : ?>
+	<?php else : ?>
 <p><?php _e( 'Super admin privileges cannot be removed because this user has the network admin email.' ); ?></p>
-<?php endif; ?>
+	<?php endif; ?>
 </td></tr>
 <?php } ?>
 
@@ -589,7 +589,7 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 		</p>
 	</td>
 </tr>
-<?php endif; ?>
+		<?php endif; ?>
 
 		<?php
 		/**
@@ -644,7 +644,7 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 		</label>
 	</td>
 </tr>
-	<?php endif; ?>
+		<?php endif; ?>
 
 		<?php
 		if ( IS_PROFILE_PAGE && count( $sessions->get_all() ) === 1 ) :
@@ -658,7 +658,7 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 			</p>
 		</td>
 	</tr>
-<?php elseif ( IS_PROFILE_PAGE && count( $sessions->get_all() ) > 1 ) : ?>
+		<?php elseif ( IS_PROFILE_PAGE && count( $sessions->get_all() ) > 1 ) : ?>
 	<tr class="user-sessions-wrap hide-if-no-js">
 		<th><?php _e( 'Sessions' ); ?></th>
 		<td aria-live="assertive">
@@ -668,7 +668,7 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 			</p>
 		</td>
 	</tr>
-<?php elseif ( ! IS_PROFILE_PAGE && $sessions->get_all() ) : ?>
+		<?php elseif ( ! IS_PROFILE_PAGE && $sessions->get_all() ) : ?>
 	<tr class="user-sessions-wrap hide-if-no-js">
 		<th><?php _e( 'Sessions' ); ?></th>
 		<td>
@@ -681,7 +681,7 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 			</p>
 		</td>
 	</tr>
-<?php endif; ?>
+		<?php endif; ?>
 
 	</table>
 
@@ -746,7 +746,7 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 	</td>
 </tr>
 </table>
-	<?php endif; ?>
+		<?php endif; ?>
 
 <input type="hidden" name="action" value="update" />
 <input type="hidden" name="user_id" id="user_id" value="<?php echo esc_attr( $user_id ); ?>" />

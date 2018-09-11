@@ -46,7 +46,7 @@ get_header();
 						<div class="entry-caption">
 							<?php the_excerpt(); ?>
 						</div><!-- .entry-caption -->
-						<?php endif; ?>
+					<?php endif; ?>
 				</div><!-- .entry-attachment -->
 
 				<?php
@@ -72,7 +72,7 @@ get_header();
 
 			<?php comments_template(); ?>
 
-		<?php endwhile; // end of the loop. ?>
+	<?php endwhile; // end of the loop. ?>
 
 		</div><!-- #content -->
 	</section><!-- #primary -->

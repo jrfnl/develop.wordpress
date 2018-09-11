@@ -159,7 +159,7 @@ if ( $comment->comment_parent ) :
 		?>
 	</div>
 		<?php
-endif;
+	endif;
 endif;
 ?>
 
