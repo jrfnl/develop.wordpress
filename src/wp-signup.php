@@ -139,11 +139,9 @@ function show_blog_form( $blogname = '', $blog_title = '', $errors = '' ) {
 	<?php if ( $errmsg = $errors->get_error_message( 'blog_title' ) ) { ?>
 		<p class="error"><?php echo $errmsg; ?></p>
 		<?php
-}
+	}
 	echo '<input name="blog_title" type="text" id="blog_title" value="' . esc_attr( $blog_title ) . '" />';
-?>
 
-	<?php
 	// Site Language.
 	$languages = signup_get_available_languages();
 
@@ -176,9 +174,9 @@ function show_blog_form( $blogname = '', $blog_title = '', $errors = '' ) {
 			?>
 		</p>
 		<?php
-		endif; // Languages.
+	endif; // Languages.
 
-		$blog_public_on_checked = $blog_public_off_checked = '';
+	$blog_public_on_checked = $blog_public_off_checked = '';
 	if ( isset( $_POST['blog_public'] ) && '0' == $_POST['blog_public'] ) {
 		$blog_public_off_checked = 'checked="checked"';
 	} else {
