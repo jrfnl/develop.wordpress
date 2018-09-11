@@ -625,7 +625,7 @@ class WP_Terms_List_Table extends WP_List_Table {
 					<span class="title"><?php _e( 'Slug' ); ?></span>
 					<span class="input-text-wrap"><input type="text" name="slug" class="ptitle" value="" /></span>
 				</label>
-	<?php } ?>
+		<?php } ?>
 			</div></fieldset>
 		<?php
 

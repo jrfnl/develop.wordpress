@@ -41,7 +41,7 @@ if ( is_front_page() && twentyfourteen_has_featured_posts() ) {
 				 */
 				get_template_part( 'content', get_post_format() );
 
-				endwhile;
+			endwhile;
 			// Previous/next post navigation.
 			twentyfourteen_paging_nav();
 

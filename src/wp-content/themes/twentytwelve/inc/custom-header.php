@@ -96,7 +96,7 @@ function twentytwelve_header_style() {
 		.site-header h2 {
 			color: #<?php echo $text_color; ?>;
 		}
-	<?php endif; ?>
+		<?php endif; ?>
 	</style>
 	<?php
 }

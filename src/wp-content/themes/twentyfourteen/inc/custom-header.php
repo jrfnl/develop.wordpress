@@ -87,7 +87,7 @@ if ( ! function_exists( 'twentyfourteen_header_style' ) ) :
 		.site-title a {
 			color: #<?php echo esc_attr( $text_color ); ?>;
 		}
-	<?php endif; ?>
+		<?php endif; ?>
 	</style>
 		<?php
 	}

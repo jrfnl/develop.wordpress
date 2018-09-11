@@ -136,7 +136,7 @@ if ( is_singular() && get_option( 'thread_comments' ) ) {
 				else :
 					?>
 					<?php get_search_form(); ?>
-			<?php endif; ?>
+				<?php endif; ?>
 
 			<nav id="access" role="navigation">
 				<h3 class="assistive-text"><?php _e( 'Main menu', 'twentyeleven' ); ?></h3>

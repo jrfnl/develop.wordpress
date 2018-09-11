@@ -715,9 +715,9 @@ function meta_form( $post = null ) {
 <a href="#postcustomstuff" class="hide-if-no-js" onclick="jQuery('#metakeyinput, #metakeyselect, #enternew, #cancelnew').toggle();return false;">
 <span id="enternew"><?php _e( 'Enter new' ); ?></span>
 <span id="cancelnew" class="hidden"><?php _e( 'Cancel' ); ?></span></a>
-<?php } else { ?>
+	<?php } else { ?>
 <input type="text" id="metakeyinput" name="metakeyinput" value="" />
-<?php } ?>
+	<?php } ?>
 </td>
 <td><textarea id="metavalue" name="metavalue" rows="2" cols="25"></textarea></td>
 </tr>

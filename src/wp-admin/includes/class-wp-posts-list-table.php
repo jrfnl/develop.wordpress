@@ -1464,8 +1464,8 @@ class WP_Posts_List_Table extends WP_List_Table {
 			</label>
 
 	<?php
-	endif; // $bulk
-	endif; // post_type_supports title
+			endif; // $bulk
+			endif; // post_type_supports title
 			?>
 
 			<?php if ( ! $bulk ) : ?>
@@ -1475,7 +1475,7 @@ class WP_Posts_List_Table extends WP_List_Table {
 			</fieldset>
 			<br class="clear" />
 				<?php
-	endif; // $bulk
+			endif; // $bulk
 
 if ( post_type_supports( $screen->post_type, 'author' ) ) :
 	$authors_dropdown = '';
@@ -1505,8 +1505,9 @@ if ( post_type_supports( $screen->post_type, 'author' ) ) :
 
 	<?php
 	if ( ! $bulk ) {
-		echo $authors_dropdown;}
-	endif; // post_type_supports author
+		echo $authors_dropdown;
+	}
+endif; // post_type_supports author
 
 if ( ! $bulk && $can_publish ) :
 	?>
@@ -1529,7 +1530,7 @@ if ( ! $bulk && $can_publish ) :
 				</label>
 			</div>
 
-	<?php endif; ?>
+<?php endif; ?>
 
 		</div></fieldset>
 
@@ -1545,11 +1546,11 @@ if ( ! $bulk && $can_publish ) :
 					<?php wp_terms_checklist( null, array( 'taxonomy' => $taxonomy->name ) ); ?>
 			</ul>
 
-	<?php endforeach; //$hierarchical_taxonomies as $taxonomy ?>
+				<?php endforeach; //$hierarchical_taxonomies as $taxonomy ?>
 
 		</div></fieldset>
 
-	<?php endif; // count( $hierarchical_taxonomies ) && !$bulk ?>
+			<?php endif; // count( $hierarchical_taxonomies ) && !$bulk ?>
 
 		<fieldset class="inline-edit-col-right"><div class="inline-edit-col">
 
@@ -1606,7 +1607,7 @@ if ( ! $bulk && $can_publish ) :
 
 					<?php
 				endif; // !$bulk
-		endif; // page-attributes
+			endif; // page-attributes
 			?>
 
 			<?php if ( 0 < count( get_page_templates( null, $screen->post_type ) ) ) : ?>
@@ -1624,7 +1625,7 @@ if ( ! $bulk && $can_publish ) :
 				<?php page_template_dropdown( '', $screen->post_type ); ?>
 			</select>
 		</label>
-	<?php endif; ?>
+			<?php endif; ?>
 
 			<?php if ( count( $flat_taxonomies ) && ! $bulk ) : ?>
 
@@ -1640,9 +1641,9 @@ if ( ! $bulk && $can_publish ) :
 			</label>
 					<?php endif; ?>
 
-	<?php endforeach; //$flat_taxonomies as $taxonomy ?>
+				<?php endforeach; //$flat_taxonomies as $taxonomy ?>
 
-	<?php endif; // count( $flat_taxonomies ) && !$bulk ?>
+			<?php endif; // count( $flat_taxonomies ) && !$bulk ?>
 
 			<?php
 			if ( post_type_supports( $screen->post_type, 'comments' ) || post_type_supports( $screen->post_type, 'trackbacks' ) ) :
@@ -1659,7 +1660,7 @@ if ( ! $bulk && $can_publish ) :
 					<option value="closed"><?php _e( 'Do not allow' ); ?></option>
 				</select>
 			</label>
-		<?php endif; if ( post_type_supports( $screen->post_type, 'trackbacks' ) ) : ?>
+					<?php endif; if ( post_type_supports( $screen->post_type, 'trackbacks' ) ) : ?>
 			<label class="alignright">
 				<span class="title"><?php _e( 'Pings' ); ?></span>
 				<select name="ping_status">
@@ -1668,7 +1669,7 @@ if ( ! $bulk && $can_publish ) :
 					<option value="closed"><?php _e( 'Do not allow' ); ?></option>
 				</select>
 			</label>
-		<?php endif; ?>
+					<?php endif; ?>
 			</div>
 
 			<?php else : // $bulk ?>
@@ -1688,8 +1689,8 @@ if ( ! $bulk && $can_publish ) :
 			</div>
 
 	<?php
-	endif; // $bulk
-	endif; // post_type_supports comments or pings
+			endif; // $bulk
+			endif; // post_type_supports comments or pings
 			?>
 
 			<div class="inline-edit-group wp-clearfix">
@@ -1698,13 +1699,13 @@ if ( ! $bulk && $can_publish ) :
 					<select name="_status">
 			<?php if ( $bulk ) : ?>
 						<option value="-1"><?php _e( '&mdash; No Change &mdash;' ); ?></option>
-	<?php endif; // $bulk ?>
+			<?php endif; // $bulk ?>
 					<?php if ( $can_publish ) : // Contributors only get "Unpublished" and "Pending Review" ?>
 						<option value="publish"><?php _e( 'Published' ); ?></option>
 						<option value="future"><?php _e( 'Scheduled' ); ?></option>
 						<?php if ( $bulk ) : ?>
 						<option value="private"><?php _e( 'Private' ); ?></option>
-	<?php endif; // $bulk ?>
+						<?php endif; // $bulk ?>
 					<?php endif; ?>
 						<option value="pending"><?php _e( 'Pending Review' ); ?></option>
 						<option value="draft"><?php _e( 'Draft' ); ?></option>
@@ -1733,7 +1734,7 @@ if ( ! $bulk && $can_publish ) :
 
 	<?php	endif; // $bulk ?>
 
-	<?php endif; // 'post' && $can_publish && current_user_can( 'edit_others_cap' ) ?>
+			<?php endif; // 'post' && $can_publish && current_user_can( 'edit_others_cap' ) ?>
 
 			</div>
 

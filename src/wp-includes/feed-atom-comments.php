@@ -124,7 +124,7 @@ if ( $comment->comment_parent == 0 ) : // This comment is top level
 		?>
 		<thr:in-reply-to ref="<?php comment_guid( $parent_comment ); ?>" href="<?php echo get_comment_link( $parent_comment ); ?>" type="<?php bloginfo_rss( 'html_type' ); ?>" />
 		<?php
-endif;
+	endif;
 	/**
 	 * Fires at the end of each Atom comment feed item.
 	 *

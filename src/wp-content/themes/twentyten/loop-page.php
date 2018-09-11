@@ -44,5 +44,5 @@ if ( have_posts() ) {
 
 				<?php comments_template( '', true ); ?>
 
-<?php endwhile;
+	<?php endwhile;
 }; // end of the loop. ?>

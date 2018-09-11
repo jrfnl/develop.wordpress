@@ -18,7 +18,7 @@
 		} else {
 			the_post_thumbnail( 'twentyfourteen-full-width' );
 		}
-		endif;
+	endif;
 	?>
 	</a>
 

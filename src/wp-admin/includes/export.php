@@ -583,7 +583,7 @@ function export_wp( $args = array() ) {
 		<wp:is_sticky><?php echo intval( $is_sticky ); ?></wp:is_sticky>
 				<?php	if ( $post->post_type == 'attachment' ) : ?>
 		<wp:attachment_url><?php echo wxr_cdata( wp_get_attachment_url( $post->ID ) ); ?></wp:attachment_url>
-	<?php endif; ?>
+				<?php endif; ?>
 				<?php wxr_post_taxonomy(); ?>
 				<?php
 				$postmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID ) );
@@ -609,7 +609,7 @@ function export_wp( $args = array() ) {
 		<wp:meta_value><?php echo wxr_cdata( $meta->meta_value ); ?></wp:meta_value>
 		</wp:postmeta>
 					<?php
-	endforeach;
+				endforeach;
 
 				$_comments = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_approved <> 'spam'", $post->ID ) );
 				$comments  = array_map( 'get_comment', $_comments );
@@ -653,7 +653,7 @@ function export_wp( $args = array() ) {
 			</wp:commentmeta>
 					<?php	endforeach; ?>
 		</wp:comment>
-			<?php	endforeach; ?>
+				<?php	endforeach; ?>
 		</item>
 				<?php
 			}

@@ -23,7 +23,7 @@
 			 * to fully load the template.
 			 */
 			return;
-		endif;
+	endif;
 ?>
 
 	<?php // You can start editing here -- including this comment! ?>

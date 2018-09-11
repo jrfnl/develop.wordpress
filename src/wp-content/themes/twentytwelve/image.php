@@ -72,7 +72,7 @@ get_header(); ?>
 				if ( $attachment->ID == $post->ID ) {
 					break;
 				}
-endforeach;
+			endforeach;
 
 			// If there is more than 1 attachment in a gallery
 			if ( count( $attachments ) > 1 ) :
@@ -133,7 +133,7 @@ endif;
 
 				<?php comments_template(); ?>
 
-			<?php endwhile; // end of the loop. ?>
+		<?php endwhile; // end of the loop. ?>
 
 		</div><!-- #content -->
 	</div><!-- #primary -->

@@ -286,7 +286,7 @@ function network_step1( $errors = false ) {
 				</td>
 			</tr>
 		</table>
-		<?php endif; ?>
+	<?php endif; ?>
 
 		<h3><?php esc_html_e( 'Network Details' ); ?></h3>
 		<table class="form-table">

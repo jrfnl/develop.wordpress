@@ -63,7 +63,7 @@ if ( ! function_exists( 'twentyfourteen_paging_nav' ) ) :
 		</div><!-- .pagination -->
 	</nav><!-- .navigation -->
 			<?php
-	endif;
+		endif;
 	}
 endif;
 
@@ -207,7 +207,7 @@ if ( ! function_exists( 'twentyfourteen_post_thumbnail' ) ) :
 	</a>
 
 	<?php
-	endif; // End is_singular()
+		endif; // End is_singular()
 	}
 endif;
 

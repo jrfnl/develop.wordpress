@@ -30,7 +30,7 @@ get_header(); ?>
 					 */
 					get_template_part( 'content', get_post_format() );
 
-					endwhile;
+				endwhile;
 					// Previous/next post navigation.
 					twentyfourteen_paging_nav();
 

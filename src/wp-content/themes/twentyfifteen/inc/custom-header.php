@@ -189,7 +189,7 @@ if ( ! function_exists( 'twentyfifteen_header_style' ) ) :
 			clip: rect(1px, 1px, 1px, 1px);
 			position: absolute;
 		}
-	<?php endif; ?>
+		<?php endif; ?>
 	</style>
 		<?php
 	}

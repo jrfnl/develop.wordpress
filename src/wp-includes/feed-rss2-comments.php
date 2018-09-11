@@ -120,7 +120,7 @@ do_action( 'rss_tag_pre', 'rss2-comments' );
 			</item>
 			<?php
 		endwhile;
-endif;
+	endif;
 	?>
 </channel>
 </rss>

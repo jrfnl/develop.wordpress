@@ -3111,7 +3111,7 @@ function attachment_submitbox_metadata() {
 				<?php _e( 'File size:' ); ?> <strong><?php echo size_format( $file_size ); ?></strong>
 			</div>
 			<?php
-		endif;
+	endif;
 
 	if ( preg_match( '#^(audio|video)/#', $post->post_mime_type ) ) {
 		$fields = array(

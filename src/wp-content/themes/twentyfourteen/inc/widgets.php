@@ -185,7 +185,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 									if ( ! empty( $post_thumbnail ) ) :
 										?>
 						<a href="<?php the_permalink(); ?>"><?php echo $post_thumbnail; ?></a>
-						<?php endif; ?>
+									<?php endif; ?>
 						<p class="wp-caption-text">
 								<?php
 								printf(
@@ -196,7 +196,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 								?>
 						</p>
 								<?php
-						endif;
+							endif;
 
 							else :
 								the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ) );
@@ -209,7 +209,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 						<?php
 						if ( ! has_post_format( 'link' ) ) :
 							the_title( '<h1 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h1>' );
-							endif;
+						endif;
 
 							printf(
 								'<span class="entry-date"><a href="%1$s" rel="bookmark"><time class="entry-date" datetime="%2$s">%3$s</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="%4$s" rel="author">%5$s</a></span></span>',
@@ -223,7 +223,7 @@ class Twenty_Fourteen_Ephemera_Widget extends WP_Widget {
 						if ( ! post_password_required() && ( comments_open() || get_comments_number() ) ) :
 							?>
 							<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'twentyfourteen' ), __( '1 Comment', 'twentyfourteen' ), __( '% Comments', 'twentyfourteen' ) ); ?></span>
-							<?php endif; ?>
+						<?php endif; ?>
 						</div><!-- .entry-meta -->
 					</header><!-- .entry-header -->
 				</article><!-- #post-## -->

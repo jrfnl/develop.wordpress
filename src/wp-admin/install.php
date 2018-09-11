@@ -111,7 +111,7 @@ function display_setup_form( $error = null ) {
 		?>
 <h1><?php _ex( 'Welcome', 'Howdy' ); ?></h1>
 <p class="message"><?php echo $error; ?></p>
-<?php } ?>
+	<?php } ?>
 <form id="setup" method="post" action="install.php?step=2" novalidate="novalidate">
 	<table class="form-table">
 		<tr>
@@ -394,7 +394,7 @@ switch ( $step ) {
 			if ( ! empty( $result['password'] ) && empty( $admin_password_check ) ) :
 				?>
 			<code><?php echo esc_html( $result['password'] ); ?></code><br />
-		<?php endif ?>
+			<?php endif ?>
 			<p><?php echo $result['password_message']; ?></p>
 		</td>
 	</tr>

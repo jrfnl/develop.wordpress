@@ -111,7 +111,7 @@ _deprecated_file(
 			<?php endif; ?>
 
 			</li>
-			<?php endif; ?>
+				<?php endif; ?>
 		</ul>
 		<ul role="navigation">
 				<?php wp_list_pages( 'title_li=<h2>' . __( 'Pages' ) . '</h2>' ); ?>
@@ -142,7 +142,7 @@ _deprecated_file(
 					<?php wp_meta(); ?>
 				</ul>
 				</li>
-			<?php } ?>
+				<?php } ?>
 
 			<?php endif; /* ! dynamic_sidebar() */ ?>
 		</ul>

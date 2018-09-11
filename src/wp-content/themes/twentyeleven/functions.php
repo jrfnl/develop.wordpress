@@ -274,7 +274,7 @@ if ( ! function_exists( 'twentyeleven_header_style' ) ) :
 		#site-description {
 			color: #<?php echo $text_color; ?>;
 		}
-	<?php endif; ?>
+		<?php endif; ?>
 	</style>
 		<?php
 	}
@@ -319,7 +319,7 @@ if ( ! function_exists( 'twentyeleven_admin_header_style' ) ) :
 	#site-description {
 		color: #<?php echo get_header_textcolor(); ?>;
 	}
-	<?php endif; ?>
+		<?php endif; ?>
 	#headimg img {
 		max-width: 1000px;
 		height: auto;
@@ -537,7 +537,7 @@ if ( ! function_exists( 'twentyeleven_content_nav' ) ) :
 				<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'twentyeleven' ) ); ?></div>
 			</nav><!-- #nav-above -->
 			<?php
-	endif;
+		endif;
 	}
 endif; // twentyeleven_content_nav
 
@@ -676,7 +676,7 @@ if ( ! function_exists( 'twentyeleven_comment' ) ) :
 					<?php if ( $comment->comment_approved == '0' ) : ?>
 					<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'twentyeleven' ); ?></em>
 					<br />
-				<?php endif; ?>
+					<?php endif; ?>
 
 				</footer>
 

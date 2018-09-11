@@ -44,7 +44,7 @@ if ( $description || is_customize_preview() ) :
 	?>
 						<p class="site-description"><?php echo $description; ?></p>
 					<?php
-					endif;
+endif;
 ?>
 				<button class="secondary-toggle"><?php _e( 'Menu and widgets', 'twentyfifteen' ); ?></button>
 			</div><!-- .site-branding -->

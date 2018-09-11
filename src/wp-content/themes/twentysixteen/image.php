@@ -108,7 +108,7 @@ get_header(); ?>
 					)
 				);
 				// End the loop.
-				endwhile;
+			endwhile;
 			?>
 
 		</main><!-- .site-main -->

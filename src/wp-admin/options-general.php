@@ -100,7 +100,7 @@ if ( ! is_multisite() ) {
 		);
 		?>
 </p>
-<?php endif; ?>
+	<?php endif; ?>
 </td>
 </tr>
 

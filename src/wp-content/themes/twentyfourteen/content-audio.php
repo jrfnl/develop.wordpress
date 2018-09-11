@@ -17,7 +17,7 @@
 			<span class="cat-links"><?php echo get_the_category_list( _x( ', ', 'Used between list items, there is a space after the comma.', 'twentyfourteen' ) ); ?></span>
 		</div><!-- .entry-meta -->
 			<?php
-			endif;
+		endif;
 
 if ( is_single() ) :
 	the_title( '<h1 class="entry-title">', '</h1>' );

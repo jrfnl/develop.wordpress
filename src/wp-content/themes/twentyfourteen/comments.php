@@ -51,7 +51,7 @@ if ( post_password_required() ) {
 		<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'twentyfourteen' ) ); ?></div>
 		<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'twentyfourteen' ) ); ?></div>
 	</nav><!-- #comment-nav-above -->
-	<?php endif; // Check for comment navigation. ?>
+		<?php endif; // Check for comment navigation. ?>
 
 	<ol class="comment-list">
 		<?php
@@ -71,11 +71,11 @@ if ( post_password_required() ) {
 		<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'twentyfourteen' ) ); ?></div>
 		<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'twentyfourteen' ) ); ?></div>
 	</nav><!-- #comment-nav-below -->
-	<?php endif; // Check for comment navigation. ?>
+		<?php endif; // Check for comment navigation. ?>
 
 		<?php if ( ! comments_open() ) : ?>
 	<p class="no-comments"><?php _e( 'Comments are closed.', 'twentyfourteen' ); ?></p>
-	<?php endif; ?>
+		<?php endif; ?>
 
 	<?php endif; // have_comments() ?>
 

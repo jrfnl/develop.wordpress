@@ -63,7 +63,7 @@ if ( $is_privacy_guide ) {
 		<p><?php printf( __( 'If you want to convert your categories to tags (or vice versa), use the <a href="%s">Categories and Tags Converter</a> available from the Import screen.' ), 'import.php' ); ?></p>
 	</div>
 			<?php
-	endif;
+		endif;
 	endif;
 
 	/**

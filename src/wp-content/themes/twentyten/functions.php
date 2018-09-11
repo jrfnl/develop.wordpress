@@ -388,7 +388,7 @@ if ( ! function_exists( 'twentyten_comment' ) ) :
 				<?php if ( $comment->comment_approved == '0' ) : ?>
 				<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'twentyten' ); ?></em>
 				<br />
-			<?php endif; ?>
+				<?php endif; ?>
 
 			<div class="comment-meta commentmetadata"><a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
 				<?php

@@ -158,10 +158,10 @@ get_header(); ?>
 								}
 								?>
 					<li><a href="#featured-post-<?php echo esc_attr( $counter_slider ); ?>" title="<?php echo esc_attr( sprintf( __( 'Featuring: %s', 'twentyeleven' ), the_title_attribute( 'echo=0' ) ) ); ?>"<?php echo $class; ?>></a></li>
-						<?php endwhile; ?>
+							<?php endwhile; ?>
 					</ul>
 					</nav>
-					<?php endif; // End check for more than one sticky post. ?>
+						<?php endif; // End check for more than one sticky post. ?>
 					</div><!-- .featured-posts -->
 					<?php endif; // End check for published posts. ?>
 				<?php endif; // End check for sticky posts. ?>

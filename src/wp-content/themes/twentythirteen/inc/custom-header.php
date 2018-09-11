@@ -115,7 +115,7 @@ function twentythirteen_header_style() {
 		}
 	}
 		<?php
-		endif;
+	endif;
 
 		// Has the text been hidden?
 	if ( ! display_header_text() ) :
@@ -142,7 +142,7 @@ function twentythirteen_header_style() {
 		.site-description {
 			color: #<?php echo esc_attr( $text_color ); ?>;
 		}
-	<?php endif; ?>
+		<?php endif; ?>
 	</style>
 	<?php
 }

@@ -298,7 +298,10 @@ else :
 						<?php
 						if ( is_writeable( $file ) ) {
 							?>
-						<strong><?php _e( 'Caution:' ); ?></strong><?php } ?>
+						<strong><?php _e( 'Caution:' ); ?></strong>
+										  <?php
+						}
+						?>
 						<?php _e( 'This is a file in your current parent theme.' ); ?>
 					</p>
 				</div>

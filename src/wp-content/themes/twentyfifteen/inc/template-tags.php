@@ -25,11 +25,11 @@ if ( ! function_exists( 'twentyfifteen_comment_nav' ) ) :
 			<?php
 			if ( $prev_link = get_previous_comments_link( __( 'Older Comments', 'twentyfifteen' ) ) ) :
 				printf( '<div class="nav-previous">%s</div>', $prev_link );
-				endif;
+			endif;
 
 			if ( $next_link = get_next_comments_link( __( 'Newer Comments', 'twentyfifteen' ) ) ) :
 				printf( '<div class="nav-next">%s</div>', $next_link );
-				endif;
+			endif;
 			?>
 			</div><!-- .nav-links -->
 		</nav><!-- .comment-navigation -->

@@ -373,7 +373,7 @@ printf( __( 'If you like, you may enter custom structures for your category and 
 	?>
 </p>
 		<?php endif; ?>
-	<?php endif; ?>
+		<?php endif; ?>
 <?php elseif ( $is_nginx ) : ?>
 	<p><?php _e( '<a href="https://codex.wordpress.org/Nginx">Documentation on Nginx configuration</a>.' ); ?></p>
 	<?php
