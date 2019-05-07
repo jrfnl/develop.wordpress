@@ -46,6 +46,18 @@ if ( version_compare( tests_get_phpunit_version(), '8.0', '>=' ) ) {
 	exit( 1 );
 }
 
+$php_version = phpversion();
+include ABSPATH . '/wp-includes/version.php';
+if ( version_compare( $required_php_version, $php_version, '>' ) ) {
+	printf(
+		'ERROR: Your server is running PHP version %1$s but WordPress %2$s requires at least %3$s. The unit tests will not be run.' . PHP_EOL,
+		$php_version,
+		$wp_version,
+		$required_php_version
+	);
+	exit( 1 );
+}
+
 if ( defined( 'WP_RUN_CORE_TESTS' ) && WP_RUN_CORE_TESTS && ! is_dir( ABSPATH ) ) {
 	echo "ERROR: The /build/ directory is missing! Please run `grunt build` prior to running PHPUnit.\n";
 	exit( 1 );
