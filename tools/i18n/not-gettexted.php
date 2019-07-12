@@ -29,8 +29,7 @@ class NotGettexted {
 	var $commands = array('extract' => 'command_extract', 'replace' => 'command_replace' );
 
 
-	function logmsg() {
-		$args = func_get_args();
+	function logmsg( ...$args ) {
 		if ($this->enable_logging) error_log(implode(' ', $args));
 	}
 
@@ -138,8 +137,7 @@ class NotGettexted {
 	}
 
 
-	function command_extract() {
-		$args = func_get_args();
+	function command_extract( ...$args ) {
 		$pot_filename = $args[0];
 		if (isset($args[1]) && is_array($args[1]))
 			$filenames = $args[1];
@@ -176,8 +174,7 @@ class NotGettexted {
 		return true;
 	}
 
-	function command_replace() {
-		$args = func_get_args();
+	function command_replace( ...$args ) {
 		$mo_filename = $args[0];
 		if (isset($args[1]) && is_array($args[1]))
 			$filenames = $args[1];
