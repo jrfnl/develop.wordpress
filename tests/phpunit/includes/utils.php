@@ -128,17 +128,16 @@ class MockAction {
 		return $arg . '_append';
 	}
 
-	function filterall( $tag, $arg = null ) {
+	function filterall( $tag, ...$args ) {
 		// this one doesn't return the result, so it's safe to use with the new 'all' filter
 		if ( $this->debug ) {
 			dmp( __FUNCTION__, $this->current_filter() );
 		}
 
-		$args           = func_get_args();
 		$this->events[] = array(
 			'filter' => __FUNCTION__,
 			'tag'    => $tag,
-			'args'   => array_slice( $args, 1 ),
+			'args'   => $args,
 		);
 	}
 
@@ -300,9 +299,7 @@ function xml_array_dumbdown( &$data ) {
 	return $out;
 }
 
-function dmp() {
-	$args = func_get_args();
-
+function dmp( ...$args ) {
 	foreach ( $args as $thing ) {
 		echo ( is_scalar( $thing ) ? strval( $thing ) : var_export( $thing, true ) ), "\n";
 	}

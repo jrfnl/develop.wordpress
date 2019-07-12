@@ -909,11 +909,11 @@ abstract class WP_UnitTestCase_Base extends PHPUnit_Framework_TestCase {
 	 * @since 2.5.0
 	 * @since 3.8.0 Moved from `Tests_Query_Conditionals` to `WP_UnitTestCase`.
 	 *
-	 * @param string ...$prop Any number of WP_Query properties that are expected to be true for the current request.
+	 * @param string ...$true Any number of WP_Query properties that are expected to be true for the current request.
 	 */
-	public function assertQueryTrue() {
+	public function assertQueryTrue( ...$true ) {
 		global $wp_query;
-		$all  = array(
+		$all = array(
 			'is_404',
 			'is_admin',
 			'is_archive',
@@ -944,7 +944,6 @@ abstract class WP_UnitTestCase_Base extends PHPUnit_Framework_TestCase {
 			'is_trackback',
 			'is_year',
 		);
-		$true = func_get_args();
 
 		foreach ( $true as $true_thing ) {
 			$this->assertContains( $true_thing, $all, "Unknown conditional: {$true_thing}." );
