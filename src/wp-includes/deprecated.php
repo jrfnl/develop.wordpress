@@ -1792,10 +1792,9 @@ function _nc( $single, $plural, $number, $domain = 'default' ) {
  * @deprecated 2.8.0 Use _n()
  * @see _n()
  */
-function __ngettext() {
+function __ngettext( ...$args ) {
 	_deprecated_function( __FUNCTION__, '2.8.0', '_n()' );
-	$args = func_get_args();
-	return call_user_func_array('_n', $args);
+	return _n( ...$args );
 }
 
 /**
@@ -1805,10 +1804,9 @@ function __ngettext() {
  * @deprecated 2.8.0 Use _n_noop()
  * @see _n_noop()
  */
-function __ngettext_noop() {
+function __ngettext_noop( ...$args ) {
 	_deprecated_function( __FUNCTION__, '2.8.0', '_n_noop()' );
-	$args = func_get_args();
-	return call_user_func_array('_n_noop', $args);
+	return _n_noop( ...$args );
 
 }
 
