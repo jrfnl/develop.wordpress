@@ -444,7 +444,7 @@ function add_action( $tag, $function_to_add, $priority = 10, $accepted_args = 1 
  * @param mixed  ...$arg Optional. Additional arguments which are passed on to the
  *                       functions hooked to the action. Default empty.
  */
-function do_action( $tag, $arg = '' ) {
+function do_action( $tag, ...$arg ) {
 	global $wp_filter, $wp_actions, $wp_current_filter;
 
 	if ( ! isset( $wp_actions[ $tag ] ) ) {
@@ -471,17 +471,11 @@ function do_action( $tag, $arg = '' ) {
 		$wp_current_filter[] = $tag;
 	}
 
-	$args = array();
-	if ( is_array( $arg ) && 1 == count( $arg ) && isset( $arg[0] ) && is_object( $arg[0] ) ) { // array(&$this)
-		$args[] =& $arg[0];
-	} else {
-		$args[] = $arg;
-	}
-	for ( $a = 2, $num = func_num_args(); $a < $num; $a++ ) {
-		$args[] = func_get_arg( $a );
+	if ( empty( $arg ) ) {
+		$arg[] = '';
 	}
 
-	$wp_filter[ $tag ]->do_action( $args );
+	$wp_filter[ $tag ]->do_action( $arg );
 
 	array_pop( $wp_current_filter );
 }
