@@ -1079,18 +1079,19 @@ function walk_category_tree( ...$args ) {
  *
  * @uses Walker_CategoryDropdown to create HTML dropdown content.
  * @since 2.1.0
- * @see Walker_CategoryDropdown::walk() for parameters and return description.
+ * @see Walker::walk() for parameters and return description.
+ *
+ * @param mixed ...$args Elements array, maximum hierarchical depth and optional additional arguments.
  * @return string
  */
-function walk_category_dropdown_tree() {
-	$args = func_get_args();
-	// the user's options are the third parameter
+function walk_category_dropdown_tree( ...$args ) {
+	// The user's options are the third parameter.
 	if ( empty( $args[2]['walker'] ) || ! ( $args[2]['walker'] instanceof Walker ) ) {
 		$walker = new Walker_CategoryDropdown;
 	} else {
 		$walker = $args[2]['walker'];
 	}
-	return call_user_func_array( array( $walker, 'walk' ), $args );
+	return $walker->walk( ...$args );
 }
 
 //
