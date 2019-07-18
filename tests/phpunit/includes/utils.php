@@ -243,10 +243,8 @@ function xml_to_array( $in ) {
 	return $p->data;
 }
 
-function xml_find( $tree /*, $el1, $el2, $el3, .. */ ) {
-	$a   = func_get_args();
-	$a   = array_slice( $a, 1 );
-	$n   = count( $a );
+function xml_find( $tree, ...$elms ) {
+	$n   = count( $elms );
 	$out = array();
 
 	if ( $n < 1 ) {
@@ -254,17 +252,15 @@ function xml_find( $tree /*, $el1, $el2, $el3, .. */ ) {
 	}
 
 	for ( $i = 0; $i < count( $tree ); $i++ ) {
-		#       echo "checking '{$tree[$i][name]}' == '{$a[0]}'\n";
-		#       var_dump($tree[$i]['name'], $a[0]);
-		if ( $tree[ $i ]['name'] === $a[0] ) {
+		#       echo "checking '{$tree[$i][name]}' == '{$elms[0]}'\n";
+		#       var_dump($tree[$i]['name'], $elms[0]);
+		if ( $tree[ $i ]['name'] === $elms[0] ) {
 			#           echo "n == {$n}\n";
 			if ( 1 === $n ) {
 				$out[] = $tree[ $i ];
 			} else {
-				$subtree   =& $tree[ $i ]['child'];
-				$call_args = array( $subtree );
-				$call_args = array_merge( $call_args, array_slice( $a, 1 ) );
-				$out       = array_merge( $out, call_user_func_array( 'xml_find', $call_args ) );
+				$subtree =& $tree[ $i ]['child'];
+				$out     = array_merge( $out, xml_find( $subtree, ...array_slice( $elms, 1 ) ) );
 			}
 		}
 	}
