@@ -1722,20 +1722,16 @@ function wp_ajax_menu_get_metabox() {
 		$menus_meta_box_object = $items[ $_POST['item-object'] ];
 
 		/** This filter is documented in wp-admin/includes/nav-menu.php */
-		$item = apply_filters( 'nav_menu_meta_box_object', $menus_meta_box_object );
-		ob_start();
-		call_user_func_array(
-			$callback,
-			array(
-				null,
-				array(
-					'id'       => 'add-' . $item->name,
-					'title'    => $item->labels->name,
-					'callback' => $callback,
-					'args'     => $item,
-				),
-			)
+		$item     = apply_filters( 'nav_menu_meta_box_object', $menus_meta_box_object );
+		$box_args = array(
+			'id'       => 'add-' . $item->name,
+			'title'    => $item->labels->name,
+			'callback' => $callback,
+			'args'     => $item,
 		);
+
+		ob_start();
+		$callback( null, $box_args );
 
 		$markup = ob_get_clean();
 
