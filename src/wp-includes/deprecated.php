@@ -2068,8 +2068,7 @@ function js_escape( $text ) {
 function wp_specialchars( $string, $quote_style = ENT_NOQUOTES, $charset = false, $double_encode = false ) {
 	_deprecated_function( __FUNCTION__, '2.8.0', 'esc_html()' );
 	if ( func_num_args() > 1 ) { // Maintain back-compat for people passing additional arguments.
-		$args = func_get_args();
-		return call_user_func_array( '_wp_specialchars', $args );
+		return _wp_specialchars( $string, $quote_style, $charset, $double_encode );
 	} else {
 		return esc_html( $string );
 	}
